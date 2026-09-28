@@ -1,0 +1,2796 @@
+<!DOCTYPE html>
+<html>
+<!-- transaksi.html *** -->
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>{title}</title>
+
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<link id="favicon" rel="icon" type='image/x-icon' href="{favicon}">
+<link rel="stylesheet" href="{cdn_suport}bootstrap-3.3.7-dist/css/bootstrap.min.css?v={local_version}">
+<link rel="stylesheet" href="{cdn_suport}Font-Awesome-master/css/font-awesome.min.css?v={local_version}">
+<link rel="stylesheet" href="{cdn_suport}ionicons-master/css/ionicons.min.css?v={local_version}">
+<link rel="stylesheet" href="{cdn_suport}simple-line-icons-master/css/simple-line-icons.css?v={local_version}">
+<link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/dist/css/AdminLTE.css?v={local_version}">
+<link rel="stylesheet" href="{cdn_suport}bootstrap3-dialog-master/dist/css/bootstrap-dialog.min.css?v={local_version}">
+<link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/dist/css/skins/_all-skins.min.css?v={local_version}">
+<link rel="stylesheet" href="{cdn_suport}bootstrap-fileinput-master/css/fileinput.min.css?v={local_version}">
+<link rel="stylesheet" href="{cdn_suport}bootstrap-toggle-master/css/bootstrap-toggle.min.css?v={local_version}">
+<link rel="stylesheet" href="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.css?v={local_version}">
+<link rel="stylesheet" href="{cdn_suport}bootstrap-xlgrid-master/bootstrap-xlgrid.min.css?v={local_version}">
+<link rel="stylesheet" href="{base}assets/custom/custom.min.css?v={local_version}">
+<link rel="stylesheet" href="{base}assets/custom/dialog.css?v={local_version}">
+<link rel="stylesheet" href="{cdn_suport}HoldOn/HoldOn.css?v={local_version}">
+<link rel="stylesheet" href="{base}assets/custom/jquery.floatingscroll.css?v={local_version}">
+<link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/media/css/dataTables.bootstrap.min.css?v={local_version}">
+<!--<link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/media/css/jquery.dataTables_themeroller.css?v={local_version}">-->
+<link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/yadcf-0.9.3/jquery.dataTables.yadcf.css?v={local_version}">
+<link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/extensions/Buttons/css/buttons.dataTables.css?v={local_version}">
+<link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/extensions/FixedHeader/css/fixedHeader.bootstrap.css?v={local_version}">
+<link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/extensions/FixedColumns/css/fixedColumns.bootstrap.css?v={local_version}">
+<link rel="stylesheet" href="{cdn_suport}bootstrap-select-1.13.9/dist/css/bootstrap-select.css?v={local_version}">
+<!--<link rel="stylesheet" href="{cdn_suport}js-snackbar/snackbar.min.css?v={local_version}">-->
+<link rel="stylesheet" href="{cdn_suport}jquery-toast-plugin-master/dist/jquery.toast.min.css?v={local_version}">
+
+<script src="{cdn_suport}AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v={local_version}"></script>
+<script src="{base}assets/custom/custom.js?v={local_version}"></script>
+<script src="{cdn_suport}HoldOn/HoldOn.js?v={local_version}"></script>
+<script src="{cdn_suport}geo/js/geo.js?v={local_version}"></script>
+<script src="{cdn_suport}bootstrap-3.3.7-dist/js/bootstrap.min.js?v={local_version}"></script>
+<script src="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.js?v={local_version}"></script>
+<script src="{cdn_suport}bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js?v={local_version}"></script>
+<script src="{base}assets/custom/jquery.floatingscroll.min.js?v={local_version}"></script>
+<!--<script src="{base}assets/custom/cpuid-master/test.js?v={local_version}"></script>-->
+<script src="{cdn_suport}DataTables-1.10.13/media/js/jquery.dataTables.min.js?v={local_version}"></script>
+<script src="{cdn_suport}DataTables-1.10.13/media/js/dataTables.bootstrap.min.js?v={local_version}"></script>
+<script src="{cdn_suport}DataTables-1.10.13/media/js/jquery.highlight.js?v={local_version}"></script>
+<script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/dataTables.buttons.js?v={local_version}"></script>
+<script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.colVis.js?v={local_version}"></script>
+<script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.print.js?v={local_version}"></script>
+<script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.html5.js?v={local_version}"></script>
+<script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.flash.js?v={local_version}"></script>
+<script src="{cdn_suport}DataTables-1.10.13/yadcf-0.9.3/jquery.dataTables.yadcf.js?v={local_version}"></script>
+<script src="{cdn_suport}DataTables-1.10.13/extensions/FixedHeader/js/dataTables.fixedHeader.js?v={local_version}"></script>
+<script src="{cdn_suport}DataTables-1.10.13/extensions/FixedColumns/js/dataTables.fixedColumns.js?v={local_version}"></script>
+<script src="{cdn_suport}bootstrap-select-1.13.9/dist/js/bootstrap-select.js?v={local_version}"></script>
+<script src="{cdn_suport}DataTables-1.10.13/extensions/KeyTable/js/dataTables.keyTable.min.js?v={local_version}"></script>
+<script src="{cdn_suport}simple_geo/geo-min.js?v={local_version}"></script>
+<!--<script src="{cdn_suport}js-snackbar/snackbar.min.js?v={local_version}"></script>-->
+<script src="{cdn_suport}jquery-toast-plugin-master/dist/jquery.toast.min.js?v={local_version}"></script>
+
+
+<style type="text/css">
+
+    .swal-wide{
+        width:45vw !important;
+    }
+
+    .modal table.dataTable tbody tr:hover {
+        cursor: pointer;
+        background-color: yellow;
+        font-weight: 800;
+    }
+
+    .modal table.dataTable.stripe tbody tr.odd.selected,
+    .modal table.dataTable.display tbody tr.odd.selected,
+    .modal table.dataTable.stripe tbody tr.even.selected,
+    .modal table.dataTable.display tbody tr.even.selected {
+        background-color: #acbad4;
+        font-weight: 800;
+    }
+
+    #viewModalCariProduk_modal .modal-dialog {
+        top: 10vh!important;
+        width: 90vw!important;
+    }
+    #viewModalBanyakProduk_modal .modal-dialog {
+        top: 10vh!important;
+        width: 90vw!important;
+    }
+
+    .history_table .modal-dialog {
+        top: 10vh!important;
+        width: 90vw!important;
+    }
+
+    #switch{
+        top: 50%;
+        left: 0;
+        width: 142px;
+        height: 36px;
+    }
+    .toggle{
+        position: relative;
+        border: 2px solid #444249;
+        border-radius: 20px;
+        -webkit-transition: border-color .6s  ease-out;
+        transition: border-color .6s  ease-out;
+        box-sizing: border-box;
+    }
+    .toggle.toggle-on{
+        border-color: rgba(137, 194, 217, .4);
+        -webkit-transition: all .5s .15s ease-out;
+        transition: all .5s .15s ease-out;
+    }
+    .toggle-button{
+        position: absolute;
+        top: 4px;
+        width: 24px;
+        bottom: 4px;
+        right: 110px;
+        background-color: #444249;
+        border-radius: 19px;
+        cursor: pointer;
+        -webkit-transition: all .3s .1s, width .1s, top .1s, bottom .1s;
+        transition: all .3s .1s, width .1s, top .1s, bottom .1s;
+    }
+    .toggle-on .toggle-button{
+        top: 3px;
+        width: 135px;
+        bottom: 3px;
+        right: 3px;
+        border-radius: 23px;
+        background-color: #3afa3c;
+        box-shadow: 0 0 16px #249f23;
+        -webkit-transition: all .2s .1s, right .1s;
+        transition: all .2s .1s, right .1s;
+    }
+    .toggle-text-on{
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        line-height: 33px;
+        text-align: center;
+        font-family: 'Quicksand', sans-serif;
+        font-size: 18px;
+        font-weight: normal;
+        cursor: pointer;
+        -webkit-user-select: none; /* Chrome/Safari */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* IE10+ */
+        color: rgba(0,0,0,0);
+    }
+    .toggle-on .toggle-text-on{
+        color: #ff003f;
+        -webkit-transition: color .3s .15s;
+        transition: color .3s .15s;
+    }
+    .toggle-text-off{
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 6px;
+        line-height: 33px;
+        text-align: center;
+        font-family: 'Quicksand', sans-serif;
+        font-size: 14px;
+        font-weight: bold;
+        -webkit-user-select: none; /* Chrome/Safari */
+        -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* IE10+ */
+        cursor: pointer;
+        color: #444249;
+    }
+    .toggle-on .toggle-text-off{
+        color: rgba(0,0,0,0);
+    }
+    /* used for streak effect */
+    .glow-comp{
+        position: absolute;
+        opacity: 0;
+        top: 10px;
+        bottom: 10px;
+        left: 10px;
+        right: 10px;
+        border-radius: 6px;
+        background-color: rgba(75, 122, 141, .1);
+        box-shadow: 0 0 12px rgba(75, 122, 141, .2);
+        -webkit-transition: opacity 4.5s 1s;
+        transition: opacity 4.5s 1s;
+    }
+    .toggle-on .glow-comp{
+        opacity: 1;
+        -webkit-transition: opacity 1s;
+        transition: opacity 1s;
+    }
+</style>
+<style>
+    /*.odd {*/
+    /*background-color: #f2faff !important;*/
+    /*}*/
+    /*.even {*/
+    /*background-color: #fff !important;*/
+    /*}*/
+
+    /*table#tablePencarianProduk > tbody >tr :hover td {*/
+    /*background: yellow;*/
+    /*}*/
+
+    @media (max-width: 767px) {
+        .form-control {
+            padding: 6px 1px !important;
+        }
+    }
+    .colorswap {
+        background: transparent;
+        animation: mymove 2s;
+    }
+    @keyframes mymove {
+        from {background-color: green;}
+        to {background-color: transparent;}
+    }
+    #overlay_shopping_cart {
+        position: absolute;
+        display: none;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 2;
+        cursor: pointer;
+    }
+    #txt_overlay_shopping_cart{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        font-size: 50px;
+        color: white;
+        transform: translate(-50%,-50%);
+        -ms-transform: translate(-50%,-50%);
+    }
+
+    #overlay {
+        position: absolute;
+        display: none;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 2;
+        cursor: pointer;
+    }
+    #text{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        font-size: 50px;
+        color: white;
+        transform: translate(-50%,-50%);
+        -ms-transform: translate(-50%,-50%);
+    }
+    tr td .form-control{
+        height: 20px !important;
+        padding: 0px 2px !important;
+    }
+    table.table.payment tr td .form-control {
+        height: 36px !important;
+        padding: 0px 0px !important;
+    }
+    tr td .form-control.ns {
+        height: 32px !important;
+        padding: 0px 2px !important;
+    }
+    select option[value=*] {
+        background: rgba(100, 100, 100, 0.3);
+    }
+    table.dataTable.table-condensed>thead>tr>th {
+        padding-right: 12px;
+    }
+    table.dataTable.compact tbody td span {
+        vertical-align: middle;
+        /*display: table-cell;*/
+    }
+    table.dataTable.compact thead th, table.dataTable.compact thead td {
+        padding: 0px 2px;
+    }
+
+    html,body {
+        font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+    }
+</style>
+
+<style>
+    html,
+    body {
+        width: 100%;
+        height: 100%;
+        font-family: "Open Sans", sans-serif;
+        padding: 0;
+        margin: 0;
+    }
+
+    #context-menu .item {
+        padding: 2px 6px;
+        font-size: 12px;
+        color: #eee;
+        cursor: pointer;
+        border-radius: inherit;
+        width: -webkit-fill-available;
+    }
+
+    #context-menu .item . disabled{
+        cursor: pointer;
+    }
+
+    #context-menu .item:hover {
+        background: #343430;
+    }
+
+    #context-menu.visible {
+        display: block;
+    }
+
+    #context-menu {
+        position: fixed;
+        z-index: 10000;
+        width: 200px;
+        background: #1b1a1a;
+        border-radius: 5px;
+        transform: scale(0);
+        transform-origin: top left;
+    }
+
+    #context-menu.visible {
+        transform: scale(1);
+        transition: transform 200ms ease-in-out;
+    }
+
+    .item-divider {
+        height: 0;
+        margin: 0.5rem 0;
+        overflow: hidden;
+        border-top: 1px solid #e9ecef;
+    }
+
+</style>
+</head>
+
+<body onbeforeunload="custom_holdon(close_holdon)" class="hold-transition {skin_header} sidebar-mini sidebar-collapse" onload="fillBoxes();">
+<div id="baseURL" class="hidden">{base}</div>
+<input type='text' id="selector_caller" class="hidden" value="{selector_caller}">
+<input type='text' id="barcode_action_url" class="hidden" value="{barcode_action_url}">
+<div class="wrapper">
+<header class="main-header">
+    <a href="{base}" class="logo hidden-xs hidden-sm no-padding">
+        <span class="logo-mini"><span class="glyphicon glyphicon-home"></span></span>
+        <span class="logo-lg">{logo_header}</span>
+    </a>
+    <nav class="navbar navbar-static-top">
+        <div class="no-padding no-border">
+            <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                <span class="sr-only">Toggle navigation</span>
+            </a>
+            <a class="sidebar-title"><b class="text-uppercase">{title}</b></a>
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav" id="menu_top">
+                    {menu_top}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <nav class="navbar navbar-fixed-bottom navbar-2nd">
+        <div class="no-padding no-border">
+            <div style="padding-right:0;padding-left:0;" class="col-sm-2 col-xs-2 col-md-1 col-lg-1">
+                <div class="hidden-xs col-sm-6 col-md-6 col-lg-6 no-padding">
+                    <a href="{base}" class="btn btn__trigger-home btn__trigger--views-home"><i
+                            class="glyphicon glyphicon-home"></i></a>
+                </div>
+                <div class="hidden-xl hidden-lg hidden-md hidden-sm col-xs-6 no-padding">
+                    <a href="{base}" class="btn btn__trigger-home-mb btn__trigger--views-home-mb"><i
+                            class="glyphicon glyphicon-home"></i></a>
+                </div>
+                <div class="hidden-xs col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding">
+                    <div class="text-bold text-center timbul dtime">
+                        <span class="jam"></span>
+                        <span class="blink">:</span>
+                        <span class="menit"></span>
+                    </div>
+                </div>
+            </div>
+            <div style="padding-right:0;padding-left:0;padding-left: 17px;" class="hidden-lg col-xs-8">
+                {info_ucd}
+            </div>
+            <div style="padding-right:0;padding-left:0;" class="col-sm-10 col-xs-2 col-md-11 col-lg-11">
+                {float_menu_bawah}
+            </div>
+        </div>
+        <div class="hidden-sm hidden-md hidden-lg hidden-xl hidden-xxl col-xs-12 bg-black text-lime text-bold">
+            <span class="col-xs-8 no-padding">
+                <span class="hari"></span>
+                <span class="tanggal"></span>
+            </span>
+                <span class="col-xs-4 no-padding text-right">
+                <span class="jam"></span>
+                <span class="blink">:</span>
+                <span class="menit"></span>
+            </span>
+        </div>
+    </nav>
+    <nav class="hidden-xs navbar navbar-fixed-bottom navbar-3rd">
+        <div class="no-padding no-border">
+            <span class="col-lg-2 no-padding">
+                <span class="hari timbul text-bold"></span>
+                <span class="tanggal timbul text-bold"></span>
+            </span>
+                <span class="col-lg-10 no-padding">
+                {info_bottom}
+            </span>
+        </div>
+    </nav>
+</header>
+<aside class="main-sidebar">
+    <section class="sidebar">
+        {searching}
+        <ul class="sidebar-menu">
+            {menu_left}
+        </ul>
+    </section>
+
+</aside>
+<div class="content-wrapper">
+<div id="search_result"></div>
+<section style="padding: 3px;" class="content">
+<div class="row">
+<div class="container-fluid">
+    <div class="col-md-12 col-lg-12 no-paddingx pull-right text-rights" style="padding: 3px;margin-bottom: 2px;background: lightgray; border-radius: 5px;">
+        <div class="col-lg-2 col-md-12" style="padding: 5px;">
+            <div class='box-solid text-center hidden-lg' sstyle='margin-top: 10px;'>
+                <div class="input-group btn-block">
+                    {add_item}
+                    <input type='text' class='form-control'
+                           name='text'
+                           id='itemKeyword'
+                           value=''
+                           placeholder='{selector_label}'
+                           onclick{modeedit}=" if($('#pilihan_item').html().length>0){$('#pilihan_outlet').html('');$('#pilihan_item').html('')}else{this.select();$('#pilihan_item').load('{selector_caller}?search='+encodeURI(this.value));}  "
+                    onkeyup_code="if(detectEnter() && this.value.length>=10){{barcode_action}}else{ if(this.value.length>=4){$('#pilihan_item').load('{selector_caller}?search='+encodeURI(this.value));}}"
+                    autocomplete="off">
+                    {mobile_scan}
+                </div>
+                <div id='pilihan_item' style="min-width:95%;max-height: 210px;position: absolute;left:10px;overflow: auto;z-index: 3;"></div>
+            </div>
+
+            <div class="rowx no-marginx">
+
+                <div style="margin-top: 13px;" class="col-lg-6 col-xs-6 no-padding hidden-lg hidden-xs">
+                    <div class="toggle" id="switch">
+                        <div class="toggle-text-off">NON MEMBER</div>
+                        <div class="glow-comp"></div>
+                        <div class="toggle-button"></div>
+                        <div class="toggle-text-on">MEMBER</div>
+                    </div>
+                </div>
+                <div style="margin-top: 1px;" class="col-lg-12 col-xs-6  hidden-xs no-padding">
+                    <label>Member <sup><r>(F3)</r></sup>
+                        <div style="margin-top: 1px;" class='col-lg-6x col-xs-7x box-solid text-center input-group'>
+
+                            <input type="hidden" name="pihakID" id="pihakID">
+                            <!-- {add_pihak} -->
+                            <input type='text' class='form-control text-uppercase'
+                                   name='pihakName' id="pihakName"
+                                   value='{pihakName}'
+                                   placeholder='{pihak_label}'
+                            {modeeditopt}
+                            onclick{modeedit}="if($(this).val().length>3 && $('#pilihan_outlet').html().length>3){ $('#pilihan_outlet').html(''); $('#pilihan_item').html('');}else{ $('#pilihan_outlet').load('{pihak_caller}?search='+ encodeURI(this.value)); }"
+                            onkeyup{modeedit}=" $('#pilihan_outlet').load('{pihak_caller}?search='+ encodeURI(this.value))"
+                            autocomplete="off">
+                                            <span class='input-group-btn hidden-lgx'>
+                                    <a id="btn-close-pihakName" class='btn btn-default' href="javascript:void(0)"
+                                       onclick{modeedit}="document.getElementById('pihakID').value='';document.getElementById('pihakName').value='';document.getElementById('result').src='{pihak_caller_delete}';if($('.toggle').hasClass('toggle-on')){ $('#pilihan_outlet').load('{pihak_caller}?search='+document.getElementById('pihakName').value)}else{ console.log('jangan keluarkan pilihan select member karena non-member terpilih'); selectNonMember(); };">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                                </a>
+                                </span>
+
+                        </div>
+                    </label>
+                </div>
+                <div id='pilihan_outlet' style="max-height: 300px;position: absolute;left: 40px;overflow: auto;z-index: 1;"></div>
+
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-12 col-xs-12 hidden-lg hidden-md" id="tmp_request_xhr" style="padding: 5px;">{tmp_request}</div>
+        <!--<div class="col-lg-3 col-md-12" id="tmp_request_xhr" style="padding: 5px;"></div>-->
+
+        <!--<div class="col-lg-3 col-md-12" style="padding: 5px;">-->
+        <!--<ul style="padding: 5px;" class="pagination no-margin hidden-xs hidden-sm">-->
+        <!--<li><a href="{base}{modul}/History/viewHistory/{jenisTr}" data-toggle="tooltip" data-placement="bottom" title="{trName} histories"><span class='glyphicon glyphicon-time'></span>&nbsp;&nbsp;histories</a></li>-->
+        <!--<li><a href="{base}{modul}/Create/index/982" data-toggle="tooltip" data-placement="bottom" title="membatalkan transaksi penjualan"><i class='fa fa-warning'></i>&nbsp;&nbsp;Pembatalan</a></li>-->
+        <!--<li><a href="{base}{modul}/ActivityReport/viewMySettlement/{jenisTr}" data-toggle="tooltip" data-placement="bottom" title="my {trName} settlement"><span class='fa fa-gg'></span>&nbsp;&nbsp;my settlement</a></li>-->
+        <!--<li><a href="javascript:void(0)" onclick="window.open('{base}Addons/CustomerScreen', '_blank','location=no,height=700,width=1200,scrollbars=no,status=yes')" data-toggle="tooltip" data-placement="bottom" title="customer screen"><span class='fa fa-desktop'></span>&nbsp;&nbsp;Screen 2</a></li>-->
+        <!--<li style="display:{newTrDisp}"><a href="{newTrTarget}" data-toggle="tooltip" data-placement="bottom" title="new {trName}"><span class='fa fa-plus'></span> new {trName}</a></li>-->
+        <!--</ul>-->
+        <!--</div>-->
+
+        <div class="col-lg-10 col-md-12 hidden-sm hidden-xs" style="padding: 5px;">
+            <div style="border-radius: 10px;" class="panel panel-primary no-margin">
+                <div style="border-radius: 10px;padding: 7px;" class="panel-body bg-info">
+                    <div class="text-left text-bold text-primary">KETERANGAN: </div>
+                    <ul style="" class="no-margin">
+
+                        <li class="col col-lg-2 no-padding text-left div_f1">
+                            <span style="font-size: 14px;" class="text-bold text-primary">F1: </span>
+                            <span style="font-size: 12px;" class="text-primary fa-1x">Second Monitor</span>
+                        </li>
+                        <li class="col col-lg-2 no-padding text-left div_f9">
+                            <span style="font-size: 14px;" class="text-bold text-primary">F9: </span>
+                            <span style="font-size: 12px;" class="text-primary fa-1x">Simpan Transaksi</span>
+                        </li>
+                        <li class="col col-lg-2 no-padding text-left div_f8">
+                            <span style="font-size: 14px;" class="text-bold text-primary">F8: </span>
+                            <span style="font-size: 12px;" class="text-primary fa-1x">Pembayaran</span>
+                        </li>
+
+                        <li class="col col-lg-2 no-padding text-left div_f2">
+                            <span style="font-size: 14px;" class="text-bold text-primary">F2: </span>
+                            <span style="font-size: 12px;" class="text-primary fa-1x">History</span>
+                        </li>
+                        <li class="col col-lg-2 no-padding text-left div_f11">
+                            <span style="font-size: 14px;" class="text-bold text-primary">F11: </span>
+                            <span style="font-size: 12px;" class="text-primary fa-1x">Full Screen</span>
+                        </li>
+                        <li class="col col-lg-2 no-padding text-left div_f10">
+                            <span style="font-size: 14px;" class="text-bold text-primary">F10: </span>
+                            <span style="font-size: 12px;" class="text-primary fa-1x">Buka PreOrder {count_ltd}</span>
+                        </li>
+
+                        <li class="col col-lg-2 no-padding text-left div_f3">
+                            <span style="font-size: 14px;" class="text-bold text-primary">F3: </span>
+                            <span style="font-size: 12px;" class="text-primary fa-1x">Member</span>
+                        </li>
+                        <li class="col col-lg-2 no-padding text-left">
+                            <span style="font-size: 14px;" class="text-bold text-primary">CTRL+F7: </span>
+                            <span style="font-size: 12px;" class="text-primary fa-1x">Settlement</span>
+                        </li>
+                        <li class="col col-lg-2 no-padding text-left div_f6">
+                            <span style="font-size: 14px;" class="text-bold text-primary">F6: </span>
+                            <span style="font-size: 12px;" class="text-primary fa-1x">Pembatalan Transaksi</span>
+                        </li>
+
+                        <li class="col col-lg-2 no-padding text-left div_f4">
+                            <span style="font-size: 14px;" class="text-bold text-primary">F4: </span>
+                            <span style="font-size: 12px;" class="text-primary fa-1x">Clear ShoppingCart</span>
+                        </li>
+
+                        <li class="col col-lg-2 no-padding text-left">
+                            <span style="font-size: 14px;" class="text-bold text-primary">CTRL+D: </span>
+                            <span style="font-size: 12px;" class="text-primary fa-1x">Reprint Last Struk</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="col-md-12 col-lg-12 no-paddingx" onclicks="document.getElementById('pilihan_outlet').innerHTML='';document.getElementById('pilihan_item').innerHTML='';">
+    <div class="box box-solid border-blue">
+        <div class="box-header with-border bg-gray hidden-lg">
+            <div class="col-md-3">
+                <h3 class="box-title"><i class="fa fa-shopping-cart"></i> {sub_title} - selected items
+                </h3>
+            </div>
+            <div class="col-md-7 container-custom-button"></div>
+            <div class="col-md-2 pull-right text-right">
+                <a id="refresh_shoppingcart" href="javascript:void(0)"
+                   onclick="$('#shopping_cart').load('{base}{modul}/_shoppingCart/viewCart/{jenisTr}?ohyes=ohno');"><span
+                        class="glyphicon glyphicon-refresh"></span></a>
+            </div>
+        </div>
+        <div class="box-body no-padding">
+            <div class="row row-eq-height no-margin">
+                <div id="overlay_shopping_cart" onclick="off()">
+                    <div id="txt_overlay_shopping_cart">Please Wait...</div>
+                </div>
+
+                <div class="col-lg-9 col-xs-12 no-padding bg-white">
+                    <div id="shopping_cart" class="table-responsivexx no-padding text-center" style="min-heightssss:150px;color: #9FAFD1;"> </div>
+                    <div class="row">
+                        <div class="box-footer bg-gray col-md-12">
+                            <textarea class="form-control" placeholder="description note"
+                                      style="font-style:italic;font-family:Monaco, Menlo, Consolas, 'Courier New', monospace;"
+                                      onblur="$('#result').load('{column_recorder}description?val='+encodeURI(this.value));"
+                                      change01="$('#result').load('{column_recorder}description?val='+encodeURI(this.value));"
+                                      onmouseout07="$('#result').load('{column_recorder}description?val='+encodeURI(this.value));"
+                                    >{default_description}</textarea>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" id="iTriggers">
+                        </div>
+                    </div>
+                    <div class="row hidden" style="margin-top: 10px;">
+                        <div class="col-md-4">
+                            {clear_btn}
+                            <div id="tmpSaver" style="display:{tmpsave_display}">
+                                <a href="javascript:void(0)" name="btnTmpSave" id="btnTmpSave"
+                                   class="btn btn-default"
+                                   onclick="$('#result').load('{base}{modul}/Transaksi/tmpSave/{jenisTr}');">
+                                    <span class='fa fa-sun-o'></span> save temporarily</a>
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-right">
+                            {ext_tool}
+                        </div>
+
+                        <!-- $('#result').load('{base}{submit_button_target}{jenisTr}'); -->
+
+                        <div class="col-md-4 text-right {hidden_preorderOnly}" >
+                            <!--<button type="button" name="btnProcess" id="btnProcess" disabledx-->
+                            <!--class="btn btn-success pull-right"-->
+                            <!--onclick="; this.disabled=true;">-->
+                            <!--<span class='fa fa-check'></span> {submit_button}-->
+                            <!--</button>-->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-3 hidden-xs bg-info no-padding">
+                    <div style="margin-left: 0px;margin-right: 0px;" class="box-header text-center bg-gray"><h3>Informasi</h3></div>
+                    <div id="container_information_" style="padding: 5px;margin-left: 5px;margin-right: 5px;margin-top: 5px;" class="box-body no-padding produk_diskon_list"></div>
+                    <!--<div style="padding: 5px;margin: 0px;position: absolute;bottom: 0px;height: 20vh;width: -webkit-fill-available;overflow: auto;" class="text-center bg-gray produk_diskon_list">=============</div>-->
+                </div>
+            </div>
+        </div>
+        <!--<div class="box-footer bg-gray">-->
+        <!--    <div class="row">-->
+        <!--        <div class="col-md-12">-->
+        <!--                <textarea class="form-control" placeholder="description note"-->
+        <!--                          style="font-style:italic;font-family:Monaco, Menlo, Consolas, 'Courier New', monospace;"-->
+        <!--                          onblur="$('#result').load('{column_recorder}description?val='+encodeURI(this.value));"-->
+        <!--                          change01="$('#result').load('{column_recorder}description?val='+encodeURI(this.value));"-->
+        <!--                          onmouseout07="$('#result').load('{column_recorder}description?val='+encodeURI(this.value));"-->
+        <!--                >{default_description}</textarea>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--    <div class="row">-->
+        <!--        <div class="col-md-12" id="iTriggers">-->
+        <!--</div>-->
+        <!--    </div>-->
+        <!--    <div class="row hidden" style="margin-top: 10px;">-->
+        <!--        <div class="col-md-4">-->
+        <!--            {clear_btn}-->
+        <!--            <div id="tmpSaver" style="display:{tmpsave_display}">-->
+        <!--                <a href="javascript:void(0)" name="btnTmpSave" id="btnTmpSave"-->
+        <!--                   class="btn btn-default"-->
+        <!--                   onclick="$('#result').load('{base}{modul}/Transaksi/tmpSave/{jenisTr}');">-->
+        <!--                    <span class='fa fa-sun-o'></span> save temporarily</a>-->
+        <!--            </div>-->
+        <!--        </div>-->
+        <!--        <div class="col-md-4 text-right">-->
+        <!--            {ext_tool}-->
+        <!--        </div>-->
+
+        <!--        &lt;!&ndash; $('#result').load('{base}{submit_button_target}{jenisTr}'); &ndash;&gt;-->
+
+        <!--        <div class="col-md-4 text-right {hidden_preorderOnly}" >-->
+        <!--            &lt;!&ndash;<button type="button" name="btnProcess" id="btnProcess" disabledx&ndash;&gt;-->
+        <!--                &lt;!&ndash;class="btn btn-success pull-right"&ndash;&gt;-->
+        <!--                &lt;!&ndash;onclick="; this.disabled=true;">&ndash;&gt;-->
+        <!--                &lt;!&ndash;<span class='fa fa-check'></span> {submit_button}&ndash;&gt;-->
+        <!--            &lt;!&ndash;</button>&ndash;&gt;-->
+        <!--        </div>-->
+        <!--    </div>-->
+        <!--</div>-->
+    </div>
+</div>
+</div>
+<div class="viewmodal" style="display: none;"></div>
+<div class="viewModalPembayaran" style="display: none;">{viewModalPembayaran}</div>
+<div class="viewModalCariProduk" style="display: none;">{viewModalCariProduk}</div>
+<div class="viewModalCariMember" style="display: none;">{viewModalCariMember}</div>
+<div class="viewModalTrDisimpan" style="display: none;">{viewModalTrDisimpan}</div>
+<div class="viewModalHistoryTrx" style="display: none;">{viewModalHistoryTrx}</div>
+</section>
+</div>
+<footer class="main-footer overflow-h">
+    <div class="clear-fix"></div>
+    {footer}
+</footer>
+<div id='myModal' class='modal {bg_modal} fade' role='dialog'>
+    <div class='modal-dialog {size_modal}'>
+        <div class='modal-content'>
+            {isi_modal}
+        </div>
+    </div>
+</div>
+<datalist id="new_produk">
+    <!--<option value="Internet Explorer">-->
+    <!--<option value="Firefox">-->
+    <!--<option value="Google Chrome">-->
+    <!--<option value="Opera">-->
+    <!--<option value="Safari">-->
+</datalist>
+</div>
+<div>
+    <iframe id="tray" name="tray" style="display:none;width:100%;height:120px;" ssrc="{base}_tray/index/{jenisTr}"></iframe>
+    <iframe name="result" id="result" style="resize: both;display: {display_iframe};width: 100%;height:800px;"></iframe>
+</div>
+<script src="{cdn_suport}AdminLTE-2.3.11/plugins/slimScroll/jquery.slimscroll.min.js?v={local_version}"></script>
+<script src="{cdn_suport}AdminLTE-2.3.11/dist/js/app.min.js?v={local_version}"></script>
+<script src="{cdn_suport}multi-step-modal-master/multi-step-modal.js?v={local_version}"></script>
+<script src="{cdn_suport}bootstrap-fileinput-master/js/fileinput.min.js?v={local_version}"></script>
+<script src="{cdn_suport}bootstrap-toggle-master/js/bootstrap-toggle.min.js?v={local_version}"></script>
+<script src="{base}assets/custom/hippo_ajax.js?v={local_version}"></script>
+<script src="{base}assets/custom/JS.js?v={local_version}"></script>
+<script src="{cdn_suport}AdminLTE-3.0.5/plugins/moment/moment.min.js?v={local_version}"></script>
+<script src="{cdn_suport}AdminLTE-3.0.5/plugins/moment/locale/id.js?v={local_version}"></script>
+<script type="text/javascript">
+    var changingHash = false;
+    function onbarcode(event) {
+        switch (event.type) {
+            case "hashchange": {
+                if (changingHash == true) {
+                    return;
+                }
+                var hash = window.location.hash;
+                if (hash.substr(0, 3) == "#zx") {
+                    hash = window.location.hash.substr(3);
+                    changingHash = true;
+                    window.location.hash = event.oldURL.split("\#")[1] || ""
+                    changingHash = false;
+                    processBarcode(hash);
+                }
+                break;
+            }
+            case "storage": {
+                window.focus();
+                if (event.key == "barcode") {
+                    window.removeEventListener("storage", onbarcode, false);
+                    processBarcode(event.newValue);
+                }
+                break;
+            }
+            default: {
+                console.log(event)
+                break;
+            }
+        }
+    }
+    window.addEventListener("hashchange", onbarcode, false);
+    function getScan() {
+        var href = window.location.href;
+        var ptr = href.lastIndexOf("#");
+        if (ptr > 0) {
+            href = href.substr(0, ptr);
+        }
+        window.addEventListener("storage", onbarcode, false);
+        setTimeout('window.removeEventListener("storage", onbarcode, false)', 15000);
+        localStorage.removeItem("barcode");
+        //window.open  (href + "#zx" + new Date().toString());
+        if (navigator.userAgent.match(/Firefox/i)) {
+            //Used for Firefox. If Chrome uses this, it raises the "hashchanged" event only.
+            window.location.href = ("zxing://scan/?ret=" + encodeURIComponent(href + "#zx{CODE}"));
+        } else {
+            //Used for Chrome. If Firefox uses this, it leaves the scan window open.
+            window.open("zxing://scan/?ret=" + encodeURIComponent(href + "#zx{CODE}"));
+        }
+    }
+    function processBarcode(bc) {
+        $('#itemKeyword').val(bc);
+        var keyboardEvent = new KeyboardEvent('keyup', {bubbles: true});
+        Object.defineProperty(keyboardEvent, 'charCode', {
+            get: function () {
+                return this.charCodeVal;
+            }
+        });
+        keyboardEvent.charCodeVal = [13];
+        document.getElementById('itemKeyword').dispatchEvent(keyboardEvent);
+    }
+</script>
+<script type="text/javascript">
+
+//$("body").on("click", function(){
+//    document.getElementById('pilihan_outlet').innerHTML='';
+//    document.getElementById('pilihan_item').innerHTML='';
+//})
+
+$('.toggle').click(function(e){
+    e.preventDefault();
+    $(this).toggleClass('toggle-on');
+    if($('.toggle').hasClass('toggle-on')){
+        $("#pihakName").prop("disabled", false);
+        $("#pihakName").val('');
+        localStorage.member = 1
+        selectMemberCtrl()
+        $("#pihakName").focus();
+    }
+    else{
+        localStorage.member = 0
+        selectMemberCtrl()
+        $("#pihakName").prop("disabled", true);
+    }
+});
+
+function selectNonMember(){
+    document.getElementById('result').src='{base}penjualan/_processPihak/select/582/MdlCustomer?id=1';
+}
+
+function dropDownSelectMember(aa=''){
+    $('#pilihan_outlet').load('{base}penjualan/_selectorPihak/selectPihak/582/MdlCustomer?search='+aa);
+}
+
+var defMember = localStorage.member!=undefined ? localStorage.member : 0
+
+var selectMemberCtrl = function(){
+    if( $("#pihakName").val() == "" ){
+        selectNonMember()
+    }
+    else if($("#pihakName").val() != "TUNAI"){
+        dropDownSelectMember( $("#pihakName").val() )
+    }
+    else{
+        selectNonMember()
+    }
+}
+
+if(defMember*1>0){
+//    console.log('default dengan select member aktif');
+    $('.toggle#switch').addClass('toggle-on');
+}
+
+else{
+    selectNonMember();
+    $("#pihakName").prop("disabled", true);
+}
+
+$('#myModal').on('hidden.bs.modal', function () {
+    $(this).removeData('bs.modal');
+});
+checked = false;
+function checkedAll(frm1) {
+    var aa = document.getElementById(frm1);
+    if (checked == false) {
+        checked = true
+    } else {
+        checked = false
+    }
+    for (var i = 0; i < aa.elements.length; i++) {
+        aa.elements[i].checked = checked;
+    }
+}
+
+var tray;
+function load() {
+    tray = $('#tray').load('{base}_tray/index/{jenisTr}');
+}
+
+function reLoad() {
+    setInterval("load()", 30000);
+}
+
+function detectEnter() {
+    var keyCode = event.keyCode ? event.keyCode : event.which ? event.which
+            : event.charCode;
+    if (keyCode == 13) {
+//            console.log('entering');
+        return true;
+    } else {
+        return false;
+    }
+//        console.log(event);
+}
+
+function detectESC() {
+    var keyCode = event.keyCode ? event.keyCode : event.which ? event.which
+            : event.charCode;
+    if (keyCode == 27) {
+
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function fillBoxes() {
+    localStorage.setItem('loadShoppingCart', "idle" );
+    if (document.getElementById('shopping_cart')) {
+        top.$('#shopping_cart').load('{base}{modul}/_shoppingCart/viewCart/{jenisTr}?ohyes=ohno');
+    }
+//        if (document.getElementById('itemKeyword')) {
+//            document.getElementById('itemKeyword').value = '';
+//            document.getElementById('itemKeyword').focus();
+//        }
+//        var viewundoneList = function () {
+//            top.$('#undoneList').html("<div class='row' style='margin-top: 14px; padding-bottom: 14px;'> <span class='col-lg-12 text-center'><img width='5%' src='{base}assets/images/loading_16_p.gif'></span> </div>");
+//            setTimeout(function () {
+//                if (top.$('#undoneList').find('img').length > 0) {
+//                    top.$('#undoneList').load('{base}{modul}/Transaksi/viewUndoneItems/{jenisTr}/?ohyes=ohno', function(){ viewundoneList })
+//                }
+//            }, 10000);
+//        }
+//        setTimeout(function () {
+//            top.$('#undoneList').html("<div class='row' style='margin-top: 14px; padding-bottom: 14px;'> <span class='col-lg-12 text-center'><img width='5%' src='{base}assets/images/loading_16_p.gif'></span> </div>");
+//            top.$('#undoneList').load('{base}{modul}/Transaksi/viewUndoneItems/{jenisTr}/?ohyes=ohno', function(){ viewundoneList });
+//        }, 1000);
+//        reLoad();
+}
+
+setInterval(function () {
+    if ($('table.transaksi_id').length > 0) {
+        if (typeof $('table.transaksi_id').attr('id') == 'undefined') {
+            $('table.transaksi_id').dataTable({
+                "columnDefs": [{
+                    "targets": 0,
+                    "orderable": false
+                }]
+            })
+            $('input#selectAll_transaksi_id').on('click', function () {
+                alert("selectAll_transaksi_id selected");
+            })
+        }
+    }
+    if ($('table.produk_id').length > 0) {
+        if (typeof $('table.produk_id').attr('id') == 'undefined') {
+            $('table.produk_id').dataTable({
+                "columnDefs": [{
+                    "targets": 0,
+                    "orderable": false
+                }]
+            })
+            $('input#selectAll_produk_id').on('click', function () {
+                var checkBox = $("input[name='prdID\\[\\]']");
+                jQuery.each(checkBox, function (i, d) {
+                    if ($('#selectAll_produk_id:checkbox:checked').length > 0) {
+                        $(checkBox).prop('checked', true)
+                    } else {
+                        $(checkBox).prop('checked', false)
+                    }
+                });
+            })
+        }
+    }
+    if ($('table.vendor_id').length > 0) {
+        if (typeof $('table.vendor_id').attr('id') == 'undefined') {
+            $('table.vendor_id').dataTable({
+                "columnDefs": [{
+                    "targets": 0,
+                    "orderable": false
+                }]
+            })
+        }
+    }
+}, 1000);
+
+setInterval(function () {
+    $('.tooltip.fade.left.in').fadeOut();
+}, 5000);
+
+var shopping_cart = document.getElementById('shopping_cart');
+var randomSubParent = document.getElementById('randomSubParent');
+
+function scrollParentToChild(parent, child) {
+    var parentRect = parent.getBoundingClientRect();
+    var parentViewableArea = {
+        height: parent.clientHeight,
+        width: parent.clientWidth
+    };
+    var childRect = child.getBoundingClientRect();
+    var isViewable = (childRect.top >= parentRect.top) && (childRect.top <= parentRect.top + parentViewableArea.height);
+    if (!isViewable) {
+        parent.scrollTop = (childRect.top + parent.scrollTop) - parentRect.top
+    }
+}
+
+var delay = function () {
+    var a = 0;
+    return function (t, e, th) {
+        clearTimeout(a), a = setTimeout(t, e)
+//            console.log(t);
+//            console.log(e);
+//            console.log($(th).attr('noid'));
+    }
+}();
+
+var callQtips = function () {
+    setTimeout(function () {
+        $("span[name='qtips']").each(function () {
+            $(this).qtip({
+                content: {
+                    text: function (event, api) {
+                        $.ajax({
+                            url: api.elements.target.attr('href') // Use href attribute as URL
+                        })
+                                .then(function (content) {
+                                    // Set the tooltip content upon successful retrieval
+                                    api.set('content.text', content);
+                                }, function (xhr, status, error) {
+                                    // Upon failure... set the tooltip content to error
+                                    api.set('content.text', status + ': ' + error);
+                                });
+                        return 'Loading...'; // Set some initial text
+                    }
+                },
+                position: {
+                    viewport: $(window)
+                },
+                hide: {
+                    fixed: true,
+                    delay: 300
+                },
+                style: 'qtip-wiki'
+            });
+        });
+    }, 3500);
+}
+
+setInterval( function(){
+    var loadShoppingCart = null != localStorage.getItem('loadShoppingCart') ? localStorage.getItem('loadShoppingCart') : "idle";
+    //check to refresh
+    if( "idle" != loadShoppingCart ){
+        //refresh
+        if(parseFloat(loadShoppingCart)<=0){
+//                console.log('shoppingcart di refresh ('+loadShoppingCart+')');
+            document.getElementById("overlay").style.display = "block";
+            $('#shopping_cart').load('{base}{modul}/_shoppingCart/viewCart/{jenisTr}?ohyes=ohno');
+            localStorage.setItem('loadShoppingCart', "idle" );
+        }
+        //abaikan #1
+        else{
+//                console.log('hitung mundur ('+loadShoppingCart+')');
+            $('#btn_kalkulasi').removeClass('hidden');
+            $('#kalkulasi').html('('+loadShoppingCart+')');
+            $('#kalkulasi').addClass('text-bold');
+            localStorage.setItem('loadShoppingCart', parseFloat(loadShoppingCart)-1 );
+        }
+    }
+    //abaikan #2
+    else{
+//            console.log('abaikan shoppingcart tidak di refresh');
+    }
+}, 1000);
+
+</script>
+<script type="text/javascript">
+var ubtn = "{base}{submit_button_target}{jenisTr}"
+function onBlurTest() {
+//        console.log('user meninggalkan TAB window ' + new Date());
+//        console.log('posisi browser: ' + window.location.href);
+};
+function onFocusTest(){
+//        console.log('user masuk TAB window ' + new Date());
+//        console.log('posisi browser: ' + window.location.href);
+//        $('#itemKeyword').focus();
+//        console.log('focus ke itemKeyword');
+    if( $('#refresh_shoppingcart').length ){
+//            $('#refresh_shoppingcart').trigger('click');
+//            console.log("refresh_shoppingcart di click");
+    }
+};
+
+//detect user sedang focus ke browser atau tidak
+//by chepy
+window.onfocus = onFocusTest;
+window.onblur = onBlurTest;
+function requestFullScreen(){
+    let elem = document.querySelector("body");
+    if(!document.fullscreenElement){
+        elem.requestFullscreen().catch((err)=>{
+            alert('Error attempting to enable fullscreen mode: ${err.message} (${err.name})');
+    });
+}
+else{
+    document.exitFullscreen();
+}
+}
+
+$("#itemKeyword").on('keyup', delay_v2(function(event){
+    if(event.which==13 && this.value.length>=10){
+        top.eval('"' + $(this).attr('onkeyup_code') + '"');
+        {barcode_action}
+    }
+    else{
+        if(this.value.length>=4){
+            $('#pilihan_item').load('{selector_caller}?search='+encodeURI(this.value));
+        }
+    }
+},100));
+
+{on_change}
+
+function showSwalNumpad(produk_id,produk_nama,datas='{}',diskon='{}'){
+    var handler = "{base}penjualan/_processSelectProduct/select/582?selector&id=";
+
+    // console.log('datas: ', datas);
+    // console.log('produk_nama: ', produk_nama);
+    // console.log('produk_id: ', produk_id);
+    // console.log('diskon: ', diskon);
+
+    var tmpProduk = datas.produk;
+    var arrProduk = {};
+    jQuery.each(tmpProduk, function(a,b){
+        arrProduk[b.id] = b;
+    })
+    swal({
+        title: produk_nama + "<br><sup><r>MASUKAN QTY</r></sup>",
+        html: "<input value='1' style='font-size: 25px;' id='sc_qty_swal' class='form-control text-center text-bold text-green'>" +
+                "<div style='font-size:12px!important;' id='info_diskon_swal'></div>",
+        showConfirmButton: false,
+        animation: 0,
+        onOpen: function(){
+            $('#sc_qty_swal').focus();
+            $('#sc_qty_swal').select();
+            $('#sc_qty_swal').off('click');
+            $('#sc_qty_swal').on('click', function(){
+                this.select();
+            });
+            $('#sc_qty_swal').off('keydown');
+            $('#sc_qty_swal').on('keydown', delay_v2(function (e) {
+                var target = e.target || e.srcElement;
+                e.stopPropagation();
+                if(e.keyCode === 13){
+                    var valLength = target.value*1;
+                    $('#addNewSKU,#addNewProduk').val("")
+                    $('#addNewSKU').focus()
+                    $("#result").load(handler + produk_id + "&qty_unit="+target.value*1);
+                    top.swal.enableLoading();
+                    top.swal.close();
+                }
+            }, 200));
+
+//                    var src_diskon = JSON.parse(datas.src_diskon)
+//                    var headerGrosir     = ""
+//                    var headerFreeProduk = ""
+//                    var headerProduk     = ""
+//                    var txtGrosir        = ""
+//                    var txtFreeProduk    = ""
+//                    var txtProduk        = ""
+//                    if( countObj(src_diskon) > 0){
+//                        jQuery.each(src_diskon, function(a,i){
+//                            if( countObj(i) > 0 && i != "0.00"){
+//                                switch(a){
+//                                    case "grosir":
+//                                        console.log(a);
+//                                        break;
+//                                    case "free_produk":
+//                                        console.log(a);
+//                                        break;
+//                                    case "produk":
+//                                        console.log(a);
+//                                        break;
+//                                    default:
+//                                        console.error("default atau kosongan");
+//                                        break;
+//                                }
+//                            }
+//                            else{
+//                                console.error( countObj(i) );
+//                                console.error(i);
+//                            }
+//                        })
+//                    }
+//                    top.$("#info_diskon_swal").html(src_diskon);
+        }
+    })
+}
+function detailproduk(){
+    var url = $('#selector_caller').val();
+    var barcode_action_url = $('#barcode_action_url').val();
+    var produk = $('#addNewSKU').val() != "" ? $('#addNewSKU').val() : $('#addNewProduk').val();
+    var qty_produk = $('#addNewQty').val() != "" ? $('#addNewQty').val()*1 : 1;
+
+    if(produk!='' && produk!=null){
+
+        $.ajax({
+            type: 'get',
+            url: url,
+            data: {
+                search: produk,
+                qty_produk: qty_produk,
+            },
+            success: function(response) {
+                var datas = JSON.parse(response); //untuk output selain REST API harus di parse dulu
+
+                if(datas.status===2){
+                    BootstrapDialog.closeAll();
+                    BootstrapDialog.show({
+                        message: $('<div></div>').load('../../../application/modules/penjualan/template/cariproduk.html'),
+                        title: "Cari Produk",
+                        size: 'custom-width',
+                        closable: true,
+                        animate: false,
+                        onshow: function(){
+                            console.log('dialogOnShow');
+                        },
+                        onshown: function(dialog) {
+                            setTimeout( function(){
+                                table = $('#dataproduk').DataTable({
+                                    responsive: true,
+                                    destroy: true,
+                                    processing: true,
+                                    serverSide: true,
+                                    searchDelay: 1200,
+                                    select: {
+                                        style: 'single'
+                                    },
+                                    keys: {
+                                        keys: [ 13 /* ENTER */, 38 /* UP */, 40 /* DOWN */ ]
+                                    },
+                                    order: [5, 'asc'],
+                                    ajax: {
+                                        "url": "../../../data/fetch_data_produk/Produk",
+                                        "type": "POST",
+                                        "data": {mdl: 'MdlCariProduk'},
+                                    },
+                                    createdRow: function( row, data, dataIndex){
+                                        if( data[5] == 0){
+                                            $(row).addClass('bg-red text-muted');
+                                        }
+                                    },
+                                    columnDefs: [{
+                                        "targets": [0],
+                                        "orderable": false,
+                                        "width": 5
+                                    },
+                                        {
+                                            render: function (data, type, row) {
+                                                var strShow = data.length > 0 ? "<i class='fa fa-barcode'></i>&nbsp; " + data : "<i class='text-red blink fa fa-warning'></i>"
+                                                return strShow;
+                                            },
+                                            "targets": [1],//kode produk
+                                            "className": 'text-left',
+                                            "width": 150,
+                                        },
+                                        {
+                                            "targets": [2],//nama produk
+                                            "className": 'text-left text-uppercase',
+                                            "width": "35vw",
+                                        },
+
+                                        {
+                                            render: function (data, type, row) {
+                                                var strShow = data.length > 10 ? data.substr(0, 10)+"..." : data
+                                                var tmb_select = strShow
+                                                return tmb_select;
+                                            },
+                                            "targets": [3],//kategori vendor
+                                            "className": 'text-left',
+                                            "width": 130,
+                                        },
+                                        {
+                                            "targets": [4],//satuan
+                                            "className": 'text-left',
+                                            "width": 5,
+                                        },
+                                        {
+                                            render: function (data, type, row) {
+                                                var tmb_select = data.length>0 ? addCommas(data) : "0&nbsp;<i class='text-red blink fa fa-warning'></i>"
+                                                return tmb_select;
+                                            },
+                                            "targets": [5], //harga jual
+                                            "className": 'text-right',
+                                            "width": 50,
+                                        },
+//                                        {
+//                                            "targets": [6],//stok
+//                                            "className": 'text-left',
+//                                            "width": 5,
+//                                        },
+                                        {
+                                            render: function (data, type, row) {
+                                                var tmb_select  = "<span class='btn btn-xs btn-default' disabled><i class='fa fa-pencil'></i></span>"
+                                                tmb_select += "<span class='btn btn-xs btn-info' disabled><i class='fa fa-list'></i></span>"
+                                                tmb_select += "<span class='btn btn-xs btn-warning' disabled><i class='fa fa-times'></i></span>"
+
+                                                return tmb_select;
+                                            },
+                                            "targets": [6],//button ext
+                                            "className": 'text-left',
+                                            "width": 5,
+                                        },
+                                    ],
+                                });
+                                $('#dataproduk').on('key-focus.dt', function(e, datatable, cell){
+                                    e.stopPropagation();
+                                    $(table.row(cell.index().row).node()).addClass('selected');
+                                });
+                                $('#dataproduk').on('key-blur.dt', function(e, datatable, cell){
+                                    e.stopPropagation();
+                                    $(table.row(cell.index().row).node()).removeClass('selected');
+                                });
+                                $('#dataproduk').on('key.dt', function(e, datatable, key, cell, originalEvent){
+                                    e.stopPropagation();
+                                    if(key === 13){
+                                        var data = table.row(cell.index().row).data();
+//                                        console.log(data);
+                                        var barcode = data[1]
+                                        var nama_prod = data[2]
+                                        var harga = data[5]
+//                                        var stock = data[6]
+                                        var p_id = data[6]
+
+                                        if(harga*1>0){
+                                            top.$('.modal').modal('hide')
+                                            var finalSelect = barcode != '' ? barcode : nama_prod;
+                                            if(localStorage.popup_qty*1>0){
+                                                showSwalNumpad(p_id,nama_prod,datas)
+                                                // console.log("showSwalNumpad source #1 Line: 1392");
+                                            }
+                                            else{
+//                                                console.log("datas.produk[0].tipe_produk: " + datas.produk[0].tipe_produk)
+                                                top.$("#result").load("{base}penjualan/_processSelectProduct/select/582?selector&id="+p_id+"&qty_unit="+qty_produk)
+                                            }
+                                        }
+                                        else{
+                                            swal('HARGA JUAL BELUM DISETTING', 'Produk/Items ini belum memiliki Harga jual, Silahkan informasikan kepada SPV/Gudang Anda untuk menambahkan harga jual', 'warning');
+                                        }
+                                    }
+                                });
+                                $('#dataproduk').on('click', 'tbody td', function(e){
+                                    e.stopPropagation();
+                                    var rowIdx = table.cell(this).index().row;
+                                    var data = table.row(rowIdx).data();
+
+                                    var barcode = data[1]
+                                    var nama_prod = data[2]
+                                    var harga = data[5]
+//                                    var stock = data[6]
+                                    var p_id = data[6]
+
+                                    if(harga*1>0){
+                                        top.$('.modal').modal('hide')
+                                        var finalSelect = barcode != '' ? barcode : nama_prod;
+                                        if(localStorage.popup_qty*1>0){
+                                            showSwalNumpad(p_id,nama_prod,datas)
+                                            // console.log("showSwalNumpad source #2 Line: 1420");
+                                        }
+                                        else{
+//                                            console.log("datas.produk[0].tipe_produk: " + datas.produk[0].tipe_produk)
+                                            top.$("#result").load("{base}penjualan/_processSelectProduct/select/582?selector&id="+p_id+"&qty_unit="+qty_produk)
+                                        }
+                                    }
+                                    else{
+                                        swal('HARGA JUAL BELUM DISETTING', 'Produk/Items ini belum memiliki Harga jual, Silahkan informasikan kepada SPV/Gudang Anda untuk menambahkan harga jual', 'warning');
+                                    }
+                                });
+                                top.$('#dataproduk_filter input').val(produk).focus().trigger('keyup');
+                            },200)
+
+                        }
+                    })
+                }
+                else if(datas.status===0){
+//                        console.log(datas.js);
+                    top.eval(datas.js)
+                }
+                else{
+                    if(localStorage.popup_qty*1>0){
+                        var produk_id = datas.produk[0].id;
+                        var produk_nama = datas.produk[0].nama;
+                        showSwalNumpad(produk_id,produk_nama,datas)
+                        // console.log("showSwalNumpad source #3 Line: 1446");
+                    }
+                    else{
+//                            if(datas.produk[0].tipe_produk=="digital"){
+//                                var produk_id = datas.produk[0].id;
+//                                var produk_nama = datas.produk[0].nama;
+//                                showSwalNumpad(produk_id,produk_nama,datas)
+//                            }
+//                            else{
+                        eval(datas.js)
+//                            }
+                    }
+                }
+            },
+            error: function(xhr, ajaxOptions, thrownError) {
+//                            console.error(xhr.status + ' ' + xhr.responseText + ' ' + thrownError);
+            }
+        });
+
+    }
+    else{
+        BootstrapDialog.closeAll();
+        BootstrapDialog.show({
+            message: $('<div></div>').load('../../../application/modules/penjualan/template/cariproduk.html'),
+            title: "Cari Produk",
+            size: 'custom-width',
+            closable: true,
+            animate: false,
+            onshow: function(){
+//                    console.log('dialogOnShow');
+            },
+            onshown: function(dialog) {
+                setTimeout(function(){
+
+                    table = $('#dataproduk').DataTable({
+                        responsive: true,
+                        destroy: true,
+                        processing: true,
+                        serverSide: true,
+                        searchDelay: 1200,
+                        select: {
+                            style: 'single'
+                        },
+                        keys: {
+                            keys: [ 13 /* ENTER */, 38 /* UP */, 40 /* DOWN */ ]
+                        },
+                        order: [],
+                        ajax: {
+                            "url": "../../../data/fetch_data_produk/Produk",
+                            "type": "POST",
+                            "data": {mdl: 'MdlCariProduk'},
+                        },
+                        createdRow: function( row, data, dataIndex){
+                            if( data[5] == 0){
+                                $(row).addClass('bg-red text-muted');
+                            }
+                        },
+                        columnDefs: [{
+                            "targets": [0],
+                            "orderable": false,
+                            "width": 5
+                        },
+                            {
+                                render: function (data, type, row) {
+                                    var strShow = data.length > 0 ? "<i class='fa fa-barcode'></i>&nbsp; " + data : "<i class='text-red blink fa fa-warning'></i>"
+                                    return strShow;
+                                },
+                                "targets": [1],//kode produk
+                                "className": 'text-left',
+                                "width": 150,
+                            },
+                            {
+                                "targets": [2],//nama produk
+                                "className": 'text-left text-uppercase',
+                                "width": "35vw",
+                            },
+
+                            {
+                                render: function (data, type, row) {
+                                    var strShow = data.length > 10 ? data.substr(0, 10)+"..." : data
+                                    var tmb_select = strShow
+                                    return tmb_select;
+                                },
+                                "targets": [3],//kategori vendor
+                                "className": 'text-left',
+                                "width": 130,
+                            },
+                            {
+                                "targets": [4],//satuan
+                                "className": 'text-left',
+                                "width": 5,
+                            },
+                            {
+                                render: function (data, type, row) {
+                                    var tmb_select = data.length>0 ? addCommas(data) : "0&nbsp;<i class='text-red blink fa fa-warning'></i>"
+                                    return tmb_select;
+                                },
+                                "targets": [5], //harga jual
+                                "className": 'text-right',
+                                "width": 50,
+                            },
+//                            {
+//                                "targets": [6],//stok
+//                                "className": 'text-left',
+//                                "width": 5,
+//                            },
+                            {
+                                render: function (data, type, row) {
+                                    var tmb_select  = "<span class='btn btn-xs btn-default' disabled><i class='fa fa-pencil'></i></span>"
+                                    tmb_select += "<span class='btn btn-xs btn-info' disabled><i class='fa fa-list'></i></span>"
+                                    tmb_select += "<span class='btn btn-xs btn-warning' disabled><i class='fa fa-times'></i></span>"
+
+                                    return tmb_select;
+                                },
+                                "targets": [6],//button ext
+                                "className": 'text-left',
+                                "width": 5,
+                            },
+                        ],
+                    });
+                    $('#dataproduk').on('key-focus.dt', function(e, datatable, cell){
+                        e.stopPropagation();
+                        $(table.row(cell.index().row).node()).addClass('selected');
+                    });
+                    $('#dataproduk').on('key-blur.dt', function(e, datatable, cell){
+                        e.stopPropagation();
+                        $(table.row(cell.index().row).node()).removeClass('selected');
+                    });
+                    $('#dataproduk').on('key.dt', function(e, datatable, key, cell, originalEvent){
+                        e.stopPropagation();
+                        if(key === 13){
+                            var data = table.row(cell.index().row).data();
+                            var barcode = data[1]
+                            var nama_prod = data[2]
+                            var harga = data[5]
+//                            var stock = data[6]
+                            var p_id = data[6]
+                            if(harga*1>0){
+                                top.$('.modal').modal('hide')
+                                var finalSelect = barcode != '' ? barcode : nama_prod;
+                                if(localStorage.popup_qty*1>0){
+                                    showSwalNumpad(p_id,nama_prod)
+                                    // console.log("showSwalNumpad source #4 Line: 1588");
+                                }
+                                else{
+//                                    console.log("datas.produk[0].tipe_produk: " + datas.produk[0].tipe_produk)
+                                    top.$("#result").load("{base}penjualan/_processSelectProduct/select/582?selector&id="+p_id+"&qty_unit="+qty_produk)
+                                }
+                            }
+                            else{
+                                swal('HARGA JUAL BELUM DISETTING', 'Produk/Items ini belum memiliki Harga jual, Silahkan informasikan kepada SPV/Gudang Anda untuk menambahkan harga jual', 'warning');
+                            }
+                        }
+                    });
+                    $('#dataproduk').on('click', 'tbody td', function(e){
+                        e.stopPropagation();
+                        var rowIdx = table.cell(this).index().row;
+                        var data = table.row(rowIdx).data();
+
+                        var barcode = data[1]
+                        var nama_prod = data[2]
+                        var harga = data[5]
+//                        var stock = data[6]
+                        var p_id = data[6]
+                        if(harga*1>0){
+                            top.$('.modal').modal('hide')
+                            var finalSelect = barcode != '' ? barcode : nama_prod;
+                            if(localStorage.popup_qty*1>0){
+                                showSwalNumpad(p_id,nama_prod)
+                                // console.log("showSwalNumpad source #5 Line: 1615");
+                            }
+                            else{
+//                                console.log("datas.produk[0].tipe_produk: " + datas.produk[0].tipe_produk)
+                                top.$("#result").load("{base}penjualan/_processSelectProduct/select/582?selector&id="+p_id+"&qty_unit="+qty_produk)
+                            }
+                        }
+                        else{
+                            swal('ITEMS BELUM DI SETTING HARGA', 'Produk/Items ini belum memiliki Harga, Silahkan informasikan kepada SPV/Gudang Anda...', 'warning');
+                        }
+                    });
+                    top.$('#dataproduk_filter input').val(produk).focus().trigger('keyup');
+                },200)
+            }
+        })
+    }
+}
+function pilihTransaksiDisimpan(id){
+    top.swal('memulihkan data yang tersimpan..');
+    top.swal.enableLoading();
+    $.ajax({
+        url: '{base}{modul}/_shoppingCart/restoreCart/582/'+removeCommas(id),
+        data: {},
+        success: function(data){
+            arrData = JSON.parse(data)
+            if(arrData.status){
+                top.$('#pihakName').val(arrData.pihakName);
+                if(arrData.pihakName=="TUNAI"||arrData.pihakName==""){
+                    localStorage.member = 0;
+                }
+                else{
+                    localStorage.member = 1
+                }
+                $('#shopping_cart').load('{base}{modul}/_shoppingCart/viewCart/{jenisTr}?ohyes=ohno', function(){
+                    top.$('.modal').modal('hide');
+                    top.swal.close();
+                    top.location.reload();
+                });
+            }
+            else{
+                top.swal('Oppss...', arrData.reason , 'warning');
+                top.swal.enableLoading();
+                setTimeout( function(){
+                    top.swal.close()
+                }, 3000)
+            }
+        }
+    })
+}
+function pilihTransaksiDisimpanPreOrder(id){
+    top.swal('memuat data');
+    top.swal.enableLoading();
+    $.ajax({
+        url: '{base}{modul}/_shoppingCart/restoreCartPreOrder/582/'+removeCommas(id),
+        data: {},
+        success: function(data){
+            arrData = JSON.parse(data);
+            if(arrData.status){
+                fetch("{base}penjualan/_shoppingCart/reset/582").then(()=> {
+                    jQuery.each( arrData.produk , function(a, b){
+                            fetch("{base}/penjualan/_processSelectProduct/select/582?selector&id="+ b.id+"&qty_unit="+ b.jml);
+                        });
+                jQuery.each( arrData.customer , function(a, b){
+                    if(b.id!=1){
+                        top.$("#pihakName").val(b.nama);
+                        localStorage.member = 1
+                        fetch("{base}/penjualan/_processPihak/select/582/MdlCustomer?id="+ b.id);
+                    }
+                    else{
+                        selectNonMember();
+                    }
+                });
+                setTimeout(function(){
+                    $('#shopping_cart').load('{base}{modul}/_shoppingCart/viewCart/{jenisTr}?ohyes=ohno', function(){
+                        top.$('.modal').modal('hide');
+                        top.swal.close();
+                    });
+                },1000);
+            });
+        }
+        else{
+            top.swal('Oppss...', arrData.reason , 'warning');
+    top.swal.enableLoading();
+    setTimeout( function(){
+        top.swal.close()
+    }, 3000)
+}
+}
+})
+}
+function pilihMember(id,nama){
+    //https://boga.mayagrahakencana.com/tho_boga/penjualan/_shoppingCart/restoreCart/582/133
+
+    if(nama!='' && nama!='TUNAI'){
+        top.swal('', '<b>' + nama + '</b> terpilih', 'success')
+        top.swal.enableLoading();
+        setTimeout( function(){
+            top.swal.close()
+        }, 1500)
+    }
+
+    localStorage.member = 1
+    $('#result').load('{base}{modul}/_processPihak/select/582/MdlCustomer?id='+ removeCommas(id) )
+    //window.location.reload()
+}
+function showPembayaran(){
+    BootstrapDialog.closeAll();
+    BootstrapDialog.show({
+//                    message: $('<div></div>').html('../../../application/modules/penjualan/template/pembayaran.html'),
+        message: $('<div></div>').load('../../../penjualan/_pembayaran_pos/viewCart/582'),
+        title: "PEMBAYARAN",
+        size: 'custom-width pembayaran',
+        closable: true,
+        animate: false,
+        closeByBackdrop: false,
+        closeByKeyboard: false,
+        draggable: true,
+        buttons: [
+            {
+                label: 'RELOAD',
+                cssClass: 'btn-success hidden btn-reload-modal-pembayaran',
+                action: function(){
+                    var idModal = $(".modal.in.pembayaran").attr('id')
+                    $("#"+idModal+" .modal-body").load('../../../penjualan/_pembayaran_pos/viewCart/582', function() {
+
+                    });
+                }
+            },
+            {
+                label: 'BATAL',
+                cssClass: 'btn-danger',
+                action: function(dialogRef){
+                    dialogRef.close();
+                }
+            },
+            {
+                label: 'LANJUTKAN PEMBAYARAN',
+                cssClass: 'btn-success lanjutkan_pembayaran',
+                action: function(){
+                    if( $(".swal2-confirm").length > 0 ){
+                        $(".swal2-confirm").trigger('click')
+                    }
+                    else{
+                        setTimeout( function(){
+                            confirm_alert_result('Peringatan', 'Transaksi akan disimpan setelah mengeklik OK', '{base}{submit_button_target}{jenisTr}')
+                            top.$(document).off('focusin.modal');
+                        }, 200)
+                    }
+                }
+            },
+        ],
+        onshown: function(dialog) {
+//                console.log('onshown BS dialog');
+
+            $('.modal input#add_disc').on('keyup', delay_v2(function(){
+                $(this).trigger('mouseout')
+//                    console.log('trigger mouseout pada add_disc');
+            },1000));
+
+            $('.modal input#bayar').on('keyup', delay_v2(function(){
+                $(this).trigger('mouseout')
+//                    console.log('trigger mouseout pada bayar');
+            },1000));
+
+            top.$(document).off('focusin.modal');
+        }
+    })
+}
+
+function execKeyDown(e){
+    e.stopPropagation();
+    var keyElemID = e.target || e.srcElement;
+    //=========MULAI DARI SINI KEBAWAH============
+    if (e.keyCode == 27) { //escape
+        e.preventDefault();
+        $('#addNewSKU').focus().trigger('click');
+    }
+    if (e.shiftKey && e.keyCode == 27) { //SHIFT + ESC
+        e.preventDefault();
+        $('#addNewProduk').focus().trigger('click');
+    }
+    if (e.shiftKey && e.keyCode == 107) { //SHIFT + PLUS
+        e.preventDefault();
+        $('#addNewQty').focus().trigger('click');
+    }
+    if (e.keyCode == 112) { //Press F1 Apalah
+        e.preventDefault();
+        if( confirm('ANDA AKAN MEMBUKA MONITOR KONSUMEN..?') )
+            window.open('{base}penjualan/CustomerScreen', '_blank','location=no,height=700,width=1200,scrollbars=no,status=yes')
+    }
+    if (e.keyCode == 113) { //Press F2 History
+        e.preventDefault();
+        $(".div_f2").addClass('bg-yellow');
+        setTimeout( function(){
+            $(".div_f2").removeClass('bg-yellow');
+        }, 1000);
+        BootstrapDialog.closeAll();
+        BootstrapDialog.show({
+            message: $('<div></div>').load('../../../penjualan/History/showData/582'),
+            title: 'History',
+            size: 'history_table',
+            onshown: function(dialog) {}
+        })
+    }
+    if (e.keyCode == 114) { //Press F3 cari Member
+        e.preventDefault();
+        $(".div_f3").addClass('bg-yellow');
+        setTimeout( function(){
+            $(".div_f3").removeClass('bg-yellow');
+        }, 1000);
+        BootstrapDialog.closeAll();
+        BootstrapDialog.show({
+            message: $('<div></div>').load('../../../application/modules/penjualan/template/carimember.html'),
+            title: 'Cari dan Pilih Member',
+            size: 'custom-width',
+            onshown: function(dialog) {
+                carimember = $('#carimember').DataTable({
+                    responsive: true,
+                    destroy: true,
+                    oLanguage: {
+                        sSearch: 'Cari Nama/Barcode'
+                    },
+                    processing: true,
+                    serverSide: true,
+                    searchDelay: 1200,
+                    select: {
+                        style: 'single'
+                    },
+                    keys: {
+                        keys: [ 13 /* ENTER */, 38 /* UP */, 40 /* DOWN */ ]
+                    },
+                    order: [],
+                    ajax: {
+                        url: '../../../data/fetch_data/CariCustomer',
+                        type: 'POST',
+                        data: {mdl: 'MdlCariCustomer'},
+                    },
+                    columnDefs: [{
+                        'targets': [0],
+                        'orderable': false,
+                        'width': 5
+                    },
+                        {
+                            render: function (data, type, row) {
+                                var tmb_select = data!='' ? removeCommas(data) : ''
+                                return tmb_select;
+                            },
+                            'targets': [1],
+                            'className': 'text-left',
+                            'width': 50,
+                        },
+                        {
+                            'targets': [6],
+                            'className': 'text-left',
+                            'width': 20,
+                        },
+                        {
+                            render: function (data, type, row) {
+                                var tmb_select = "<span onclick='pilihMember('"+data+","+row[3]+"');swal('kamu memilih "+row[3]+"')' class='btn btn-sm btn-flat btn-info'>PILIH</span>"
+                                return tmb_select;
+                            },
+                            'targets': [8],
+                            'className': 'text-center'
+                        }
+                    ],
+                    select: {
+                        style: 'single'
+                    },
+                    keys: {
+                        keys: [ 13 /* ENTER */, 38 /* UP */, 40 /* DOWN */ ]
+                    },
+                });
+                $('#carimember').on('key-focus.dt', function(e, datatable, cell){
+                    e.stopPropagation();
+                    $(carimember.row(cell.index().row).node()).addClass('selected');
+                });
+                $('#carimember').on('key-blur.dt', function(e, datatable, cell){
+                    e.stopPropagation();
+                    $(carimember.row(cell.index().row).node()).removeClass('selected');
+                });
+                $('#carimember').on('key.dt', function(e, datatable, key, cell, originalEvent){
+                    e.stopPropagation();
+                    if(key === 13){
+                        var data = carimember.row(cell.index().row).data();
+                        top.$('.modal').modal('hide')
+                        var id = data[8]
+                        var nama = data[3]
+                        pilihMember(id,nama)
+                    }
+                });
+                $('#carimember').on('click', 'tbody td', function(e){
+                    e.stopPropagation();
+                    var rowIdx = carimember.cell(this).index().row;
+                    var data = carimember.row(rowIdx).data();
+                    top.$('.modal').modal('hide')
+                    var id = data[8]
+                    var nama = data[3]
+                    pilihMember(id,nama)
+                });
+                top.$('#carimember_filter input').focus();
+            }
+        })
+    }
+    if (e.keyCode == 119) { //Press F8
+        e.preventDefault();
+        $(".div_f8").addClass('bg-yellow');
+        setTimeout( function(){
+            $(".div_f8").removeClass('bg-yellow');
+        }, 1000);
+        showPembayaran();
+    }
+    if (e.keyCode == 115) { // Press F4
+        e.preventDefault();
+
+        $(".div_f4").addClass('bg-yellow');
+
+        setTimeout( function(){
+            $(".div_f4").removeClass('bg-yellow');
+        }, 200);
+
+        if( $("#btn_clear_shopping_cart").length > 0 ){
+
+            if(confirm("keranjang belanja akan di hapus")){
+                top.$("#result").load("{base}penjualan/_shoppingCart/reset/582", function(a){
+//                        console.log(a);
+                });
+            }
+
+        }
+        else{
+            swal('INFO', 'shoppingcart Anda masih Kosong...!!', 'info');
+//                swal.showLoading();
+//                setTimeout( function(){
+//                    swal.close();
+//                },1500)
+        }
+    }
+    if (e.keyCode == 117) { // Press F6
+        e.preventDefault();
+        $(".div_f6").addClass('bg-yellow');
+        setTimeout( function(){
+            $(".div_f6").removeClass('bg-yellow');
+        }, 1000);
+        window.location.href = '{base}{modul}/Create/index/982'
+    }
+    if (e.keyCode == 120) {//Press F9 simpan transaksi
+        e.preventDefault();
+        $(".div_f9").addClass('bg-yellow');
+        setTimeout( function(){
+            $(".div_f9").removeClass('bg-yellow');
+        }, 1000);
+        if( $("#tmp_save").length > 0 ){
+            swal('menyimpan transaksi...')
+            swal.enableLoading();
+            $("#tmp_save").trigger('click');
+        }
+        else{
+            swal('shoppingcart kosong', 'tambahkan produk/item untuk disimpan...!!!', 'warning')
+            swal.enableLoading();
+            setTimeout(function(){
+                swal.close()
+            },1500)
+        }
+    }
+    if (e.keyCode == 121) {//Press F10 Show Transaksi Di Simpan
+        e.preventDefault();
+        $(".div_f10").addClass('bg-yellow');
+        setTimeout( function(){
+            $(".div_f10").removeClass('bg-yellow');
+        }, 1000);
+        BootstrapDialog.closeAll();
+        BootstrapDialog.show({
+            message: $('<div></div>').load('../../../application/modules/penjualan/template/transaksidisimpan.html'),
+            title: "Pre Order / Transaksi Di Simpan",
+            size: 'custom-width',
+            onshown: function(dialog) {
+                //ini untuk handle local data
+                transaksidisimpan = $('#transaksidisimpan').DataTable({
+                    responsive: true,
+                    "destroy": true,
+                    "processing": true,
+                    "serverSide": true,
+                    select: {
+                        style: 'single'
+                    },
+                    keys: {
+                        keys: [
+                            13 /* ENTER */,
+                            38 /* UP */,
+                            40 /* DOWN */
+                        ]
+                    },
+                    "order": [],
+                    "ajax": {
+                        "url": "../../../data/fetch_data/TransaksiDiSimpan",
+                        "type": "GET",
+                        "data": {mdl: 'MdlTransaksiDiSimpan'},
+                    },
+                    "columnDefs": [{
+                        "targets": [0],
+                        "orderable": false,
+                        "width": 5
+                    },
+                        {
+                            "targets": [1],
+                            "className": 'text-left',
+                            "width": 150,
+                        },
+                        {
+                            render: function (data, type, row) {
+                                var tmb_select = "<span onclick=\"top.swal('membuka transaksi')\" class='btn btn-sm btn-flat btn-info'>PILIH</span>"
+                                return tmb_select;
+                            },
+                            targets: [7],
+                            className: 'text-center'
+                        }
+                    ],
+                });
+                $('#transaksidisimpan').on('key-focus.dt', function(e, datatable, cell){
+                    e.stopPropagation();
+                    $(transaksidisimpan.row(cell.index().row).node()).addClass('selected');
+                });
+                $('#transaksidisimpan').on('key-blur.dt', function(e, datatable, cell){
+                    e.stopPropagation();
+                    $(transaksidisimpan.row(cell.index().row).node()).removeClass('selected');
+                });
+                $('#transaksidisimpan').on('key.dt', function(e, datatable, key, cell, originalEvent){
+                    e.stopPropagation();
+                    if(key === 13){
+                        var data = transaksidisimpan.row(cell.index().row).data();
+                        var order_id = removeCommas(data[1])
+                        var id = data[7]
+                        pilihTransaksiDisimpan(id)
+                    }
+                });
+                $('#transaksidisimpan').on('click', 'tbody td', function(e){
+                    e.stopPropagation();
+                    var rowIdx = transaksidisimpan.cell(this).index().row;
+                    var data = transaksidisimpan.row(rowIdx).data();
+                    var order_id = removeCommas(data[1])
+                    var id = data[7]
+                    pilihTransaksiDisimpan(id)
+                });
+                top.$('#transaksidisimpan_filter input').focus();
+
+                //===================================================================
+                //===================================================================
+
+                //ini untuk handle preorder data
+                transaksidisimpan_preorder = $('#transaksidisimpan_preorder').DataTable({
+                    responsive: true,
+                    "destroy": true,
+                    "processing": true,
+                    "serverSide": true,
+                    select: {
+                        style: 'single'
+                    },
+                    keys: {
+                        keys: [
+                            13 /* ENTER */,
+                            38 /* UP */,
+                            40 /* DOWN */
+                        ]
+                    },
+                    "order": [],
+                    "ajax": {
+                        "url": "{adm_domain}/data/fetch_data/TransaksiDiSimpan",
+                        "type": "GET",
+                        "data": {mdl: 'MdlTransaksiDiSimpan', tokoid: 1001},
+                    },
+                    "columnDefs": [{
+                        "targets": [0],
+                        "orderable": false,
+                        "width": 5
+                    },
+                        {
+                            "targets": [1],
+                            "className": 'text-left',
+                            "width": 150,
+                        },
+                        {
+                            render: function (data, type, row) {
+                                var tmb_select = "<span onclick=\"top.swal('membuka transaksi')\" class='btn btn-sm btn-flat btn-info'>PILIH</span>"
+                                return tmb_select;
+                            },
+                            targets: [7],
+                            className: 'text-center'
+                        }
+                    ],
+                });
+                $('#transaksidisimpan_preorder').on('key-focus.dt', function(e, datatable, cell){
+                    e.stopPropagation();
+                    $(transaksidisimpan_preorder.row(cell.index().row).node()).addClass('selected');
+                });
+                $('#transaksidisimpan_preorder').on('key-blur.dt', function(e, datatable, cell){
+                    e.stopPropagation();
+                    $(transaksidisimpan_preorder.row(cell.index().row).node()).removeClass('selected');
+                });
+                $('#transaksidisimpan_preorder').on('key.dt', function(e, datatable, key, cell, originalEvent){
+                    e.stopPropagation();
+                    if(key === 13){
+                        var data = transaksidisimpan_preorder.row(cell.index().row).data();
+                        var order_id = removeCommas(data[1])
+                        var id = data[7]
+                        pilihTransaksiDisimpanPreOrder(id)
+                    }
+                });
+                $('#transaksidisimpan_preorder').on('click', 'tbody td', function(e){
+                    e.stopPropagation();
+                    var rowIdx = transaksidisimpan_preorder.cell(this).index().row;
+                    var data = transaksidisimpan_preorder.row(rowIdx).data();
+                    var order_id = removeCommas(data[1])
+                    var id = data[7]
+                    pilihTransaksiDisimpanPreOrder(id)
+                });
+                top.$('#transaksidisimpan_preorder_filter input').focus();
+            }
+        })
+    }
+    if (e.ctrlKey && e.keyCode == 118) {//Press CTRL+F7 My Settlement
+        e.preventDefault();
+        window.location.href = '{base}{modul}/ActivityReport/viewMySettlement/{jenisTr}'
+    }
+    if (e.altKey && e.keyCode == 82) {//Press ALT+R Reload
+        e.preventDefault();
+        window.location.reload()
+    }
+    if (e.ctrlKey && e.keyCode == 68) { //CTRL + D
+        e.preventDefault();
+        var last_print = localStorage.last_transaction_printing;
+        if(last_print!=''){
+            top.popSmall(last_print)
+        }
+    }
+    if (e.shiftKey && e.keyCode == 68) { //SHIFT + D
+        e.preventDefault();
+        $('.modal.in input[type=search]').focus()
+    }
+}
+
+function initAllEvent(){
+    $(document).off('focusin.modal');
+    $('#addNewSKU').off('keydown');
+    $('#addNewSKU,#addNewProduk').on('keydown', function(e){
+        if(e.which==13){
+            e.preventDefault();
+            setTimeout( function(){ detailproduk() }, 250);
+        }
+    });
+    $('#addNewSKU').focus();
+    $('#addNewSKU').off('click');
+    $('#addNewSKU').on('click', function(e){
+        this.select()
+    });
+    $('#addNewQty').keydown(function(e){
+        if( e.key*1 > 0 && e.key != ' ' ){
+        }
+        else if(e.key*1 == 0){
+            $(this).val( 1 )
+        }
+        else{
+        }
+        if(e.which==13){
+            e.preventDefault();
+            $('#addNewSKU').focus();
+        }
+    })
+    $(this).off('click');
+    $(this).on('click', function(e){
+        var target = e.target || e.srcElement;
+        var addNewProdukContent = $("#addNewProdukContent").text().length
+        if(target.id=="addNewProduk" && target.value!="" && addNewProdukContent*1==0 ){
+        }
+        else if(target.id=="addNewProduk" && target.value!="" && addNewProdukContent*1>0){
+            $(this).select()
+        }
+        else{
+        }
+    });
+    $(this).on('click', function(e){
+        execKeyDown(e);
+//            console.log(e);
+    });
+    $(this).off('keydown');
+    $(this).keydown(delay_v2(function (e) {
+        var target = e.target || e.srcElement;
+        var isiDropDown =''
+        if( target.id == "addNewProduk" && e.keyCode != 9 && e.keyCode != 38 && e.keyCode != 40 && e.keyCode!=13 || target.id == "addNewProduk" && target.value !='' && e.keyCode==13){
+
+            $.ajax({
+                url: '{selector_caller}',
+                data: {search: target.value},
+                success: function(data){
+                    arrData = JSON.parse(data)
+                    if(arrData.status==2 || arrData.status==1){
+                        isiDropDown += "<li style='list-style: none;' class='dropdown open'><ul class='dropdown-menu' role='menu'>"
+                        show=10;
+                        items=1;
+                        jQuery.each(arrData.produk, function(i, d){
+                            var barcode = d.barcode
+                            var nama = d.nama
+                            if(items<=show){
+                                isiDropDown += "<li role='menu' aria-label='menu' tabindex='0' class='list_produk_show' handler='"+ arrData.handler+"' handler2='"+ arrData.handler2+"' produk_id='"+ d.id+"' barcode='"+barcode+"' nama='"+nama+"'><a href='#'>"+d.nama+"</a></li>";
+                            }
+                            items++;
+                        })
+                        isiDropDown += "</ul></li>"
+                        $("#addNewProdukContent").html(isiDropDown);
+
+                        $(".list_produk_show").on('click', function(e){
+                            var barcode = $(this).attr('barcode')
+                            var nama = $(this).attr('nama')
+                            var pid = $(this).attr('produk_id')
+                            var handler = $(this).attr('handler')
+                            var handler2 = $(this).attr('handler2')
+                            var values = barcode!="" && barcode!= "barcode - null " ? barcode : nama;
+                            var addNewQty = $('#addNewQty').val()*1>0 ? $('#addNewQty').val()*1 : 1;
+                            if(localStorage.popup_qty*1>0){
+                                showSwalNumpad(pid,nama,arrData)
+                                // console.log("showSwalNumpad source #6 Line: 1843");
+                            }
+                            else{
+                                $('#addNewProduk').val('');
+                                $('#addNewQty').val('');
+                                top.swal(nama,'','success');
+                                top.swal.enableLoading();
+                                top.$("#result").load(handler+pid+handler2+"&qty_unit="+addNewQty,function(){
+                                    top.swal.close();
+                                });
+                            }
+                            $("#addNewProdukContent").html("")
+                        });
+
+                        $(function(){
+                            document.onkeydown = function(e) {
+                                var selected = $('.list_produk_show:focus').index();
+                                var next = selected + 1;
+                                var pre = selected - 1;
+                                if(pre < 0)
+                                    pre = 0;
+                                if(next > $('.list_produk_show').length)
+                                    next = $('.list_produk_show').length;
+                                if(e.which == 38) { // up
+                                    e.preventDefault();
+                                    $('.list_produk_show').eq(pre).focus();
+                                }
+                                if(e.which == 40) { // down
+                                    e.preventDefault();
+                                    $('.list_produk_show').eq(next).focus();
+                                }
+                                if(e.which == 13) { // enter
+                                    e.preventDefault();
+                                    var elSelected = $('.list_produk_show:focus');
+                                    if(elSelected.length > 0){
+                                        var barcode = $(elSelected).attr('barcode');
+                                        var nama = $(elSelected).attr('nama');
+                                        var values = barcode!="" ? barcode : nama;
+                                        var pid = $(elSelected).attr('produk_id')
+                                        var handler = $(elSelected).attr('handler')
+                                        var handler2 = $(elSelected).attr('handler2')
+                                        var addNewQty = $('#addNewQty').val()*1>0 ? $('#addNewQty').val()*1 : 1;
+                                        top.$("#result").load(handler+pid+handler2+"&qty_unit="+addNewQty);
+                                    }
+                                    $("#addNewProdukContent").html("")
+                                }
+                            };
+                        });
+                    }
+                    else{
+                        $("#addNewProdukContent").html("<div style='padding: 5px;' class='text-white text-bold panel panel-warning bg-yellow'><i>KEYWORD <i><r>"+target.value+"</r></i> TIDAK DITEMUKAN</i><div>SILAHKAN KOREKSI KEYWORD ANDA</div></div>")
+                    }
+                }
+            })
+        }
+
+        if(swal.isVisible() && e.keyCode==13){
+            $('.swal2-confirm').click()
+        }
+
+    }, 200));
+    $(this).off('keyup');
+    $(this).keyup(function (e) {
+        if (e.keyCode == 13) { //Enter
+            e.preventDefault();
+            if($('.modal.in .lanjutkan_pembayaran').length>0){
+                if( removeCommas($("#bayar").val()) ){
+                    if( top.$(".lanjutkan_pembayaran").length > 0 ){
+                        top.$(".lanjutkan_pembayaran").trigger('click');
+                    }
+                }
+                else{
+                    top.swal('nilai bayar harus di isi')
+                }
+            }
+        }
+    });
+    $(this).keydown(function (e) {
+        execKeyDown(e)
+    });
+    if( $("#popup_qty").length > 0 ){
+        if(localStorage.popup_qty == undefined){
+            localStorage.popup_qty = 1
+        }
+        var isQtyPopUp = localStorage.popup_qty != undefined ? localStorage.popup_qty*1 : 0
+        if(isQtyPopUp==0){
+            $("#popup_qty").prop( "checked", false );
+        }
+        $("#popup_qty").on('click', function(){
+            if( !$(this).is(":checked") ){
+                localStorage.popup_qty = 0
+                swal('POPUP DIMATIKAN', 'popup kuantiti di matikan, Produk terpilih akan langsung masuk shoppingcart..', 'warning');
+                swal.enableLoading()
+                setTimeout(function(){ swal.close() }, 2000)
+            }
+            else{
+                localStorage.popup_qty = 1
+                swal('POPUP DIAKTIFKAN', 'popup kuantiti di aktifkan, popUp kuantiti akan keluar setelah memilih produk..', 'success');
+                swal.enableLoading()
+                setTimeout(function(){ swal.close() }, 2000)
+            }
+        })
+    }
+}
+
+function success_callback(p){
+//        console.log('lat='+p.coords.latitude.toFixed(2)+';lon='+p.coords.longitude.toFixed(2));
+}
+function error_callback(p){
+//        console.log('error='+p.message);
+}
+function extPosFitur(){
+    var clientMonitorHeight = $(window).height();
+    var clientMonitorWidth = $(window).width();
+    $("#monitor_size").html(clientMonitorHeight+"x"+clientMonitorWidth);
+    if(geo_position_js.init()){
+        geo_position_js.getCurrentPosition(success_callback,error_callback,{enableHighAccuracy:true});
+    }
+    else{
+//            console.log("Functionality not available");
+    }
+}
+
+$(document).ready(function () {
+    initAllEvent();
+    setInterval(function(){
+        extPosFitur()
+    }, 20000);
+    extPosFitur()
+});
+
+/*
+ * TRANSAKSI API
+ */
+var itemCheck = {
+    digi: function(digiID){
+
+    }
+}
+var exePayment = {
+    pay: function(data,acc,target){
+        var progress = ''
+        progress += '<div class=\"text-center fa-2x\">SEDANG MEMPROSES PAYMENT PRODUK DIGITAL</div>'
+        progress += '<div class=\"text-center fa-2x text-bold\">'+data.nama+'</div>'
+        progress += '<div class=\"text-center fa-2x text-bold\"><i class=\"fa fa-refresh fa-spin\"></i></div>'
+        progress += "<div id='prog_"+target+"' class='text-center'></div>"
+        $('#digi_'+target).html(progress);
+        $.ajax({
+            url: '{base}penjualan/Iak/payment',
+            method: 'post',
+            data: {data: acc, produk: data},
+            success: function(presave){
+                HoldOn.close();
+                if(presave.status==1){
+                    exePayment.preview(data,presave,target);
+                }
+            }
+        })
+    },
+    preview: function(data,presave,target){
+//            console.log(presave);
+    }
+}
+
+</script>
+
+<script>
+
+let syncTimer;
+let initKas;
+let initPerangkat;
+let initSinkron;
+
+//1 = enable | 0 = disable
+var autoCheckPerangkat  = {autoCheckPerangkat};
+var autoCheckKas        = {autoCheckKas};
+var autoCheckSync       = {autoCheckSync};
+var autoSyncPoint       = {autoSyncPoint};
+
+function perEmployeeSync(lastInfo=''){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var arrDatas = JSON.parse(this.response)
+            if(arrDatas.status == 1){
+                if(lastInfo!=99 && lastInfo!=''){
+                    var lap  = lastInfo
+                    lap += "<div class='text-left text-bold'>"
+                    lap += "<div class='text-capitalize'>- Account Karyawan (OK)...</div>"
+                    lap += "</div>"
+                    lap += "<hr>selesai dalam: <div class='text-bold text-red text-center' id='timelapsed'></div>"
+
+                    top.swal({
+                        title: "Sinkron Berhasil",
+                        html: lap,
+                        type: "success",
+                        onClose: function(){
+                            top.window.location.reload();
+                        }
+                    });
+
+                    clearInterval(syncTimer);
+                    if($("#timelapsed").length>0){
+                        $("#timelapsed").html(localStorage.timelapsed);
+                    }
+                }
+                else if(lastInfo==99){
+                    top.swal({
+                        title: "DATA TIDAK DI SINKRON",
+                        html: "selain data karyawan, tidak ada data lain nya yang di sinkron..<br> jika data yang di maksud gagal sinkron, hubungi Developer penyedia Aplikasi.",
+                        type: "warning",
+                        onClose: function(){
+                            top.window.location.reload();
+                        }
+                    });
+                }
+                else{
+                    top.swal({
+                        title: "Sinkron Berhasil",
+                        html: arrDatas.reason,
+                        type: "success",
+                        onClose: function(){
+                            top.window.location.reload();
+                        }
+                    });
+                }
+            }
+            else if(arrDatas.status == 88){
+                top.swal({
+                    title: "Sinkron Gagal",
+                    html: arrDatas.reason,
+                    type: "error",
+                    onClose: function(){
+                        top.window.location.reload();
+                    }
+                });
+            }
+            else{
+                top.swal({
+                    title: "Sinkron Gagal",
+                    html: arrDatas.reason,
+                    type: "error",
+                    onClose: function(){
+                        top.window.location.reload();
+                    }
+                });
+            }
+        }
+    };
+    xhttp.onerror = function(){
+        swal('Sinkron Gagal', "cek koneksi internet Anda..." , 'error');
+        $.toast().reset('all');
+    };
+    xhttp.open("GET", "{base}eusvc/KonsolidasiData/perEmployee", true);
+    xhttp.send();
+}
+
+function sinkronTimer(){
+    stopSinkronTimer();
+    var timerMulai = moment().format("YYYY-MM-DD HH:mm:ss");
+    if($("#timerMulai").length>0){
+        $("#timerMulai").html(timerMulai);
+    }
+    syncTimer = setInterval(function(){
+        var start = moment(timerMulai,'YYYY-MM-DD HH:mm:ss');
+        var hourPassed = moment().diff(start, 'hours');
+        var minutesPassed = moment().diff(start, 'minutes');
+        var SecondsPassed = moment().diff(start, 'seconds') % 60;
+        var jam = hourPassed*1 > 0 ? (hourPassed*1 < 10 ? "0"+hourPassed*1 : hourPassed*1) : "00"
+        var menit = minutesPassed*1 > 0 ? (minutesPassed*1 < 10 ? "0"+minutesPassed*1 : minutesPassed*1) : "00"
+        var detik = SecondsPassed*1 > 0 ? (SecondsPassed*1 < 10 ? "0"+SecondsPassed*1 : SecondsPassed*1) : "00"
+        var separator = ":";
+        var timelapsed = jam + separator + menit + separator + detik;
+        if($("#timelapsed").length>0){
+            $("#timelapsed").html(timelapsed);
+        }
+//            console.log(timelapsed);
+        localStorage.timelapsed = timelapsed
+    }, 1000)
+}
+
+function stopSinkronTimer(){
+    clearInterval(syncTimer);
+}
+
+function syncDataAll(){
+
+    swal({
+        title: "KONFIRMASI SINKRONISASI",
+        html: 'SINKRON DATA MEMBUTUHKAN KURANG LEBIH 2 MENIT, APAKAH ANDA INGIN MELANJUTKAN...??',
+        type: "info",
+        showConfirmButton: true,
+        showCancelButton: true,
+        cancelButtonText: "Batalkan",
+        confirmButtonText: 'Lanjutkan',
+        allowOutsideClick: false,
+    }).then((result)=>{
+        if(result){
+        clearInterval(initKas);
+        clearInterval(initPerangkat);
+        clearInterval(initSinkron);
+        swal({
+            title: "SINKRONISASI",
+            html: "Mulai: <div class='text-bold text-green text-center' id='timerMulai'></div> SEDANG SINKRONISASI, MOHON TIDAK MENUTUP BROWSER ANDA... <div class='text-bold text-red text-center' id='timelapsed'></div>",
+            type: "info",
+            showConfirmButton: false,
+            showCancelButton: false,
+            allowOutsideClick: false,
+        });
+        swal.enableLoading();
+        sinkronTimer();
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var arrDatas = JSON.parse(this.response)
+                if(arrDatas.status == 1){
+                    var lap="<div class='text-left text-bold'>"
+                    jQuery.each(arrDatas.laporan, function(a,b){
+                        var stat = b.status==1 ? "<i class='fa fa-check-circle text-green'></i>" : b.status==2 ? "<i class='fa fa-warning-circle text-warning'></i>" : "<i class='fa fa-times-circle text-red'></i>"
+                        var count = "(" + b.count*1 + ")"
+                        lap += "<div class='text-capitalize'>- " + b.label + "  "+count+"  " + stat + "</div>"
+                    })
+                    lap += "</div>"
+                    $.toast().reset('all');
+                    if (typeof perEmployeeSync !== "undefined") {
+                        perEmployeeSync(lap);
+                    }
+                    else{
+                        swal('Sinkron Berhasil', lap, 'success');
+                    }
+                }
+                else if(arrDatas.status == 99){
+                    if (typeof perEmployeeSync !== "undefined") {
+                        perEmployeeSync(99);
+                    }
+                    else{
+                        swal('Tidak Ada Data', "tidak ada data yang di sinkron", 'warning');
+                    }
+                }
+                else if(arrDatas.status == 88){
+                    top.swal({
+                        title: "Sinkron Gagal",
+                        html: arrDatas.reason,
+                        type: "error",
+                        onClose: function(){
+                            top.window.location.reload();
+                        }
+                    });
+                }
+                else{
+                    top.swal({
+                        title: "Sinkron Gagal",
+                        html: arrDatas.reason,
+                        type: "error",
+                        onClose: function(){
+                            top.window.location.reload();
+                        }
+                    });
+                }
+            }
+        };
+        xhttp.onerror = function(){
+            $.toast().reset('all');
+        };
+        xhttp.open("GET", "{base}eusvc/KonsolidasiData/allDataV2/fromchecker", true);
+        xhttp.send();
+    }
+});
+
+}
+
+function checkSinkron(){
+    var xhttp = new XMLHttpRequest();
+    //console.log("machineID: {machine_id}  melakukan check sinkron");
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var datas = JSON.parse(this.response);
+//                console.log(datas);
+            if( datas !== null && datas.row > 0 ){
+                var txt =''
+                jQuery.each(datas.data,function(a,b){
+                    txt += "<div class='text-link text-capitalize'>- " + b + "</div>"
+                })
+                txt += "<div class=''>&nbsp;</div>"
+                txt += "<div class='btn btn-md text-bold btn-warning btn-block' onclick=\"syncDataAll()\"><i class='fa fa-recycle'></i> klik untuk sinkronisasi </div>"
+                txt += "<div style='margin-left: -40px;margin-top:20px;' class='text-info text-bold text-center'> SEGERA LAPORKAN JIKA NOTIFIKASI INI TIDAK MENGHILANG BEBERAPA SAAT SETELAH SINKRON DILAKUKAN </div>"
+                $.toast({
+                    heading: 'Perlu Sinkronisasi',
+                    text: txt,
+                    position: {
+                        right: 15,
+                        bottom: 75
+                    },
+                    hideAfter: false,
+                    bgColor: '#FF1359',
+                    textColor: 'white',
+                    icon: 'error',
+                    allowToastClose: false,
+                    stack: false,
+                })
+            }
+            else if(datas.status==88){
+                var txt =''
+                jQuery.each(datas.data,function(a,b){
+                    txt += "<div class='text-link text-capitalize'>- " + b + "</div>"
+                })
+                txt += "<div class=''>&nbsp;</div>"
+                txt += "<div class='btn btn-md text-bold btn-warning btn-block' onclick=\"syncDataAll()\"><i class='fa fa-recycle'></i> klik untuk sinkronisasi </div>"
+                txt += "<div style='margin-left: -40px;margin-top:20px;' class='text-info text-bold text-center'> SEGERA LAPORKAN JIKA NOTIFIKASI INI TIDAK MENGHILANG BEBERAPA SAAT SETELAH SINKRON DILAKUKAN </div>"
+                $.toast({
+                    heading: 'Perlu Sinkronisasi',
+                    text: txt,
+                    position: {
+                        right: 15,
+                        bottom: 75
+                    },
+                    hideAfter: false,
+                    bgColor: '#FF1359',
+                    textColor: 'white',
+                    icon: 'error',
+                    allowToastClose: false,
+                    stack: false,
+                })
+            }
+            else{
+                //indikasi tidak ada data yg akan di updatekan
+//                    top.swal({
+//                        title: "Sinkron Gagal",
+//                        html: "masalah tidak terdeteksi",
+//                        type: "error",
+//                        onClose: function(){
+//                            top.window.location.reload();
+//                        }
+//                    });
+            }
+        }
+        else{
+            $.toast().reset('all');
+        }
+    };
+    xhttp.onerror = function(){
+        //console.log('koneksi bermasalah, silahkan cek internet');
+        $.toast().reset('all');
+    };
+//        xhttp.open("GET", "{adm_domain}/eusvc/NonRest/checkSinkronV2/{machine_id}", true);
+    xhttp.open("GET", "{base}eusvc/NonRest/checkSinkronV2/{machine_id}", true);
+//        xhttp.open("GET", "{base}eusvc/NonRest/checkSinkron/{machine_id}", true);
+    xhttp.send();
+}
+
+function gotoDateSettlement(date){
+    window.location.href = "{base}penjualan/ActivityReport/viewMySettlement/582?date1="+date+"&date2="+date
+}
+function asteriks(strings){
+    var returned = 0
+    var splObj = strings.split(",");
+    var spl = splObj.length;
+    switch( spl ){
+        case 1:
+            returned = strings
+            break;
+        case 2:
+            var c1 = splObj[0]
+            var c2 = splObj[1]
+            returned = c1+',xxx';
+            break;
+        case 3:
+            var c1 = splObj[0]
+            var c2 = splObj[1]
+            var c3 = splObj[2]
+            returned = c1+',xxx,xxx';
+            break;
+    }
+    return returned;
+}
+function checkSaldoKas(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var datas = JSON.parse(this.response);
+//                console.log('SALDO_KAS', datas);
+            localStorage.SALDO_KAS = JSON.stringify(datas);
+            var html=""
+            if(datas.status==0){
+
+                var arrSubSaldo = {}
+                arrSaldoKasir = datas.yesterday.data_by_seller != undefined ? datas.yesterday.data_by_seller : datas.today.data_by_seller;
+
+//                    console.log('arrSaldoKasir: ', arrSaldoKasir);
+
+                html+="<table class='table dataTable compact table-bordered'>"
+                html+="<caption class='text-capitalize'><div>MCID: {machine_id}</div><div>COMID: {com_info}</div></caption>"
+                jQuery.each(arrSaldoKasir, function(a, b){
+                    data = b.data
+                    nama_kasir = b.oleh_nama
+                    total_saldo = b.saldo
+                    html+="<tr>"
+                    html+="<th colspan='2'>"
+                    html+="<span class='text-capitalize'>" +nama_kasir +"</span>" + " harus setor Rp. "+ asteriks(addCommas(total_saldo)) + ",-"
+                    html+="</th>"
+                    html+="</tr>"
+
+                    var arsubno = 0
+                    jQuery.each(data, function(tgl, nilai){
+
+                        arrSubSaldo[arsubno] = tgl
+//                            html+="<caption class='text-capitalize'>MCID: {machine_id}</caption>"
+                        html+= "<tr>"
+                        html+= "<td>"
+                        html+= "<div class='text-left text-link' onclick=\"gotoDateSettlement('"+tgl+"')\">" + tgl + "</div>"
+                        html+= "</td>"
+                        html+= "<td>"
+                        html+= "<span class='pull-right'>" + asteriks(addCommas(nilai))+ "</span>"
+                        html+= "</td>"
+                        html+= "</tr>"
+
+                        arsubno++;
+                    })
+
+
+                    html+= "<tr>"
+                    html+= "<th colspan='2'>"
+                    html+= "<span class='pull-right'>" + asteriks(addCommas(total_saldo)) + "</span>"
+                    html+= "</th>"
+                    html+= "</tr>"
+
+                    html+= "<tr>"
+                    html+= "<td class='text-center' colspan='2'>"
+                    html+= "---"
+                    html+= "</td>"
+                    html+= "</tr>"
+                })
+                html+="</table>"
+
+                top.swal({
+                    title: "KAS PERLU DISETOR",
+                    html: "<div class='text-red text-bold'>LAKUKAN SETORAN SEBELUM MELAKUKAN PENJUALAN</div><span class='text-primary text-bold'>ANDA AKAN DIBAWA KE HALAMAN SETTLEMENT UNTUK MELAKUKAN SETORAN.</span>" + html,
+                    type: "warning",
+                    onClose: function(){
+                        gotoDateSettlement(arrSubSaldo[0]);
+//                            top.window.location.replace('{base}penjualan/ActivityReport/viewMySettlement/582');
+                    }
+                });
+
+//                    top.swal.enableLoading();
+//                    setTimeout(function(){
+//                    }, 5000)
+            }
+        }
+        else{
+            //top.window.location.reload();
+//                console.log("this.readyState: " + this.readyState);
+//                console.log("this.status: " + this.status);
+        }
+    };
+    xhttp.onerror = function(){
+
+    };
+    xhttp.open("GET", "{base}eusvc/NonRest/checkSaldoKas", true);
+    xhttp.send();
+}
+function checkPerangkat(){
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            var arrDatas = JSON.parse(this.response)
+            if(arrDatas.status==1){
+                var alias = arrDatas.data.alias
+                $("#mid_alias").html(alias)
+            }
+        }
+    };
+    xhttp.onerror = function(){
+        console.log(arrDatas);
+    };
+    xhttp.open("GET", "{base}Login/checkdevice", true);
+    xhttp.send();
+}
+
+function initCheckSinkron(){
+    initSinkron = setInterval( function(){
+        checkSinkron();
+    }, 45000);
+    checkSinkron();
+}
+function initCheckKas(){
+    initKas = setInterval( function(){
+        checkSaldoKas();
+    }, 3600000);
+    checkSaldoKas();
+}
+function initCheckPerangkat(){
+    initPerangkat = setInterval( function(){
+        checkPerangkat();
+    }, 25000);
+    checkPerangkat();
+}
+
+setTimeout(function(){
+    if(autoCheckSync){
+        initCheckSinkron();
+    }
+    if(autoCheckKas){
+        initCheckKas();
+    }
+    if(autoCheckPerangkat){
+        initCheckPerangkat();
+    }
+    if(autoSyncPoint){
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                var arrDatas = JSON.parse(this.response);
+                console.log(arrDatas);
+            }
+        };
+        xhttp.onerror = function(){
+            console.log('customerPointSync: => GAGAL | CEK KONEKSI');
+        };
+        xhttp.open("GET", "{base}eusvc/KonsolidasiData/customerPointSync", true);
+        xhttp.send();
+    }
+}, 5000)
+
+
+if( $('.tombol_sinkronisasi_layout').length > 0 ){
+    var span = "<span class='text-green text-bold' onclick=\"syncDataAll()\" data-toggle='tooltip' data-placement='top' title='Sinkronisasi'>"
+            + "<i class='fa fa-recycle'></i>"
+            + "</span> klik icon hijau untuk sinkronisasi"
+    $('.tombol_sinkronisasi_layout').html(span);
+}
+
+//    if (navigator && navigator.serviceWorker) {
+//        navigator.serviceWorker.register('{base}sw.js');
+//    }
+
+</script>
+{scriptBottom}
+</body>
+</html>

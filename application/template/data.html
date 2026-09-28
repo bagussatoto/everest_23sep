@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html>
+<head> <!-- data.html -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{title}</title>
+
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link id="favicon" rel="icon" type='image/x-icon' href="{favicon}">
+    <!--<link rel="stylesheet" href="{cdn_suport}bootstrap-3.3.7-dist/css/bootstrap.min.css?v={local_version}">-->
+    <!--<link rel="stylesheet" href="{cdn_suport}Font-Awesome-master/css/font-awesome.min.css?v={local_version}">-->
+    <!--<link rel="stylesheet" href="{cdn_suport}ionicons-master/css/ionicons.min.css?v={local_version}">-->
+    <!--<link rel="stylesheet" href="{cdn_suport}simple-line-icons-master/css/simple-line-icons.css?v={local_version}">-->
+    <!--&lt;!&ndash; Theme style &ndash;&gt;-->
+    <!--<link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/dist/css/AdminLTE.css?v={local_version}">-->
+    <!--<link rel="stylesheet" href="{cdn_suport}bootstrap3-dialog-master/dist/css/bootstrap-dialog.css?v={local_version}">-->
+    <!--&lt;!&ndash; AdminLTE Skins. Choose a skin from the css/skins-->
+         <!--folder instead of downloading all of them to reduce the load. &ndash;&gt;-->
+    <!--<link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/dist/css/skins/_all-skins.min.css?v={local_version}">-->
+    <!--<link rel="stylesheet" href="{cdn_suport}bootstrap-fileinput-master/css/fileinput.min.css?v={local_version}">-->
+    <!--<link rel="stylesheet" href="{cdn_suport}bootstrap-toggle-master/css/bootstrap-toggle.min.css?v={local_version}">-->
+    <!--<link rel="stylesheet" href="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.css?v={local_version}">-->
+    <!--<link rel="stylesheet" href="{cdn_suport}bootstrap-xlgrid-master/bootstrap-xlgrid.min.css?v={local_version}">-->
+    <!--<link rel="stylesheet" href="{base}assets/custom/custom.min.css?v={local_version}">-->
+    <!--<link rel="stylesheet" href="{base}/assets/custom/dialog.css?v={local_version}">-->
+    <!--<link rel="stylesheet" href="{cdn_suport}HoldOn/HoldOn.min.css?v={local_version}">-->
+    <!--<link rel="stylesheet"-->
+          <!--href="{cdn_suport}DataTables-1.10.13/media/css/dataTables.bootstrap.min.css?v={local_version}">-->
+    <!--<link rel="stylesheet"-->
+          <!--href="{cdn_suport}DataTables-1.10.13/media/css/jquery.dataTables_themeroller.css?v={local_version}">-->
+    <!--<link rel="stylesheet"-->
+          <!--href="{cdn_suport}DataTables-1.10.13/yadcf-0.9.3/jquery.dataTables.yadcf.css?v={local_version}">-->
+    <!--<link rel="stylesheet"-->
+          <!--href="{cdn_suport}DataTables-1.10.13/extensions/Buttons/css/buttons.dataTables.css?v={local_version}">-->
+    <!--<link rel="stylesheet" href="{base}assets/custom/jquery.floatingscroll.css?v={local_version}">-->
+    <!--<link rel="stylesheet"-->
+          <!--href="{cdn_suport}DataTables-1.10.13/extensions/FixedHeader/css/fixedHeader.bootstrap.css?v={local_version}">-->
+    <!--<link rel="stylesheet"-->
+          <!--href="{cdn_suport}DataTables-1.10.13/extensions/FixedColumns/css/fixedColumns.bootstrap.css?v={local_version}">-->
+
+
+    <!--<link rel="stylesheet" href="{cdn_suport}bootstrap-select-1.13.9/dist/css/bootstrap-select.css?v={local_version}">-->
+    <!--&lt;!&ndash;<link rel="stylesheet" href="{cdn_suport}jquery-ui-themes-1.11.0/themes/smoothness/jquery-ui.css?v={local_version}"/>&ndash;&gt;-->
+
+
+    <!--<script src="{cdn_suport}AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v={local_version}"></script>-->
+    <!--<script src="{cdn_suport}bootstrap-3.3.7-dist/js/bootstrap.min.js?v={local_version}"></script>-->
+    <!--<script src="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.js?v={local_version}"></script>-->
+    <!--<script src="{cdn_suport}bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js?v={local_version}"></script>-->
+    <!--&lt;!&ndash;<script src="{cdn_suport}bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js?v={local_version}"></script>&ndash;&gt;-->
+    <!--<script src="{base}assets/custom/custom.js?v={local_version}"></script>-->
+    <!--&lt;!&ndash;<link rel="stylesheet" href="{cdn_suport}jquery-ui-themes-1.11.0/themes/smoothness/jquery-ui.css?v={local_version}"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;<script src="{cdn_suport}jquery-ui-1.11.0/jquery-ui.min.js?v={local_version}"></script>&ndash;&gt;-->
+    <!--<script src="{cdn_suport}HoldOn/HoldOn.min.js?v={local_version}"></script>-->
+
+    <!--<script src="{cdn_suport}DataTables-1.10.13/media/js/jquery.dataTables.min.js?v={local_version}"></script>-->
+    <!--<script src="{cdn_suport}DataTables-1.10.13/media/js/dataTables.bootstrap.min.js?v={local_version}"></script>-->
+    <!--<script src="{cdn_suport}DataTables-1.10.13/media/js/jquery.highlight.js?v={local_version}"></script>-->
+    <!--<script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/dataTables.buttons.js?v={local_version}"></script>-->
+    <!--<script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.colVis.js?v={local_version}"></script>-->
+    <!--<script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.print.js?v={local_version}"></script>-->
+    <!--<script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.html5.js?v={local_version}"></script>-->
+    <!--<script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.flash.js?v={local_version}"></script>-->
+    <!--<script src="{cdn_suport}DataTables-1.10.13/yadcf-0.9.3/jquery.dataTables.yadcf.js?v={local_version}"></script>-->
+
+    <!--<script src="{base}assets/custom/jquery.floatingscroll.min.js?v={local_version}"></script>-->
+    <!--<script src="{cdn_suport}bootstrap-select-1.13.9/dist/js/bootstrap-select.js?v={local_version}"></script>-->
+    <!--&lt;!&ndash;<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>&ndash;&gt;-->
+    <!--&lt;!&ndash;<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>&ndash;&gt;-->
+    <!--<script type="text/javascript"-->
+            <!--src="https://cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.20/b-1.6.1/b-colvis-1.6.1/b-flash-1.6.1/b-html5-1.6.1/b-print-1.6.1/datatables.min.js"></script>-->
+    <!--<script src="{cdn_suport}DataTables-1.10.13/extensions/FixedHeader/js/dataTables.fixedHeader.js?v={local_version}"></script>-->
+    <!--<script src="{cdn_suport}DataTables-1.10.13/extensions/FixedColumns/js/dataTables.fixedColumns.js?v={local_version}"></script>-->
+    <!--<script src="{cdn_suport}jQuery-Mask-Plugin-master/dist/jquery.mask.js?v={local_version}"></script>-->
+
+
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-3.3.7-dist/css/bootstrap.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}Font-Awesome-master/css/font-awesome.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}ionicons-master/css/ionicons.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}simple-line-icons-master/css/simple-line-icons.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/dist/css/AdminLTE.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}bootstrap3-dialog-master/dist/css/bootstrap-dialog.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/dist/css/skins/_all-skins.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-fileinput-master/css/fileinput.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-toggle-master/css/bootstrap-toggle.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-xlgrid-master/bootstrap-xlgrid.min.css?v={local_version}">
+    <link rel="stylesheet" href="{base}assets/custom/custom.min.css?v={local_version}">
+    <link rel="stylesheet" href="{base}assets/custom/dialog.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}qtip/jquery.qtip.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}HoldOn/HoldOn.css?v={local_version}">
+    <link rel="stylesheet" href="{base}assets/custom/jquery.floatingscroll.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}DataTables-1.10.13/media/css/dataTables.bootstrap.min.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}DataTables-1.10.13/media/css/jquery.dataTables_themeroller.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}DataTables-1.10.13/yadcf-0.9.3/jquery.dataTables.yadcf.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}DataTables-1.10.13/extensions/Buttons/css/buttons.dataTables.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/extensions/FixedHeader/css/fixedHeader.bootstrap.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/extensions/FixedColumns/css/fixedColumns.bootstrap.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/plugins/timepicker/bootstrap-timepicker.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}MomentJs-2.24.0/daterangepicker.min.css?v={local_version}">
+
+    <link rel="stylesheet"
+          href="{cdn_suport}DataTables-1.10.13/extensions/FixedHeader/css/fixedHeader.bootstrap.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}DataTables-1.10.13/extensions/FixedColumns/css/fixedColumns.bootstrap.css?v={local_version}">
+
+
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-select-1.13.9/dist/css/bootstrap-select.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-wysihtml5/bootstrap3-wysihtml5.css?v={local_version}">
+
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v={local_version}"></script>
+    <script src="{base}assets/custom/custom.js?v={local_version}"></script>
+    <script src="{cdn_suport}HoldOn/HoldOn.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-3.3.7-dist/js/bootstrap.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js?v={local_version}"></script>
+
+    <script src="{base}assets/custom/jquery.floatingscroll.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/timepicker/bootstrap-timepicker.js?v={local_version}"></script>
+    <script src="{cdn_suport}MomentJs-2.24.0/moment.js?v={local_version}"></script>
+    <script src="{cdn_suport}MomentJs-2.24.0/daterangepicker.js?v={local_version}"></script>
+
+    <script src="{cdn_suport}DataTables-1.10.13/media/js/jquery.dataTables.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/media/js/dataTables.bootstrap.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/media/js/jquery.highlight.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/dataTables.buttons.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.colVis.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.print.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.html5.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.flash.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/yadcf-0.9.3/jquery.dataTables.yadcf.js?v={local_version}"></script>
+
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/FixedHeader/js/dataTables.fixedHeader.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/FixedColumns/js/dataTables.fixedColumns.js?v={local_version}"></script>
+    <script src="{cdn_suport}qtip/jquery.qtip.min.js?v={local_version}"></script>
+
+    <script src="{cdn_suport}bootstrap-select-1.13.9/dist/js/bootstrap-select.js?v={local_version}"></script>
+    <script src="{cdn_suport}jQuery-Mask-Plugin-master/dist/jquery.mask.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-wysihtml5/bootstrap3-wysihtml5.all.js?v={local_version}"></script>
+    <style>
+        .select2 {
+            z-index: 100000;
+        }
+        table tbody tr, table tbody td, table thead th {
+            white-space: nowrap;
+        }
+    </style>
+    <style>
+        .image-container {
+            position: relative;
+        }
+
+        .image-container .after {
+            position: absolute;
+            top: 0;
+            /*left: 0;*/
+            width: 100%;
+            height: 100%;
+            display: none;
+            color: #FFF;
+            display: block;
+            background: rgba(0, 0, 0, .8);
+        }
+
+        .image-container .after > span {
+            position: absolute;
+            top: 30%;
+            left: 39%;
+            font-size: 2.5em;
+        }
+    </style>
+</head>
+<body onbeforeunload="custom_holdon(close_holdon)" class="hold-transition skin-blue sidebar-mini" onload="reLoad();">
+<!--tanda loading pas sedang ngeload halaman-->
+<div id="baseURL" class="hidden">{base}</div>
+<!--end---tanda loading pas sedang ngeload halaman-->
+<div class="wrapper">
+    <header class="main-header">
+        <a href="{base}" class="logo hidden-xs hidden-sm no-padding">
+            <span class="logo-mini"><span class="glyphicon glyphicon-home"></span></span>
+            <span class="logo-lg"><img src="{base}public/images/profiles/logo_header.png" height="40px"></span>
+        </a>
+        <nav class="navbar navbar-static-top">
+            <div class="no-padding no-border">
+                <!--<div class="hidden-sm hidden-lgr col-sm-2 col-xs-1 col-md-1 col-lg-1 no-padding">-->
+                    <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                        <span class="sr-only">Toggle navigation</span>
+                    </a>
+                    <a class="sidebar-title"><b class="text-uppercase">{title}</b> {sub_title}</a>
+                <!--</div>-->
+                <!--                <div class="col-sm-8 col-xs-11 col-md-8 col-lg-8 no-padding text-center">-->
+                <!--                <span class="hidden-mdx hidden-lgx hidden-xlx hidden-xxlx">-->
+                <!--                    <span class="navbar-brand text-center no-border" style="padding:8px;">-->
+                <!--                        <a href="{base}">-->
+                <!--                            <a class="btn btn-tool text-white" href="javascript:void(0)" onclick="location.href='{btn_back}';"><span class="glyphicon glyphicon-arrow-left text-yellow"></span></a>-->
+                <!--                            <span class="text-white">{title} <small style="color:#eeeeee;text-transform: lowercase;">{sub_title}</small></span>-->
+                <!--                        </a>-->
+                <!--                    </span>-->
+                <!--                </span>-->
+                <!--                </div>-->
+
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav" id="menu_top">
+                        {menu_top}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <span onclick="window.scrollTo({top: 0,left: 0,behavior: 'smooth'});" class="btn btn-top"
+              style="display:none;bottom: 75px;left: 275px;position: fixed;background: url(../../assets/images/top1.png); background-repeat: no-repeat; background-size: 47px 30px;"> TOP </span>
+        <nav class="navbar navbar-fixed-bottom navbar-2nd">
+            <!--untuk view desktop-->
+            <div class="no-padding no-border">
+                <div style="padding-right:0;padding-left:0;" class="col-sm-2 col-xs-2 col-md-1 col-lg-1">
+                    <div class="hidden-xs col-sm-6 col-md-6 col-lg-6 no-padding">
+                        <a href="{base}" class="btn btn__trigger-home btn__trigger--views-home"><i
+                                class="glyphicon glyphicon-home"></i></a>
+                    </div>
+                    <div class="hidden-xxxl hidden-xxl hidden-xl hidden-lg hidden-md hidden-sm col-xs-6 no-padding">
+                        <a href="{base}" class="btn btn__trigger-home-mb btn__trigger--views-home-mb"><i
+                                class="glyphicon glyphicon-home"></i></a>
+                    </div>
+                    <div class="hidden-xs col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding">
+                        <div class="text-bold text-center timbul dtime">
+                            <span class="jam"></span>
+                            <span class="blink">:</span>
+                            <span class="menit"></span>
+                        </div>
+                    </div>
+                </div>
+                <div style="padding-right:0;padding-left: 17px;" class="hidden-lg hidden-md hidden-sm col-xs-8">
+                    {info_ucd}
+                </div>
+                <div style="padding-right:0;padding-left:17px;" class="hidden-xs col-sm-7 col-xs-2 col-md-9 col-lg-9">
+
+                    {menu_taskbar}
+
+                    <!--<a href="#" onclick="swal('Phone 1')" data-toggle="tooltip" data-placement="top" title="Phone 1" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-phone"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('Plus 1')" data-toggle="tooltip" data-placement="top" title="Plus 1" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-plus"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('User 1')" data-toggle="tooltip" data-placement="top" title="User 1" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-user"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('Phone 2')" data-toggle="tooltip" data-placement="top" data-original-title="Phone 2" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-phone"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('Plus 2')" data-toggle="tooltip" data-placement="top" data-original-title="Plus 2" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-plus"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('User 2')" data-toggle="tooltip" data-placement="top" data-original-title="User 2" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-user"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('Phone 3')" data-toggle="tooltip" data-placement="top" data-original-title="Phone 3" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-phone"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('Plus 3')" data-toggle="tooltip" data-placement="top" data-original-title="Plus 3" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-plus"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('User 3')" data-toggle="tooltip" data-placement="top" data-original-title="User 3" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-user"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('Phone 4')" data-toggle="tooltip" data-placement="top" data-original-title="Phone 4" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-phone"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('Plus 4')" data-toggle="tooltip" data-placement="top" data-original-title="Plus 4" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-plus"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('User 4')" data-toggle="tooltip" data-placement="top" data-original-title="User 4" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-user"></i>-->
+                    <!--</a>-->
+
+                </div>
+                <div style="padding-right:0;padding-left:0;" class="col-sm-3 col-xs-2 col-md-2 col-lg-2">
+                    {float_menu_bawah}
+                </div>
+            </div>
+            <div class="hidden-sm hidden-md hidden-lg hidden-xl hidden-xxxl hidden-xxl col-xs-12 bg-black text-lime text-bold">
+            <span class="col-xs-8 no-padding">
+                <span class="hari"></span>
+                <span class="tanggal"></span>
+            </span>
+                <span class="col-xs-4 no-padding text-right">
+                <span class="jam"></span>
+                <span class="blink">:</span>
+                <span class="menit"></span>
+            </span>
+            </div>
+        </nav>
+        <nav class="hidden-xs navbar navbar-fixed-bottom navbar-3rd">
+            <div class="no-padding no-border">
+            <span class="col-lg-2 no-padding">
+                <span class="hari timbul text-bold"></span>
+                <span class="tanggal timbul text-bold"></span>
+            </span>
+                <span class="col-lg-10 no-padding">
+                {info_bottom}
+            </span>
+            </div>
+        </nav>
+
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+
+            <ul class="sidebar-menu ">
+                <!--<li class="header">MAIN NAVIGATION</li>-->
+                {menu_left}
+
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!--<section class="content-header">-->
+        <!--    <h1>{title} <small>{sub_title}</small></h1>-->
+        <!--</section>-->
+        <section class="content">
+            <!--<div class="row info-bottom">                <div class="col-lg-12 col-xs-12 text-centerrr"><span id='not_ctr'></span> {info_bottom}</div>            </div>-->
+            <div class="row">
+                <!--<div class="col-md-12">-->
+                <!--<h2>-->
+                <!--<a class="btn btn-tool" href="javascript:void(0)" onclick="location.href='{btn_back}';"><span class="glyphicon glyphicon-arrow-left"></span></a>-->
+                <!--{title}-->
+                <!--<small>{sub_title} </small>-->
+                <!--</h2>-->
+                <!--</div>-->
+                <div class="col-md-12">
+                    {top_limited}
+                </div>
+                <div class="col-md-12">
+                    {error_msg}
+                </div>
+
+                <div class="col-md-12">
+                    {menu_depresiasi}
+                </div>
+
+                <div class="col-md-12">
+
+                    <div class="box box-solidddd box-danger" style="display:{prop_display}">
+                        <div class="box-header">
+                            <span class="pull-left text-uppercase text-red">{data_propose_title}</span>
+                        </div>
+                        <div class="box-body">
+                            <div class="table-responsive table_propose">
+                                {data_propose_content}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="box box-primary">
+
+                        <div class="box-header">
+                            <div class="col-sm-3 text-center">
+                                <div class="input-group">
+                                    <span class="input-group-addon" style="background:#e0e0e0;">
+                                        <span class="glyphicon glyphicon-remove" style="cursor: hand;"
+                                              onclick="document.getElementById('q').value='';location.href='{this_page}&k=';"></span>
+                                        </span>
+                                    <input type="text" id="q" class="form-control" value="{search_str}"
+                                           placeholder="search {title}"
+                                           onkeydown="if(detectEnter()==true){location.href='{this_page}&k='+this.value;}">
+                                    <span class="input-group-addon" style="background:#e0e0e0;">
+                                        <span class="glyphicon glyphicon-search" style="cursor: hand;"
+                                              onclick="if(document.getElementById('q').value.length>0){location.href='{this_page}&k='+document.getElementById('q').value;}"></span>
+                                        </span>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 text-center">
+                                <ul class="pager no-padding"
+                                    style="padding:0px;margin:0px;">{link_str}
+                                </ul>
+                            </div>
+
+                            <div class="col-sm-3 text-center">{edit_link}{add_link}</div>
+
+                        </div>
+                        <div class="box-body">
+                            <div _class="col-md-3 col-sm-3" class="{reg_folders_classname} no-padding" id="reg_folders"
+                                 style="background:#f0f0f7;">
+                                <div class="clone">
+                                    {folders}
+                                </div>
+                                <div style="position:fixed;display:none" class="fixed">
+
+                                </div>
+                            </div>
+                            <div _class="col-md-9 col-sm-9" class="{reg_items_classname} no-padding" id="reg_items">
+                                <div class="table-responsive table_active">
+                                        {data_active_content}
+                                    </div>
+
+                                </div>
+                        </div>
+                        <div class="box-footer text-right" style="background:#f0f0f7;">{data_nonactive_footer} &nbsp;&nbsp;&nbsp;&nbsp; {data_active_footer}</div>
+                    </div>
+
+                    <div class="box box-info">
+                        <div class="box-header">
+                            <span class="pull-left">{data_hist_title}</span>
+                            <span class="pull-right"></span>
+                        </div>
+                        <div class="box-body" style="font-style:italic;">
+                            <div class="table-responsive table_history">
+                                {data_hist_content}
+                    </div>
+                        </div>
+                    </div>
+
+                    <div class="panel-body pull-right" style="background:#f0f0f0;">
+                        <a id='printBtn' class="btn btn-default" href="javascript:void(0)" title="tampilkan versi cetak" data-toggle="tooltip" data-placement="top" onclick="createPrintVersion(window.location.href)"><span class="glyphicon glyphicon-print"></span> cetak</a>
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+    </div>
+    <!--modal-->
+    <div id='myModal' class='modal {bg_modal} fade' role='dialog'>
+        <div class='modal-dialog {lebar_modal}'>
+            <div class='modal-content'>
+                {isi_modal}
+            </div>
+        </div>
+    </div>
+    <footer class="main-footer overflow-h">
+        <div class="clear-fix"></div>
+        {footer}
+
+    </footer>
+    <aside class="control-sidebar control-sidebar-dark">
+        {menu_right_isi}
+
+    </aside>
+
+    <div class="control-sidebar-bg"></div>
+</div>
+<div>
+    <iframe id="tray" name="tray" style="display:none;width:100%;height:120px;" src="{base}_tray/index"></iframe>
+    <iframe name="result" id="result" style="resize: both;display: {display_iframe};width: 100%;height:800px;"></iframe>
+</div>
+
+<script src="{cdn_suport}AdminLTE-2.3.11/plugins/slimScroll/jquery.slimscroll.min.js?v={local_version}"></script>
+<script src="{cdn_suport}AdminLTE-2.3.11/dist/js/app.min.js?v={local_version}"></script>
+<script src="{cdn_suport}multi-step-modal-master/multi-step-modal.js?v={local_version}"></script>
+
+<script src="{cdn_suport}bootstrap-fileinput-master/js/fileinput.min.js?v={local_version}"></script>
+<script src="{cdn_suport}bootstrap-toggle-master/js/bootstrap-toggle.min.js?v={local_version}"></script>
+
+<script src="{base}assets/custom/hippo_ajax.js?v={local_version}"></script>
+<script src="{base}assets/custom/JS.js?v={local_version}"></script>
+
+<!--barcode reader-->
+<script type="text/javascript">
+    if (window.location.hash.substr(1, 2) == "zx") {
+        var bc = window.location.hash.substr(3);
+        localStorage["barcode"] = decodeURI(window.location.hash.substr(3))
+        window.close();
+        self.close();
+        window.location.href = "about:blank";//In case self.close isn't allowed
+    }
+</script>
+<script type="text/javascript">
+    var changingHash = false;
+
+    function onbarcode(event) {
+        switch (event.type) {
+            case "hashchange": {
+                if (changingHash == true) {
+                    return;
+                }
+                var hash = window.location.hash;
+                if (hash.substr(0, 3) == "#zx") {
+                    hash = window.location.hash.substr(3);
+                    changingHash = true;
+                    window.location.hash = event.oldURL.split("\#")[1] || ""
+                    changingHash = false;
+                    processBarcode(hash);
+                }
+
+                break;
+            }
+            case "storage": {
+                window.focus();
+                if (event.key == "barcode") {
+                    window.removeEventListener("storage", onbarcode, false);
+                    processBarcode(event.newValue);
+                }
+                break;
+            }
+            default: {
+                console.log(event)
+                break;
+            }
+        }
+    }
+
+    window.addEventListener("hashchange", onbarcode, false);
+
+    function getScan() {
+        var href = window.location.href;
+        var ptr = href.lastIndexOf("#");
+        if (ptr > 0) {
+            href = href.substr(0, ptr);
+        }
+        window.addEventListener("storage", onbarcode, false);
+        setTimeout('window.removeEventListener("storage", onbarcode, false)', 15000);
+        localStorage.removeItem("barcode");
+        //window.open  (href + "#zx" + new Date().toString());
+
+        if (navigator.userAgent.match(/Firefox/i)) {
+            //Used for Firefox. If Chrome uses this, it raises the "hashchanged" event only.
+            window.location.href = ("zxing://scan/?ret=" + encodeURIComponent(href + "#zx{CODE}"));
+        } else {
+            //Used for Chrome. If Firefox uses this, it leaves the scan window open.
+            window.open("zxing://scan/?ret=" + encodeURIComponent(href + "#zx{CODE}"));
+        }
+    }
+
+    function processBarcode(bc) {
+        document.getElementById("scans").innerHTML += "<div>" + bc + "</div>";
+        //put your code in place of the line above.
+    }
+
+    function detectEnter() {
+        var keyCode = event.keyCode ? event.keyCode : event.which ? event.which
+            : event.charCode;
+        if (keyCode == 13) {
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+</script>
+
+
+<script>
+
+    $('#myModal').on('hidden.bs.modal', function () {
+        $(this).removeData('bs.modal');
+    });
+
+    $('body').tooltip({selector: '[data-toggle=tooltip]'});
+    //        $('data-toggle').tooltip({title:"Event", trigger:"focus or hover only", delay:{hide:100}});
+
+    checked = false;
+
+    function checkedAll(frm1) {
+        var aa = document.getElementById(frm1);
+        if (checked == false) {
+            checked = true
+        } else {
+            checked = false
+        }
+        for (var i = 0; i < aa.elements.length; i++) {
+            aa.elements[i].checked = checked;
+        }
+    }
+
+    function detectEnter() {
+        var keyCode = event.keyCode ? event.keyCode : event.which ? event.which
+            : event.charCode;
+
+        if (keyCode == 13) {
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function load() {
+        top.$('#tray').load('{base}_tray/');
+    }
+
+    function reLoad() {
+        setInterval("load()", 30000);
+    }
+
+    function createPrintVersion(url) {
+        var oldUrl = url;
+        var tmpUrl = url.replace("mode=view", "&&");
+        tmpUrl = tmpUrl.replace("#content", "");
+        tmpUrl = tmpUrl.replace("#printBtn", "");
+        if (tmpUrl.indexOf('?') > -1) {
+            var newUrl = tmpUrl + '&mode=print';
+        } else {
+            var newUrl = tmpUrl + '?mode=print';
+        }
+        window.open(newUrl);
+    }
+</script>
+<script>
+    // //        $("th").resizable();
+    if ($('#_no_ktp')) {
+        $('#_no_ktp').mask('0000000000000000', {
+            placeholder: "________________",
+            onComplete: function (cep) {
+//                 console.log('sampun!:', cep);
+                $('#_no_ktp').css("border", "2px solid #69c169");
+                $('#_no_ktp').css("background", "#d9f1e0");
+            },
+            onKeyPress: function (cep, event, currentField, options) {
+//                 console.log('ditunyuk !:', cep, ' ngapo: ', event, 'wayahe: ', currentField.attr('class'), ' sak-sak-e: ', options);
+                $('#_no_ktp').css("border", "2px solid #ef1f32");
+                $('#_no_ktp').css("background", "#f1d9d9");
+            },
+            onInvalid: function (val, e, field, invalid, options) {
+                var error = invalid[0];
+//                 console.log ("jebule: ", error.v, " wedus e : ", error.p, ". lapo: ", error.e);
+                $('#_no_ktp').css("border", "2px solid #efc21f");
+                $('#_no_ktp').css("background", "#f1e9d9");
+            }
+        });
+    }
+    //
+    if ($('#_npwp')) {
+        $('#_npwp').mask('00.000.000.0-000.000', {
+            placeholder: "__.___.___._-___.___",
+            onComplete: function (cep) {
+//                 console.log('sampun!:', cep);
+                $('#_npwp').css("border", "2px solid #69c169");
+                $('#_npwp').css("background", "#d9f1e0");
+            },
+            onKeyPress: function (cep, event, currentField, options) {
+//                 console.log('ditunyuk !:', cep, ' ngapo: ', event, 'wayahe: ', currentField.attr('class'), ' sak-sak-e: ', options);
+                $('#_npwp').css("border", "2px solid #ef1f32");
+                $('#_npwp').css("background", "#f1d9d9");
+            },
+            onInvalid: function (val, e, field, invalid, options) {
+                var error = invalid[0];
+//                 console.log ("jebule: ", error.v, " wedus e : ", error.p, ". lapo: ", error.e);
+                $('#_npwp').css("border", "2px solid #efc21f");
+                $('#_npwp').css("background", "#f1e9d9");
+            }
+        });
+    }
+
+    function rem(root) {
+        var $root = $(root);
+        $root.contents().each(function () {
+            if (this.nodeType === 1) {
+                rem(this);
+            }
+        });
+
+        if (!$root.is("area,base,col,command,embed,hr,img,input,keygen,link,meta,param,source,track,wbr") && !$root.html().trim().length) {
+            $root.remove();
+        }
+    }
+
+    $(document).ready(function () {
+        var theadCheck = $("#table_propose > thead");
+        var buttonCommon = {
+            exportOptions: {
+                format: {
+                    body: function (data, row, column, node) {
+
+                        function filterSpan(strspan) {
+
+                        }
+
+                        function filterIcon(stricon) {
+
+                        }
+
+                        function filterDiv(strdiv) {
+                            var newData = String(strdiv);
+                            var pos = newData.indexOf('<div ');
+                            var result;
+                            if (pos !== -1) {
+
+
+                                return result;
+                            } else {
+
+
+                                return result;
+                            }
+                        }
+
+                        var newData = String(data);
+                        var pos = newData.indexOf('<span ');
+
+                        if (pos !== -1) {
+                            //ada span
+                            var posVal = $(newData).html();
+                            var newposVal = String(posVal);
+
+
+                            var pos2 = newposVal.indexOf('<div ');
+
+                            if (pos2 !== -1) {
+                                console.log('#1 ' + pos2 + '  -  ' + newposVal);
+                            } else {
+                                console.log('#2 ' + pos2 + '  -  ' + newposVal);
+                            }
+                        }
+                        else{
+                            var pos1 = newData.indexOf('<i ');
+
+                            if (pos1 !== -1) {
+                                var posVal = $(newData).html();
+                                var newposVal = String(posVal);
+                                var pos2 = newposVal.indexOf('<div ');
+                                if (pos2 !== -1) {
+                                    var newPosVal2 = $(newposVal).html();
+                                    console.log('#4 ' + pos2 + '  -  ' + newPosVal2);
+                                } else {
+                                    console.log('#5 ' + pos2 + '  -  ' + newposVal);
+                                }
+
+                            } else {
+                                return data;
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        if (theadCheck.length > 0) {
+            var table_propose = $('#table_propose').DataTable({
+                dom: 'lBfrtip',
+                lengthMenu: [[10, 20, 50, 100, -1], [10, 20, 50, 100, 'All']],
+                pageLength: -1,
+                stateSave: true,
+                fixedHeader: true,
+                paging: true,
+                buttons: [
+                    $.extend(true, {}, buttonCommon, {
+                        extend: 'copyHtml5',
+                        exportOptions: {
+                            stripHtml: false
+                        }
+                    }),
+                    $.extend(true, {}, buttonCommon, {
+                        extend: 'excelHtml5',
+                        exportOptions: {
+                            stripHtml: false
+                        }
+                    }),
+                    $.extend(true, {}, buttonCommon, {
+                        extend: 'pdfHtml5',
+                        exportOptions: {
+                            stripHtml: false
+                        }
+                    })
+                ]
+            });
+
+            $('.table-responsive.table_propose').floatingScroll();
+            $('.table-responsive.table_propose').scroll(delay_v2( function(){ $('#table_propose').DataTable().fixedHeader.adjust(); }, 200));
+
+            $('.clone > table#folder_table').clone().appendTo('.fixed').width($('#reg_folders').width());
+            $('.fixed').css('left', 255);
+            $('.fixed').css('top', 5);
+            $('.fixed').css('background', $('#reg_folders').css('background'));
+            $('.fixed').css('padding-left', 15);
+            $('.fixed').css('padding-right', 15);
+        }
+
+        $(window).scroll(function () {
+            var height = window.pageYOffset;
+            var targetHeight = $('#reg_folders').width();
+            if (height > targetHeight) {
+                $('.fixed').fadeIn();
+            } else {
+                $('.fixed').fadeOut();
+            }
+        });
+
+
+        if($('#table_active').length){
+
+            var table_active = $('#table_active').DataTable({
+                dom: 'lBfrtip',
+                lengthMenu: [[10, 20, 50, 100, -1], [10, 20, 50, 100, 'All']],
+                pageLength: -1,
+                stateSave: true,
+                fixedHeader: true,
+                paging: false,
+                buttons: [
+                    // 'excel',
+                    // {extend:'csv', footer: true, exportOptions: {
+                    //         stripHtml: true
+                    //     }},
+                    $.extend(true, {}, buttonCommon, {
+                        extend: 'csvHtml5',
+                        text: 'Download CSV',
+                        exportOptions: {
+                            stripHtml: true
+                        }
+                    }),
+                    $.extend(true, {}, buttonCommon, {
+                        extend: 'copyHtml5',
+                        text: 'Copy To Clipboard',
+                        exportOptions: {
+                            stripHtml: true
+                        }
+                    }),
+                    $.extend(true, {}, buttonCommon, {
+                        extend: 'excelHtml5',
+                        exportOptions: {
+                            stripHtml: false
+                        }
+                    }),
+                    $.extend(true, {}, buttonCommon, {
+                        extend: 'pdfHtml5',
+                        exportOptions: {
+                            stripHtml: false
+                        }
+                    })
+                ]
+            });
+
+            $('.table-responsive.table_active').floatingScroll();
+            $('.table-responsive.table_active').scroll(delay_v2( function(){ $('#table_active').DataTable().fixedHeader.adjust(); }, 200));
+
+        }
+
+        if($('#table_history').length){
+
+            var default_table = $('#table_history').DataTable({
+                dom: 'lBfrtip',
+                lengthMenu: [[10, 20, 50, 100, -1], [10, 20, 50, 100, 'All']],
+                pageLength: -1,
+                stateSave: true,
+                fixedHeader: true,
+                paging: false,
+                buttons: [
+                    $.extend(true, {}, buttonCommon, {
+                        extend: 'copyHtml5',
+                        exportOptions: {
+                            stripHtml: false
+                        }
+                    }),
+                    $.extend(true, {}, buttonCommon, {
+                        extend: 'excelHtml5',
+                        exportOptions: {
+                            stripHtml: false
+                        }
+                    }),
+                    $.extend(true, {}, buttonCommon, {
+                        extend: 'pdfHtml5',
+                        exportOptions: {
+                            stripHtml: false
+                        }
+                    })
+                ]
+            });
+
+            $('.table-responsive.table_history').floatingScroll();
+            $('.table-responsive.table_history').scroll(delay_v2( function(){ $('#table_history').DataTable().fixedHeader.adjust(); }, 200));
+
+        }
+
+    });
+</script>
+<!--<script>-->
+<!--{jsBottom}-->
+<!--</script>-->
+</body>
+</html>

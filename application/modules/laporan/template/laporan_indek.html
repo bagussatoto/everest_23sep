@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html>
+<!-- Template Name laporan_index.html -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{title}</title>
+
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!--<link id="favicon" rel="icon" type='image/x-icon' href="{favicon}?v={local_version}">-->
+
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/qtip2@3.0.3/dist/jquery.qtip.min.css">
+
+    <link id="favicon" rel="icon" type='image/x-icon' href="{favicon}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-3.3.7-dist/css/bootstrap.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}Font-Awesome-master/css/font-awesome.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}ionicons-master/css/ionicons.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}simple-line-icons-master/css/simple-line-icons.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/dist/css/AdminLTE.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap3-dialog-master/dist/css/bootstrap-dialog.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/dist/css/skins/_all-skins.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-fileinput-master/css/fileinput.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-toggle-master/css/bootstrap-toggle.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-xlgrid-master/bootstrap-xlgrid.min.css?v={local_version}">
+    <link rel="stylesheet" href="{base}assets/custom/custom.min.css?v={local_version}">
+    <link rel="stylesheet" href="{base}assets/custom/dialog.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}HoldOn/HoldOn.css?v={local_version}">
+    <link rel="stylesheet" href="{base}assets/custom/jquery.floatingscroll.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/media/css/dataTables.bootstrap.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/media/css/jquery.dataTables_themeroller.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/yadcf-0.9.3/jquery.dataTables.yadcf.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/extensions/Buttons/css/buttons.dataTables.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}qtip/jquery.qtip.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/extensions/FixedHeader/css/fixedHeader.bootstrap.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/extensions/FixedColumns/css/fixedColumns.bootstrap.css?v={local_version}">
+    <!--<link rel="stylesheet" href="{cdn_suport}highslide-5.0.0/highslide/highslide.css?v={local_version}">-->
+    <link rel="stylesheet" href="{base}assets/custom/highslide.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-select-1.13.9/dist/css/bootstrap-select.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-fileinput-master/css/fileinput.min.css?v={local_version}">
+
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v={local_version}"></script>
+    <script src="{base}assets/custom/custom.js?v={local_version}"></script>
+    <script src="{cdn_suport}HoldOn/HoldOn.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-3.3.7-dist/js/bootstrap.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js?v={local_version}"></script>
+
+    <script src="{base}assets/custom/jquery.floatingscroll.min.js?v={local_version}"></script>
+    <script src="{base}assets/custom/highslide-with-html.js?v={local_version}"></script>
+    <!--<script src="{cdn_suport}highslide-5.0.0/highslide/highslide.min.js?v={local_version}"></script>-->
+
+    <script src="{cdn_suport}DataTables-1.10.13/media/js/jquery.dataTables.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/media/js/dataTables.bootstrap.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/media/js/jquery.highlight.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/dataTables.buttons.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.colVis.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.print.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.html5.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.flash.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/yadcf-0.9.3/jquery.dataTables.yadcf.js?v={local_version}"></script>
+
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/FixedHeader/js/dataTables.fixedHeader.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/FixedColumns/js/dataTables.fixedColumns.js?v={local_version}"></script>
+    <script src="{cdn_suport}qtip/jquery.qtip.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-select-1.13.9/dist/js/bootstrap-select.js?v={local_version}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/qtip2@3.0.3/dist/jquery.qtip.min.js"></script>
+
+    <style>
+
+        .qtip-content {
+            font-size: 14px !important; /* Atur ukuran font */
+            line-height: 1.4; /* Jarak antar baris */
+        }
+
+        thead {
+            background: lightgray;
+        }
+        table.dataTable tbody th, table.dataTable tbody td {
+            white-space: nowrap;
+        }
+    </style>
+    <script>
+        var newwindow;
+        function createPop(url, name)
+        {
+            newwindow=window.open(url,name,'width=200,height=1,top=10000,toolbar=0,menubar=0,location=0,visible=none');newwindow.blur();
+            window.focus();
+            // if (window.focus) {newwindow.focus()}
+        }
+
+    </script>
+    <script>
+        /*!
+         * accounting.js v0.4.2
+         * Copyright 2014 Open Exchange Rates
+         *
+         * Freely distributable under the MIT license.
+         * Portions of accounting.js are inspired or borrowed from underscore.js
+         *
+         * Full details and documentation:
+         * http://openexchangerates.github.io/accounting.js/
+         */
+
+        (function(root, undefined) {
+
+            /* --- Setup --- */
+
+            // Create the local library object, to be exported or referenced globally later
+            var lib = {};
+
+            // Current version
+            lib.version = '0.4.2';
+
+
+            /* --- Exposed settings --- */
+
+            // The library's settings configuration object. Contains default parameters for
+            // currency and number formatting
+            lib.settings = {
+                currency: {
+                    symbol : "$",		// default currency symbol is '$'
+                    format : "%s%v",	// controls output: %s = symbol, %v = value (can be object, see docs)
+                    decimal : ".",		// decimal point separator
+                    thousand : ",",		// thousands separator
+                    precision : 2,		// decimal places
+                    grouping : 3		// digit grouping (not implemented yet)
+                },
+                number: {
+                    precision : 0,		// default precision on numbers is 0
+                    grouping : 3,		// digit grouping (not implemented yet)
+                    thousand : ",",
+                    decimal : "."
+                }
+            };
+
+            /* --- Internal Helper Methods --- */
+
+            // Store reference to possibly-available ECMAScript 5 methods for later
+            var nativeMap = Array.prototype.map,
+                nativeIsArray = Array.isArray,
+                toString = Object.prototype.toString;
+
+            /**
+             * Tests whether supplied parameter is a string
+             * from underscore.js
+             */
+            function isString(obj) {
+                return !!(obj === '' || (obj && obj.charCodeAt && obj.substr));
+            }
+
+            /**
+             * Tests whether supplied parameter is an array
+             * from underscore.js, delegates to ECMA5's native Array.isArray
+             */
+            function isArray(obj) {
+                return nativeIsArray ? nativeIsArray(obj) : toString.call(obj) === '[object Array]';
+            }
+
+            /**
+             * Tests whether supplied parameter is a true object
+             */
+            function isObject(obj) {
+                return obj && toString.call(obj) === '[object Object]';
+            }
+
+            /**
+             * Extends an object with a defaults object, similar to underscore's _.defaults
+             *
+             * Used for abstracting parameter handling from API methods
+             */
+            function defaults(object, defs) {
+                var key;
+                object = object || {};
+                defs = defs || {};
+                // Iterate over object non-prototype properties:
+                for (key in defs) {
+                    if (defs.hasOwnProperty(key)) {
+                        // Replace values with defaults only if undefined (allow empty/zero values):
+                        if (object[key] == null) object[key] = defs[key];
+                    }
+                }
+                return object;
+            }
+
+            /**
+             * Implementation of `Array.map()` for iteration loops
+             *
+             * Returns a new Array as a result of calling `iterator` on each array value.
+             * Defers to native Array.map if available
+             */
+            function map(obj, iterator, context) {
+                var results = [], i, j;
+
+                if (!obj) return results;
+
+                // Use native .map method if it exists:
+                if (nativeMap && obj.map === nativeMap) return obj.map(iterator, context);
+
+                // Fallback for native .map:
+                for (i = 0, j = obj.length; i < j; i++ ) {
+                    results[i] = iterator.call(context, obj[i], i, obj);
+                }
+                return results;
+            }
+
+            /**
+             * Check and normalise the value of precision (must be positive integer)
+             */
+            function checkPrecision(val, base) {
+                val = Math.round(Math.abs(val));
+                return isNaN(val)? base : val;
+            }
+
+
+            /**
+             * Parses a format string or object and returns format obj for use in rendering
+             *
+             * `format` is either a string with the default (positive) format, or object
+             * containing `pos` (required), `neg` and `zero` values (or a function returning
+             * either a string or object)
+             *
+             * Either string or format.pos must contain "%v" (value) to be valid
+             */
+            function checkCurrencyFormat(format) {
+                var defaults = lib.settings.currency.format;
+
+                // Allow function as format parameter (should return string or object):
+                if ( typeof format === "function" ) format = format();
+
+                // Format can be a string, in which case `value` ("%v") must be present:
+                if ( isString( format ) && format.match("%v") ) {
+
+                    // Create and return positive, negative and zero formats:
+                    return {
+                        pos : format,
+                        neg : format.replace("-", "").replace("%v", "-%v"),
+                        zero : format
+                    };
+
+                    // If no format, or object is missing valid positive value, use defaults:
+                } else if ( !format || !format.pos || !format.pos.match("%v") ) {
+
+                    // If defaults is a string, casts it to an object for faster checking next time:
+                    return ( !isString( defaults ) ) ? defaults : lib.settings.currency.format = {
+                        pos : defaults,
+                        neg : defaults.replace("%v", "-%v"),
+                        zero : defaults
+                    };
+
+                }
+                // Otherwise, assume format was fine:
+                return format;
+            }
+
+
+            /* --- API Methods --- */
+
+            /**
+             * Takes a string/array of strings, removes all formatting/cruft and returns the raw float value
+             * Alias: `accounting.parse(string)`
+             *
+             * Decimal must be included in the regular expression to match floats (defaults to
+             * accounting.settings.number.decimal), so if the number uses a non-standard decimal
+             * separator, provide it as the second argument.
+             *
+             * Also matches bracketed negatives (eg. "$ (1.99)" => -1.99)
+             *
+             * Doesn't throw any errors (`NaN`s become 0) but this may change in future
+             */
+            var unformat = lib.unformat = lib.parse = function(value, decimal) {
+                // Recursively unformat arrays:
+                if (isArray(value)) {
+                    return map(value, function(val) {
+                        return unformat(val, decimal);
+                    });
+                }
+
+                // Fails silently (need decent errors):
+                value = value || 0;
+
+                // Return the value as-is if it's already a number:
+                if (typeof value === "number") return value;
+
+                // Default decimal point comes from settings, but could be set to eg. "," in opts:
+                decimal = decimal || lib.settings.number.decimal;
+
+                // Build regex to strip out everything except digits, decimal point and minus sign:
+                var regex = new RegExp("[^0-9-" + decimal + "]", ["g"]),
+                    unformatted = parseFloat(
+                        ("" + value)
+                            .replace(/\((?=\d+)(.*)\)/, "-$1") // replace bracketed values with negatives
+                            .replace(regex, '')         // strip out any cruft
+                            .replace(decimal, '.')      // make sure decimal point is standard
+                    );
+
+                // This will fail silently which may cause trouble, let's wait and see:
+                return !isNaN(unformatted) ? unformatted : 0;
+            };
+
+            /**
+             * Implementation of toFixed() that treats floats more like decimals
+             *
+             * Fixes binary rounding issues (eg. (0.615).toFixed(2) === "0.61") that present
+             * problems for accounting- and finance-related software.
+             */
+            var toFixed = lib.toFixed = function(value, precision) {
+                precision = checkPrecision(precision, lib.settings.number.precision);
+
+                var exponentialForm = Number(lib.unformat(value) + 'e' + precision);
+                var rounded = Math.round(exponentialForm);
+                var finalResult = Number(rounded + 'e-' + precision).toFixed(precision);
+                return finalResult;
+            };
+
+            /**
+             * Format a number, with comma-separated thousands and custom precision/decimal places
+             * Alias: `accounting.format()`
+             *
+             * Localise by overriding the precision and thousand / decimal separators
+             * 2nd parameter `precision` can be an object matching `settings.number`
+             */
+            var formatNumber = lib.formatNumber = lib.format = function(number, precision, thousand, decimal) {
+                // Resursively format arrays:
+                if (isArray(number)) {
+                    return map(number, function(val) {
+                        return formatNumber(val, precision, thousand, decimal);
+                    });
+                }
+
+                // Clean up number:
+                number = unformat(number);
+
+                // Build options object from second param (if object) or all params, extending defaults:
+                var opts = defaults(
+                    (isObject(precision) ? precision : {
+                        precision : precision,
+                        thousand : thousand,
+                        decimal : decimal
+                    }),
+                    lib.settings.number
+                    ),
+
+                    // Clean up precision
+                    usePrecision = checkPrecision(opts.precision),
+
+                    // Do some calc:
+                    negative = number < 0 ? "-" : "",
+                    base = parseInt(toFixed(Math.abs(number || 0), usePrecision), 10) + "",
+                    mod = base.length > 3 ? base.length % 3 : 0;
+
+                // Format the number:
+                return negative + (mod ? base.substr(0, mod) + opts.thousand : "") + base.substr(mod).replace(/(\d{3})(?=\d)/g, "$1" + opts.thousand) + (usePrecision ? opts.decimal + toFixed(Math.abs(number), usePrecision).split('.')[1] : "");
+            };
+
+
+            /**
+             * Format a number into currency
+             *
+             * Usage: accounting.formatMoney(number, symbol, precision, thousandsSep, decimalSep, format)
+             * defaults: (0, "$", 2, ",", ".", "%s%v")
+             *
+             * Localise by overriding the symbol, precision, thousand / decimal separators and format
+             * Second param can be an object matching `settings.currency` which is the easiest way.
+             *
+             * To do: tidy up the parameters
+             */
+            var formatMoney = lib.formatMoney = function(number, symbol, precision, thousand, decimal, format) {
+                // Resursively format arrays:
+                if (isArray(number)) {
+                    return map(number, function(val){
+                        return formatMoney(val, symbol, precision, thousand, decimal, format);
+                    });
+                }
+
+                // Clean up number:
+                number = unformat(number);
+
+                // Build options object from second param (if object) or all params, extending defaults:
+                var opts = defaults(
+                    (isObject(symbol) ? symbol : {
+                        symbol : symbol,
+                        precision : precision,
+                        thousand : thousand,
+                        decimal : decimal,
+                        format : format
+                    }),
+                    lib.settings.currency
+                    ),
+
+                    // Check format (returns object with pos, neg and zero):
+                    formats = checkCurrencyFormat(opts.format),
+
+                    // Choose which format to use for this value:
+                    useFormat = number > 0 ? formats.pos : number < 0 ? formats.neg : formats.zero;
+
+                // Return with currency symbol added:
+                return useFormat.replace('%s', opts.symbol).replace('%v', formatNumber(Math.abs(number), checkPrecision(opts.precision), opts.thousand, opts.decimal));
+            };
+
+
+            /**
+             * Format a list of numbers into an accounting column, padding with whitespace
+             * to line up currency symbols, thousand separators and decimals places
+             *
+             * List should be an array of numbers
+             * Second parameter can be an object containing keys that match the params
+             *
+             * Returns array of accouting-formatted number strings of same length
+             *
+             * NB: `white-space:pre` CSS rule is required on the list container to prevent
+             * browsers from collapsing the whitespace in the output strings.
+             */
+            lib.formatColumn = function(list, symbol, precision, thousand, decimal, format) {
+                if (!list || !isArray(list)) return [];
+
+                // Build options object from second param (if object) or all params, extending defaults:
+                var opts = defaults(
+                    (isObject(symbol) ? symbol : {
+                        symbol : symbol,
+                        precision : precision,
+                        thousand : thousand,
+                        decimal : decimal,
+                        format : format
+                    }),
+                    lib.settings.currency
+                    ),
+
+                    // Check format (returns object with pos, neg and zero), only need pos for now:
+                    formats = checkCurrencyFormat(opts.format),
+
+                    // Whether to pad at start of string or after currency symbol:
+                    padAfterSymbol = formats.pos.indexOf("%s") < formats.pos.indexOf("%v") ? true : false,
+
+                    // Store value for the length of the longest string in the column:
+                    maxLength = 0,
+
+                    // Format the list according to options, store the length of the longest string:
+                    formatted = map(list, function(val, i) {
+                        if (isArray(val)) {
+                            // Recursively format columns if list is a multi-dimensional array:
+                            return lib.formatColumn(val, opts);
+                        } else {
+                            // Clean up the value
+                            val = unformat(val);
+
+                            // Choose which format to use for this value (pos, neg or zero):
+                            var useFormat = val > 0 ? formats.pos : val < 0 ? formats.neg : formats.zero,
+
+                                // Format this value, push into formatted list and save the length:
+                                fVal = useFormat.replace('%s', opts.symbol).replace('%v', formatNumber(Math.abs(val), checkPrecision(opts.precision), opts.thousand, opts.decimal));
+
+                            if (fVal.length > maxLength) maxLength = fVal.length;
+                            return fVal;
+                        }
+                    });
+
+                // Pad each number in the list and send back the column of numbers:
+                return map(formatted, function(val, i) {
+                    // Only if this is a string (not a nested array, which would have already been padded):
+                    if (isString(val) && val.length < maxLength) {
+                        // Depending on symbol position, pad after symbol or at index 0:
+                        return padAfterSymbol ? val.replace(opts.symbol, opts.symbol+(new Array(maxLength - val.length + 1).join(" "))) : (new Array(maxLength - val.length + 1).join(" ")) + val;
+                    }
+                    return val;
+                });
+            };
+
+            /* --- Module Definition --- */
+            // Export accounting for CommonJS. If being loaded as an AMD module, define it as such.
+            // Otherwise, just add `accounting` to the global object
+            if (typeof exports !== 'undefined') {
+                if (typeof module !== 'undefined' && module.exports) {
+                    exports = module.exports = lib;
+                }
+                exports.accounting = lib;
+            } else if (typeof define === 'function' && define.amd) {
+                // Return the library as an AMD module:
+                define([], function() {
+                    return lib;
+                });
+            } else {
+                // Use accounting.noConflict to restore `accounting` back to its original value.
+                // Returns a reference to the library's `accounting` object;
+                // e.g. `var numbers = accounting.noConflict();`
+                lib.noConflict = (function(oldAccounting) {
+                    return function() {
+                        // Reset the value of the root's `accounting` variable:
+                        root.accounting = oldAccounting;
+                        // Delete the noConflict method:
+                        lib.noConflict = undefined;
+                        // Return reference to the library to re-assign it:
+                        return lib;
+                    };
+                })(root.accounting);
+
+                // Declare `fx` on the root (global/window) object:
+                root['accounting'] = lib;
+            }
+
+            // Root will be `window` in browser or `global` on the server:
+        }(this));
+    </script>
+</head>
+<!--sidebar-collapse-->
+<body onbeforeunload="custom_holdon(close_holdon)" class="hold-transition {skin_header} sidebar-mini" onload="reLoad();">
+<div id="baseURL" class="hidden">{base}</div>
+<div class="wrapper">
+    <header class="main-header">
+        <a href="{base}" class="logo hidden-xs hidden-sm no-padding">
+            <span class="logo-mini"><span class="glyphicon glyphicon-home"></span></span>
+            <span class="logo-lg"><img src="{base}public/images/profiles/logo_header.png" height="40px"></span>
+            <!--{logo_header}-->
+        </a>
+        <nav class="navbar navbar-static-top">
+            <div class="no-padding no-border">
+                <!--                <div class="hidden-sm hidden-lgr col-sm-2 col-xs-1 col-md-1 col-lg-1 no-padding">-->
+                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+                <a class="sidebar-title"><b class="text-uppercase">{title}</b></a>
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav" id="menu_top">
+                        {menu_top}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <nav class="navbar navbar-fixed-bottom navbar-2nd">
+            <!--untuk view desktop-->
+            <div class="no-padding no-border">
+                <div style="padding-right:0;padding-left:0;" class="col-sm-2 col-xs-2 col-md-1 col-lg-1">
+                    <div class="hidden-xs col-sm-6 col-md-6 col-lg-6 no-padding">
+                        <a href="{base}" class="btn btn__trigger-home btn__trigger--views-home"><i
+                                class="glyphicon glyphicon-home"></i></a>
+                    </div>
+                    <div class="hidden-xl hidden-xxl hidden-lg hidden-md hidden-sm col-xs-6 no-padding">
+                        <a href="{base}" class="btn btn__trigger-home-mb btn__trigger--views-home-mb"><i
+                                class="glyphicon glyphicon-home"></i></a>
+                    </div>
+                    <div class="hidden-xs col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding">
+                        <div class="text-bold text-center timbul dtime">
+                            <span class="jam"></span>
+                            <span class="blink">:</span>
+                            <span class="menit"></span>
+                        </div>
+                    </div>
+                </div>
+                <div style="padding-right:0;padding-left:0;padding-left: 17px;" class="hidden-lg col-xs-8">
+                    {info_ucd}
+                </div>
+                <div style="padding-right:0;padding-left:0;" class="col-sm-10 col-xs-2 col-md-11 col-lg-11">
+                    {float_menu_bawah}
+                </div>
+            </div>
+            <div class="hidden-sm hidden-md hidden-lg hidden-xl hidden-xxl col-xs-12 bg-black text-lime text-bold">
+            <span class="col-xs-8 no-padding">
+                <span class="hari"></span>
+                <span class="tanggal"></span>
+            </span>
+                <span class="col-xs-4 no-padding text-right">
+                <span class="jam"></span>
+                <span class="blink">:</span>
+                <span class="menit"></span>
+            </span>
+            </div>
+        </nav>
+        <nav class="hidden-xs navbar navbar-fixed-bottom navbar-3rd">
+            <div class="no-padding no-border">
+            <span class="col-lg-2 no-padding">
+                <span class="hari timbul text-bold"></span>
+                <span class="tanggal timbul text-bold"></span>
+            </span>
+                <span class="col-lg-10 no-padding">
+                {info_bottom}
+            </span>
+            </div>
+        </nav>
+
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            <!--{searching}-->
+            <ul class="sidebar-menu">
+                <!--<li class="header">MAIN NAVIGATION</li>-->
+                {menu_left}
+
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <div id="search_result"></div>
+
+        <section class="content">
+
+            <div class="row">
+                <div class="col-md-12" id="top_navigasi">
+
+                    <div class="panel panel-default">
+                        <!--                        <div class="panel-body">-->
+                        <!--                            <div class="table-responsive">-->
+                        <table class="table table-condensed no-padding no-border">
+                            <tr>
+                                {add_td}
+                                <td class="valign-m text-center" width="90px">
+                                    <span class="glyphicon glyphicon-calendar"></span> start date
+                                </td>
+                                <td>
+                                    <input id="date1" class="form-control" type="date" value="{date1}"
+                                           min="{date_min}" max="{date_max}">
+                                </td>
+
+                                <td align="left" valign="middle">
+                                    <!--<a class="btn btn-default btn-block" href="javascript:void(0)"-->
+                                    <!--   onclick="location.href='{url}';">-->
+                                    <!--    <span class="glyphicon glyphicon-remove"></span>-->
+                                    <!--</a>-->
+                                </td>
+
+                                <!--                                    </tr>-->
+
+                                <!--                                    <tr>-->
+                                <td class="valign-m text-center" width="70px">
+                                    <span class="glyphicon glyphicon-calendar"></span> to date
+                                </td>
+                                <td>
+                                    <input id="date2" class="form-control" type="date" value="{date2}"
+                                           min="{date_min}" max="{date_max}">
+                                </td>
+
+
+                                <td align="left" valign="middle">
+                                    <button type="button" id="btn_date" class="btn btn-primary btn-block" href="javascript:void(0)"
+                                       onclick="location.href='{url}?1=1&date1='+document.getElementById('date1').value+'&date2='+document.getElementById('date2').value+'';">
+                                        <i class="fa fa-arrow-right"></i> Apply
+                                    </button>
+                                </td>
+                            </tr>
+
+
+                        </table>
+                        <!--                            </div>-->
+                        <!--                        </div>-->
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    {content}
+                    <!--<div class="box box-solidddd box-info">-->
+                    <!--    <div class="box-header">-->
+                    <!--        <span class="pull-left">{sub_title}</span>-->
+                    <!--        &lt;!&ndash;<span class="pull-right">{add_link}</span>&ndash;&gt;-->
+                    <!--    </div>-->
+                    <!--    <div class="box-body" style="left:0px;overflow:auto;"></div>-->
+                    <!--    &lt;!&ndash;<div class="box-footer text-right">{onprogress_footer}</div>&ndash;&gt;-->
+                    <!--</div>-->
+
+
+                </div>
+            </div>
+
+            <!--<a href="./include-short.htm" onclick="return hs.htmlExpand(this, { outlineType: 'rounded-white',-->
+			<!--wrapperClassName: 'draggable-header', objectType: 'ajax' } )" class="highslide">-->
+            <!--    AJAX content-->
+            <!--</a>-->
+
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <!--modal-->
+    <!--<div class='modal fade' role='dialog'>-->
+    <div id='myModal' class='modal {bg_modal} fade' role='dialog'>
+        <div class='modal-dialog {lebar_modal}'>
+            <div class='modal-content'>
+                {isi_modal}
+                <!-- Content will be loaded here from 'remote.php' file -->
+            </div>
+        </div>
+    </div>
+    <!--</div>-->
+    <!--modal-end-->
+    <footer class="main-footer overflow-h">
+        <div class="clear-fix"></div>
+        {footer}
+    </footer>
+    <!--{float_menu_bawah}-->
+
+</div>
+
+<div>
+    <iframe id="tray" name="tray" style="display:none;width:100%;height:120px;" src="{base}_tray/index"></iframe>
+    <iframe name="result" id="result" style="resize: both;display: {display_iframe};width: 100%;height:800px;"></iframe>
+</div>
+<div id='myModal' class='modal {bg_modal} fade' role='dialog'>
+    <div class='modal-dialog {lebar_modal}'>
+        <div class='modal-content'>
+            <!--{isi_modal}-->
+            <!-- Content will be loaded here from 'remote.php' file -->
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    hs.Expander.prototype.onAfterGetContent = function (sender) {
+    console.log();
+
+    }
+</script>
+
+<script src="{cdn_suport}AdminLTE-2.3.11/plugins/slimScroll/jquery.slimscroll.min.js?v={local_version}"></script>
+<script src="{cdn_suport}AdminLTE-2.3.11/dist/js/app.min.js?v={local_version}"></script>
+<script src="{cdn_suport}multi-step-modal-master/multi-step-modal.js?v={local_version}"></script>
+<script src="{cdn_suport}bootstrap-fileinput-master/js/fileinput.min.js?v={local_version}"></script>
+<script src="{cdn_suport}bootstrap-toggle-master/js/bootstrap-toggle.min.js?v={local_version}"></script>
+<script src="{base}assets/custom/hippo_ajax.js?v={local_version}"></script>
+<script src="{base}assets/custom/JS.js?v={local_version}"></script>
+
+<!--barcode reader-->
+<script type="text/javascript">
+
+    if (window.location.hash.substr(1, 2) == "zx") {
+        var bc = window.location.hash.substr(3);
+        localStorage["barcode"] = decodeURI(window.location.hash.substr(3))
+        window.close();
+        self.close();
+        window.location.href = "about:blank";//In case self.close isn't allowed
+    }
+</script>
+<SCRIPT type="text/javascript">
+    var maxdate = '{date_max}';
+    var date1 = $('#date1').val();
+    var date2 = $('#date2').val();
+
+    // $("#date2").attr('disabled',true);
+    if(date2 == '')
+    {
+        $("#btn_date").attr('disabled',true);
+    }
+    else {
+        $("#btn_date").attr('disabled',false);
+    }
+
+    $("#date1").change(function() {
+        var date1_new = $("#date1").val();
+
+        var d = new Date(date1_new);
+        var date = d.getDate();
+        var month = d.getMonth() + 1; // Since getMonth() returns month from 0-11 not 1-12
+        var year = d.getFullYear();
+        if (month < 10) month = '0' + month;
+
+        var lastday = function(y,m){
+            return  new Date(y, m, 0).getDate('dd');
+        }
+        var lastmonthday = lastday(year,month);
+        var date2_max = year + "-" + month + "-" + lastmonthday;
+
+        if(date2 == '')
+        {
+            $("#date2").val(maxdate);
+            $("#date2").prop('min',date1_new);
+        }
+
+        // $("#date2").attr('disabled',true).val(date2_max);
+        $("#btn_date").attr('disabled',false);
+    });
+
+    var changingHash = false;
+
+    function onbarcode(event) {
+        switch (event.type) {
+            case "hashchange": {
+                if (changingHash == true) {
+                    return;
+                }
+                var hash = window.location.hash;
+                if (hash.substr(0, 3) == "#zx") {
+                    hash = window.location.hash.substr(3);
+                    changingHash = true;
+                    window.location.hash = event.oldURL.split("\#")[1] || ""
+                    changingHash = false;
+                    processBarcode(hash);
+                }
+
+                break;
+            }
+            case "storage": {
+                window.focus();
+                if (event.key == "barcode") {
+                    window.removeEventListener("storage", onbarcode, false);
+                    processBarcode(event.newValue);
+                }
+                break;
+            }
+            default: {
+                console.log(event)
+                break;
+            }
+        }
+    }
+
+    window.addEventListener("hashchange", onbarcode, false);
+
+    function getScan() {
+        var href = window.location.href;
+        var ptr = href.lastIndexOf("#");
+        if (ptr > 0) {
+            href = href.substr(0, ptr);
+        }
+        window.addEventListener("storage", onbarcode, false);
+        setTimeout('window.removeEventListener("storage", onbarcode, false)', 15000);
+        localStorage.removeItem("barcode");
+        //window.open  (href + "#zx" + new Date().toString());
+
+        if (navigator.userAgent.match(/Firefox/i)) {
+            //Used for Firefox. If Chrome uses this, it raises the "hashchanged" event only.
+            window.location.href = ("zxing://scan/?ret=" + encodeURIComponent(href + "#zx{CODE}"));
+        } else {
+            //Used for Chrome. If Firefox uses this, it leaves the scan window open.
+            window.open("zxing://scan/?ret=" + encodeURIComponent(href + "#zx{CODE}"));
+        }
+    }
+
+    function processBarcode(bc) {
+        document.getElementById("scans").innerHTML += "<div>" + bc + "</div>";
+        //put your code in place of the line above.
+    }
+
+</SCRIPT>
+
+
+<script>
+
+    $('#myModal').on('hidden.bs.modal', function () {
+        $(this).removeData('bs.modal');
+    });
+
+    $('body').tooltip({selector: '[data-toggle=tooltip]'});
+    //    $('data-toggle').tooltip({title:"Event", trigger:"focus or hover only", delay:{hide:100}});
+
+
+    //    var loading_xs = function loading() {
+    //        document.getElementById("loading-div").style.display = "none";
+    //    };
+    //
+    //    jQuery(window).load(function () {
+    //        setTimeout(loading_xs, 500);
+    //
+    //        setTimeout(function () {
+    //            document.getElementById("loading-div").style.display = "block";
+    //            document.getElementById("loading-div").style.display = "none";
+    //        }, 10000);
+    //
+    //    });
+
+    checked = false;
+
+    function checkedAll(frm1) {
+        var aa = document.getElementById(frm1);
+        if (checked == false) {
+            checked = true
+        } else {
+            checked = false
+        }
+        for (var i = 0; i < aa.elements.length; i++) {
+            aa.elements[i].checked = checked;
+        }
+    }
+
+    function load() {
+        document.getElementById('tray').src = '{base}_tray/';
+    }
+
+    function reLoad() {
+        setInterval("load()", 30000);
+    }
+
+    loadQtips();
+</script>
+{scriptBottom}
+</body>
+</html>

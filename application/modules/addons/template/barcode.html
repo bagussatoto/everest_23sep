@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{title}</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <!-- Template Name barcode.html -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!--<link id="favicon" rel="icon" type='image/x-icon' href="{base}favicon.png">-->
+    <link id="favicon" rel="icon" type='image/x-icon' href="{favicon}?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-3.3.7-dist/css/bootstrap.min.css?v={local_version}">
+    <!-- Font Awesome -->
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css?v={local_version}">-->
+    <link rel="stylesheet" href="{cdn_suport}Font-Awesome-master/css/font-awesome.min.css?v={local_version}">
+    <!-- Ionicons -->
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css?v={local_version}">-->
+    <link rel="stylesheet" href="{cdn_suport}ionicons-master/css/ionicons.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}simple-line-icons-master/css/simple-line-icons.css?v={local_version}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/dist/css/AdminLTE.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap3-dialog-master/dist/css/bootstrap-dialog.min.css?v={local_version}">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/dist/css/skins/_all-skins.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-fileinput-master/css/fileinput.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-toggle-master/css/bootstrap-toggle.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}qtip/jquery.qtip.min.css?v={local_version}">
+    <!--<link rel="stylesheet" href="../../assets/suport/SmartCart-master/dist/css/smart_cart.min.css?v={local_version}">-->
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-xlgrid-master/bootstrap-xlgrid.min.css?v={local_version}">
+    <link rel="stylesheet" href="{base}assets/custom/custom.min.css?v={local_version}">
+    <link rel="stylesheet" href="{base}/assets/custom/dialog.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}numpad/jquery.numpad.grosir2.css?v={local_version}">
+    <!--<link rel="stylesheet" href="{cdn_suport}jquery-mobile/jquery.mobile-1.4.5.min.css?v={local_version}">-->
+    <link rel="stylesheet" href="{cdn_suport}HoldOn/HoldOn.min.css?v={local_version}">
+
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-select-1.13.9/dist/css/bootstrap-select.css?v={local_version}">
+
+    <link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/media/css/dataTables.bootstrap.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/media/css/jquery.dataTables_themeroller.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/yadcf-0.9.3/jquery.dataTables.yadcf.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/extensions/Buttons/css/buttons.dataTables.css?v={local_version}">
+
+
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-3.3.7-dist/js/bootstrap.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}numpad/jquery.numpad.grosir2.js?v={local_version}"></script>
+    <!--<script src="{cdn_suport}qr/.js?v={local_version}"></script>-->
+    <script src="{base}assets/custom/custom.js?v={local_version}"></script>
+    <script src="{cdn_suport}HoldOn/HoldOn.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}qtip/jquery.qtip.min.js?v={local_version}"></script>
+
+    <script src="{base}assets/custom/JsBarcode/JsBarcode.all.min.js?v={local_version}"></script>
+
+    <script src="{cdn_suport}DataTables-1.10.13/media/js/jquery.dataTables.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/media/js/dataTables.bootstrap.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/media/js/jquery.highlight.js?v={local_version}"></script>
+
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/dataTables.buttons.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.colVis.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.print.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.html5.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.flash.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/yadcf-0.9.3/jquery.dataTables.yadcf.js?v={local_version}"></script>
+
+    <!--{head}-->
+</head>
+<!--membuat sidebar colaps bodynya pakai yg ini-->
+<!--<body class="hold-transition skin-yellow sidebar-mini sidebar-collapse">-->
+
+<!--<body class="hold-transition skin-yellow sidebar-mini" onload="reLoad();">-->
+<body class="hold-transition skin-yellow sidebar-mini" onload="reLoad();">
+<!--tanda loading pas sedang ngeload halaman-->
+<div id="baseURL" class="hidden">{base}</div>
+<div id="loading-div">
+<div id="progress-bar"></div>
+<div id="loading"></div>
+</div>
+<!--end---tanda loading pas sedang ngeload halaman-->
+<div class="wrapper">
+
+    <header class="main-header">
+        <!-- Logo -->
+        <a href="{base}" class="logo hidden-xs hidden-sm no-padding">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini"><span class="glyphicon glyphicon-home"></span></span>
+            <!-- logo for regular state and mobile devices -->
+            <!--<span class="logo-lg"><img src="{base}public/images/profiles/logo_header.png" height="40px"></span>-->
+<!--            <span class="logo-lg"><img src="{base}public/images/profiles/logo_header.png" height="40px"></span>-->
+            <span class="logo-lg">{logo_header}</span>
+        </a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top">
+            <div class="no-padding no-border">
+<!--                <div class="hidden-sm hidden-lg col-sm-2 col-xs-1 col-md-2 col-lg-2 no-padding">-->
+                    <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                        <span class="sr-only">Toggle navigation</span>
+                    </a>
+                    <a class="sidebar-title"><b class="text-uppercase">{title}</b></a>
+<!--                </div>-->
+
+<!--                <div class="col-sm-8 col-xs-11 col-md-8 col-lg-8 no-padding text-center">-->
+<!--                <span class="hidden-mdx hidden-lgx hidden-xlx hidden-xxlx">-->
+<!--                    <span class="navbar-brand text-center no-border" style="padding:8px;">-->
+<!--                        <a href="{base}">-->
+<!--                            <a class="btn btn-tool text-white" href="JavaScript:void(0)" onclick="location.href='{btn_back}';"><span class="glyphicon glyphicon-arrow-left text-green"></span></a>-->
+<!--                            <span class="text-white">{title} <small style="color:#eeeeee;text-transform: lowercase;">{sub_title}</small></span>-->
+<!--                        </a>-->
+<!--                    </span>-->
+<!--                </span>-->
+<!--                </div>-->
+            </div>
+        </nav>
+        <nav class="navbar navbar-fixed-bottom navbar-2nd">
+            <!--untuk view desktop-->
+            <div class="no-padding no-border">
+                <div style="padding-right:0;padding-left:0;" class="col-sm-2 col-xs-2 col-md-1 col-lg-1">
+                    <div class="hidden-xs col-sm-6 col-md-6 col-lg-6 no-padding">
+                        <a href="{base}" class="btn btn__trigger-home btn__trigger--views-home"><i class="glyphicon glyphicon-home"></i></a>
+                    </div>
+                    <div class="hidden-xl hidden-xxl hidden-lg hidden-md hidden-sm col-xs-6 no-padding">
+                        <a href="{base}" class="btn btn__trigger-home-mb btn__trigger--views-home-mb"><i class="glyphicon glyphicon-home"></i></a>
+                    </div>
+                    <div class="hidden-xs col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding">
+                        <div class="text-bold text-center timbul dtime">
+                            <span class="jam"></span>
+                            <span class="blink">:</span>
+                            <span class="menit"></span>
+                        </div>
+                    </div>
+                </div>
+                <div style="padding-right:0;padding-left:0;padding-left: 17px;" class="hidden-lg col-xs-8">
+                    {info_ucd}
+                </div>
+                <div style="padding-right:0;padding-left:0;" class="col-sm-10 col-xs-2 col-md-11 col-lg-11">
+                    {float_menu_bawah}
+                </div>
+            </div>
+            <div class="hidden-sm hidden-md hidden-lg hidden-xl hidden-xxl col-xs-12 bg-black text-lime text-bold">
+            <span class="col-xs-8 no-padding">
+                <span class="hari"></span>
+                <span class="tanggal"></span>
+            </span>
+            <span class="col-xs-4 no-padding text-right">
+                <span class="jam"></span>
+                <span class="blink">:</span>
+                <span class="menit"></span>
+            </span>
+            </div>
+        </nav>
+        <nav class="hidden-xs navbar navbar-fixed-bottom navbar-3rd">
+            <div class="no-padding no-border">
+            <span class="col-lg-2 no-padding">
+                <span class="hari timbul text-bold"></span>
+                <span class="tanggal timbul text-bold"></span>
+            </span>
+            <span class="col-lg-10 no-padding">
+                {info_bottom}
+            </span>
+            </div>
+        </nav>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+{searching}
+            <ul class="sidebar-menu ">
+                <!--<li class="header">MAIN NAVIGATION</li>-->
+                {menu_left}
+
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <div id="search_result"></div>
+        <!-- Main content -->
+        <section class="content">
+
+            <div class="row">
+                <div class="col-md-12">
+                    {error_msg}
+                </div>
+                <div class="col-md-12">
+                    {navigasi_top}
+                    <div id="main_page" class="box box-primary">
+                        <div class="box-header">
+                            <span class="col-sm-3">{data_active_title}</span>
+                            <span class="col-sm-4 text-center"><ul class="pager no-padding"
+                                                                  style="padding:0px;margin:0px;">{link_str}</ul></span>
+
+                        </div>
+                        <div class="box-body" style="position:relative;left:0;overflow:auto;">
+                            <!--<div _class="col-lg-3" class="{reg_folders_classname}" id="reg_folders"-->
+                                 <!--&lt;!&ndash;style="background:#f0f0f7;">{folders}&ndash;&gt;-->
+                            <!--</div>-->
+                            <!--<div style="padding-left: 15px;">-->
+                                <!--<a class="btn btn-info" href="JavaScript:void(0)" onclick="location.href='{btn_generete}';"><i class="fas fa-barcode"></i></span>Generate barcode</a>-->
+                            <!--</div>-->
+                            <div _class="col-lg-9" class="{reg_items_classname}" id="reg_items">{data_active_content}</div>
+
+                        </div>
+                        <!--<div class="box-footer text-center">{data_active_footer}</div>-->
+                    </div>
+
+                    <div class="panel-body pull-right" style="background:#f0f0f0;">
+                        <a class="btn btn-default" href=#content title="ke atas" data-toggle="tooltip" data-placement="top"><span class="glyphicon glyphicon-chevron-up"></span> atas</a>
+                        <a id='printBtn' class="btn btn-default" href="JavaScript:void(0)" title="tampilkan versi cetak" data-toggle="tooltip" data-placement="top" onclick="createPrintVersion(window.location.href)"><span class="glyphicon glyphicon-print"></span> cetak</a>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <!--modal-->
+    <!--<div class='modal fade' role='dialog'>-->
+    <div id='myModal' class='modal {bg_modal} fade' role='dialog'>
+        <div class='modal-dialog {lebar_modal}'>
+            <div class='modal-content'>
+                {isi_modal}
+                <!-- Content will be loaded here from 'remote.php' file -->
+            </div>
+        </div>
+    </div>
+    <!--</div>-->
+    <!--modal-end-->
+    <footer class="main-footer overflow-h">
+        <div class="clear-fix"></div>
+        {footer}
+        <!--<div class="pull-right hidden-xs">-->
+        <!--<b>Version</b> 2.3.5-->
+        <!--</div>-->
+        <!--<strong>Copyright &copy; 2014-2016 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights
+        -->
+        <!--reserved.-->
+        <!--div class="pull-right">{stop_time}</div-->
+    </footer>
+
+    <!-- Control Sidebar menu_right_isi-->
+    <aside class="control-sidebar control-sidebar-dark">
+        {menu_right_isi}
+    </aside>
+    <!-- /.control-sidebar -->
+    <!-- Add the sidebar's background. This div must be placed
+         immediately after the control sidebar -->
+    <div class="control-sidebar-bg"></div>
+</div>
+<div>
+    <iframe id="tray" name="tray" style="display:none;width:100%;height:120px;" src="{base}_tray/index"></iframe>
+    <iframe name="result" id="result" style="resize: both;display: {display_iframe};width: 100%;height:800px;"></iframe>
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 2.2.3 -->
+<!--<script src="../../assets/suport/AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v={local_version}"></script>-->
+<!-- jQuery UI 1.11.4 -->
+<!--<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js?v={local_version}"></script>-->
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+    /*$.widget.bridge('uibutton', $.ui.button);*/
+</script>
+<script src="{cdn_suport}AdminLTE-2.3.11/plugins/slimScroll/jquery.slimscroll.min.js?v={local_version}"></script>
+<script src="{cdn_suport}AdminLTE-2.3.11/dist/js/app.min.js?v={local_version}"></script>
+<script src="{cdn_suport}multi-step-modal-master/multi-step-modal.js?v={local_version}"></script>
+
+<script src="{cdn_suport}bootstrap-fileinput-master/js/fileinput.min.js?v={local_version}"></script>
+<script src="{cdn_suport}bootstrap-toggle-master/js/bootstrap-toggle.min.js?v={local_version}"></script>
+
+<script src="{base}assets/custom/hippo_ajax.js?v={local_version}"></script>
+<script src="{base}assets/custom/JS.js?v={local_version}"></script>
+
+<!--barcode reader-->
+<script type="text/javascript">
+    if (window.location.hash.substr(1, 2) == "zx") {
+        var bc = window.location.hash.substr(3);
+        localStorage["barcode"] = decodeURI(window.location.hash.substr(3))
+        window.close();
+        self.close();
+        window.location.href = "about:blank";//In case self.close isn't allowed
+    }
+</script>
+<SCRIPT type="text/javascript">
+    var changingHash = false;
+
+    function onbarcode(event) {
+        switch (event.type) {
+            case "hashchange": {
+                if (changingHash == true) {
+                    return;
+                }
+                var hash = window.location.hash;
+                if (hash.substr(0, 3) == "#zx") {
+                    hash = window.location.hash.substr(3);
+                    changingHash = true;
+                    window.location.hash = event.oldURL.split("\#")[1] || ""
+                    changingHash = false;
+                    processBarcode(hash);
+                }
+
+                break;
+            }
+            case "storage": {
+                window.focus();
+                if (event.key == "barcode") {
+                    window.removeEventListener("storage", onbarcode, false);
+                    processBarcode(event.newValue);
+                }
+                break;
+            }
+            default: {
+                console.log(event)
+                break;
+            }
+        }
+    }
+
+    window.addEventListener("hashchange", onbarcode, false);
+
+    function getScan() {
+        var href = window.location.href;
+        var ptr = href.lastIndexOf("#");
+        if (ptr > 0) {
+            href = href.substr(0, ptr);
+        }
+        window.addEventListener("storage", onbarcode, false);
+        setTimeout('window.removeEventListener("storage", onbarcode, false)', 15000);
+        localStorage.removeItem("barcode");
+        //window.open  (href + "#zx" + new Date().toString());
+
+        if (navigator.userAgent.match(/Firefox/i)) {
+            //Used for Firefox. If Chrome uses this, it raises the "hashchanged" event only.
+            window.location.href = ("zxing://scan/?ret=" + encodeURIComponent(href + "#zx{CODE}"));
+        } else {
+            //Used for Chrome. If Firefox uses this, it leaves the scan window open.
+            window.open("zxing://scan/?ret=" + encodeURIComponent(href + "#zx{CODE}"));
+        }
+    }
+
+    function processBarcode(bc) {
+        document.getElementById("scans").innerHTML += "<div>" + bc + "</div>";
+        //put your code in place of the line above.
+    }
+
+</SCRIPT>
+
+
+<script>
+
+    $('#myModal').on('hidden.bs.modal', function () {
+        $(this).removeData('bs.modal');
+    });
+
+    $('body').tooltip({selector: '[data-toggle=tooltip]'});
+    //    $('data-toggle').tooltip({title:"Event", trigger:"focus or hover only", delay:{hide:100}});
+
+
+    var loading_xs = function loading() {
+        document.getElementById("loading-div").style.display = "none";
+    };
+
+    jQuery(window).load(function () {
+        setTimeout(loading_xs, 500);
+
+        setTimeout(function () {
+            document.getElementById("loading-div").style.display = "block";
+            document.getElementById("loading-div").style.display = "none";
+        }, 10000);
+
+    });
+
+    checked = false;
+
+    function checkedAll(frm1) {
+        var aa = document.getElementById(frm1);
+        if (checked == false) {
+            checked = true
+        } else {
+            checked = false
+        }
+        for (var i = 0; i < aa.elements.length; i++) {
+            aa.elements[i].checked = checked;
+        }
+    }
+
+    function detectEnter() {
+        var keyCode = event.keyCode ? event.keyCode : event.which ? event.which
+            : event.charCode;
+
+        if (keyCode == 13) {
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function load() {
+        document.getElementById('tray').src = '{base}_tray/';
+    }
+
+    function reLoad() {
+        setInterval("load()", 30000);
+    }
+    function createPrintVersion(url){
+        var oldUrl=url;
+        var tmpUrl=url.replace("mode=view","&&");
+        tmpUrl=tmpUrl.replace("#content","");
+        tmpUrl=tmpUrl.replace("#printBtn","");
+        if(tmpUrl.indexOf('?')>-1){
+            var newUrl=tmpUrl+'&mode=print';
+        }else{
+            var newUrl=tmpUrl+'?mode=print';
+        }
+        window.open(newUrl);
+    }
+</script>
+<script>
+//    $("th").resizable();
+</script>
+</body>
+</html>

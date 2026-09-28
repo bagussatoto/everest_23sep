@@ -1,0 +1,30 @@
+<div style="padding-top:6px;" class="row {class_projectSudahStart}">
+    {taskListNew}
+    {projectData}
+    <div class="col-md-12" >
+        <div class="box box-info">
+            <div class="box-header"><h3>DAFTAR PENUGASAN {btnTambahTugas}</h3></div>
+            <div class="box-body no-padding">{tasklist}</div>
+    </div>
+        <div class="box box-warning">
+            <div class="box-header">HISTORY PELAKSANA</div>
+            <div class="box-body">{projectDataDetails}</div>
+</div>
+    </div>
+</div>
+
+<div style="padding-top:6px;" class="row {class_projectBelumStart}">
+    {projectBelumStart}
+</div>
+
+<script>
+    top.$(".selectpicker").selectpicker('refresh');
+    top.init_tab();
+</script>
+
+{scriptBottomCtr}
+
+
+
+
+

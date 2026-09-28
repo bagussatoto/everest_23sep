@@ -1,0 +1,2675 @@
+<?php
+
+if (isset($items)) {
+
+    if (isset($fixedNoteTop)) {
+        echo "<div class='alert alert-danger' style='margin-top: 0px;font-size: 20px;'>";
+        echo "<span>$fixedNoteTop</span>";
+        echo "</div>";
+    }
+
+    if (isset($label_info_pph)) {
+        echo "<div class='alert alert-info text-bold' style='margin-top: 0px;margin-bottom: 5px;'>";
+        echo "<span style='font-size: 20px;'>$label_info_pph</span>";
+        if ($label_info_pph_2 != NULL) {
+            echo "<br><span style='font-size: 18px;'>$label_info_pph_2</span>";
+        }
+        if ($sub_label_freelancer != NULL) {
+            echo "<br><span style='font-size: 18px;'>$sub_label_freelancer</span>";
+        }
+// START OF COMPLETE REPEATED LOGIC
+        if ($sub_label_info_pph != NULL) {
+            echo "<br><span style='font-size: 15px;color:red;'>$sub_label_info_pph</span>";
+        }
+        echo "</div>";
+    }
+
+    $pajakOption = isset($_SESSION[$cCode]['main']['pajakOption']) ? $_SESSION[$cCode]['main']['pajakOption'] : '';
+    if ($pajakOption == 'pph_final_umkm') {
+        $no_suket = isset($_SESSION[$cCode]['main']['no_suket']) ? $_SESSION[$cCode]['main']['no_suket'] : '';
+        $file_suket = isset($_SESSION[$cCode]['main']['file_suket']) ? $_SESSION[$cCode]['main']['file_suket'] : '';
+
+        echo "<div class='alert alert-warning' style='margin-top: 5px; margin-bottom: 5px;'>";
+        echo "<div class='row'>";
+        echo "<div class='col-md-6'>";
+        echo "<label>Nomor Suket PP 55/2022:</label>";
+        echo "<input type='text' class='form-control' value='$no_suket' placeholder='Masukkan nomor Suket...' onblur=\"top.$('#result').load('" . base_url() . "biaya/_shoppingCart/addReff/?key=no_suket&val='+encodeURIComponent(this.value));\">";
+        echo "</div>";
+
+        echo "<div class='col-md-6'>";
+        echo "<label>Upload Salinan Suket:</label>";
+        if (strlen($file_suket) > 0) {
+            echo " <a href='$file_suket' target='_blank' class='btn btn-xs btn-success'><i class='fa fa-eye'></i> Lihat File</a>";
+        }
+        echo "<form id='myFormSuket' method='post' enctype='multipart/form-data' action='" . base_url() . "biaya/_shoppingCart/recordSuketFile' target='result'>";
+        echo "<input type='file' name='file' class='form-control' onchange=\"document.getElementById('myFormSuket').submit();swal({'text':'uploading suket...',showConfirmButton:false,timer:5000});\">";
+        echo "</form>";
+        echo "</div>";
+        echo "</div>";
+        echo "</div>";
+    }
+
+    $showItems = isset($showItems) && strlen($showItems) > 0 && $showItems == "false" ? false : "true";
+// END OF COMPLETE REPEATED LOGIC
+
+    if (sizeof($items) > 0) {
+
+        /*===bagian logic tambahan taxes untuk payment src*/
+        if (isset($shopingCartAddTax) && sizeof($shopingCartAddTax) > 0) {
+            echo "<div class=''>";
+            echo "<div class='text-center text-bold bg-red text-uppercase'> Tipe konsumen </div>";
+            foreach ($shopingCartAddTax["fields"] as $sels => $label) {
+                $checked = $checkTaxes == $sels ? "checked" : "";
+                echo "<label class='badge text-uppercase' style='padding:4px 6px 4px 6px;color:#454545;background:#e0e0e0;'>
+                              <input type='radio' name='switch_pajak' $checked value='$sels'  onclick=\"$('#result').load('" . $shopingCartAddTaxAction . "/?val='+this.value+'&p=$sels');\">
+                              <span>$label</span>
+                          </label>";
+            }
+            echo "</div>";
+        }
+
+        /*============end tambahan*/
+        $jmlKolomHeader = sizeof($itemLabels) + 2;
+
+        echo "<div class='table-responsive no-padding no-border'>";
+        /*=============== BADGE PPN / NON PPN =================*/
+        if (sizeof($arrHeaderElement) > 0) {
+            foreach ($arrHeaderElement as $el => $eDetails) {
+                $elLabel = $eDetails['label'];
+                $elClass = $eDetails['class'];
+                echo "<div class='$elClass'>";
+                echo "<div class='text-center text-bold bg-yellow'> $elLabel </div>";
+                foreach ($eDetails['subElements'] as $sels => $seDetails) {
+                    $selsLabel = $seDetails['label'];
+                    $selsValue = $seDetails['value'];
+                    $selsMainTarget = $seDetails['srcMain'];
+                    $selsItemsTarget = $seDetails['srcItem'];
+                    $mainOverwrite = $seDetails['overWriteMain'];
+                    $currentPPN = isset($main[$selsMainTarget]) ? $main[$selsMainTarget] : 0;
+                    $ppnPersenItems = isset($items[0]['ppnVendor']) ? $items[0]['ppnVendor'] : 0;
+                    $autoTerapkan = ($ppnPersenItems != $currentPPN) && ($selsValue == $currentPPN) ? true : false;
+                    $checked = $selsValue == $currentPPN ? "checked" : "";
+
+                    $jenisTr = isset($arrHeaderElementJenis) ? $arrHeaderElementJenis : "";
+                    // cekhitam($checked."$currentPPN");
+                    echo "<label class='badge text-uppercase' style='padding:4px 6px 4px 6px;color:#454545;background:#e0e0e0;'>
+                              <input type='radio' name='switch_ppn' value='$selsValue' $checked 
+                              onclick=\"$('#result').load('" . MODUL_PATH . "_processSelectProductPpn/select/$jenisTr?ppn='+this.value+'&ppnTargetItems=$selsItemsTarget&ppnTargetMain=$selsMainTarget&overWriteMain=$mainOverwrite');\">
+                              <span>$selsLabel</span>
+                          </label>";
+                }
+                echo "</div>";
+            }
+        }
+        /*=============== BADGE PPN / NON PPN =================*/
+
+
+        /**====================== UNTUK HANDLING JENIS CASHBACK ===============*/
+
+        echo "<div class='overflow-h' style=\"margin-bottom: 10px; border-radius: 5px 5px 0 0;\">";
+
+        /** ------------------------------------------------------
+         * milih jenis cashback
+         * ------------------------------------------------------*/
+        if (sizeof($shopingCartCashbackType) > 0) {
+            foreach ($shopingCartCashbackType as $el => $eDetails) {
+                $elLabel = $eDetails['label'];
+                $elClass = $eDetails['class'];
+                echo "<div class='$elClass' style='border: 1px solid #d0d0d0; border-radius: 5px;'>";
+                echo "<div class='text-center text-bold bg-yellow'> $elLabel </div>";
+                foreach ($eDetails['subElements'] as $sels => $seDetails) {
+                    $selsLabel = $seDetails['label'];
+                    $selsValue = $seDetails['value'];
+                    $selsMainTarget = $seDetails['srcMain'];
+                    $selsItemsTarget = $seDetails['srcItem'];
+                    $mainOverwrite = $seDetails['overWriteMain'];
+                    $currentPPN = isset($main[$selsMainTarget]) ? $main[$selsMainTarget] : 0;
+                    $ppnPersenItems = isset($items[0]['ppnVendor']) ? $items[0]['ppnVendor'] : 0;
+                    $autoTerapkan = ($ppnPersenItems != $currentPPN) && ($selsValue == $currentPPN) ? true : false;
+                    $checked = $selsValue == $currentPPN ? "checked" : "";
+
+                    $jenisTr = isset($arrHeaderElementJenis) ? $arrHeaderElementJenis : "";
+                    // cekhitam($checked."$currentPPN");
+                    echo "<label class='badge text-uppercase' style='padding:4px 6px 4px 6px;color:#454545;background:#e0e0e0;'>
+                              <input type='radio' name='switch_ppn' value='$selsValue' $checked 
+                              onclick=\"$('#result').load('" . MODUL_PATH . "_processSelectProductPpn/cashback/$jenisTr?val='+this.value+'&key=$selsMainTarget&name=$sels');\">
+                              <span>$selsLabel</span>
+                          </label>";
+                }
+                echo "</div>";
+            }
+        }
+
+        /*------------------------------------------------------
+         *   untuk handlink metode finishing
+         * ----------------------------------------------*/
+        if(sizeof($shoppingCartCashbackFinishing) > 0 && isset($_SESSION[$cCode]['main']['type_cashback']) && $_SESSION[$cCode]['main']['type_cashback'] == 'produk'){
+            foreach ($shoppingCartCashbackFinishing as $el => $eDetails) {
+                $elLabel = $eDetails['label'];
+                $elClass = $eDetails['class'];
+                echo "<div class='$elClass' style='border: 1px solid #d0d0d0; border-radius: 5px;'>";
+                echo "<div class='text-center text-bold bg-green'> $elLabel </div>";
+                foreach ($eDetails['subElements'] as $sels => $seDetails) {
+                    $selsLabel = $seDetails['label'];
+                    $selsValue = $seDetails['value'];
+                    $selsMainTarget = $seDetails['srcMain'];
+                    $selsItemsTarget = $seDetails['srcItem'];
+                    // $mainOverwrite = $seDetails['overWriteMain'];
+                    $currentPPN = isset($main[$selsMainTarget]) ? $main[$selsMainTarget] : 0;
+                    $ppnPersenItems = isset($items[0]['ppnVendor']) ? $items[0]['ppnVendor'] : 0;
+                    $autoTerapkan = ($ppnPersenItems != $currentPPN) && ($selsValue == $currentPPN) ? true : false;
+                    $checked = $selsValue == $currentPPN ? "checked" : "";
+
+                    $jenisTr = isset($arrHeaderElementJenis) ? $arrHeaderElementJenis : "";
+                    // cekhitam($checked."$currentPPN");
+                    echo "<label class='badge text-uppercase' style='padding:4px 6px 4px 6px;color:#454545;background:#e0e0e0;'>
+                              <input type='radio' name='finishing' value='$selsValue' $checked 
+                              onclick=\"$('#result').load('" . MODUL_PATH . "_processSelectProductPpn/finishing/$jenisTr?val='+this.value+'&key=$selsMainTarget&name=$sels');\">
+                              <span>$selsLabel</span>
+                          </label>";
+                }
+                echo "</div>";
+            }
+        }
+
+        /** ------------------------------------------------------
+         * milih valas
+         * ------------------------------------------------------*/
+        if (isset($shoppingCartCashbackAdd) && (sizeof($shoppingCartCashbackAdd) > 0) && (sizeof($shoppingCartCashbackAdd["fields"]) > 0)) {
+            if (isset($shoppingCartCashbackAdd["label"])) {
+                $label_judul = $shoppingCartCashbackAdd["label"];
+            }
+            else {
+                $label_judul = "&nbsp;";
+            }
+            $vlClass = $shoppingCartCashbackAdd['class'];
+            $vlMdl = $shoppingCartCashbackAdd['mdlName'];
+            $vlKey = $shoppingCartCashbackAdd['key'];
+            $vlSelected = $shoppingCartCashbackAdd['selectedType_valas'];
+            echo "<div class='$elClass' style='border: 1px solid #d0d0d0; border-radius: 5px;'>";
+            $str_valas .= "<div class='text-center text-bold bg-red text-uppercase'> $label_judul</div>";
+            foreach ($shoppingCartCashbackAdd["fields"] as $sels => $label) {
+                $checked = ($vlSelected == $sels) ? "checked" : "";
+                $str_valas .= "<label class='badge text-uppercase' style='padding:4px 6px 4px 6px;color:#454545;background:#e0e0e0;'>
+                              <input type='radio' name='switch_valas' $checked value='$sels'  
+                              onclick=\"$('#result').load('" . $shoppingCartCashbackAddAction . "/?val='+this.value+'&p=$sels&mdl=$vlMdl&key=$vlKey');\">
+                              <span>$label</span>
+                          </label>&nbsp;";
+            }
+            $str_valas .= "</div>";
+            echo $str_valas;
+        }
+
+        /** ------------------------------------------------------
+         * milih produk
+         * ------------------------------------------------------*/
+        if (isset($shoppingCartCashbackAddProduct) && (sizeof($shoppingCartCashbackAddProduct) > 0) && isset($_SESSION[$cCode]['main']['type_cashback']) && $_SESSION[$cCode]['main']['type_cashback'] == 'produk') {
+            if (isset($shoppingCartCashbackAddProduct["label"])) {
+                $label_judul = $shoppingCartCashbackAddProduct["label"];
+            }
+            else {
+                $label_judul = "&nbsp;";
+            }
+            $vlClass = $shoppingCartCashbackAddProduct['class'];
+            $vlMdl = $shoppingCartCashbackAddProduct['mdlName'];
+            $vlKey = $shoppingCartCashbackAddProduct['key'];
+            $vlSelected = $shoppingCartCashbackAddProduct['selectedType_produk'];
+            if (!isset($shoppingCartCashbackAddProductAction) || $shoppingCartCashbackAddProductAction == "") {
+                $shoppingCartCashbackAddProductAction = MODUL_PATH . $shoppingCartCashbackAddProduct["selector"] . "/" . $this->jenisTr;
+            }
+
+            echo "<div class='$vlClass'>";
+            echo "<div class='text-center text-bold bg-red text-uppercase'> $label_judul</div>";
+            echo "<select class='form-control product-select2' style='width:100%;'>";
+            echo "<option value=''>-pilih produk-</option>";
+            foreach ($shoppingCartCashbackAddProduct["fields"] as $pid => $pname) {
+                $selected = ($vlSelected == $pid) ? "selected" : "";
+                echo "<option value='$pid' $selected>$pname</option>";
+            }
+            echo "</select>";
+            echo "</div>";
+            ?>
+            <style>
+                .select2-container .select2-selection--single {
+                    height: 34px !important;
+                    border: 1px solid #ccc !important;
+                    border-radius: 4px !important;
+                    padding: 4px 12px;
+                }
+                .select2-container--default .select2-selection--single .select2-selection__arrow {
+                    height: 32px !important;
+                }
+                .select2-container--default .select2-selection--single .select2-selection__rendered {
+                    line-height: 24px !important;
+                    padding-left: 0;
+                }
+            </style>
+            <script>
+            if (typeof $.fn.select2 === 'undefined') {
+                var select2Css = document.createElement('link');
+                select2Css.rel = 'stylesheet';
+                select2Css.href = 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css';
+                document.head.appendChild(select2Css);
+
+                var select2Js = document.createElement('script');
+                select2Js.src = 'https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js';
+                document.head.appendChild(select2Js);
+            }
+
+            function initSelect2() {
+                if (typeof $.fn.select2 === 'undefined') {
+                    setTimeout(initSelect2, 50);
+                    return;
+                }
+                $('.product-select2').select2({
+                    ajax: {
+                        url: '<?php echo base_url(); ?>biaya/_shoppingCart/searchProductAjax',
+                        dataType: 'json',
+                        delay: 300,
+                        data: function (params) {
+                            return {
+                                q: params.term
+                            };
+                        },
+                        processResults: function (data) {
+                            return {
+                                results: data.results
+                            };
+                        },
+                        cache: true
+                    },
+                    placeholder: '-pilih produk-',
+                    minimumInputLength: 0,
+                    allowClear: true,
+                    width: '100%',
+                    templateResult: function (data) {
+                        if (!data.id) {
+                            return data.text;
+                        }
+                        var colorStyle = data.color ? 'color: ' + data.color + ';' : '';
+                        var titleAttr = data.tooltip ? ' title="' + data.tooltip + '"' : '';
+
+                        var $res = $('<div class="select2-product-row" style="display: flex; justify-content: space-between; align-items: center;"' + titleAttr + '>' +
+                            '<span class="product-name">' + data.text_nama + '</span>' +
+                            '<span class="product-qty" style="font-weight: bold; ' + colorStyle + '">' + data.text_stok + '</span>' +
+                            '</div>');
+                        return $res;
+                    },
+                    templateSelection: function (data) {
+                        return data.text_nama || data.text;
+                    }
+                }).on('select2:select', function (e) {
+                    var val = e.params.data.id;
+                    if (val) {
+                        document.getElementById('result').src = '<?php echo $shoppingCartCashbackAddProductAction; ?>?val=' + val + '&p=' + val + '&mdl=<?php echo $vlMdl; ?>&key=<?php echo $vlKey; ?>';
+                    }
+                });
+            }
+            initSelect2();
+            </script>
+            <?php
+        }
+
+        echo "</div>";
+        // ------------------------------------------------------
+
+        //region view nota yang dipilih
+        if (count($masterItems) > 0) {
+            $viewMaster_item = "<div style='margin-top: 0px;margin-bottom: 10; margin-bottom: 20px;'>";
+            $viewMaster_item .= "<table class='table table-condensed no-padding table-bordered no-margin'>";
+            $viewMaster_item .= "<tr class='bg-grey-2 text-uppercase'>";
+            $viewMaster_item .= "<th style='width:1%;' class='text-muted text-center'>";
+            $viewMaster_item .= "NO";
+            $viewMaster_item .= "</th>";
+
+            foreach ($master_item_label as $mKey => $mLabel) {
+
+                $viewMaster_item .= "<th style='width:1%;white-space: nowrap;' class='text-muted text-center'>";
+                if (is_array($mLabel)) {
+                    $viewMaster_item .= $mLabel["label"];
+                }
+                else {
+                    $viewMaster_item .= $mLabel;
+                }
+                $viewMaster_item .= "</th>";
+
+            }
+            $viewMaster_item .= "</tr>";
+            $mxi = 0;
+            $viewMaster_item .= "<tr>";
+            $viewMaster_item .= "<td style='vertical-align:middle; width:1%' class='text-center'>";
+            $viewMaster_item .= "1";
+            $viewMaster_item .= "</td>";
+            foreach ($masterItems as $km => $val_km) {
+                $viewMaster_item .= "<td style='vertical-align:middle; width:1%' class='text-center'>";
+                $viewMaster_item .= $val_km;
+                $viewMaster_item .= "</td>";
+
+            }
+            $viewMaster_item .= "</tr>";
+
+            $viewMaster_item .= "</table>";
+            $viewMaster_item .= "</div>";
+
+            echo $viewMaster_item;
+        }
+
+        //endregion
+
+        echo "<table class='table table-condensed no-padding table-bordered no-margin'>";
+        /*===============header shoping cart======================*/
+        if (isset($itemLabels)) {
+            if (sizeof($itemLabels) && (is_array($itemLabels)) && $showItems) {
+                echo "<tr class='bg-grey-2 text-uppercase'>";
+                echo "<th style='width:1%;' class='text-muted text-center'>";
+                echo "NO";
+                echo "</th>";
+// START OF COMPLETE REPEATED LOGIC
+                foreach ($itemLabels as $key => $label) {
+                    if (isset($labelFieldsReplacer[$key])) {
+                        $label = $labelFieldsReplacer[$key];
+                        if (isset($pajakOption) && $pajakOption == 'pph_final_umkm') {
+                            if ($key == 'nilai_pph_original') {
+                                $label = 'PPh Final UMKM';
+                            }
+                            if ($key == 'pph__tarif') {
+                                $label = 'PPh Final UMKM (%)';
+                    }
+                        }
+                    }
+// END OF COMPLETE REPEATED LOGIC
+                    echo "<th style='width:1%;white-space: nowrap;' class='text-muted text-center'>";
+                    echo $label;
+                    echo "</th>";
+                }
+
+                //----------
+                if (isset($checkOpname) && ($checkOpname == true)) {
+                    echo "<th style='width:1%;' class='text-muted text-center'>";
+                    echo "V";
+                    echo "</th>";
+                }
+                //----------
+                if (!$avoidRemove) {
+                    echo "<th style='width:1%;' class='text-muted text-center'>";
+                    echo "x";
+                    echo "</th>";
+                }
+                echo "</tr>";
+            }
+        }
+
+        /*===============body shoping cart=======================================*/
+        $no = 0;
+        foreach ($items as $iSpec) {
+
+            if ($showItems) {
+
+                $iID = $iSpec['id'];
+                $disabled_field = (isset($iSpec['disabled']) && ($iSpec['disabled'] == 1)) ? "disabled" : "";
+                $no++;
+                $bgColor = "transparent";
+                if (isset($_SESSION['errLines'])) {
+                    if (in_array($iSpec['id'], $_SESSION["errLines"])) {
+                        $bgColor = "#ffff77";
+                    }
+                }
+
+                echo "<tr id='tr_" . $iSpec['id'] . "' bgcolor=$bgColor>";
+                echo "<td style='vertical-align:middle; width:1%' class='text-center'>";
+                echo $no;
+                echo "</td>";
+                $colCtr = 0;
+                $queryParams = "";
+                $colID = array();
+                $listMode = array();
+                $readOnly = array();
+                $qtyParam = "";
+                if (isset($itemLabels['jml'])) {
+                    $qtyParam = "+removeCommas(document.getElementById('jml_$no').value)";
+                }
+                foreach ($itemLabels as $key => $label) {
+                    $listMode[$key] = "input";
+                    $keyupEvent[$key] = "";
+                    $keyUpStr[$key] = "";
+                    if (array_key_exists($key, $keyUpEvents)) {
+                        if (sizeof($selectedPrices) > 0) {
+                            $keyupEvent[$key] = $keyUpEvents[$key];
+                            foreach ($selectedPrices as $k => $v) {
+                                $nameLabel = $k . "_" . $no;
+                                $keyupEvent[$key] = str_replace("{" . $k . "}", $nameLabel, $keyupEvent[$key]);
+                            }
+                            foreach ($itemLabels as $k => $v) {
+                                $nameLabel = $k . "_" . $no;
+                                $keyupEvent[$key] = str_replace("{" . $k . "}", $nameLabel, $keyupEvent[$key]);
+                            }
+                        }
+
+                        if (isset($keyupAction) && $keyupAction == true) {
+                            $keyupEvent[$key] = $keyUpEvents[$key];
+                            foreach ($selectedPrices as $k => $v) {
+                                $nameLabel = $k . "_" . $no;
+                                $keyupEvent[$key] = str_replace("{" . $k . "}", $nameLabel, $keyupEvent[$key]);
+                            }
+                            foreach ($itemLabels as $k => $v) {
+                                $nameLabel = $k . "_" . $no;
+                                $keyupEvent[$key] = str_replace("{" . $k . "}", $nameLabel, $keyupEvent[$key]);
+                            }
+                        }
+                    }
+                    else {
+                    }
+                    if (strlen($keyupEvent[$key]) > 2) {
+                        $keyUpStr[$key] = " onkeyup=\"" . $keyupEvent[$key] . "\" ";
+                    }
+                    if (in_array($key, $editableFields)) {
+                        $readOnly[$key] = "";
+                        if (isset($iSpec["jml"]) && $iSpec["jml"] < 1) {
+                            $readOnly[$key] = "readonly_xz";
+                        }
+                        if (isset($paramsForceEditable[$key])) {
+                            if ($paramsForceEditable[$key] == true) {
+
+                            }
+                            else {
+                                $readOnly[$key] = "readonly_xxz";
+                                $listMode[$key] = "text";
+                            }
+                        }
+                    }
+                    else {
+                        $readOnly[$key] = "readonly_xxz";
+                        $listMode[$key] = "text";
+                    }
+                    $colID[$key] = $key . "_" . $no;
+                    if ($listMode[$key] == "input") {
+                        $queryParams .= "&$key='+removeCommas(document.getElementById('" . $colID[$key] . "').value)+'";
+                    }
+                }
+
+                foreach ($itemLabels as $key => $label) {
+                    $colCtr++;
+                    $color = "343434";
+                    if (isset($_SESSION['errFields'][$iSpec['id']])) {
+                        if (in_array($key, $_SESSION['errFields'][$iSpec['id']])) {
+                            $color = "#dd3300";
+                        }
+                    }
+                    echo "<td align='left'>";
+                    $colID = $key . "_" . $no;
+                    $keyID = $key;
+                    $noID = $no;
+                    $tabIndexNum = $colCtr . $no;
+                    $fieldVal = "";
+                    if (substr($key, 0, 1) == "*") {
+                        $key_p = str_replace("*", "", $key);
+                        $key_ex = explode("#", $key_p);
+                        $pair_name = $key_ex[0];
+                        $pair_key = $key_ex[1];
+                        $pair_key_val = $iSpec[$pair_key];
+                        if (sizeof($key_ex) > 1) {
+                            $fieldVal = isset($pairedValue[$pair_name][$pair_key_val]) ? $pairedValue[$pair_name][$pair_key_val] : "0";
+                        }
+                        else {
+                            $fieldVal = isset($pairedValue[$pair_name]) ? $pairedValue[$pair_name] : "0";
+                        }
+                    }
+                    else {
+                        if (isset($iSpec[$key])) {
+                            if (is_numeric($iSpec[$key])) {
+                                $fieldVal = $iSpec[$key] + 0;
+                            }
+                            else {
+                                $fieldVal = $iSpec[$key];
+                            }
+                        }
+                    }
+                    if (sizeof($minValues) > 0) {
+                        $moq = isset($minValues['moq'][$iID]) ? $minValues['moq'][$iID] : 0;
+                        $validateKey_up = true;
+                    }
+                    else {
+                        $moq = 0;
+                        $validateKey_up = false;
+                    }
+                    $keyupData = (($key == "qty" || $key == "jml") && $validateKey_up == true) ? "onkeydown=\"if(parseInt(this.value)<$moq){setTimeout(function(){ this.value='" . $iSpec[$key] . "'}, 1000);} \"" : "";
+
+                    switch ($listMode[$key]) {
+                        case "input":
+                            echo "<input type='text'  min='$moq' autocomplete='off' " . $readOnly[$key] . " keyid=$keyID noid=$noID id_jml=$iID id=$colID  
+                            $disabled_field
+                            class='form-control text-right' style='color:$color;' 
+                            value='" . niceDecimal($fieldVal) . "' onclick='this.select()' " . $keyUpStr[$key] . " ";
+                            $baseInputName = isset($unionSelectors['base']) ? "document.getElementById('" . $unionSelectors['base'] . "_" . $no . "')" : "this";
+//                            $pemicuGerbangAsli = "onblur=\"if(this.value!=this.defaultValue){ hiliteDiv(this); document.getElementById('result').src='" . $iSpec['editTarget'] . "'$qtyParam+'$queryParams'; } \" $keyupData";
+                            $pemicuGerbangAsli = "onblur=\"if(this.value!=this.defaultValue){ hiliteDiv(this); top.$('#result').load('" . $iSpec['editTarget'] . "'$qtyParam+'$queryParams') } \" $keyupData";
+                            $pemicuGerbangAsli .= "*onmouseout=\"if(this.value!=this.defaultValue){hiliteDiv(this);document.getElementById('result').src='" . $iSpec['editTarget'] . "'$qtyParam+'$queryParams';}\" ";
+                            $pemicuGerbang = "onblur=\"if($baseInputName.value!=$baseInputName.defaultValue){hiliteDiv($baseInputName);document.getElementById('result').src='" . $iSpec['editTarget'] . "'$qtyParam+'$queryParams';}\" $keyupData ";
+                            $pemicuGerbang .= "*onmouseout=\"if($baseInputName.value!=$baseInputName.defaultValue){hiliteDiv($baseInputName);document.getElementById('result').src='" . $iSpec['editTarget'] . "'$qtyParam+'$queryParams';}\" ";
+                            $pemicuGerbangUnion = "onchange=\"if($baseInputName.value!=$baseInputName.defaultValue){hiliteDiv($baseInputName);document.getElementById('result').src='" . $iSpec['editTarget'] . "'$qtyParam+'$queryParams';} \" ";
+
+                            if (isset($unionSelectors['base'])) {
+                                if ($unionSelectors['base'] == $key) {//==jadi acuan kiriman
+                                    echo str_replace("this", $baseInputName, $pemicuGerbang);
+                                }
+                                else {
+                                    if (in_array($key, $unionSelectors['members'])) {//==jadi member union, tidak memicu perubahan gerbang
+                                        echo $pemicuGerbangUnion;
+                                    }
+                                    else {//==biasa aja, memicu perubahan gerbang
+                                        echo $pemicuGerbangAsli;
+                                    }
+                                }
+                            }
+                            else {
+                                echo $pemicuGerbangAsli;
+                            }
+
+                            if (isset($keyupAction) && $keyupAction == true) {
+                                echo "onkeyup=\"document.getElementById('result').src='" . $iSpec['editTarget'] . "'$qtyParam+'$queryParams';if(parseFloat(removeCommas(this.value))>0){ this.value=addCommas(this.value) }else{ this.value=0 }\"";
+                            }
+                            else {
+                                echo "onkeyup=\"delay( function(){ $('#shopping_cart').trigger('change') }, 400, this );if(parseFloat(removeCommas(this.value))>0){ this.value=addCommas(this.value) }else{ this.value=0 }\"";
+                            }
+
+                            echo ">";
+
+                            break;
+                        case "text":
+                            if (is_numeric($fieldVal)) {
+                                echo "<span keyid=$keyID noid=$noID id=$colID class='form-control text-right' style='color:$color;background:#f0f0f0;'>" . niceDecimal($fieldVal) . "</span>";
+                            }
+                            else {
+                                if (strlen($fieldVal) > 10) {
+                                    echo "<span keyid=$keyID noid=$noID id=$colID class='' style='color:$color;border:0px;'>" . formatField($key, $fieldVal) . "</span>";
+                                }
+                                else {
+                                    echo "<span keyid=$keyID noid=$noID id=$colID class='form-control' style='color:$color;border:0px;'>" . formatField($key, $fieldVal) . "</span>";
+                                }
+                            }
+                            break;
+                    }
+                    echo "</td>";
+                }
+
+                //-----------------
+                if (isset($checkOpname) && ($checkOpname == true)) {
+                    if (isset($iSpec['ceklist_opname']) && ($iSpec['ceklist_opname'] == 1)) {
+                        $ceklist_checked = "checked";
+                    }
+                    else {
+                        $ceklist_checked = "";
+                    }
+                    echo "<td width='1%'>";
+                    echo "<input type='checkbox' $ceklist_checked 
+                        onclick=\"document.getElementById('result').src='" . $checkOpnamePaired . "?id=$iID';\">";
+                    echo "</td>";
+                }
+                //-----------------
+                //region remover per row
+                if (!$avoidRemove) {
+                    echo "<td width='1%'>";
+                    echo "<a class='text-red btn' title='remove this item' data-toggle='tooltip' data-placement='left' onclick=\"document.getElementById('result').src='" . $iSpec['removeTarget'] . "';\"><span class='glyphicon glyphicon-remove'></span></a>";
+                    echo "</td>";
+                }
+                //endregion
+
+                echo "</tr>";
+
+                echo "
+            <script>
+                \n$('#check_" . trim($iSpec['id']) . "', $('#pilihan_item')).html(\"<i class='fa fa-check'></i>\");
+                \n$('#check_" . trim($iSpec['id']) . "', $('#pilihan_item')).addClass(\"text-green text-bold pull-right\");
+            </script>
+            ";
+
+                if ($noteEnabled == true) {
+                    $colspan2 = $imageEnable == true ? 1 : -1;
+                    $colspan = sizeof($itemLabels) - $colspan2;
+                    echo "<tr>";
+                    echo "<td>&nbsp;</td>";
+                    echo "<td colspan='" . $colspan . "'>";
+                    $noteVal = isset($iSpec['note']) ? $iSpec['note'] : "";
+                    if (isset($noteType)) {
+                        switch ($noteType) {
+                            case "textarea":
+                                echo "<textarea class='form-control' placeholder='write notes here'
+                                onblur=\"if(this.value!=this.defaultValue){hiliteDiv(this);document.getElementById('result').src='" . $noteRecorder . "?val='+encodeURIComponent(this.value)+'&iid=$iID';}\"
+                                onmouseout=\"if(this.value!=this.defaultValue){hiliteDiv(this);document.getElementById('result').src='" . $noteRecorder . "?val='+encodeURIComponent(this.value)+'&iid=$iID';}\"
+                                >$noteVal</textarea>";
+                                break;
+                            case "text":
+                            default:
+                                echo "<input type=text class='form-control' value='$noteVal' placeholder='write notes here'
+                                onblur=\"if(this.value!=this.defaultValue){hiliteDiv(this);document.getElementById('result').src='" . $noteRecorder . "?val='+encodeURIComponent(this.value)+'&iid=$iID';}\"
+                                onmouseout=\"if(this.value!=this.defaultValue){hiliteDiv(this);document.getElementById('result').src='" . $noteRecorder . "?val='+encodeURIComponent(this.value)+'&iid=$iID';}\"
+                                >";
+                                break;
+                        }
+                    }
+
+                    echo "</td>";
+                    if ($imageEnable == true) {
+                        echo "<td colspan='2'>";
+                        $imageVal = isset($iSpec['images']) ? $iSpec['images'] : "";
+                        if (isset($imageType)) {
+                            switch ($imageType) {
+                                case "images":
+
+                                    $file_e = "";
+                                    $file = isset($iSpec['images']) ? $iSpec['images'] : "";
+                                    $file_e = urlencode($file);
+                                    echo "<div class='input-groups'>";
+                                    if (strlen($imageVal) > 0) {
+                                        $modals = array(
+                                            "title" => "Attachment " . $iSpec['nama'],
+                                            "body" => array($file),
+                                        );
+                                        $modal_e = urlencode(blobEncode($modals));
+                                        $modal_l = base_url() . "Katalog/modal/$modal_e";
+
+                                        echo "<a href='$modal_l' data-toggle='modal' data-target='#myModal'><img src='$file' class='img-rounder' height='50px' style='float: right;'></a>";
+                                        echo "<input type='hidden' name='img_$iID' value='$file'>";
+                                    }
+
+                                    echo "<form class='input-group' id='myForm_$iID' method='post' enctype='multipart/form-data' action='$imageRecorder/$iID?valValue=$file_e' target='result'>";
+
+                                    echo "<input type='file' id='file-upload' style='border: none;' name='file' class='file' onchange=\"document.getElementById('myForm_$iID').submit();swal({'text':'uploading image ... ... ',showConfirmButton: false,timer:5000,});\">";
+
+                                    echo "</form>";
+                                    echo "</div>";
+
+                                    break;
+                                case "text":
+                                default:
+                                    echo "<input type=text class='form-control' value='$noteVal'
+                                onblur=\"if(this.value!=this.defaultValue){hiliteDiv(this);document.getElementById('result').src='" . $noteRecorder . "?val='+encodeURIComponent(this.value)+'&iid=$iID';}\"
+                                onmouseout=\"if(this.value!=this.defaultValue){hiliteDiv(this);document.getElementById('result').src='" . $noteRecorder . "?val='+encodeURIComponent(this.value)+'&iid=$iID';}\"
+                                >";
+                                    break;
+                            }
+                        }
+                        echo "</td>";
+                    }
+                    echo "</tr>";
+                }
+
+                if ($pairedItemEnabled == true) {
+                    if (sizeof($pairedItemField) > 0) {
+                        $listModePairedItem = array();
+                        $readOnlyPairedItem = array();
+                        foreach ($pairedItemField as $key => $label) {
+                            $listModePairedItem[$key] = "input";
+                            if (in_array($key, $editableFields)) {
+                                $readOnlyPairedItem[$key] = "";
+                                if (isset($iSpec["jml"]) && $iSpec["jml"] < 1) {
+                                    $readOnlyPairedItem[$key] = "readonly_x";
+                                }
+                            }
+                            else {
+                                $readOnlyPairedItem[$key] = "readonly_xx";
+                                $listModePairedItem[$key] = "text";
+                            }
+                        }
+                    }
+                    echo "<tr>";
+                    echo "<td>&nbsp;</td>";
+                    $c_itemLabels = sizeof($itemLabels);
+                    $c_pairedItemField = sizeof($pairedItemField);
+                    $c_colspan = ($c_itemLabels - $c_pairedItemField + 1);
+                    echo "<td colspan='" . $c_colspan . "'>";
+                    //==pairedItems, if any
+                    if (isset($selItems) && sizeof($selItems) > 0) {
+                        echo "<select
+                                title='pilih nama biaya...'
+                                data-header='Ketik Nama Biaya'
+                                data-size='10'
+                                data-container='body'
+                                class='picker_$iID selectpicker form-control select2 show-tick'
+                                data-style='btn-primary'
+                                data-live-search='true'
+                                classs='form-control'
+                                onchange=\"document.getElementById('result').src='" . $pairedItemRecorder . "?val='+(this.value)+'&iid=$iID'\"
+                                >";
+
+                        asort($selItems);
+
+                        foreach ($selItems as $piID => $piName) {
+                            if ($piID != $iSpec['id']) {
+                                $selectedState = (isset($pairedItems[$iID]) && ($piID == $pairedItems[$iID]['id'])) ? "selected" : "";
+                                $selItemsKodes = isset($selItemsKode[$piID]) ? $selItemsKode[$piID] : "-";
+                                $selItemsFolders = isset($selItemsFolder[$piID]) ? $selItemsFolder[$piID] : "-";
+                                $selItemsKeterangans = isset($selItemsKeterangan[$piID]) ? $selItemsKeterangan[$piID] : "-";
+                                $selItemsBarcodes = isset($selItemsBarcode[$piID]) ? $selItemsBarcode[$piID] : "-";
+                                $selItemsCatNama = isset($selItemsCatNama[$piID]) ? $selItemsCatNama[$piID] : "-";
+                                echo "<option data-subtext='$selItemsKodes' data-tokens='$piID $selItemsFolders $selItemsKeterangans $selItemsBarcodes $selItemsCatNama' value='$piID' $selectedState>$piName </option>";
+                            }
+                        }
+
+                        echo "</select>";
+
+                    }
+
+                    echo "</td>";
+
+//                echo "<script>top.$('.select2').selectpicker();</script>";
+//                echo "<script> setTimeout( function(){ top.$('.picker_$iID').selectpicker(); console.log('dari shopingcart picker_$iID') }, 100 ); </script>";
+
+                    echo "<script> $('.picker_$iID').selectpicker(); </script>";
+
+//                echo "<script> setTimeout( function(){ top.$('.select2').selectpicker(); console.log('dari shopingcart') }, 500 ); </script>";
+
+                    if (sizeof($pairedItemField) > 0) {
+                        foreach ($pairedItemField as $key => $label) {
+                            $pairedItems2ID = isset($pairedItems[$iID]['id']) ? $pairedItems[$iID]['id'] : 0;
+                            $pairedItems2Qty = isset($pairedItems[$iID]['jml']) ? $pairedItems[$iID]['jml'] : 0;
+                            $fieldVal = isset($pairedItems[$iID][$key]) ? $pairedItems[$iID][$key] : "";
+                            echo "<td>";
+                            switch ($listMode[$key]) {
+                                case "input":
+                                    echo "<input type='text' class='form-control text-right' value='" . $pairedItems2Qty . "' min='0' autocomplete='off'
+                                    onblur=\"document.getElementById('result').src='" . $pairedItemRecorder . "?newQty='+removeCommas(this.value)+'&iid=$iID&val=$pairedItems2ID';\"
+                                    onmouseout=\"document.getElementById('result').src='" . $pairedItemRecorder . "?newQty='+removeCommas(this.value)+'&iid=$iID&val=$pairedItems2ID';\"
+                                    >";
+                                    break;
+                                case "text":
+                                    if (is_numeric($fieldVal)) {
+                                        echo "<span class='form-control text-right' style='color:$color;background:#f0f0f0;'>" . niceDecimal($fieldVal) . "</span>";
+                                    }
+                                    else {
+                                        echo "<span class='form-control text-left' style='color:$color;border:0px;'>" . str_replace(" ", "&nbsp;", $fieldVal) . "</span>";
+                                    }
+                                    break;
+                            }
+                            echo "</td>";
+                        }
+                    }
+                    echo "</tr>";
+                }
+
+                // ini dipakai konversi dari unit ke non unit
+                if ($pairedItemBreakdownEnabled == true) {
+                    if (sizeof($pairedItemField) > 0) {
+                        $listModePairedItem = array();
+                        $readOnlyPairedItem = array();
+                        foreach ($pairedItemField as $key => $label) {
+                            $listModePairedItem[$key] = "input";
+                            if (in_array($key, $editableFields2)) {
+                                $readOnlyPairedItem[$key] = "";
+                                if (isset($iSpec["jml"]) && $iSpec["jml"] < 1) {
+                                    $readOnlyPairedItem[$key] = "readonly_x";
+                                }
+                            }
+                            else {
+                                $readOnlyPairedItem[$key] = "readonly_xx";
+                                $listModePairedItem[$key] = "text";
+                            }
+                        }
+                    }
+                    echo "<tr>";
+                    echo "<td>&nbsp;</td>";
+                    $c_itemLabels = sizeof($itemLabels);
+                    $c_pairedItemField = sizeof($pairedItemField);
+                    $c_colspan = ($c_itemLabels - $c_pairedItemField + 1);
+                    echo "<td colspan='" . $c_colspan . "'>";
+                    //==pairedItems, if any
+//                    if (isset($selItems) && sizeof($selItems) > 0) {
+//                        echo "<select
+//                                title='Choose one of the following...'
+//                                data-header='Ketik Nama/Kode/Folder/Barcode'
+//                                data-size='10'
+//                                data-container='body'
+//                                class='picker_$iID selectpicker form-control select2 show-tick'
+//                                data-style='btn-primary'
+//                                data-live-search='true'
+//                                classs='form-control'
+//                                onchange=\"document.getElementById('result').src='" . $pairedItemRecorder . "?val='+(this.value)+'&iid=$iID'\"
+//                                >";
+//
+//                        asort($selItems);
+//
+//                        foreach ($selItems as $piID => $piName) {
+//                            if ($piID != $iSpec['id']) {
+//                                $selectedState = (isset($pairedItems[$iID]) && ($piID == $pairedItems[$iID]['id'])) ? "selected" : "";
+//                                $selItemsKodes = isset($selItemsKode[$piID]) ? $selItemsKode[$piID] : "-";
+//                                $selItemsFolders = isset($selItemsFolder[$piID]) ? $selItemsFolder[$piID] : "-";
+//                                $selItemsKeterangans = isset($selItemsKeterangan[$piID]) ? $selItemsKeterangan[$piID] : "-";
+//                                $selItemsBarcodes = isset($selItemsBarcode[$piID]) ? $selItemsBarcode[$piID] : "-";
+//                                $piName_f = htmlspecialchars($piName);
+//                                echo "<option data-subtext='$selItemsKodes' data-tokens='$piID $selItemsFolders $selItemsKeterangans $selItemsBarcodes' value='$piID' $selectedState>$piName </option>";
+//                            }
+//                        }
+//
+//                        echo "</select>";
+//
+//                    }
+
+                    //----------------
+                    echo "<table class='tablexx table-condensed no-padding table-bordered no-margin'>";
+                    if (isset($items4) && (sizeof($items4) > 0)) {
+                        if (isset($itemLabels2)) {
+                            if (sizeof($itemLabels2) && (is_array($itemLabels2)) && $showItems) {
+                                echo "<tr class='bg-grey-2 text-uppercase'>";
+                                echo "<th style='width:1%;' class='text-muted text-center'>";
+                                echo "NO";
+                                echo "</th>";
+                                foreach ($itemLabels2 as $key => $label) {
+                                    echo "<th style='width:1%;white-space: nowrap;' class='text-muted text-center'>";
+                                    if (is_array($label)) {
+                                        echo $label["label"];
+                                    }
+                                    else {
+                                        echo $label;
+                                    }
+                                    echo "</th>";
+                                }
+                                //----------
+                                echo "</tr>";
+                            }
+                        }
+
+                        if (isset($items4[$iID]) && (sizeof($items4[$iID]) > 0)) {
+                            $no = 0;
+                            $subtotal = 0;
+                            foreach ($items4[$iID] as $iSpec) {
+//                                $iSpec["editTarget"] = $pairedItemBreakdown["itemRecorder"];
+//arrPrintKuning($iSpec);
+                                $no++;
+                                $bgColor = "transparent";
+                                echo "<tr id='tr_" . $iSpec['id'] . "' bgcolor=$bgColor>";
+                                echo "<td style='vertical-align:middle; width:1%' class='text-center'>";
+                                echo $no;
+                                echo "</td>";
+
+                                $colCtr = 0;
+                                $queryParams = "";
+                                $colID = array();
+                                $listMode = array();
+                                $readOnly = array();
+                                $qtyParam = "";
+                                if (isset($itemLabels2['jml'])) {
+                                    $qtyParam = "+removeCommas(document.getElementById('jml_$no').value)";
+                                }
+                                foreach ($itemLabels2 as $key => $label) {
+                                    $listMode[$key] = "input";
+                                    $keyupEvent[$key] = "";
+                                    $keyUpStr[$key] = "";
+                                    if (array_key_exists($key, $keyUpEvents)) {
+                                        //                    cekbiru("$key has events");
+                                        if (sizeof($selectedPrices) > 0) {
+                                            $keyupEvent[$key] = $keyUpEvents[$key];
+                                            foreach ($selectedPrices as $k => $v) {
+                                                //                            $nameLabel = "value_" . $yID . "_" . $xID . "_" . $k . ""; //==untuk nama/ID input
+                                                $nameLabel = $k . "_" . $no;
+                                                $keyupEvent[$key] = str_replace("{" . $k . "}", $nameLabel, $keyupEvent[$key]);
+                                            }
+                                            foreach ($itemLabels as $k => $v) {
+                                                $nameLabel = $k . "_" . $no;
+                                                $keyupEvent[$key] = str_replace("{" . $k . "}", $nameLabel, $keyupEvent[$key]);
+                                            }
+                                        }
+                                        if (isset($keyupAction) && $keyupAction == true) {
+                                            $keyupEvent[$key] = $keyUpEvents[$key];
+                                            foreach ($selectedPrices as $k => $v) {
+                                                //                            $nameLabel = "value_" . $yID . "_" . $xID . "_" . $k . ""; //==untuk nama/ID input
+                                                $nameLabel = $k . "_" . $no;
+                                                $keyupEvent[$key] = str_replace("{" . $k . "}", $nameLabel, $keyupEvent[$key]);
+                                            }
+                                            foreach ($itemLabels2 as $k => $v) {
+                                                $nameLabel = $k . "_" . $no;
+                                                $keyupEvent[$key] = str_replace("{" . $k . "}", $nameLabel, $keyupEvent[$key]);
+                                            }
+                                        }
+                                    }
+                                    else {
+                                    }
+                                    if (strlen($keyupEvent[$key]) > 2) {
+                                        $keyUpStr[$key] = " onkeyup=\"" . $keyupEvent[$key] . "\" ";
+                                    }
+                                    if (in_array($key, $editableFields2)) {
+                                        $readOnly[$key] = "";
+                                        if (isset($iSpec["jml"]) && $iSpec["jml"] < 1) {
+                                            $readOnly[$key] = "readonly_xz";
+                                        }
+                                        if (isset($paramsForceEditable[$key])) {
+                                            if ($paramsForceEditable[$key] == true) {
+
+                                            }
+                                            else {
+                                                $readOnly[$key] = "readonly_xxz";
+                                                $listMode[$key] = "text";
+                                            }
+                                        }
+                                    }
+                                    else {
+                                        $readOnly[$key] = "readonly_xxz";
+                                        $listMode[$key] = "text";
+                                    }
+                                    $colID[$key] = $key . "_" . $no;
+                                    if ($listMode[$key] == "input") {
+
+                                        $queryParams .= "&project_id=$iID&wo_id=$wo_id&$key='+removeCommas(document.getElementById('" . $colID[$key] . "').value)+'";
+                                    }
+                                }
+                                foreach ($itemLabels2 as $key => $label) {
+                                    $colCtr++;
+                                    $color = "343434";
+                                    if (isset($_SESSION['errFields'][$iSpec['id']])) {
+                                        if (in_array($key, $_SESSION['errFields'][$iSpec['id']])) {
+                                            $color = "#dd3300";
+                                        }
+                                    }
+                                    echo "<td align='left'>";
+                                    $colID = $key . "_" . $no;
+                                    $keyID = $key;
+                                    $noID = $no;
+                                    $tabIndexNum = $colCtr . $no;
+                                    $fieldVal = "";
+                                    if (substr($key, 0, 1) == "*") {
+                                        $key_p = str_replace("*", "", $key);
+                                        $key_ex = explode("#", $key_p);
+                                        $pair_name = $key_ex[0];
+                                        $pair_key = $key_ex[1];
+                                        $pair_key_val = $iSpec[$pair_key];
+                                        if (sizeof($key_ex) > 1) {
+                                            $fieldVal = isset($pairedValue[$pair_name][$pair_key_val]) ? $pairedValue[$pair_name][$pair_key_val] : "0";
+                                        }
+                                        else {
+                                            $fieldVal = isset($pairedValue[$pair_name]) ? $pairedValue[$pair_name] : "0";
+                                        }
+                                    }
+                                    else {
+                                        if (isset($iSpec[$key])) {
+                                            if (is_numeric($iSpec[$key])) {
+                                                $fieldVal = $iSpec[$key] + 0;
+                                            }
+                                            else {
+                                                $fieldVal = $iSpec[$key];
+                                            }
+                                        }
+                                    }
+                                    if (sizeof($minValues) > 0) {
+                                        $moq = isset($minValues['moq'][$iID]) ? $minValues['moq'][$iID] : 0;
+                                        $validateKey_up = true;
+                                    }
+                                    else {
+                                        $moq = 0;
+                                        $validateKey_up = false;
+                                    }
+                                    $keyupData = (($key == "qty" || $key == "jml") && $validateKey_up == true) ? "onkeydown=\"if(parseInt(this.value)<$moq){setTimeout(function(){ this.value='" . $iSpec[$key] . "'}, 1000);} \"" : "";
+                                    $wo_id = $iSpec['biaya_dasar_id'];
+                                    $queryParams = "&biaya_id=$iID&sub_biaya_id=$wo_id";
+                                    switch ($listMode[$key]) {
+                                        case "input":
+                                            $linkSubEditable = $iSpec['editTarget'] . "?key=$key" . "$queryParams&$key=";
+                                            $thisValue = "'+removeCommas(this.value)";
+                                            echo "<input type='text'  min='$moq' autocomplete='off' " . $readOnly[$key] . " keyid=$keyID noid=$noID id_jml=$iID id=$colID  class='form-control text-right' style='color:$color;'
+                                                value='" . niceDecimal($fieldVal) . "'
+                                                onclick='this.select()'";
+//                                            $baseInputName = isset($unionSelectors['base']) ? "document.getElementById('" . $unionSelectors['base'] . "_" . $no . "')" : "this";
+//                                            $pemicuGerbangAsli = "onblur=\"if(this.value!=this.defaultValue){hiliteDiv(this);document.getElementById('result').src='" . $iSpec['editTarget'] . "'$qtyParam+'$queryParams';} \" $keyupData";
+//                                            $pemicuGerbangAsli .= "*onmouseout=\"if(this.value!=this.defaultValue){hiliteDiv(this);document.getElementById('result').src='" . $iSpec['editTarget'] . "'$qtyParam+'$queryParams';}\" ";
+//                                            $pemicuGerbang = "onblur=\"if($baseInputName.value!=$baseInputName.defaultValue){hiliteDiv($baseInputName);document.getElementById('result').src='" . $iSpec['editTarget'] . "'$qtyParam+'$queryParams';}\" $keyupData ";
+//                                            $pemicuGerbang .= "*onmouseout=\"if($baseInputName.value!=$baseInputName.defaultValue){hiliteDiv($baseInputName);document.getElementById('result').src='" . $iSpec['editTarget'] . "'$qtyParam+'$queryParams';}\" ";
+//                                            $pemicuGerbangUnion = "onchange=\"if($baseInputName.value!=$baseInputName.defaultValue){hiliteDiv($baseInputName);document.getElementById('result').src='" . $iSpec['editTarget'] . "'$qtyParam+'$queryParams';} \" ";
+//
+//                                            if (isset($unionSelectors['base'])) {
+//                                                if ($unionSelectors['base'] == $key) {//==jadi acuan kiriman
+//                                                    echo str_replace("this", $baseInputName, $pemicuGerbang);
+//                                                }
+//                                                else {
+//                                                    if (in_array($key, $unionSelectors['members'])) {//==jadi member union, tidak memicu perubahan gerbang
+//                                                        echo $pemicuGerbangUnion;
+//                                                    }
+//                                                    else {//==biasa aja, memicu perubahan gerbang
+//                                                        echo $pemicuGerbangAsli;
+//                                                    }
+//                                                }
+//                                            }
+//                                            else {
+//                                                echo $pemicuGerbangAsli;
+//                                            }
+                                            echo " onblur=\"document.getElementById('result').src='" . $linkSubEditable . "$thisValue\"";
+//                                            echo " onblur=\"document.getElementById('result').src='" . $linkSubEditable . "$queryParams\"";
+//                                            if (isset($keyupAction) && $keyupAction == true) {
+//                                                echo "onkeyup=\"document.getElementById('result').src='" . $iSpec['editTarget'] . "'$qtyParam+'$queryParams';if(parseFloat(removeCommas(this.value))>0){ this.value=addCommas(this.value) }else{ this.value=0 }\"";
+//                                            }
+//                                            else {
+//                                                echo "onkeyup=\"delay( function(){ $('#shopping_cart').trigger('change') }, 400, this );if(parseFloat(removeCommas(this.value))>0){ this.value=addCommas(this.value) }else{ this.value=0 }\"";
+//                                            }
+                                            echo ">";
+                                            break;
+                                        case "text":
+                                            $add_data_val = "";
+                                            if (is_array($label)) {
+                                                $add_data_val = isset($iSpec[$label["addKey"]]) ? "<br>" . $iSpec[$label["addKey"]] : "";
+                                            }
+                                            if (is_numeric($fieldVal)) {
+                                                echo "<span keyid=$keyID noid=$noID id=$colID class='form-control text-right' style='color:$color;background:#f0f0f0;'>" . niceDecimal($fieldVal) . "$add_data_val</span>";
+                                            }
+                                            else {
+                                                if (strlen($fieldVal) > 10) {
+                                                    echo "<span keyid=$keyID noid=$noID id=$colID class='' style='color:$color;border:0px;'>" . formatField($key, $fieldVal) . "$add_data_val</span>";
+                                                }
+                                                else {
+                                                    echo "<span keyid=$keyID noid=$noID id=$colID class='form-control' style='color:$color;border:0px;'>" . formatField($key, $fieldVal) . "$add_data_val</span>";
+                                                }
+                                            }
+                                            break;
+                                    }
+                                    echo "</td>";
+
+                                    if ($key == "subtotal") {
+                                        $subtotal += $fieldVal;
+                                    }
+                                }
+                                echo "</tr id='tr_" . $iSpec['id'] . "' bgcolor=$bgColor>";
+                            }
+                            $colspan2 = count($itemLabels2);
+                            echo "<tr id='tr_" . $iSpec['id'] . "' bgcolor=$bgColor>";
+                            echo "<td colspan='$colspan2' style='vertical-align:middle;' class='text-uppercase text-right'>total</td>";
+                            echo "<td style='vertical-align:middle;' class='text-right'>" . number_format($subtotal, "0", ".", ",") . "</td>";
+                            echo "</tr id='tr_" . $iSpec['id'] . "' bgcolor=$bgColor>";
+                        }
+
+                    }
+
+                    echo "</table class='table table-condensed no-padding table-bordered no-margin'>";
+                    //----------------
+
+                    echo "</td>";
+
+                    echo "<script> $('.picker_$iID').removeClass('open'); </script>";
+                    echo "<script> $('.picker_$iID').selectpicker(); </script>";
+
+                    if (sizeof($pairedItemField) > 0) {
+                        foreach ($pairedItemField as $key => $label) {
+                            $pairedItems2ID = isset($pairedItems[$iID]['id']) ? $pairedItems[$iID]['id'] : 0;
+                            $pairedItems2Qty = isset($pairedItems[$iID]['jml']) ? $pairedItems[$iID]['jml'] : 0;
+                            $fieldVal = isset($pairedItems[$iID][$key]) ? $pairedItems[$iID][$key] : "";
+                            echo "<td>";
+                            switch ($listMode[$key]) {
+                                case "input":
+                                    echo "<input type='text' class='form-control text-right' value='" . $pairedItems2Qty . "' min='0' autocomplete='off'
+                                    onblur=\"document.getElementById('result').src='" . $pairedItemRecorder . "?newQty='+removeCommas(this.value)+'&iid=$iID&val=$pairedItems2ID';\"
+                                    onmouseout=\"document.getElementById('result').src='" . $pairedItemRecorder . "?newQty='+removeCommas(this.value)+'&iid=$iID&val=$pairedItems2ID';\"
+                                    >";
+                                    break;
+                                case "text":
+                                    if (is_numeric($fieldVal)) {
+                                        echo "<span class='form-control text-right' style='color:$color;background:#f0f0f0;'>" . niceDecimal($fieldVal) . "</span>";
+                                    }
+                                    else {
+                                        echo "<span class='form-control text-left' style='color:$color;border:0px;'>" . str_replace(" ", "&nbsp;", $fieldVal) . "</span>";
+                                    }
+                                    break;
+                            }
+                            echo "</td>";
+                        }
+                    }
+                    echo "</tr>";
+                }
+
+//                arrPrintWebs($konversiItems);
+                // ini dipakai konversi dari roll ke non roll, misal pipa dipotong, dll
+                if ($pairedItemPotongEnabled == true) {
+                    if (sizeof($pairedItemField) > 0) {
+                        $listModePairedItem = array();
+                        $readOnlyPairedItem = array();
+                        foreach ($pairedItemField as $key => $label) {
+                            $listModePairedItem[$key] = "input";
+                            if (in_array($key, $editableFields2)) {
+                                $readOnlyPairedItem[$key] = "";
+                                if (isset($iSpec["jml"]) && $iSpec["jml"] < 1) {
+                                    $readOnlyPairedItem[$key] = "readonly_x";
+                                }
+                            }
+                            else {
+                                $readOnlyPairedItem[$key] = "readonly_xx";
+                                $listModePairedItem[$key] = "text";
+                            }
+                        }
+                    }
+                    echo "<tr>";
+                    echo "<td>&nbsp;</td>";
+                    $c_itemLabels = sizeof($itemLabels);
+                    $c_pairedItemField = sizeof($pairedItemField);
+                    $c_colspan = ($c_itemLabels - $c_pairedItemField + 1);
+
+                    echo "<td line='" . __LINE__ . "' colspan='" . $c_colspan . "'>";
+                    echo "<select title='Pilih Produk Target Konversi'
+                                data-header='Ketik Nama/Kode/Folder/Barcode'
+                                data-size='10'
+                                data-container='body'
+                                class='picker_$iID col-md-12 no-padding selectpicker'
+                                data-style='btn-primary btn-sm'
+                                data-live-search='true'
+                                onchange=\"document.getElementById('result').src='" . $pairedItemRecorder . "?val='+(this.value)+'&iid=$iID'\"
+                                >";
+                    asort($konversiItems);
+                    foreach ($konversiItems as $pMainID => $arrPrdMain) { //$piID => $piName
+
+                        if ($pMainID == $iSpec['id']) {
+                            $sisa_dipakai = $iSpec['sisa_dipakai'] * 1;
+                            foreach ($arrPrdMain as $piID => $piName) {
+
+                                $selectedState = (isset($pairedKonversiItems[$iID]) && ($piID == $pairedKonversiItems[$iID]['id'])) ? "selected" : "";
+                                $selItemsKodes = isset($konversiItemsKode[$pMainID][$piID]) ? $konversiItemsKode[$pMainID][$piID] : "-";
+                                $selItemsFolders = isset($konversiItemsFolder[$pMainID][$piID]) ? $konversiItemsFolder[$pMainID][$piID] : "-";
+                                $selItemsKeterangans = isset($konversiItemsKeterangan[$pMainID][$piID]) ? $konversiItemsKeterangan[$pMainID][$piID] : "-";
+                                $selItemsBarcodes = isset($konversiItemsBarcode[$pMainID][$piID]) ? $konversiItemsBarcode[$pMainID][$piID] : "-";
+                                $selItemsKategori = isset($konversiItemsKategori[$pMainID][$piID]) ? $konversiItemsKategori[$pMainID][$piID] : "-";
+                                $selItemsSubKategori = isset($konversiItemsSubKategori[$pMainID][$piID]) ? $konversiItemsSubKategori[$pMainID][$piID] : "-";
+                                $selItemsSatuanNilai = isset($konversiItemsSatuanNilai[$pMainID][$piID]) ? $konversiItemsSatuanNilai[$pMainID][$piID] : "-";
+
+                                $piName_f = htmlspecialchars($piName);
+
+                                if ($selItemsSatuanNilai * 1 > 0) {
+                                    if ($sisa_dipakai < $selItemsSatuanNilai) {
+                                        echo "<option data-icon='glyphicon-unchecked text-blue' disabled data-content=\"<span class='text-red'><i class='fa fa-close'></i>&nbsp;&nbsp;$piName</span>\"></option>";
+                                    }
+                                    else {
+                                        echo "<option data-icon='glyphicon-unchecked text-blue' data-satuan-nilai='$selItemsSatuanNilai' data-subtext='$selItemsBarcodes' data-tokens='$piID $selItemsFolders $selItemsKeterangans $selItemsBarcodes $selItemsKategori $selItemsSubKategori' value='$piID' $selectedState>$piName</option>";
+                                    }
+                                }
+                                else {
+                                    echo "<option data-icon='glyphicon-unchecked text-blue' disabled data-content=\"<span class='text-danger'><i class='fa fa-close'></i>&nbsp;&nbsp;$piName <b>(produk ini belum di set satuan nilai)</b></span>\"></option>";
+                                }
+                            }
+                        }
+                    }
+                    echo "</select>";
+
+                    //==pairedItems, if any
+//                    if (isset($selItems) && sizeof($selItems) > 0) {
+//                        echo "<select
+//                                title='Choose one of the following...'
+//                                data-header='Ketik Nama/Kode/Folder/Barcode'
+//                                data-size='10'
+//                                data-container='body'
+//                                class='picker_$iID selectpicker form-control select2 show-tick'
+//                                data-style='btn-primary'
+//                                data-live-search='true'
+//                                classs='form-control'
+//                                onchange=\"document.getElementById('result').src='" . $pairedItemRecorder . "?val='+(this.value)+'&iid=$iID'\"
+//                                >";
+//
+//                        asort($selItems);
+//
+//                        foreach ($selItems as $piID => $piName) {
+//                            if ($piID != $iSpec['id']) {
+//                                $selectedState = (isset($pairedItems[$iID]) && ($piID == $pairedItems[$iID]['id'])) ? "selected" : "";
+//                                $selItemsKodes = isset($selItemsKode[$piID]) ? $selItemsKode[$piID] : "-";
+//                                $selItemsFolders = isset($selItemsFolder[$piID]) ? $selItemsFolder[$piID] : "-";
+//                                $selItemsKeterangans = isset($selItemsKeterangan[$piID]) ? $selItemsKeterangan[$piID] : "-";
+//                                $selItemsBarcodes = isset($selItemsBarcode[$piID]) ? $selItemsBarcode[$piID] : "-";
+//                                $piName_f = htmlspecialchars($piName);
+//                                echo "<option data-subtext='$selItemsKodes' data-tokens='$piID $selItemsFolders $selItemsKeterangans $selItemsBarcodes' value='$piID' $selectedState>$piName </option>";
+//                            }
+//                        }
+//
+//                        echo "</select>";
+//
+//                    }
+
+                    //----------------
+                    echo "<table class='table table-condensed no-padding table-bordered no-margin'>";
+                    if (isset($items4) && (sizeof($items4) > 0)) {
+                        if (isset($itemLabels2)) {
+                            if (sizeof($itemLabels2) && (is_array($itemLabels2)) && $showItems) {
+                                echo "<tr class='bg-grey-2 text-uppercase'>";
+                                echo "<th style='width:1%;' class='text-muted text-center'>";
+                                echo "NO";
+                                echo "</th>";
+                                foreach ($itemLabels2 as $key => $label) {
+                                    echo "<th style='width:1%;white-space: nowrap;' class='text-muted text-center'>";
+                                    if (is_array($label)) {
+                                        echo $label["label"];
+                                    }
+                                    else {
+                                        echo $label;
+                                    }
+                                    echo "</th>";
+                                }
+                                //----------
+                                //region remover per row
+                                if (!$avoidRemove) {
+                                    echo "<td width='1%'>";
+                                    echo "X";
+                                    echo "</td>";
+                                }
+                                //endregion
+                                echo "</tr>";
+                            }
+                        }
+                        if (isset($items4[$iID]) && (sizeof($items4[$iID]) > 0)) {
+                            $no = 0;
+                            $subtotal = 0;
+                            foreach ($items4[$iID] as $iSpec) {
+//                                $iSpec["editTarget"] = $pairedItemBreakdown["itemRecorder"];
+//arrPrintKuning($iSpec);
+                                $no++;
+                                $bgColor = "transparent";
+                                echo "<tr id='tr_" . $iSpec['id'] . "' bgcolor=$bgColor>";
+                                echo "<td style='vertical-align:middle; width:1%' class='text-center'>";
+                                echo $no;
+                                echo "</td>";
+
+                                $colCtr = 0;
+                                $queryParams = "";
+                                $colID = array();
+                                $listMode = array();
+                                $readOnly = array();
+                                $qtyParam = "";
+                                if (isset($itemLabels2['jml'])) {
+                                    $qtyParam = "+removeCommas(document.getElementById('jml_$no').value)";
+                                }
+                                foreach ($itemLabels2 as $key => $label) {
+                                    $listMode[$key] = "input";
+                                    $keyupEvent[$key] = "";
+                                    $keyUpStr[$key] = "";
+                                    if (array_key_exists($key, $keyUpEvents)) {
+                                        //                    cekbiru("$key has events");
+                                        if (sizeof($selectedPrices) > 0) {
+                                            $keyupEvent[$key] = $keyUpEvents[$key];
+                                            foreach ($selectedPrices as $k => $v) {
+                                                //                            $nameLabel = "value_" . $yID . "_" . $xID . "_" . $k . ""; //==untuk nama/ID input
+                                                $nameLabel = $k . "_" . $no;
+                                                $keyupEvent[$key] = str_replace("{" . $k . "}", $nameLabel, $keyupEvent[$key]);
+                                            }
+                                            foreach ($itemLabels as $k => $v) {
+                                                $nameLabel = $k . "_" . $no;
+                                                $keyupEvent[$key] = str_replace("{" . $k . "}", $nameLabel, $keyupEvent[$key]);
+                                            }
+                                        }
+                                        if (isset($keyupAction) && $keyupAction == true) {
+                                            $keyupEvent[$key] = $keyUpEvents[$key];
+                                            foreach ($selectedPrices as $k => $v) {
+                                                //                            $nameLabel = "value_" . $yID . "_" . $xID . "_" . $k . ""; //==untuk nama/ID input
+                                                $nameLabel = $k . "_" . $no;
+                                                $keyupEvent[$key] = str_replace("{" . $k . "}", $nameLabel, $keyupEvent[$key]);
+                                            }
+                                            foreach ($itemLabels2 as $k => $v) {
+                                                $nameLabel = $k . "_" . $no;
+                                                $keyupEvent[$key] = str_replace("{" . $k . "}", $nameLabel, $keyupEvent[$key]);
+                                            }
+                                        }
+                                    }
+                                    else {
+                                    }
+                                    if (strlen($keyupEvent[$key]) > 2) {
+                                        $keyUpStr[$key] = " onkeyup=\"" . $keyupEvent[$key] . "\" ";
+                                    }
+                                    if (in_array($key, $editableFields2)) {
+                                        $readOnly[$key] = "";
+                                        if (isset($iSpec["jml"]) && $iSpec["jml"] < 1) {
+                                            $readOnly[$key] = "readonly_xz";
+                                        }
+                                        if (isset($paramsForceEditable[$key])) {
+                                            if ($paramsForceEditable[$key] == true) {
+
+                                            }
+                                            else {
+                                                $readOnly[$key] = "readonly_xxz";
+                                                $listMode[$key] = "text";
+                                            }
+                                        }
+                                    }
+                                    else {
+                                        $readOnly[$key] = "readonly_xxz";
+                                        $listMode[$key] = "text";
+                                    }
+                                    $colID[$key] = $key . "_" . $no;
+                                    if ($listMode[$key] == "input") {
+                                        $queryParams .= "&$key='+removeCommas(document.getElementById('" . $colID[$key] . "').value)+'";
+                                    }
+                                }
+                                foreach ($itemLabels2 as $key => $label) {
+                                    $colCtr++;
+                                    $color = "#343434";
+                                    if (isset($_SESSION['errFields'][$iSpec['id']])) {
+                                        if (in_array($key, $_SESSION['errFields'][$iSpec['id']])) {
+                                            $color = "#dd3300";
+                                        }
+                                    }
+                                    echo "<td align='left'>";
+                                    $colID = $key . "_" . $no;
+                                    $keyID = $key;
+                                    $noID = $no;
+                                    $tabIndexNum = $colCtr . $no;
+                                    $fieldVal = "";
+                                    if (substr($key, 0, 1) == "*") {
+                                        $key_p = str_replace("*", "", $key);
+                                        $key_ex = explode("#", $key_p);
+                                        $pair_name = $key_ex[0];
+                                        $pair_key = $key_ex[1];
+                                        $pair_key_val = $iSpec[$pair_key];
+                                        if (sizeof($key_ex) > 1) {
+                                            $fieldVal = isset($pairedValue[$pair_name][$pair_key_val]) ? $pairedValue[$pair_name][$pair_key_val] : "0";
+                                        }
+                                        else {
+                                            $fieldVal = isset($pairedValue[$pair_name]) ? $pairedValue[$pair_name] : "0";
+                                        }
+                                    }
+                                    else {
+                                        if (isset($iSpec[$key])) {
+                                            if (is_numeric($iSpec[$key])) {
+                                                $fieldVal = $iSpec[$key] + 0;
+                                            }
+                                            else {
+                                                $fieldVal = $iSpec[$key];
+                                            }
+                                        }
+                                    }
+                                    if (sizeof($minValues) > 0) {
+                                        $moq = isset($minValues['moq'][$iID]) ? $minValues['moq'][$iID] : 0;
+                                        $validateKey_up = true;
+                                    }
+                                    else {
+                                        $moq = 0;
+                                        $validateKey_up = false;
+                                    }
+                                    $keyupData = (($key == "qty" || $key == "jml") && $validateKey_up == true) ? "onkeydown=\"if(parseInt(this.value)<$moq){setTimeout(function(){ this.value='" . $iSpec[$key] . "'}, 1000);} \"" : "";
+
+                                    switch ($listMode[$key]) {
+                                        case "input":
+                                            $linkSubEditable = $iSpec['editTarget'] . "&$key=";
+                                            $thisValue = "'+removeCommas(this.value)";
+                                            echo "<input type='text'  min='$moq' autocomplete='off' " . $readOnly[$key] . " keyid=$keyID noid=$noID id_jml=$iID id=$colID  class='form-control form-control-sm text-right' style='color:$color;'
+                                                value='" . niceDecimal($fieldVal) . "'
+                                                onclick='this.select()'";
+//                                            $baseInputName = isset($unionSelectors['base']) ? "document.getElementById('" . $unionSelectors['base'] . "_" . $no . "')" : "this";
+//                                            $pemicuGerbangAsli = "onblur=\"if(this.value!=this.defaultValue){hiliteDiv(this);document.getElementById('result').src='" . $iSpec['editTarget'] . "'$qtyParam+'$queryParams';} \" $keyupData";
+//                                            $pemicuGerbangAsli .= "*onmouseout=\"if(this.value!=this.defaultValue){hiliteDiv(this);document.getElementById('result').src='" . $iSpec['editTarget'] . "'$qtyParam+'$queryParams';}\" ";
+//                                            $pemicuGerbang = "onblur=\"if($baseInputName.value!=$baseInputName.defaultValue){hiliteDiv($baseInputName);document.getElementById('result').src='" . $iSpec['editTarget'] . "'$qtyParam+'$queryParams';}\" $keyupData ";
+//                                            $pemicuGerbang .= "*onmouseout=\"if($baseInputName.value!=$baseInputName.defaultValue){hiliteDiv($baseInputName);document.getElementById('result').src='" . $iSpec['editTarget'] . "'$qtyParam+'$queryParams';}\" ";
+//                                            $pemicuGerbangUnion = "onchange=\"if($baseInputName.value!=$baseInputName.defaultValue){hiliteDiv($baseInputName);document.getElementById('result').src='" . $iSpec['editTarget'] . "'$qtyParam+'$queryParams';} \" ";
+//
+//                                            if (isset($unionSelectors['base'])) {
+//                                                if ($unionSelectors['base'] == $key) {//==jadi acuan kiriman
+//                                                    echo str_replace("this", $baseInputName, $pemicuGerbang);
+//                                                }
+//                                                else {
+//                                                    if (in_array($key, $unionSelectors['members'])) {//==jadi member union, tidak memicu perubahan gerbang
+//                                                        echo $pemicuGerbangUnion;
+//                                                    }
+//                                                    else {//==biasa aja, memicu perubahan gerbang
+//                                                        echo $pemicuGerbangAsli;
+//                                                    }
+//                                                }
+//                                            }
+//                                            else {
+//                                                echo $pemicuGerbangAsli;
+//                                            }
+                                            echo " onblur=\"document.getElementById('result').src='" . $linkSubEditable . "$thisValue\"";
+//                                            if (isset($keyupAction) && $keyupAction == true) {
+//                                                echo "onkeyup=\"document.getElementById('result').src='" . $iSpec['editTarget'] . "'$qtyParam+'$queryParams';if(parseFloat(removeCommas(this.value))>0){ this.value=addCommas(this.value) }else{ this.value=0 }\"";
+//                                            }
+//                                            else {
+//                                                echo "onkeyup=\"delay( function(){ $('#shopping_cart').trigger('change') }, 400, this );if(parseFloat(removeCommas(this.value))>0){ this.value=addCommas(this.value) }else{ this.value=0 }\"";
+//                                            }
+                                            echo ">";
+                                            break;
+                                        case "text":
+                                            $add_data_val = "";
+                                            if (is_array($label)) {
+                                                $add_data_val = isset($iSpec[$label["addKey"]]) ? "<br>" . $iSpec[$label["addKey"]] : "";
+                                            }
+                                            if (is_numeric($fieldVal)) {
+                                                echo "<span keyid=$keyID noid=$noID id=$colID class='form-control form-control-sm text-right' style='color:$color;background:#f0f0f0;'>" . niceDecimal($fieldVal) . "$add_data_val</span>";
+                                            }
+                                            else {
+                                                if (strlen($fieldVal) > 10) {
+                                                    echo "<span keyid=$keyID noid=$noID id=$colID class='' style='color:$color;border:0px;'>" . formatField($key, $fieldVal) . "$add_data_val</span>";
+                                                }
+                                                else {
+                                                    echo "<span keyid=$keyID noid=$noID id=$colID class='form-control form-control-sm ' style='color:$color;border:0px;'>" . formatField($key, $fieldVal) . "$add_data_val</span>";
+                                                }
+                                            }
+                                            break;
+                                    }
+                                    echo "</td>";
+
+                                    if ($key == "total_dipakai") {
+                                        $subtotal += $fieldVal;
+                                    }
+                                }
+                                //region remover per row
+                                if (!$avoidRemove) {
+                                    echo "<td width='1%'>";
+                                    echo "<a class='btn btn-xs btn-danger' title='remove this item' data-toggle='tooltip' data-placement='left'
+                                    onclick=\"document.getElementById('result').src='" . $iSpec['removeTarget'] . "';\"><span class='glyphicon glyphicon-remove'></span></a>";
+                                    echo "</td>";
+                                }
+                                //endregion
+
+                                echo "</tr id='tr_" . $iSpec['id'] . "' bgcolor=$bgColor>";
+                            }
+                            $colspan2 = count($itemLabels2);
+                            echo "<tr style='font-weight: 700; font-size: 14px;' id='tr_" . $iSpec['id'] . "' bgcolor=$bgColor>";
+                            echo "<td colspan='$colspan2' style='vertical-align:middle;' class='text-uppercase text-right'>total</td>";
+                            echo "<td style='vertical-align:middle;' class='text-right'><span class=' form-control'>" . number_format($subtotal, "0", ".", ",") . "</span></td>";
+                            echo "<td>&nbsp;</td>";
+                            echo "</tr id='tr_" . $iSpec['id'] . "' bgcolor=$bgColor>";
+                        }
+                    }
+                    echo "</table class='table table-condensed no-padding table-bordered no-margin'>";
+                    //----------------
+
+                    echo "</td>";
+
+                    echo "<script>
+                            top.$('.bs-container').remove();
+                            top.$('.selectpicker').selectpicker('refresh');
+                        </script>";
+
+                    if (sizeof($pairedItemField) > 0) {
+                        foreach ($pairedItemField as $key => $label) {
+                            $pairedItems2ID = isset($pairedItems[$iID]['id']) ? $pairedItems[$iID]['id'] : 0;
+                            $pairedItems2Qty = isset($pairedItems[$iID]['jml']) ? $pairedItems[$iID]['jml'] : 0;
+                            $fieldVal = isset($pairedItems[$iID][$key]) ? $pairedItems[$iID][$key] : "";
+                            echo "<td>";
+                            switch ($listMode[$key]) {
+                                case "input":
+                                    echo "<input type='text' class='form-control text-right' value='" . $pairedItems2Qty . "' min='0' autocomplete='off'
+                                    onblur=\"document.getElementById('result').src='" . $pairedItemRecorder . "?newQty='+removeCommas(this.value)+'&iid=$iID&val=$pairedItems2ID';\"
+                                    onmouseout=\"document.getElementById('result').src='" . $pairedItemRecorder . "?newQty='+removeCommas(this.value)+'&iid=$iID&val=$pairedItems2ID';\"
+                                    >";
+                                    break;
+                                case "text":
+                                    if (is_numeric($fieldVal)) {
+                                        echo "<span class='form-control text-right' style='color:$color;background:#f0f0f0;'>" . niceDecimal($fieldVal) . "</span>";
+                                    }
+                                    else {
+                                        echo "<span class='form-control text-left' style='color:$color;border:0px;'>" . str_replace(" ", "&nbsp;", $fieldVal) . "</span>";
+                                    }
+                                    break;
+                            }
+                            echo "</td>";
+                        }
+                    }
+                    echo "</tr>";
+                }
+
+            }
+
+
+        }
+
+        $items2 = array();
+        //region items2, kalau salah satunya untuk produksi dan konversi
+        if (isset($items2) && sizeof($items2) > 0) {
+            echo "<tr class='bg-info'>";
+            echo "<td colspan='$jmlKolomHeader'>";
+
+            // echo "<div class='table-responsive no-padding no-border border-cek overflow-h'>";
+            echo "<div class='panel no-margin'>"; // anakan table
+            echo "<table class='table table-condensed table-striped no-padding no-border'>";
+
+            if (sizeof($itemLabels2) && (is_array($itemLabels2)) && $showItems) {
+                //region header table anakan
+                echo "<tr>";
+                echo "<td class='text-muted bg-grey-1 text-center'>";
+                echo "No";
+                echo "</td>";
+                foreach ($itemLabels2 as $key => $label) {
+                    echo "<td class='text-muted bg-grey-1 text-center text-capitalize'>";
+                    echo $label;
+                    echo "</td>";
+                }
+                echo "</tr>";
+                //endregion
+            }
+
+            $no = 0;
+            //region body table anakan
+            $kurangStoks = array();
+            foreach ($items2 as $iSpec) {
+                $iID = $iSpec['id'];
+                $no++;
+                $bgColor = "transparent";
+                if (isset($items2_sum_kurang) && is_array($items2_sum_kurang)) {
+                    if (isset($items2_sum_kurang[$iID])) {
+                        $bgColor = "yellow";
+                    }
+                }
+                if (isset($_SESSION['errLines'])) {
+                    if (in_array($iSpec['id'], $_SESSION["errLines"])) {
+                        $bgColor = "#ffff77";
+                    }
+                }
+                echo "<tr id='tr_" . $iSpec['id'] . "' bgcolor=$bgColor>";
+                echo "<td width='5%'>";
+                echo $no;
+                echo ".</td>";
+                $colCtr = 0;
+                $queryParams = "";
+                foreach ($itemLabels2 as $key => $label) {
+                    //                if(in_array($key,$editableFields)){
+                    $colID = $key . "_" . $no;
+                    $queryParams .= "&$key='+removeCommas(document.getElementById('$colID').value)+'";
+                    //                }
+                }
+
+                foreach ($itemLabels2 as $key => $label) {
+                    $colCtr++;
+                    $color = "343434";
+                    if (isset($_SESSION['errFields'][$iSpec['id']])) {
+                        if (in_array($key, $_SESSION['errFields'][$iSpec['id']])) {
+                            $color = "#dd3300";
+                        }
+                    }
+                    $cAlign = is_numeric($iSpec[$key]) ? "text-right" : "text-left";
+                    //region membuat array stok yang kurang
+                    if ($key == "sisa") {
+                        if ($iSpec[$key] < 0) {
+                            $kurangStoks[$iSpec['nama']] = $iSpec['sisa'];
+                            $cAlign .= " text-red text-bold";
+                        }
+                        else {
+                            $cAlign .= "";
+                        }
+                    }
+                    //endregion
+                    echo "<td class='$cAlign'>";
+                    $tabIndexNum = $colCtr . $no;
+
+                    if (is_numeric($iSpec[$key])) {
+                        // echo "<input type=text autocomplete='off' readOnly id=$colID class='form-control text-right' style='color:$color;' value='" . $iSpec[$key] . "' >";
+                        echo formatField($key, $iSpec[$key]);
+                        // echo $iSpec[$key];
+                    }
+                    else {
+                        // echo "<input type=text autocomplete='off' readOnly id=$colID class='form-control' style='color:$color;' value='" . $iSpec[$key] . "' >";
+                        echo $iSpec[$key];
+                    }
+                    echo "</td>";
+                }
+                echo "</tr>";
+            }
+            //endregion
+
+            echo "</table>";
+            echo "</div>"; // anakan table
+
+            // arrPrint($kurangStoks);
+
+            echo "</td>";
+            echo "</tr>";
+        }
+        //endregion
+
+        //region items3
+        if (isset($items3) && sizeof($items3) > 0) {
+            echo "<tr class='bg-info'>";
+            echo "<td colspan='$jmlKolomHeader'>";
+
+            // echo "<div class='table-responsive no-padding no-border border-cek overflow-h'>";
+            echo "<div class='panel no-margin'>"; // anakan table
+            echo "<table class='table table-condensed table-striped no-padding no-border'>";
+
+            if (sizeof($itemLabels3) && (is_array($itemLabels3)) && $showItems) {
+                //region header table anakan
+                echo "<tr>";
+                echo "<td class='text-muted bg-grey-1 text-center'>";
+                echo "No";
+                echo "</td>";
+                foreach ($itemLabels3 as $key => $label) {
+                    echo "<td class='text-muted bg-grey-1 text-center text-capitalize'>";
+                    echo $label;
+                    echo "</td>";
+                }
+                echo "</tr>";
+                //endregion
+            }
+
+            $no = 0;
+            //region body table anakan
+            $kurangStoks = array();
+            foreach ($items3 as $iSpec) {
+                $iID = $iSpec['id'];
+                $no++;
+                $bgColor = "transparent";
+                if (isset($_SESSION['errLines'])) {
+                    if (in_array($iSpec['id'], $_SESSION["errLines"])) {
+                        $bgColor = "#ffff77";
+                    }
+                }
+                echo "<tr id='tr_" . $iSpec['id'] . "' bgcolor=$bgColor>";
+                echo "<td width='5%'>";
+                echo $no;
+                echo ".</td>";
+                $colCtr = 0;
+                $queryParams = "";
+                foreach ($itemLabels3 as $key => $label) {
+                    //                if(in_array($key,$editableFields)){
+                    $colID = $key . "_" . $no;
+                    $queryParams .= "&$key='+removeCommas(document.getElementById('$colID').value)+'";
+                    //                }
+                }
+
+                foreach ($itemLabels3 as $key => $label) {
+                    $colCtr++;
+                    $color = "343434";
+                    if (isset($_SESSION['errFields'][$iSpec['id']])) {
+                        if (in_array($key, $_SESSION['errFields'][$iSpec['id']])) {
+                            $color = "#dd3300";
+                        }
+                    }
+                    $cAlign = is_numeric($iSpec[$key]) ? "text-right" : "text-left";
+                    //region membuat array stok yang kurang
+                    if ($key == "sisa") {
+                        if ($iSpec[$key] < 0) {
+                            $kurangStoks[$iSpec['nama']] = $iSpec['sisa'];
+                            $cAlign .= " text-red text-bold";
+                        }
+                        else {
+                            $cAlign .= "";
+                        }
+                    }
+                    //endregion
+                    echo "<td class='$cAlign'>";
+                    $tabIndexNum = $colCtr . $no;
+
+                    if (is_numeric($iSpec[$key])) {
+                        // echo "<input type=text autocomplete='off' readOnly id=$colID class='form-control text-right' style='color:$color;' value='" . $iSpec[$key] . "' >";
+                        echo $iSpec[$key];
+                    }
+                    else {
+                        // echo "<input type=text autocomplete='off' readOnly id=$colID class='form-control' style='color:$color;' value='" . $iSpec[$key] . "' >";
+                        echo $iSpec[$key];
+                    }
+                    echo "</td>";
+                }
+                echo "</tr>";
+            }
+            //endregion
+
+
+            if (isset($sumRows3) && sizeof($sumRows3) > 0) {
+                $nr = 0;
+                foreach ($sumRows3 as $key => $label) {
+                    $val = 0;
+                    $nr++;
+                    $bottom_borderless = $nr < sizeof($sumRows3) ? "bottom-borderless" : "";
+
+                    if (isset($main[$key]) && $main[$key] > 0) {
+                        $val = $main[$key];
+                    }
+                    else {
+                        if (isset($addValues[$key]) && $addValues[$key] > 0) {
+                            $val = $addValues[$key];
+                        }
+                    }
+
+                    echo "<tr class='bg-grey-01 3'>";
+                    echo "<td colspan='" . sizeof($itemLabels3) . "' class='text-right $bottom_borderless valign-m text-uppercase'>$label</td>";
+                    echo "<td class='right-borderlesss'>";
+                    echo formatField($key, $val);
+                    echo "</td>";
+                    echo "</tr>";
+                }
+            }
+
+            echo "</table>";
+            echo "</div>"; // anakan table
+
+            echo "</td>";
+            echo "</tr>";
+        }
+        //region cashback products list
+        if (isset($_SESSION[$cCode]["items10_sum"]) && (sizeof($_SESSION[$cCode]["items10_sum"]) > 0)) {
+            $cashbackFields = isset($shoppingCartCashbackAddProduct["shoppingCartFields"]) ? $shoppingCartCashbackAddProduct["shoppingCartFields"] : array(
+                "nama" => "Nama Produk",
+                "produk_kode" => "Kode.Part"
+            );
+
+            echo "<tr class='bg-warning'>";
+            echo "<td colspan='20' style='padding: 10px; background-color: #fcf8e3;'>";
+
+            echo "<div style='font-weight: bold; text-align: center; background-color: #f5f5f5; border: 1px solid #ddd; border-bottom: none; padding: 6px; text-transform: uppercase; color: #333;'>Produk yang Dipilih</div>";
+            echo "<table class='table table-condensed table-bordered no-margin' style='background-color: #fff;'>";
+            echo "<tr class='bg-grey-2 text-uppercase' style='font-weight: bold;'>";
+            echo "<th style='width: 5%; text-align: center; color: #555;'>No</th>";
+            foreach ($cashbackFields as $fieldKey => $fieldLabel) {
+                echo "<th style='color: #555;'>$fieldLabel</th>";
+            }
+            echo "<th style='width: 10%; text-align: center; color: #555;'>Qty</th>";
+            echo "<th style='width: 5%; text-align: center; color: #555;'>Hapus</th>";
+            echo "</tr>";
+            $no_p = 0;
+            foreach ($_SESSION[$cCode]["items10_sum"] as $pid => $pSpec) {
+                $no_p++;
+                echo "<tr>";
+                echo "<td style='text-align: center; vertical-align: middle; font-weight: bold;'>$no_p</td>";
+                foreach ($cashbackFields as $fieldKey => $fieldLabel) {
+                    $fieldVal = isset($pSpec[$fieldKey]) ? htmlspecialchars($pSpec[$fieldKey]) : "";
+                    echo "<td style='vertical-align: middle;'>$fieldVal</td>";
+                }
+                echo "<td style='text-align: center; vertical-align: middle;'>";
+                echo "<input type='number' class='form-control text-center' style='padding: 2px; height: 28px; width: 70px; margin: 0 auto;' value='{$pSpec['qty']}' min='1' 
+                      onblur=\"document.getElementById('result').src='" . base_url() . $this->modul . "/_prosesSelectProduk/updateQty/" . $this->jenisTr . "?id=$pid&qty='+this.value;\"
+                      onchange=\"document.getElementById('result').src='" . base_url() . $this->modul . "/_prosesSelectProduk/updateQty/" . $this->jenisTr . "?id=$pid&qty='+this.value;\">";
+                echo "</td>";
+                echo "<td style='text-align: center; vertical-align: middle;'>";
+                echo "<a class='text-red btn btn-link' style='padding: 0px;' onclick=\"document.getElementById('result').src='" . base_url() . $this->modul . "/_prosesSelectProduk/remove/" . $this->jenisTr . "?id=$pid';\"><span class='glyphicon glyphicon-remove'></span></a>";
+                echo "</td>";
+                echo "</tr>";
+
+// START OF COMPLETE REPEATED LOGIC
+                if (isset($pSpec['jml_serial']) && $pSpec['jml_serial'] > 0) {
+                    $qty = isset($pSpec['qty']) ? intval($pSpec['qty']) : 1;
+                    $jml_serial = intval($pSpec['jml_serial']);
+                    $max_allowed = $qty * $jml_serial;
+
+                    $serials = array();
+                    if (isset($_SESSION[$cCode]['items9_sum']) && is_array($_SESSION[$cCode]['items9_sum'])) {
+                        foreach ($_SESSION[$cCode]['items9_sum'] as $item) {
+                            $match = false;
+                            if (isset($item['id']) && $item['id'] == $pid) {
+                                $match = true;
+                            } elseif (isset($item['produk_kode']) && isset($pSpec['produk_kode']) && $item['produk_kode'] == $pSpec['produk_kode']) {
+                                $match = true;
+                            }
+                            if ($match) {
+                                $serials[] = isset($item['serial']) ? $item['serial'] : "";
+                            }
+                        }
+                    }
+
+                    $pakai_ini = 0;
+                    if($pakai_ini == 1){
+
+                        echo "<tr>";
+                        echo "<td>&nbsp;</td>";
+                        echo "<td colspan='" . (sizeof($cashbackFields) + 2) . "' style='padding: 10px 15px;'>";
+
+                        echo "<div style='margin-bottom: 10px; max-width: 500px;'>";
+                        echo "<label style='font-size: 12px; font-weight: bold; margin-bottom: 4px; display: block;'>Masukkan Nomor Serial (" . sizeof($serials) . " / " . $max_allowed . "):</label>";
+
+                        $input_disabled = (sizeof($serials) >= $max_allowed) ? "disabled" : "";
+                        $input_placeholder = (sizeof($serials) >= $max_allowed) ? "Batas nomor serial sudah tercapai" : "Ketik / Scan nomor serial lalu tekan Enter...";
+
+                        echo "<input type='text' class='form-control input-sm' $input_disabled placeholder='$input_placeholder' 
+                           onkeydown=\"if(event.keyCode === 13) { event.preventDefault(); top.$('#result').load('" . base_url() . $this->modul . "/_prosesSelectProduk/recordSerial/" . $this->jenisTr . "?id=$pid&serial='+encodeURIComponent(this.value)); }\">";
+                        echo "</div>";
+
+                        if (sizeof($serials) > 0) {
+                            // Pisahkan serial berdasarkan tipe (in / ot)
+                            $indoor_list = array();
+                            $outdoor_list = array();
+                            $default_list = array();
+
+                            foreach ($serials as $i => $sNum) {
+                                $sNum_sys = $sNum;
+                                $query_sn = $this->db->query("SELECT produk_serial_number_2 FROM produk_per_serialnumber WHERE produk_id = ? AND (produk_serial_number = ? OR produk_serial_number_2 = ?) LIMIT 1", array($pid, $sNum, $sNum));
+                                if ($query_sn->num_rows() > 0) {
+                                    $sNum_sys = $query_sn->row()->produk_serial_number_2;
+                                }
+                                $suffix = "";
+                                if (strpos($sNum_sys, ':') !== false) {
+                                    $parts = explode(':', $sNum_sys);
+                                    $suffix = strtolower(trim(end($parts)));
+                                }
+
+                                $item_data = array('index' => $i, 'serial' => $sNum);
+                                if ($suffix == 'in') {
+                                    $indoor_list[] = $item_data;
+                                } elseif ($suffix == 'ot') {
+                                    $outdoor_list[] = $item_data;
+                                } else {
+                                    $default_list[] = $item_data;
+                                }
+                            }
+
+                            echo "<div style='background-color: #fafafa; border: 1px solid #ddd; border-radius: 4px; padding: 12px; max-width: 900px;'>";
+                            echo "<div style='font-weight: bold; font-size: 11px; color: #777; margin-bottom: 10px; text-transform: uppercase; border-bottom: 1px solid #eee; padding-bottom: 4px;'>Daftar Serial Terpindai:</div>";
+
+                            if ($jml_serial > 1) {
+                                echo "<div class='row'>";
+
+                                // Kolom Indoor
+                                echo "<div class='col-xs-6' style='border-right: 1px solid #eee;'>";
+                                echo "<div style='font-weight: bold; font-size: 11px; color: #337ab7; margin-bottom: 6px;'><span class='fa fa-home'></span> INDOOR UNIT (in)</div>";
+                                if (sizeof($indoor_list) > 0) {
+                                    echo "<ol style='padding-left: 18px; margin-bottom: 0px;'>";
+                                    foreach ($indoor_list as $item) {
+                                        $i = $item['index'];
+                                        $sNum_esc = htmlspecialchars($item['serial']);
+                                        echo "<li style='margin-bottom: 4px; font-size: 13px; font-family: monospace;'>";
+                                        echo "<span style='font-weight: bold;'>$sNum_esc</span>";
+                                        echo "<a class='text-red' style='margin-left: 10px; cursor: pointer;' title='Hapus serial ini' onclick=\"top.$('#result').load('" . base_url() . $this->modul . "/_prosesSelectProduk/recordSerial/" . $this->jenisTr . "?id=$pid&act=delete&index=$i');\"><span class='glyphicon glyphicon-remove' style='font-size: 11px;'></span></a>";
+                                        echo "</li>";
+                                    }
+                                    echo "</ol>";
+                                } else {
+                                    echo "<div style='font-size: 12px; color: #999; font-style: italic;'>Belum ada serial Indoor</div>";
+                                }
+                                echo "</div>";
+
+                                // Kolom Outdoor
+                                echo "<div class='col-xs-6'>";
+                                echo "<div style='font-weight: bold; font-size: 11px; color: #d9534f; margin-bottom: 6px;'><span class='fa fa-globe'></span> OUTDOOR UNIT (ot)</div>";
+                                if (sizeof($outdoor_list) > 0) {
+                                    echo "<ol style='padding-left: 18px; margin-bottom: 0px;'>";
+                                    foreach ($outdoor_list as $item) {
+                                        $i = $item['index'];
+                                        $sNum_esc = htmlspecialchars($item['serial']);
+                                        echo "<li style='margin-bottom: 4px; font-size: 13px; font-family: monospace;'>";
+                                        echo "<span style='font-weight: bold;'>$sNum_esc</span>";
+                                        echo "<a class='text-red' style='margin-left: 10px; cursor: pointer;' title='Hapus serial ini' onclick=\"top.$('#result').load('" . base_url() . $this->modul . "/_prosesSelectProduk/recordSerial/" . $this->jenisTr . "?id=$pid&act=delete&index=$i');\"><span class='glyphicon glyphicon-remove' style='font-size: 11px;'></span></a>";
+                                        echo "</li>";
+                                    }
+                                    echo "</ol>";
+                                } else {
+                                    echo "<div style='font-size: 12px; color: #999; font-style: italic;'>Belum ada serial Outdoor</div>";
+                                }
+                                echo "</div>";
+
+                                echo "</div>";
+                            } else {
+                                // Tampilan single list default jika jml_serial = 1
+                                echo "<ol style='padding-left: 18px; margin-bottom: 0px;'>";
+                                foreach ($serials as $i => $sNum) {
+                                    $sNum_esc = htmlspecialchars($sNum);
+                                    echo "<li style='margin-bottom: 4px; font-size: 13px; font-family: monospace;'>";
+                                    echo "<span style='font-weight: bold;'>$sNum_esc</span>";
+                                    echo "<a class='text-red' style='margin-left: 10px; cursor: pointer;' title='Hapus serial ini' onclick=\"top.$('#result').load('" . base_url() . $this->modul . "/_prosesSelectProduk/recordSerial/" . $this->jenisTr . "?id=$pid&act=delete&index=$i');\"><span class='glyphicon glyphicon-remove' style='font-size: 11px;'></span></a>";
+                                    echo "</li>";
+                                }
+                                echo "</ol>";
+                            }
+
+                            echo "</div>";
+                        }
+
+                        echo "</td>";
+                        echo "</tr>";
+                    }
+                }
+// END OF COMPLETE REPEATED LOGIC
+            }
+            echo "</table>";
+            echo "</td>";
+            echo "</tr>";
+        }
+        //endregion
+        /*=============================sumrows============================*/
+        if (isset($sumRows) && sizeof($sumRows) > 0) {
+            $nr = 0;
+            foreach ($sumRows as $key => $label) {
+                $val = 0;
+                $nr++;
+                $bottom_borderless = $nr < sizeof($sumRows) ? "bottom-borderless" : "";
+
+                if (isset($main[$key]) && $main[$key] > 0) {
+                    $val = $main[$key];
+                }
+                else {
+                    if (isset($addValues[$key]) && $addValues[$key] > 0) {
+                        $val = $addValues[$key];
+                    }
+                }
+
+                if ($showItems) {
+// START OF COMPLETE REPEATED LOGIC
+                    if (isset($labelFieldsReplacer[$key])) {
+                        $label = $labelFieldsReplacer[$key];
+                        if (isset($pajakOption) && $pajakOption == 'pph_final_umkm') {
+                            if ($key == 'nilai_pph_original') {
+                                $label = 'PPh Final UMKM';
+                            }
+                            if ($key == 'pph__tarif') {
+                                $label = 'PPh Final UMKM (%)';
+                    }
+                        }
+                    }
+// END OF COMPLETE REPEATED LOGIC
+                    echo "<tr class='bg-grey-01 0'>";
+                    echo "<td colspan='" . sizeof($itemLabels) . "' class='text-right $bottom_borderless valign-m text-uppercase'>$label</td>";
+                    echo "<td colspan='3' class='right-borderlesss'>";
+                    echo "<input type='text' id='$key' class='form-control text-right' readonly value='" . niceDecimal($val) . "' >";
+                    echo "</td>";
+                    echo "</tr>";
+                }
+
+            }
+        }
+        if (isset($sumRows2) && sizeof($sumRows2) > 0) {
+
+            echo "<!-- ===========sumRows2============= -->";
+            echo "<tr bgcolor='#e0e0e0'>";
+            echo "<td colspan='" . (sizeof($itemLabels2) + 1) . "' class='text-left text-muted'><span class='fa fa-cog'></span> additional fees</td>";
+            echo "</td>";
+            echo "</tr>";
+            $nr = 0;
+            foreach ($sumRows2 as $key => $label) {
+                $nr++;
+                $bottom_borderless = $nr < sizeof($sumRows2) ? "bottom-borderless" : "";
+
+                echo "<tr bgcolor='#f0f0f5'>";
+                echo "<td colspan='" . sizeof($itemLabels) . "' class='text-right bottom-borderless valign-m text-uppercase'>$label</td>";
+                echo "<td>";
+                echo $sumSpec2[$key];
+                echo "</td>";
+                echo "</tr>";
+            }
+        }
+
+        if (sizeof($addRows) > 0) {
+            $nr = 0;
+            foreach ($addRowLabels as $k => $label) {
+                $nr++;
+                $bottom_borderless = $nr < sizeof($addRowLabels) ? "bottom-borderless" : "";
+                $rowHide = isset($addRowHiddens[$k]) ? $addRowHiddens[$k] : "tidak_hidden";
+                echo "<tr class='$rowHide'>";
+                echo "<td colspan='" . sizeof($itemLabels) . "' class='text-right $bottom_borderless valign-m text-uppercase'>$label</td>";
+                echo "<td colspan='2' class='text-right'>";
+                echo $addRows[$k];
+                echo "</td>";
+                echo "</tr>";
+            }
+        }
+
+        //region clear shoping cart
+        if ((!$avoidRemove) || (!$avoidRemoveAll_items)) {
+            $addColspan = (isset($checkOpname) && ($checkOpname == true)) ? 3 : 2;
+            echo "<tr class='bg-grey-2'>";
+            echo "<td colspan='" . (sizeof($itemLabels) + $addColspan) . "'>";
+
+            echo "<span class='pull-left'>";
+            echo "<a class='text-red' href='javascript:void(0)' title='remove ALL ITEMS' data-toggle='tooltip' data-placement='right' onclick=\"confirm_alert_result('Attention !!!','Remove all items on shopping cart?','$resetLink','YES CLEAR');\"><i class='fa fa-trash'> </i> Clear Shoping Cart</a>";
+            echo "</span>";
+
+            echo "</td>";
+            echo "</tr>";
+        }
+        //endregion
+        echo "</table class='table'>";
+        echo "</div class='table-responsive'>";
+
+        if (isset($fixedNote)) {
+            echo "<div class='alert alert-danger' style='margin-top: 10px;font-size: 15px;'>";
+            echo "<span>$fixedNote</span>";
+            echo "</div>";
+        }
+        if (isset($labelPajak) && (strlen($labelPajak)>0)) {
+            echo "<div class='alert alert-danger' style='margin-top: 10px;font-size: 20px;'>";
+            echo "<span>$labelPajak</span>";
+            echo "</div>";
+        }
+
+        /*---------------------sum CBM CKD------------------------------------*/
+        $volume_gross = "";
+        $berat_gross = "";
+        if (isset($detilSizeBar)) {
+            if (sizeof($detilSizeBar) > 0) {
+
+                $volume_gross = isset($detilSizeBar['volume_gross']) ? $detilSizeBar['volume_gross'] : 0;
+                $berat_gross = isset($detilSizeBar['berat_gross']) ? $detilSizeBar['berat_gross'] : 0;
+
+                $volume = isset($detilSizeBar['volume']) ? $detilSizeBar['volume'] : 0;
+                $berat = isset($detilSizeBar['berat']) ? $detilSizeBar['berat'] : 0;
+
+
+                echo "<div class='row bg-danger' style='background: #ffdecf;padding: 7px;'>";
+                echo "<div class='col-md-3 col-lg-3'>
+                        <div class='input-group'>
+                        <span class='input-group-addon' style='color: #000000;'>CBU CBM</span>
+                        <input type='text' class='form-control bg-danger' style='color: #000000;font-weight: bolder;' value='$volume' disabled=''>
+                        </div>
+                     </div>";
+                echo "<div class='col-md-3 col-lg-3'>
+                        <div class='input-group'>
+                        <span class='input-group-addon' style='color: #000000;'>CBU (KG)</span>
+                        <input type='text' class='form-control bg-danger' style='color: #000000;font-weight: bolder;' value='$berat' disabled=''>
+                        </div>
+                     </div>";
+                echo "<div class='col-md-3 col-lg-3'>
+                        <div class='input-group'>
+                        <span class='input-group-addon' style='color: #000000;'>CKD CBM</span>
+                        <input type='text' class='form-control bg-danger' style='color: #000000;font-weight: bolder;' value='$volume_gross' disabled=''>
+                        </div>
+                     </div>";
+                echo "<div class='col-md-3 col-lg-3'>
+                        <div class='input-group'>
+                        <span class='input-group-addon' style='color: #000000;'>CKD (KG)</span>
+                        <input type='text' class='form-control bg-danger' style='color: #000000;font-weight: bolder;' value='$berat_gross' disabled=''>
+                        </div>
+                     </div>";
+                echo "</div>";
+            }
+        }
+
+        //--------
+        if (isset($checkOpnameEnabled) && ($checkOpnameEnabled == true)) {
+            $noteEncode1 = blobEncode($checkOpnameNote1);
+            $noteEncode2 = blobEncode($checkOpnameNote2);
+
+            if (isset($checkOpnameCek1) && ($checkOpnameCek1 == 1)) {
+                $ceklist_checked_1 = "checked";
+            }
+            else {
+                $ceklist_checked_1 = "";
+            }
+            if (isset($checkOpnameCek2) && ($checkOpnameCek2 == 1)) {
+                $ceklist_checked_2 = "checked";
+            }
+            else {
+                $ceklist_checked_2 = "";
+            }
+
+            $strcekNote = "<br><div class='alert alert-danger' style='text-align: left;'>";
+
+            $strcekNote .= "<input type='checkbox' value='' $ceklist_checked_1
+                onclick=\"document.getElementById('result').src='" . $checkOpnameNotePaired . "?note1=$noteEncode1';\">";
+            $strcekNote .= "<span style='font-size: 20px;'>&nbsp;&nbsp; $checkOpnameNote1</span>";
+
+            $strcekNote .= "<br><input type='checkbox' value='' $ceklist_checked_2
+                onclick=\"document.getElementById('result').src='" . $checkOpnameNotePaired . "?note2=$noteEncode2';\">";
+            $strcekNote .= "<span style='font-size: 20px;'>&nbsp;&nbsp; $checkOpnameNote2</span>";
+
+            $strcekNote .= "</div>";
+            echo $strcekNote;
+        }
+        //--------
+        if (isset($freelancerShow) && ($freelancerShow == true)) {
+            $str = "";
+            $str .= "<div class='text-left' style='border-radius: 0 0 5px 5px;margin-top: 5px;border: 1px solid #d6d8db;'>";
+            if (sizeof($freelancerAddData) > 0) {
+                $link_add_data = base_url() . $freelancerAddData["link"] . "?noreload=1";
+                $link_tombol = "BootstrapDialog.show(
+                           {
+                                title:'Tambah Data Freelancer',
+                                message: $('<div></div>').load('$link_add_data'),
+                                size: BootstrapDialog.SIZE_WIDE,
+                                draggable:false,
+                                closable:true,
+                            }
+                        );";
+            }
+
+            $str .= "<div class='title bg-primary' style='padding: 5px;'>";
+            $str .= "<h4 class='text-left no-padding no-margin'> $freelancerLabel </h4>";
+            $str .= "</div>";
+            $str .= "<div style='margin: 2px;'>";
+            $str .= "<button class='btn btn-primary btn-sm pull-right' onclick=\"$link_tombol\">Tambah Data Freelancer</button>";
+            $str .= "<button class='btn btn-warning btn-sm' onclick=\"top.$('#result').load('$freelancerTambahBaris');\">+ Tambah Baris</button>";
+            $str .= "</div>";
+
+            $str .= "<div class='table-responsive' style='border: 1px solid #d6d8db; border-radius: 5px; margin: 2px;'>";
+            $str .= "<table class='table table-condensed'>";
+            $str .= "<tr class='bg-grey-2'>";
+            $str .= "<th>No.</th>";
+            foreach ($freelancerHeaders as $key => $label) {
+                if (is_array($label)) {
+                    $str .= "<th>" . $label["label"] . "</th>";
+                }
+                else {
+                    $str .= "<th>$label</th>";
+                }
+            }
+            $str .= "</tr>";
+            $no = 0;
+            foreach ($freelancerShowData as $ii => $iiSpec) {
+                $no++;
+                $bg_color = isset($freelancerMark["bgcolor"]) ? $freelancerMark["bgcolor"] : "";
+                $str .= "<tr bgcolor='$bg_color'>";
+                $str .= "<td>$no</td>";
+                foreach ($freelancerHeaders as $key => $label) {
+                    if (array_key_exists($key, $freelancerEditableFields)) {
+                        $val = isset($iiSpec[$key]) ? $iiSpec[$key] : 0;
+                        $anu = $key . "_" . $ii;
+                        if ($key == "nama") {
+                            $div_id = "pilihan_nama_$ii";
+                            $selector = MODUL_PATH . $freelancerEditableFields[$key]["selector"] . "/$key";
+                            $onclick = "onclick=\"getData('$selector?id=$ii&search='+encodeURI(this.value), '$div_id')\"";
+                            $onchange = "onchange=\"getData('$selector?id=$ii&search='+encodeURI(this.value), '$div_id')\"";
+                            $onblur = "";
+                            $bawah = "<br><div id='$div_id'></div>";
+                            $text = "text-left";
+                        }
+                        else {
+                            $process = MODUL_PATH . $freelancerEditableFields[$key]["process"] . "/$key/?id=$ii&val=";
+                            $param = "+removeCommas(document.getElementById('$anu').value)";
+                            $onclick = "onclick='this.select();'";
+                            $onchange = "";
+                            $onblur = "onblur=\"hiliteDiv(this);top.$('#result').load('$process'$param);\"";
+                            $bawah = "";
+                            $text = "text-right";
+                        }
+                        $valx = "<input type='text' id='$anu' name='$anu' value='$val'
+                            class='form-control $text' 
+                            $onclick $onblur $onchange
+                            
+                            > $bawah";
+
+                    }
+                    else {
+                        $valx = isset($iiSpec[$key]) ? $iiSpec[$key] : 0;
+                    }
+                    if ($key == "remove") {
+                        if (count($freelancerShowData) > 1) {
+                            $remove_disabled = "";
+                        }
+                        else {
+                            $remove_disabled = "disabled";
+                        }
+                        $process_remove = $freelancerRemoveBaris . "/?id=$ii";
+                        $valx = "<button class='text-red btn btn-sm' title='remove this item' href='javascript:void(0)' $remove_disabled
+                        onclick=\"top.$('#result').load('$process_remove');\">
+                        <span class='glyphicon glyphicon-remove'></span></button>";
+                    }
+                    $str .= "<td>$valx </td>";
+                    if (in_array($key, $freelancerHeadersSum)) {
+                        if (!isset($totalBawah[$key])) {
+                            $totalBawah[$key] = 0;
+                        }
+                        $totalBawah[$key] += isset($iiSpec[$key]) ? $iiSpec[$key] : 0;
+                    }
+                }
+                $str .= "</tr>";
+            }
+            $str .= "<tr class='text-bold'>";
+            $str .= "<td>-</td>";
+            foreach ($freelancerHeaders as $key => $label) {
+                $val = isset($totalBawah[$key]) ? formatField_he_format("debet", $totalBawah[$key]) : "-";
+                $str .= "<td>$val</td>";
+            }
+            $str .= "</tr>";
+            $str .= "</table class='table table-condensed'>";
+            $str .= "</div>";
+            $str .= "</div>";
+            $str .= "</div>";
+            echo $str;
+        }
+        //--------
+        $pakai_ini = 1;
+        if($pakai_ini == 1){
+            if (sizeof($elements) > 0) {
+                echo "<div class='panel-body table-responsivex'>";
+
+                echo "<div class='row'>";
+                echo "<div class='col-md-12'>";
+                echo "<h4 class='text-blue text-left'>Please fill in details below</h4>";
+                echo "</div class='col-md-12'>";
+                echo "</div class='row'>";
+
+                echo "<div class='row no-padding text-center' style='text-align:center;'>";
+                $elCtr = 0;
+                foreach ($elements as $eName => $pSpec) {
+
+                    $hiddenBox = "";
+                    if (isset($pSpec['hiddenBox']) && $pSpec['hiddenBox'] == "hidden") {
+                        $hiddenBox = "hidden";
+                    }
+
+                    $hiddenSelect = "";
+                    if (isset($pSpec['hiddenSelect']) && $pSpec['hiddenSelect'] == "hidden") {
+                        $hiddenSelect = "hidden";
+                    }
+                    $elCtr++;
+                    if (isset($pSpec['type']) && ($pSpec['type'] == "hidden")) {
+                        // type hidden tidak perlu tampil di ui //
+                    }
+                    else {
+//                    cekKuning("[$eName]");
+                        //region penampil untuk elemen pada shopingcart
+                        if ($elCtr % 2 == 0) {
+                        }
+                        else {
+                            echo "<div class='col-lg-12 no-padding'>";
+                            echo "<div class='row row-eq-height'>";
+                        }
+                        echo "<div class='col-md-6 col-lg-6 $hiddenBox' style='border:2px #e1ece6 solid;margin:0px;background:" . $pSpec['bgColor'] . "'>";
+                        echo "<div id='elTitle_$eName' class='text-left text-muted text-bold text-capitalize'>";
+
+                        echo $pSpec['label'] . " ";
+                        if (isset($elementConfigs[$eName]['autoSelect']) && $elementConfigs[$eName]['autoSelect']) {
+
+                        }
+                        else {
+                            echo "<a href='javascript:void(0)' 
+                        onclick=\"hiliteDiv(this);document.getElementById('result').src='" . $elementResetTarget . "$eName';\">
+                        <span class='fa fa-eraser'></span></a>";
+                        }
+                        //----------------------------------------
+                        if (isset($elementConfigMutasi[$eName])) {
+                            echo "&nbsp;&nbsp;&nbsp;<a href='" . $elementConfigMutasi[$eName] . "' target='_blank' title='klik untuk melihat mutasi'><span class='glyphicon glyphicon-time'></span></a>";
+                        }
+                        //----------------------------------------
+                        echo "<span class='pull-right'><sup>" . $pSpec['editStr'] . "&nbsp;" . $pSpec['addStr'] . "</sup></span>";
+
+                        echo "</div class='box-title'>";
+
+                        if (isset($elementConfigs[$eName]['warningLabel']) && $elementConfigs[$eName]['warningLabel']) {
+                            echo "<div class='col-md-12'>" . $elementConfigs[$eName]['warningLabel'] . "</div>";
+                        }
+                        echo "<div class='line_" . __LINE__ . " $hiddenSelect'>&nbsp;</div>";
+                        echo $pSpec['string'];
+
+                        echo "</div>";
+                        if ($elCtr % 2 == 0) {
+                            echo "</div>";
+                            echo "</div>";
+                        }
+
+                        //endregion
+                    }
+                }
+
+                echo "</div class='row'>";
+                echo "</div class='row'>";
+                echo "</div class='row'>";
+
+                if (isset($showScheme) && sizeof($showScheme) > 0) {
+
+                    echo "<div class='clearfix'><hr></div>";
+                    echo "<div class='col-md-12 no-padding'>";
+                    echo "<div class='text-center text-danger text-bold'>-- SKEMA PINJAMAN ANDA --</div>";
+                    echo "<div class='text-center text-danger text-bold meta'>generator skema hanya berlaku untuk single kreditur</div>";
+                    echo "<div class='text-center text-danger text-bold'> ========================================== </div>";
+
+                    //header skema
+                    echo "<div class='col-md-12 no-padding'>";
+
+                    echo "<span class='col-md-2 text-left text-bold no-padding'>Nama Pemegang Saham </span>
+                <span class='text-left col-md-9 no-padding text-capitalize'>: " . $headerScheme['nama'] . "</span>";
+
+//                $headerScheme = array(
+//                    "nama" => "$nmPemengangSaham",
+//                    "jml_pinjaman" => "$nilai_pinjaman",
+//                    "bunga_tahunan" => "$rate_bunga",
+//                    "awal_meminjam" => "$awal_pinjaman",
+//                    "pelunasan_pinjaman" => "$jatuh_tempo",
+//                    "lama_pinjaman" => "$total_hari hari ($total_bulan bln)",
+//                );
+
+                    echo "<span class='col-md-2 text-left text-bold no-padding'>Jumlah Pinjaman </span>      <span class='text-left col-md-9 no-padding'>: " . number_format($headerScheme['jml_pinjaman']) . "</span>";
+                    echo "<span class='col-md-2 text-left text-bold no-padding'>Bunga Tahunan </span>        <span class='text-left col-md-9 no-padding'>: " . $headerScheme['bunga_tahunan'] . "%</span>";
+                    echo "<span class='col-md-2 text-left text-bold no-padding'>Awal Meminjam </span>        <span class='text-left col-md-9 no-padding'>: " . $headerScheme['awal_meminjam'] . "</span>";
+                    echo "<span class='col-md-2 text-left text-bold no-padding'>Pelunasan Pinjaman </span>   <span class='text-left col-md-9 no-padding'>: " . $headerScheme['pelunasan_pinjaman'] . "</span>";
+                    echo "<span class='col-md-2 text-left text-bold no-padding'>Lama Pinjaman </span>        <span class='text-left col-md-9 no-padding'>: " . $headerScheme['lama_pinjaman'] . "</span>";
+
+                    echo "</div>";
+                    echo "<div class='clearfix'>&nbsp;</div>";
+                    echo "<div><table id='main_table' class='table datatable table-bordered table-hover table-striped'><thead>";
+                    echo "<tr>  <th width='1%'>No</th>
+                            <th>Periode</th>
+                            <th>jml hari / periode</th>
+                            <th>Pokok Pinjaman</th>
+                            <th>Rate Bunga</th>
+                            <th>Nilai Bunga</th>
+                            <th>PPh23</th>
+                            <th>bunga setelah dipotong PPh</th>
+                      </tr>";
+
+                    echo "</thead><tbody>";
+
+                    $total_bunga = 0;
+                    $total_pph23 = 0;
+                    $total_bunga_pph23 = 0;
+                    $total_hari = 0;
+                    $no = 1;
+
+                    foreach ($showScheme as $thnbln => $pinjaman) {
+
+                        $setBackground = isset($pinjaman['silangan']) ? $pinjaman['silangan'] : "merah";
+                        $bgColor = " ";
+
+                        switch ($setBackground) {
+                            default:
+                            case "merah":
+                                $bgColor = "bg-white";
+                                break;
+                            case "hijau":
+                                $bgColor = "bg-success";
+                                break;
+                            case "berjalan":
+                                $bgColor = "bg-warning";
+                                break;
+                        }
+
+                        echo "  <tr>
+                                <td class='$bgColor'>$no</td>
+                                <td class='$bgColor'>" . date('F Y', strtotime($pinjaman['thnbln'] . '-01')) . "</td>
+                                <td class='$bgColor'>" . $pinjaman['jml_hari_dbln'] . "</td>
+                                <td class='$bgColor'>" . number_format($pinjaman['nilai_pinjaman'], 0) . "</td>
+                                <td class='$bgColor'>" . $pinjaman['rate_bunga'] . "%</td>
+                                <td class='$bgColor'>" . number_format($pinjaman['nilai_bunga'], 0) . "</td>
+                                <td class='$bgColor'>" . number_format($pinjaman['nilai_pph23'], 0) . "</td>
+                                <td class='$bgColor'>" . number_format($pinjaman['nett_bunga'], 0) . "</td>
+                            </tr>";
+
+                        $no++;
+
+                        $total_bunga += $pinjaman['nilai_bunga'] * 1;
+                        $total_pph23 += $pinjaman['nilai_pph23'] * 1;
+                        $total_bunga_pph23 += $pinjaman['nett_bunga'] * 1;
+                        $total_hari += $pinjaman['jml_hari_dbln'] * 1;
+                    }
+
+                    echo "<tfoot>
+                        <tr>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>" . $total_hari . "</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>" . number_format($total_bunga, 0) . "</td>
+                            <td>" . number_format($total_pph23, 0) . "</td>
+                            <td>" . number_format($total_bunga_pph23, 0) . "</td>
+                        </tr>
+                    </tfoot>";
+
+                    echo "</tbody>
+                        </table>
+                        </div>";
+                    echo "<div class='clearfix'>&nbsp;</div>";
+                    echo "<div class='text-left'>Keterangan:</div>";
+                    echo "<div class='text-left'> - periode dengan background hijau akan otomatis dibuatkan <span class='text-capitalize text-bold'>request loan interest</span> sesaat setelah request pinjaman diapprove </div>";
+                    echo "</div>";
+                }
+
+                echo "</div class='panel-body table-responsive' style='bborder:1px solid red;'>";
+            }
+        }
+        else{
+            if (sizeof($elements) > 0) {
+                echo "<div class='panel-body table-responsive'>";
+                echo "<div class='row'>";
+                echo "<div class='col-md-12'>";
+                echo "<h4 class='text-blue text-left'>Please fill in details below</h4>";
+                echo "</div class='col-md-12'>";
+                echo "</div class='row'>";
+                echo "<div class='col-lg-12 no-padding text-center' style='text-align:center;'>";
+                $elCtr = 0;
+                foreach ($elements as $eName => $pSpec) {
+//                arrPrintPink($pSpec);
+                    $elCtr++;
+                    if (isset($pSpec['type']) && ($pSpec['type'] == "hidden")) {
+                        // type hidden tidak perlu tampil di ui //
+                    }
+                    else {
+                        //region penampil untuk elemen pada shopingcart
+                        if ($elCtr % 2 == 0) {
+                        }
+                        else {
+                            echo "<div class='col-lg-12 no-padding'>";
+                            echo "<div class='row row-eq-height'>";
+                        }
+                        echo "<div class='col-md-6 col-lg-6' style='border:2px #e1ece6 solid;margin:0px;background:" . $pSpec['bgColor'] . "'>";
+
+                        echo "<div id='elTitle_$eName' class='text-left text-muted text-bold text-capitalize'>";
+
+                        echo $pSpec['label'] . " ";
+                        if (isset($elementConfigs[$eName]['autoSelect']) && $elementConfigs[$eName]['autoSelect']) {
+
+                        }
+                        else {
+                            echo "<a href='javascript:void(0)' onclick=\"hiliteDiv(this);document.getElementById('result').src='" . $elementResetTarget . "$eName';\"><span class='fa fa-eraser'></span></a>";
+                        }
+                        //----------------------------------------
+                        if (isset($elementConfigMutasi[$eName])) {
+                            echo "&nbsp;&nbsp;&nbsp;<a href='" . $elementConfigMutasi[$eName] . "' target='_blank' title='klik untuk melihat mutasi'><span class='glyphicon glyphicon-time'></span></a>";
+                        }
+                        //----------------------------------------
+                        echo "<span class='pull-right'><sup>" . $pSpec['editStr'] . "&nbsp;" . $pSpec['addStr'] . "" . (isset($pSpec['reloadStr']) ? $pSpec['reloadStr'] : "") . "</sup></span>";
+
+                        echo "</div class='box-title'>";
+
+                        if (isset($elementConfigs[$eName]['warningLabel']) && $elementConfigs[$eName]['warningLabel']) {
+                            echo "<div class='col-md-12'>" . $elementConfigs[$eName]['warningLabel'] . "</div>";
+                        }
+
+
+                        echo "<div class=''>&nbsp;</div>";
+                        echo $pSpec['string'];
+
+                        echo "</div>";
+                        if ($elCtr % 2 == 0) {
+                            echo "</div>";
+                            echo "</div>";
+                        }
+                        //endregion
+                    }
+                }
+
+                echo "</div class='row'>";
+
+                if (isset($showScheme) && sizeof($showScheme) > 0) {
+
+                    echo "<div class='clearfix'><hr></div>";
+                    echo "<div class='col-md-12 no-padding'>";
+                    echo "<div class='text-center text-danger text-bold'>-- SKEMA PINJAMAN ANDA --</div>";
+                    echo "<div class='text-center text-danger text-bold meta'>generator skema hanya berlaku untuk single kreditur</div>";
+                    echo "<div class='text-center text-danger text-bold'> ========================================== </div>";
+
+                    //header skema
+                    echo "<div class='col-md-12 no-padding'>";
+
+                    echo "<span class='col-md-2 text-left text-bold no-padding'>Nama Pemegang Saham </span>
+                <span class='text-left col-md-9 no-padding text-capitalize'>: " . $headerScheme['nama'] . "</span>";
+
+//                $headerScheme = array(
+//                    "nama" => "$nmPemengangSaham",
+//                    "jml_pinjaman" => "$nilai_pinjaman",
+//                    "bunga_tahunan" => "$rate_bunga",
+//                    "awal_meminjam" => "$awal_pinjaman",
+//                    "pelunasan_pinjaman" => "$jatuh_tempo",
+//                    "lama_pinjaman" => "$total_hari hari ($total_bulan bln)",
+//                );
+
+                    echo "<span class='col-md-2 text-left text-bold no-padding'>Jumlah Pinjaman </span>      <span class='text-left col-md-9 no-padding'>: " . number_format($headerScheme['jml_pinjaman']) . "</span>";
+                    echo "<span class='col-md-2 text-left text-bold no-padding'>Bunga Tahunan </span>        <span class='text-left col-md-9 no-padding'>: " . $headerScheme['bunga_tahunan'] . "%</span>";
+                    echo "<span class='col-md-2 text-left text-bold no-padding'>Awal Meminjam </span>        <span class='text-left col-md-9 no-padding'>: " . $headerScheme['awal_meminjam'] . "</span>";
+                    echo "<span class='col-md-2 text-left text-bold no-padding'>Pelunasan Pinjaman </span>   <span class='text-left col-md-9 no-padding'>: " . $headerScheme['pelunasan_pinjaman'] . "</span>";
+                    echo "<span class='col-md-2 text-left text-bold no-padding'>Lama Pinjaman </span>        <span class='text-left col-md-9 no-padding'>: " . $headerScheme['lama_pinjaman'] . "</span>";
+
+                    echo "</div>";
+                    echo "<div class='clearfix'>&nbsp;</div>";
+                    echo "<div><table id='main_table' class='table datatable table-bordered table-hover table-striped'><thead>";
+                    echo "<tr>  <th width='1%'>No</th>
+                            <th>Periode</th>
+                            <th>jml hari / periode</th>
+                            <th>Pokok Pinjaman</th>
+                            <th>Rate Bunga</th>
+                            <th>Nilai Bunga</th>
+                            <th>PPh23</th>
+                            <th>bunga setelah dipotong PPh</th>
+                      </tr>";
+
+                    echo "</thead><tbody>";
+
+                    $total_bunga = 0;
+                    $total_pph23 = 0;
+                    $total_bunga_pph23 = 0;
+                    $total_hari = 0;
+                    $no = 1;
+
+                    foreach ($showScheme as $thnbln => $pinjaman) {
+
+                        $setBackground = isset($pinjaman['silangan']) ? $pinjaman['silangan'] : "merah";
+                        $bgColor = " ";
+
+                        switch ($setBackground) {
+                            default:
+                            case "merah":
+                                $bgColor = "bg-white";
+                                break;
+                            case "hijau":
+                                $bgColor = "bg-success";
+                                break;
+                            case "berjalan":
+                                $bgColor = "bg-warning";
+                                break;
+                        }
+
+                        echo "  <tr>
+                                <td class='$bgColor'>$no</td>
+                                <td class='$bgColor'>" . date('F Y', strtotime($pinjaman['thnbln'] . '-01')) . "</td>
+                                <td class='$bgColor'>" . $pinjaman['jml_hari_dbln'] . "</td>
+                                <td class='$bgColor'>" . number_format($pinjaman['nilai_pinjaman'], 0) . "</td>
+                                <td class='$bgColor'>" . $pinjaman['rate_bunga'] . "%</td>
+                                <td class='$bgColor'>" . number_format($pinjaman['nilai_bunga'], 0) . "</td>
+                                <td class='$bgColor'>" . number_format($pinjaman['nilai_pph23'], 0) . "</td>
+                                <td class='$bgColor'>" . number_format($pinjaman['nett_bunga'], 0) . "</td>
+                            </tr>";
+
+                        $no++;
+
+                        $total_bunga += $pinjaman['nilai_bunga'] * 1;
+                        $total_pph23 += $pinjaman['nilai_pph23'] * 1;
+                        $total_bunga_pph23 += $pinjaman['nett_bunga'] * 1;
+                        $total_hari += $pinjaman['jml_hari_dbln'] * 1;
+                    }
+
+                    echo "<tfoot>
+                        <tr>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>" . $total_hari . "</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>" . number_format($total_bunga, 0) . "</td>
+                            <td>" . number_format($total_pph23, 0) . "</td>
+                            <td>" . number_format($total_bunga_pph23, 0) . "</td>
+                        </tr>
+                    </tfoot>";
+
+                    echo "</tbody>
+                        </table>
+                        </div>";
+                    echo "<div class='clearfix'>&nbsp;</div>";
+                    echo "<div class='text-left'>Keterangan:</div>";
+                    echo "<div class='text-left'> - periode dengan background hijau akan otomatis dibuatkan <span class='text-capitalize text-bold'>request loan interest</span> sesaat setelah request pinjaman diapprove </div>";
+                    echo "</div>";
+                }
+
+            }
+        }
+
+        if (sizeof($inputs) > 0) {
+            echo "<div class='col-lg-12 no-padding' style='margin-top:5px;'>";
+            echo "<div class='alert alert-info-dot'>";
+            echo "<h4 class='text-left'>additional values</h4>";
+            echo "<table class='table table-condensed'>";
+            echo "<tr>";
+            foreach ($inputs as $eName => $eStr) {
+                echo "<td class='text-muted'>";
+                echo $inputLabels[$eName];
+                echo "</td>";
+            }
+            echo "</tr>";
+            echo "<tr>";
+            foreach ($inputs as $eName => $eStr) {
+                echo "<td>";
+                echo $eStr;
+                echo "</td>";
+            }
+            echo "</div>";
+            echo "</div>";
+            echo "</tr>";
+            echo "</table class='table table-condensed'>";
+            echo "</div class='panel-default'>";
+            echo "</div class='panel'>";
+        }
+
+        if (isset($freelancerOptionInfoLabel) && ($freelancerOptionInfoLabel != NULL)) {
+            echo "<div class='col-md-12 alert alert-info' style='font-size:15px;font-weight:bold;'>";
+//            echo "<div class='col-lg-12 no-padding text-center' style='text-align:center;'>";
+            echo $freelancerOptionInfoLabel;
+//            echo "</div class='col-lg-12 no-padding text-center' style='text-align:center;'>";
+            echo "</div class='col-md-12'>";
+        }
+
+        if (isset($previewJurnal) && sizeof($previewJurnal) > 0) {
+            $headersJurnal = $previewJurnal['header'];
+            foreach ($previewJurnal['jurnal'] as $cabangID => $subItems) {
+                if (sizeof($subItems) > 0) {
+                    $cabangNama = isset($previewJurnal['cabang'][$cabangID]) ? $previewJurnal['cabang'][$cabangID] : "";
+                    echo "<h4 class='text-blue' style='text-align: left;margin-top: 10px;'><span class='fa fa-book'></span> preview journal entries ($cabangNama)</h4>";
+                    echo "<div class='tabel table-responsive'>";
+                    echo "<table class='table table-condensed'>";
+                    echo "<tr bgcolor='#f0f0f0'>";
+                    foreach ($headersJurnal as $key => $label) {
+                        echo "<td>";
+                        echo "$label";
+                        echo "</td>";
+                    }
+                    echo "</tr>";
+                    foreach ($subItems as $iSpec) {
+                        echo "<tr>";
+                        foreach ($headersJurnal as $key => $label) {
+                            echo "<td style='text-align: left;'>";
+                            echo formatField($key, $iSpec[$key]);
+                            echo "</td>";
+                            if (is_numeric($iSpec[$key])) {
+                                if (!isset($total[$cabangID][$key])) {
+                                    $total[$cabangID][$key] = 0;
+                                }
+                                $total[$cabangID][$key] += $iSpec[$key];
+                            }
+                        }
+                        echo "</tr>";
+                    }
+                    echo "<tr style='font-size: 15px;font-weight: bold;'>";
+                    foreach ($headersJurnal as $key => $label) {
+                        echo "<td>";
+                        if (isset($total[$cabangID][$key])) {
+                            echo formatField($key, $total[$cabangID][$key]);
+                        }
+                        echo "</td>";
+                    }
+                    echo "</tr>";
+                    echo "</table>";
+                    echo "</div>";
+                }
+//                else {
+//                    echo "<div class='text-center text-warning'>";
+//                    echo "- no journal affected by this transaction -<br><br>";
+//                    echo "</div class='text-center text-warning'>";
+//                }
+            }
+        }
+
+
+        echo "<script>
+ top.$(\".select2.open\").remove();
+                if( $('span[keyid=qty_debet]').length > 0 ){
+                    top.shoppingCardValidator()
+                    //top.console.log('perlu validator shoppingcart');
+                }
+                else{
+                    //top.console.error('tidak perlu validator shoppingcart');
+                }
+                                
+                    $('.select2').selectpicker();\n                
+                
+                </script>";
+        echo "
+            <script>
+                function closeModalAfterSubmit() {
+                    $('.modal-backdrop.fade.in').modal('hide'); // Ganti dengan ID modal kamu
+                    $('.modal.bootstrap-dialog.type-primary.fade.size-wide.in').modal('hide'); // Ganti dengan ID modal kamu
+                }
+            </script>
+            ";
+    }
+    else {
+        echo "<div class='panel-body'>";
+        echo "<div class='text-danger'>";
+        echo "- <strong>you have not chosen any item yet</strong> -<br>";
+        echo "<small>you can do so by selecting items from available selectors</small><br>";
+        echo "</div class='text-warning'>";
+        echo "</div class='panel-body'>";
+    }
+
+    $sessionCleares = array("errLines", "errFields", "errMsg");
+    foreach ($sessionCleares as $s) {
+        if (isset($_SESSION[$s])) {
+            unset($_SESSION[$s]);
+        }
+    }
+
+}

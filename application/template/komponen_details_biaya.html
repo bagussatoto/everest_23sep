@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{title}</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <!-- Template Name komponen_details_biaya.html -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link id="favicon" rel="icon" type='image/x-icon' href="{favicon}">
+
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-3.3.7-dist/css/bootstrap.min.css?v={local_version}">
+    <!-- Font Awesome -->
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css?v={local_version}">-->
+    <link rel="stylesheet" href="{cdn_suport}Font-Awesome-master/css/font-awesome.min.css?v={local_version}">
+    <!-- Ionicons -->
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css?v={local_version}">-->
+    <link rel="stylesheet" href="{cdn_suport}ionicons-master/css/ionicons.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}simple-line-icons-master/css/simple-line-icons.css?v={local_version}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/dist/css/AdminLTE.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}bootstrap3-dialog-master/dist/css/bootstrap-dialog.min.css?v={local_version}">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/dist/css/skins/_all-skins.min.css?v={local_version}">
+
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-fileinput-master/css/fileinput.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-toggle-master/css/bootstrap-toggle.min.css?v={local_version}">
+
+    <link rel="stylesheet" href="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.css?v={local_version}">
+    <!--<link rel="stylesheet" href="../../assets/suport/SmartCart-master/dist/css/smart_cart.min.css?v={local_version}">-->
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-xlgrid-master/bootstrap-xlgrid.min.css?v={local_version}">
+    <link rel="stylesheet" href="{base}assets/custom/custom.min.css?v={local_version}">
+    <link rel="stylesheet" href="{base}/assets/custom/dialog.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}HoldOn/HoldOn.min.css?v={local_version}">
+<!--    <link rel="stylesheet" href="{base}assets/custom/jquery.floatingscroll.css?v={local_version}">-->
+
+
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-3.3.7-dist/js/bootstrap.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js?v={local_version}"></script>
+    <!--<script src="{cdn_suport}bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js?v={local_version}"></script>-->
+    <script src="{base}assets/custom/custom.js?v={local_version}"></script>
+    <script src="{base}assets/custom/jquery.floatingscroll.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}HoldOn/HoldOn.min.js?v={local_version}"></script>
+    <script src="{base}assets/custom/hippo_ajax.js?v={local_version}"></script>
+
+    <!--{head}-->
+</head>
+
+
+<body onbeforeunloads="custom_holdon(close_holdon)" onload="$('#bahanContainer').html('<img src=\'../../assets/images/loading_16_p.gif\'>').addClass('text-center'); $('#bahanContainer').load('{base}_detailsBiayaEditor/search?sID={prodID}&key='+(localStorage.getItem('lastSearch') || ''))" class="hold-transition skin-blue sidebar-mini">
+
+<div id="baseURL" class="hidden">{base}</div>
+<div class="wrapper">
+    <!-- Content Wrapper. Contains page content -->
+    <div style="background-color: transparent;">
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-lg-12 col-xl-12"
+                     oonclick="document.getElementById('pilihan_outlet').innerHTML='';document.getElementById('pilihan_item').innerHTML='';">
+                    <!--{content_right}-->
+                    <!--<form action="{action_shopping_cart}" name="myForm" id="myForm" method="post" accept-charset="utf-8">-->
+                    <div class="row">
+                        <div class="col-md-3 col-sm-3">
+                            <div class="input-group">
+                                <input id="pilih_produk" type="text" class="form-control" placeholder="pilih biaya" autofocus
+                                       style="font-family:Monaco, Menlo, Consolas, 'Courier New', monospace;"
+                                       onclick="$('#bahanContainer').load('{base}_detailsBiayaEditor/search?sID={prodID}&key=')"
+                                       onkeyup="if(this.value.length>2){ $('#bahanContainer').load('{base}_detailsBiayaEditor/search?sID={prodID}&key='+ encodeURI(this.value) ); } else { return false; }">
+                                            <span class="input-group-btn">
+                                                <a class="btn btn-default" href="javascript:void(0)"
+                                                   onclick="localStorage.removeItem('lastSearch');document.getElementById('bahanContainer').innerHTML='';document.getElementById('pilih_produk').value='';$('#bahanContainer').load('{base}_detailsBiayaEditor/search?sID={prodID}&key=')"><span
+                                                        class="glyphicon glyphicon-remove"></span></a>
+                                            </span>
+                            </div>
+                            <div id='bahanContainer' style="max-height:350px;position:relative;left:0;overflow: auto;"></div>
+                        </div>
+
+                        <div class="col-md-9 col-sm-9">
+                            <div style="margin-bottom: 100px;" class="panel panel-danger boxx-solid bborder-blue">
+                                {composition}
+                            </div>
+                        </div>
+
+                    </div>
+                    <div align="center" style="font-size: 20px;background-color: yellow;position: fixed;bottom: 50px;width: 100%;z-index:2;left:0;" id="msgAlert" class="panel-footer overflow-h hidden"></div>
+                    <div style="position: fixed;bottom: 0;width: 100%;z-index:2;left:0;" class="panel-footer overflow-h">
+                        <div class="col-md-2 col-sm-2 hidden"><label class="checkbox-inline"><input type="checkbox" id="showHarga">Show Harga</label></div>
+                        <div class="col-md-3 col-sm-8"><button type="button" name="btnKalkulasi" id="btnKalkulasi" style="margin-top: 10px;"
+                                                               class="btn btn-warning pull-right hidden"
+                                                               onclick="if(typeof recalculateTotals === 'function'){ recalculateTotals(); } else { location.reload(); }">
+                            <span class="glyphicon glyphicon-retweet"></span> KALKULASI / REFRESH </button></div>
+                        <div class="col-md-3 col-sm-8"><button type="button" class="btn btn-warning" onclick="document.location.reload(true)">
+                            <span class='glyphicon glyphicon-refresh'></span> Refresh dan cek ulang</button></div>
+                        <div class="col-md-2 col-sm-2"><button type="button" name="btnProcess" {btn_attr} id="btnProcess" style="margin-top: 10px;"
+                                            class="btn btn-info pull-right"
+                                            onclick="saveComponents();">
+                                        <span class='glyphicon glyphicon-save'></span> Save Components
+                                    </button>
+                                </div>
+
+                            </div>
+                    <!--</form>-->
+                </div>
+            </div>
+
+
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <div>
+        <iframe id="tray" name="tray" style="display:none;width:100%;height:120px;" src="{base}_tray/index"></iframe>
+        <iframe name="result" id="result" style="resize: both;display:none;width: 100%;height:800px;"></iframe>
+    </div>
+</div>
+
+<!-- In-Iframe Loader Overlay (Khusus iframe, tidak menyentuh body utama/parent) -->
+<div id="iframeLoaderOverlay" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(255, 255, 255, 0.88); z-index: 999999; text-align: center;">
+    <div style="position: absolute; top: 40%; left: 50%; transform: translate(-50%, -50%); background: #ffffff; padding: 25px 35px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.18); border: 1px solid #ddd; min-width: 260px;">
+        <div class="iframe-spinner"></div>
+        <div id="iframeLoaderTitle" style="margin-top: 15px; color: #333; font-weight: 600; font-size: 15px;">Menyimpan Komponen Biaya...</div>
+        <div id="iframeLoaderSubtitle" style="margin-top: 5px; color: #888; font-size: 12px;">Mohon tunggu sebentar, data sedang disimpan...</div>
+    </div>
+</div>
+<style>
+.iframe-spinner {
+    width: 42px;
+    height: 42px;
+    border: 4px solid #e0e0e0;
+    border-top: 4px solid #3c8dbc;
+    border-radius: 50%;
+    animation: iframeSpin 0.8s linear infinite;
+    -webkit-animation: iframeSpin 0.8s linear infinite;
+    margin: 0 auto;
+}
+@keyframes iframeSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+@-webkit-keyframes iframeSpin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+</style>
+
+<script>
+
+    function showIframeLoader(title, subtitle) {
+        if (title) $('#iframeLoaderTitle').text(title);
+        else $('#iframeLoaderTitle').text('Menyimpan Komponen Biaya...');
+        if (subtitle) $('#iframeLoaderSubtitle').text(subtitle);
+        else $('#iframeLoaderSubtitle').text('Mohon tunggu sebentar, data sedang disimpan...');
+        $('#iframeLoaderOverlay').fadeIn(150);
+    }
+
+    function hideIframeLoader() {
+        $('#iframeLoaderOverlay').fadeOut(150);
+    }
+
+    try {
+        var lastSearch = localStorage.getItem('lastSearch');
+        if(lastSearch && lastSearch.length > 0 && lastSearch !== 'null' && lastSearch !== 'undefined'){
+            $('#pilih_produk').val( lastSearch );
+        }
+    } catch(e) {}
+
+    try {
+        localStorage.removeItem('btnKalkulasi');
+        localStorage.btnKalkulasi = null;
+    } catch(e) {}
+
+    function cleanNumber(val) {
+        if (typeof val === 'number') return isNaN(val) ? 0 : val;
+        if (!val) return 0;
+        var s = String(val).trim();
+        var clean = s.replace(/[^0-9]/g, '');
+        return clean ? parseInt(clean, 10) : 0;
+    }
+
+    function saveComponents() {
+        var btn = $('#btnProcess');
+        btn.prop('disabled', true).removeClass('btn-info').addClass('btn-default');
+        btn.html("<span class='glyphicon glyphicon-refresh'></span> Menyimpan...");
+        showIframeLoader('Menyimpan Komponen Biaya...', 'Mohon tunggu, data sedang disimpan...');
+
+        var items = [];
+        $('tr.item-row').each(function() {
+            var row = $(this);
+            var id = row.data('id') || row.attr('id').replace('row_', '');
+            var harga = cleanNumber(row.find('.row-harga').val() || row.find('input[name="harga[]"]').val());
+            var jml = cleanNumber(row.find('.row-jml').val() || row.find('input[name="jml[]"]').val());
+            var cat_id = row.find('select').val();
+            items.push({
+                id: id,
+                harga: harga,
+                jml: jml,
+                cat_id: cat_id
+            });
+        });
+
+        $.ajax({
+            url: '{base}DetailsBiayaEditor/save/{prodID}',
+            type: 'POST',
+            data: { items: JSON.stringify(items), sID: '{prodID}' },
+            dataType: 'json',
+            success: function(res) {
+                if (res && res.status === 'error') {
+                    hideIframeLoader();
+                    btn.prop('disabled', false).addClass('btn-info').removeClass('btn-default');
+                    btn.html("<span class='glyphicon glyphicon-save'></span> Save Components");
+                    alert(res.message || 'Gagal menyimpan komponen biaya.');
+                    return;
+                }
+                var reloadUrl = '{base}DetailsBiayaEditor/edit?attached=1&sID={prodID}';
+                if (typeof top !== 'undefined' && top.$ && top.$('#result2').length > 0) {
+                    top.$('#result2').attr('src', reloadUrl);
+                } else if (parent && parent !== window && parent.$ && parent.$('#result2').length > 0) {
+                    parent.$('#result2').attr('src', reloadUrl);
+                } else {
+                    location.href = reloadUrl;
+                }
+            },
+            error: function() {
+                hideIframeLoader();
+                btn.prop('disabled', false).addClass('btn-info').removeClass('btn-default');
+                btn.html("<span class='glyphicon glyphicon-save'></span> Save Components");
+                document.getElementById('result').src = '{base}DetailsBiayaEditor/save/{prodID}';
+            }
+        });
+    }
+
+    function addItemFromList(tpID, sID, bID) {
+        showIframeLoader('Menambahkan Komponen...', 'Memperbarui daftar biaya...');
+        var url = '{base}_detailsBiayaEditor/addItem?tpID=' + encodeURIComponent(tpID) + '&sID=' + encodeURIComponent(sID) + '&bID=' + encodeURIComponent(bID);
+        $.get(url, function(res) {
+            location.reload();
+        });
+    }
+
+    var isShow = localStorage.getItem('k2hsby3')!='' ? localStorage.getItem('k2hsby3') : 0;
+    var col_jual =  $("[chid='k2hsby3\\[\\]']");
+
+    if(isShow>0){
+        jQuery.each(col_jual, function(i,d){
+            $(col_jual[i]).removeClass('hidden');
+        });
+        $('#showHarga').prop('checked', true);
+    }
+
+    top.console.log( 'k2hsby3 : ' + localStorage.getItem('k2hsby3') );
+
+    $('#showHarga').on('change', function(){
+
+        var isChecked = $(this).is(':checked'); //true or false
+        var col_jual =  $("[chid='k2hsby3\\[\\]']");
+
+        if(isChecked){
+            jQuery.each(col_jual, function(i,d){
+                $(col_jual[i]).removeClass('hidden');
+            });
+            localStorage.setItem('k2hsby3', 1);
+        }else{
+            jQuery.each(col_jual, function(i,d){
+                $(col_jual[i]).addClass('hidden');
+            });
+            localStorage.setItem('k2hsby3', 0);
+        }
+
+        $(this).find('thead>tr>th').each(function(index, loopelement) {
+            top.console.log(index + ' ' + $(loopelement).prop('class') );
+        });
+
+    });
+</script>
+</body>
+</html>

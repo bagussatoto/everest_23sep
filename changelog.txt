@@ -1,0 +1,83 @@
+Create By: chepy
+Company: MGK
+YearCreate: 2025
+
+#ganti notif
+- non material dan non biaya
+#hak akses
+- yang bisa approve c_holding, c_owner
+#perbaikan bug
+- print spk tambahan
+
+========================================================
+========================================================
+#SPK NURUL DOUBLE
+- backend belum pakai bookingNumber ditambah lagi bug html dan js ajax metode POST (saat di paksa refresh akan re-send POST data) 
+==sudah diperbaiki==
+1. tambah mekanisme bookingNumber
+2. normalisasi data transaksi
+3. SPK Nurul sudah bisa dilanjut
+
+#UPDATE KOLOM LABEL
+OK | nilai project ganti harga satuan/nilai satuan (excl.PPN)
+OK | subtotal ganti nilai project / harga project (excl.PPN)
+OK | paket instalasi ganti INSTALASI WO
+OK | nama tambah prefik WO misal (WO CIPUTAT)
+OK | instalasi WO tidak menggunakan rupiah, hanya jml barang
+
+#APPROVAL KHUSUS QC
+- mekanisme dan UI sudah standby diexisting, namun pengaturan hak akses dan penempatan belum fix
+
+=====================
+#CHANGELOG PROJECT
+==> Halaman RAB
+- Nilai Anggaran jadi HPP/Unit 
+- harga/unit untuk project (Excl.PPN)
+- subtotal = harga/nilai project (Excl.PPN)
+- warna HPP/Unit #8f8f8f
+
+==> Area Khusus Approve QC
+- HA default: dipasang dihalaman index project.
+- HA spesial: rencana di dashboard, belum fix.
+
+==> Lain-Lain
+- nyisir dan masang bookingNumber yg belum ada.
+- perbaikan bug² dan key-header² gerbang value.
+=====================
+
+=============================
+bug bug
+
+jika data lama yang gak ada biaya, 
+tapi gak ada konfirmasi jika project ini benar2 tanpa biaya, 
+maka QC gak bisa di lakukan.
+
+=========================================================
+====================== 21 juli 2025 ======================
+=========================================================
+#TERMIN CHANGELOG
+- pekerjaan => Nama WO
+- Harga => Nilai/WO
+- bahan baku => bahan evaluasi realisasi
+- kolom invoiced buang
+- kolom sisa di buang
+- auto nilai entry dari centang pilihan WO dimatikan.
+- protect nilai entry dimatikan
+
+#table payment source
+- invoiced => sudah dibayar
+- tambah kolom nilai project 
+
+Harga Jual Project(Rp): = Harga Jual Project (kontrak kerja): merah
+GrandTotal = total harga/nilai project (revisi)
+
+============================================
+=============== 22 juli 2025 ===============
+bug bug 
+remove items di shoppingcart SO Project
+https://demo.mayagrahakencana.com/everest_18jul/master_project/_shoppingCart/remove/588?id=23442
+
+items2[0][produk][id_produk]
+items_komposisi[0][produk][id_produk]
+tableIn_detail_values2[id_produk]
+tableIn_sub_detail

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{title}</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <!-- Template::bi.html -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link id="favicon" rel="icon" type='image/x-icon' href="{base}favicon.png">
+
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-3.3.7-dist/css/bootstrap.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}Font-Awesome-master/css/font-awesome.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}ionicons-master/css/ionicons.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}simple-line-icons-master/css/simple-line-icons.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/dist/css/AdminLTE.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap3-dialog-master/dist/css/bootstrap-dialog.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/dist/css/skins/_all-skins.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/plugins/morris/morris.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-fileinput-master/css/fileinput.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-toggle-master/css/bootstrap-toggle.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-xlgrid-master/bootstrap-xlgrid.min.css?v={local_version}">
+    <link rel="stylesheet" href="{base}assets/custom/custom.min.css?v={local_version}">
+    <link rel="stylesheet" href="{base}/assets/custom/dialog.css?v={local_version}">
+    <link rel="stylesheet" href="{base}assets/custom/jquery.floatingscroll.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}HoldOn/HoldOn.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/media/css/dataTables.bootstrap.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/media/css/jquery.dataTables_themeroller.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/yadcf-0.9.3/jquery.dataTables.yadcf.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/extensions/Buttons/css/buttons.dataTables.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/extensions/FixedHeader/css/fixedHeader.bootstrap.css?v={local_version}">
+
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v={local_version}"></script>
+
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/raphael/raphael-min.js?v={local_version}"></script>
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/morris/morris.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-3.3.7-dist/js/bootstrap.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js?v={local_version}"></script>
+    <script src="{base}assets/custom/custom.js?v={local_version}"></script>
+    <script src="{cdn_suport}HoldOn/HoldOn.min.js?v={local_version}"></script>
+    <script src="{base}assets/custom/jquery.floatingscroll.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/media/js/jquery.dataTables.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/media/js/dataTables.bootstrap.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/media/js/jquery.highlight.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/dataTables.buttons.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.colVis.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.print.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.html5.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.flash.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/FixedHeader/js/dataTables.fixedHeader.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/yadcf-0.9.3/jquery.dataTables.yadcf.js?v={local_version}"></script>
+    <!--chart & graph-->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+    <style>
+        .morris-hover.morris-default-style {
+            border-radius: 10px;
+            padding: 6px;
+            color: #f9f9f9;
+            background: rgb(158, 158, 160);
+            border: solid 2px rgba(113, 112, 117, 0.9);
+            font-weight: 600;
+            font-size: 14px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+<!--tanda loading pas sedang ngeload halaman-->
+<div id="baseURL" class="hidden">{base}</div>
+<!--end---tanda loading pas sedang ngeload halaman-->
+<div class="wrapper">
+
+    {content}
+
+    <!--modal-->
+    <!--<div class='modal fade' role='dialog'>-->
+    <div id='myModal' class='modal {bg_modal} fade' role='dialog'>
+        <div class='modal-dialog {lebar_modal}'>
+            <div class='modal-content'>
+                {isi_modal}
+                <!-- Content will be loaded here from 'remote.php' file -->
+            </div>
+        </div>
+    </div>
+    <!--</div>-->
+    <!--modal-end-->
+
+    <div class="control-sidebar-bg"></div>
+</div>
+<!--<div>-->
+<!--    <iframe id="tray" name="tray" style="display:none;width:100%;height:120px;" src="{base}_tray/index"></iframe>-->
+<!--    <iframe name="result" id="result" style="resize: both;display: {display_iframe};width: 100%;height:800px;"></iframe>-->
+<!--</div>-->
+<!-- ./wrapper -->
+
+
+<script>
+    /*$.widget.bridge('uibutton', $.ui.button);*/
+</script>
+<script src="{cdn_suport}AdminLTE-2.3.11/plugins/slimScroll/jquery.slimscroll.min.js?v={local_version}"></script>
+<script src="{cdn_suport}AdminLTE-2.3.11/dist/js/app.min.js?v={local_version}"></script>
+<script src="{cdn_suport}multi-step-modal-master/multi-step-modal.js?v={local_version}"></script>
+<script src="{cdn_suport}bootstrap-fileinput-master/js/fileinput.min.js?v={local_version}"></script>
+<script src="{cdn_suport}bootstrap-toggle-master/js/bootstrap-toggle.min.js?v={local_version}"></script>
+<script src="{base}assets/custom/hippo_ajax.js?v={local_version}"></script>
+<script src="{base}assets/custom/JS.js?v={local_version}"></script>
+
+
+<script>
+
+    $('#myModal').on('hidden.bs.modal', function () {
+        $(this).removeData('bs.modal');
+    });
+
+    $('body').tooltip({selector: '[data-toggle=tooltip]'});
+
+</script>
+<!--{script_bottom}-->
+</body>
+</html>

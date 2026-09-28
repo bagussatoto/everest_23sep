@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--  <meta name="viewport" content="width=device-width, initial-scale=1"> Login.html-->
+    <!-- Template Name login.html -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>{title}</title>
+    <link id="favicon" rel="icon" type='image/x-icon' href="{base}favicon.ico">
+
+
+    <link rel="stylesheet" type="text/css" href="{cdn_suport}bootstrap-3.3.7-dist/css/bootstrap.min.css?v={local_version}"/>
+    <!--<link rel="stylesheet" type="text/css" href="{base}assets/AdminLTE-2.3.11/dist/css/AdminLTE.css?v={local_version}">-->
+    <link rel="stylesheet" type="text/css" href="{cdn_suport}Font-Awesome-master/css/font-awesome.min.css?v={local_version}">
+    <link rel="stylesheet" type="text/css" href="{base}assets/custom/custom.min.css?v={local_version}"/>
+    <!--<link rel="stylesheet" type="text/css" href="../../assets/template/assets/css/"/>-->
+    <link rel="stylesheet" type="text/css" href="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.css?v={local_version}">
+    <link rel="stylesheet" type="text/css" href="{cdn_suport}bootstrap-toggle-master/css/bootstrap-toggle.min.css?v={local_version}">
+    <!--<script src="../../templates/pure/js/ie_emulation_warning.js?v={local_version}"></script>-->
+    <!--<script src="../../templates/pure/js/ie10.js?v={local_version}"></script>-->
+    <link rel="stylesheet" href="{cdn_suport}HoldOn/HoldOn.min.css?v={local_version}">
+
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-3.3.7-dist/js/bootstrap.min.js?v={local_version}"></script>
+    <!--<script type="text/javascript" src="{base}assets/AdminLTE-2.3.11/plugins/jQuery/jquery.1.11.3"></script>-->
+    <script src="{base}assets/custom/custom.js?v={local_version}"></script>
+    <script src="{base}assets/custom/md5.min.js?v={local_version}"></script>
+    <script type="text/javascript">
+        <!--
+        function ShowHidePassword() {
+            if (document.getElementById('cek1').checked) {
+                document.getElementById('secret').type = 'text';
+            } else {
+                document.getElementById('secret').type = 'password';
+            }
+        }
+
+        //-->
+
+        function toggle_visibility(id) {
+            var e = document.getElementById(id);
+            if (e.style.display == 'block')
+                e.style.display = 'none';
+            else
+                e.style.display = 'block';
+        }
+
+        function tombol(id) {
+            var t = document.getElementById(id);
+            if (t.value == 'SHOW SOP MCM')
+                t.value = 'HIDE SOP MCM';
+            else
+                t.value = 'SHOW SOP MCM';
+        }
+
+        window.onkeyup = function (e) {
+            if (e.keyCode == 27) document.getElementById('tutup').style.display = 'none';
+        }
+
+        function bukaTutup(id) {
+//            var e = document.getElementById(id);
+
+            document.getElementById(id).style.display = 'none';
+
+        }
+
+
+    </script>
+    <script src="{cdn_suport}HoldOn/HoldOn.min.js?v={local_version}"></script>
+
+    <style type='text/css'>
+
+
+        body {
+            /*padding-top: 40px;*/
+            /*padding-bottom: 40px;*/
+            padding: 20px 0px 0px 0px;
+            background-color: #eee;
+            /*background-color: #e4eef3;*/
+            /*background-color: #FFCCCC;*/
+        }
+
+        .spacer {
+            margin-bottom: 3px;
+        }
+
+        .form-signin {
+            max-width: 330px;
+            padding: 15px;
+            margin: 0 auto;
+        }
+
+        .form-signin .form-signin-heading,
+        .form-signin .checkbox {
+            margin-bottom: 10px;
+        }
+
+        .form-signin .checkbox {
+            font-weight: normal;
+        }
+
+        .form-signin .form-control {
+            position: relative;
+            height: auto;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        * html .form-signin .form-control {
+
+            vertical-align: middle;
+        }
+
+        .form-signin .form-control:focus {
+            z-index: 2;
+        }
+
+        .form-signin input[type="text"] {
+            margin-bottom: -1px;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        .form-signins input[type="password"] {
+            margin-bottom: 10px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+
+        .tengah {
+            text-align: center;
+            margin-top: 20px;
+            font-family: consolas;
+            color: #aaaaa9;
+        }
+
+        .btn-primary- {
+            background-color: #CC0000;
+            border: 1px solid #990000;
+        }
+
+    </style>
+
+
+
+    <!-- PWA Manifest & Service Worker -->
+    <link rel="manifest" href="{base}manifest.json?v={local_version}">
+    <meta name="theme-color" content="#1db954">
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('{base}sw.js?v={local_version}')
+                        .then(function(reg) { console.log('Service Worker sukses didaftarkan:', reg); })
+                        .catch(function(err) { console.log('Service Worker gagal didaftarkan:', err); });
+            });
+        }
+    </script>
+</head>
+<body onbeforeunload="custom_holdon(close_holdon)" onkeydown="if(detectEnter()==true){swal('authenticating..');document.getElementById('fLogin').submit()}"
+      onload="reLoad();fetchLocalInfo();">
+<div id="baseURL" class="hidden">{base}</div>
+<div style="display: none;" id="tutup" onclick="this.style.display='none';">
+    <div class="layer"></div>
+    <div class="layer-3">
+        {tutup}
+        <div style="margin: 50% 33%;">processing...</div>
+    </div>
+</div>
+
+
+<div class='hidden-xs hidden-sm' style="height: 100px;"></div>
+<div class='text-center no-padding no-border'>
+    <!--<span class="logo-lg"><img src="{base}public/images/profiles/logo_header.png">{logo_login}</span>-->
+    <!--<span class="logo-lg">{logo_login}</span>-->
+
+    <img src="{base}public/images/profiles/logo_header.png" class="img-no-rounded">
+</div>
+<div class="container">
+    <form action="{base}auth/Login/authCheck" id="fLogin" name="fLogin" class="form-signin" data_toggle="validator"
+          target="result" method="post" accept-charset="utf-8">
+        {content}
+        <div style="text-align:center;padding:8px;">
+        <div id='divAlt' class='text-center btn-block text-danger'></div>
+        <input type='hidden' id='cab' name='cab' value='-1'><input type='hidden' id='cabN' name='cabN' value='pusat'>
+        <div class="panel-body">
+            <div class="text-danger text-center"
+                 style="font-family: 'Helvetica Neue Light', 'HelveticaNeue-Light', 'Helvetica Neue', Calibri, Helvetica, Arial, sans-serif; color:#dd3300;">
+                {errMsg}
+            </div>
+        </div>
+        </div>
+    </form>
+</div>
+
+<div class="hidden-md hidden-lg hidden-xs hidden-sm {show_upload}">
+    <div class="text-blue text-center" onclick="getScan()"> <span class="btn btn-sm btn-success"><i class="fa fa-qrcode"></i> OPEN SCANNER </span> </div>
+    <div class="col-xs-12 text-muted text-bold text-center"> ~ or ~ </div>
+    <div class="col-xs-3"></div>
+    <div class="col-xs-6 text-center">
+        <span onclick="window.open('{base}Images/mbdata','_self')" class="btn btn-sm btn-info"><i class="fa fa-globe"></i> MOBILE WEB</span>
+    </div>
+    <div class="col-xs-3"></div>
+    <!--<div style="font-size: 2em;" class="text-bold text-center" id="scans">waiting scan</div>-->
+    <div class="col-xs-12 text-muted text-bold text-center"> ~ or ~ </div>
+    <div class="col-xs-2"></div>
+    <div class="col-xs-8 text-center">
+        <span onclick="dl_qrscanner()" class="btn btn-sm btn-default">
+        <img style="width: 35px;" src="{base}assets/images/Barcode-Scanner-128.png"> DOWNLOAD QR SCANNER</span>
+    </div>
+    <div class="col-xs-2"></div>
+</div>
+
+<!--modal-->
+<!--<div class='modal fade' role='dialog'>-->
+<div id='myModal' class='modal {bg_modal} fade' role='dialog'>
+    <div class='modal-dialog {lebar_modal}'>
+        <div class='modal-content'>
+            {isi_modal}
+            <!-- Content will be loaded here from 'remote.php' file -->
+        </div>
+    </div>
+</div>
+<!--</div>-->
+<!--modal-end-->
+
+<div id=iframes>
+    <!--<iframe id="result" name="result" height=0 width=0 border=0 frameborder=0 style="resize: both;"></iframe>-->
+    <iframe id="result" name="result" frameborder=0
+            style="resize: both;display: {display_iframe};width: 100%;"></iframe>
+</div>
+<footer class="main-footer">
+    {footer}
+
+    <!--div class="pull-right">{stop_time}</div-->
+</footer>
+<div class="row" style="display:none;">
+    <div class="col-sm-12">
+        <iframe id="res" style="width:600px;height:300px;"></iframe>
+        <div id="or_c_id">-1</div>
+        <div id="or_c_name">none</div>
+        <div id="dev_id">999</div>
+        <div id="dev_name">unknown</div>
+    </div>
+    <div id="list" name="list"></div>
+
+</div>
+
+</body>
+<script type='text/javascript' src='{cdn_suport}bootstrap-3.3.7-dist/js/bootstrap-show-password.min.js?v={local_version}'></script>
+<script type='text/javascript' src='{cdn_suport}bootstrap-validator/validator.min.js?v={local_version}'></script>
+<script type='text/javascript' src="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.js?v={local_version}"></script>
+<script src="{cdn_suport}bootstrap-toggle-master/js/bootstrap-toggle.min.js?v={local_version}"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/fingerprintjs2/2.1.0/fingerprint2.min.js?v={local_version}"></script>
+<script>
+    function openQRimage(code){
+        var urlUploadImage = "Images/mbIndex";
+        window.open(urlUploadImage + '/' + code, 'barangam');
+    }
+    function dl_qrscanner(){
+        window.open("https://cdn.mayagrahakencana.com/apk/BarcodeScannerPlus.apk", 'download');
+    }
+    $('#myModal').on('hidden.bs.modal', function () {
+        $(this).removeData('bs.modal');
+    });
+
+    $(document).ready(function () {
+        $("body").tooltip({selector: '[data-toggle=tooltip]'});
+        if( null != localStorage.getItem('notif_upload') ){
+//            document.getElementById("scans").innerHTML = "<div class='text-green'>" + localStorage.getItem('notif_upload') + "</div>";
+            localStorage.removeItem('notif_upload')
+        }
+        else{
+//            document.getElementById("scans").innerHTML = "<div class='text-green'>.....</div>";
+        }
+    });
+</script>
+<script type="text/javascript">
+    var changingHash = false;
+    function onbarcode(event) {
+        switch (event.type) {
+            case "hashchange": {
+                if (changingHash == true) {
+                    return;
+                }
+                var hash = window.location.hash;
+                if (hash.substr(0, 3) == "#zx") {
+                    hash = window.location.hash.substr(3);
+                    changingHash = true;
+                    window.location.hash = event.oldURL.split("\#")[1] || ""
+                    changingHash = false;
+                    processBarcode(hash);
+                }
+                break;
+            }
+            case "storage": {
+                window.focus();
+                if (event.key == "barcode") {
+                    window.removeEventListener("storage", onbarcode, false);
+                    processBarcode(event.newValue);
+                }
+                break;
+            }
+            default: {
+                console.log(event)
+                break;
+            }
+        }
+    }
+    window.addEventListener("hashchange", onbarcode, false);
+
+    function getScan() {
+        var href = window.location.href;
+        var ptr = href.lastIndexOf("#");
+        if (ptr > 0) {
+            href = href.substr(0, ptr);
+        }
+        window.addEventListener("storage", onbarcode, false);
+        setTimeout('window.removeEventListener("storage", onbarcode, false)', 15000);
+        localStorage.removeItem("barcode");
+
+        if (navigator.userAgent.match(/Firefox/i)) {
+            window.location.href = ("zxing://scan/?ret=" + encodeURIComponent(href + "#zx{CODE}"));
+        } else {
+            window.open("zxing://scan/?ret=" + encodeURIComponent(href + "#zx{CODE}"));
+        }
+    }
+
+    function processBarcode(bc) {
+//        document.getElementById("scans").innerHTML = "<div>" + bc + "</div>";
+        openQRimage(bc);
+    }
+
+
+
+</script>
+<script>
+    $(function () {
+        $('#password').password().on('show.bs.password', function (e) {
+            $('#eventLog').text('On show event');
+            $('#methods').prop('checked', true);
+        }).on('hide.bs.password', function (e) {
+            $('#eventLog').text('On hide event');
+            $('#methods').prop('checked', false);
+        });
+        $('#methods').click(function () {
+            $('#password').password('toggle');
+        });
+    });
+    function detectEnter() {
+        var keyCode = event.keyCode ? event.keyCode : event.which ? event.which
+            : event.charCode;
+        if (keyCode == 13) {
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+
+</script>
+<script>
+    function reLoad() {
+        setTimeout("brCheck()", 2000);
+    }
+    function brCheck() {
+        var param = "";
+        param += navigator.platform;
+        param += navigator.appVersion;
+        param += document.getElementById('list').innerHTML;
+        console.log(md5(param.toString()) + 'dontmakemewantyouplz');
+//        if (document.getElementById('btnLogin')) {
+//            document.getElementById('res').src = "{base}_placeCheck/kahsjHFhst765674hsgdhhgghgh/?id=jkas7755457jash&param=" + md5(param.toString());
+//        }
+
+    }
+
+    function switchToCenter() {
+        document.getElementById('fLogin').action = '{base}Login/authCheck';
+        document.getElementById('btnLogin').innerHTML = 'Masuk admin';
+        top.document.getElementById('cab').value = '-1';
+        top.document.getElementById('cabN').value = 'pusat';
+        document.getElementById('divAlt').innerHTML = "<a href=# onclick='switchToBranch()'>switch to POS</a>";
+    }
+
+    function switchToBranch() {
+        document.getElementById('fLogin').action = '{base}Login/authCheck_branch?dev='+document.getElementById('dev_id').innerHTML+'&dev_name='+document.getElementById('dev_name').innerHTML;
+        document.getElementById('btnLogin').innerHTML = 'Checkin POS ' + document.getElementById('or_c_name').innerHTML;
+        top.document.getElementById('cab').value = document.getElementById('or_c_id').innerHTML;
+        top.document.getElementById('cabN').value = document.getElementById('or_c_name').innerHTML;
+        document.getElementById('divAlt').innerHTML = "<a href=# onclick='switchToCenter()'>switch to admin</a>";
+    }
+    function fetchLocalInfo() {
+        // NOTE: window.RTCPeerConnection is "not a constructor" in FF22/23
+        var RTCPeerConnection = /*window.RTCPeerConnection ||*/ window.webkitRTCPeerConnection || window.mozRTCPeerConnection;
+
+        if (RTCPeerConnection) (function () {
+            var rtc = new RTCPeerConnection({iceServers: []});
+            if (1 || window.mozRTCPeerConnection) {      // FF [and now Chrome!] needs a channel/stream to proceed
+                rtc.createDataChannel('', {reliable: false});
+            }
+            ;
+
+            rtc.onicecandidate = function (evt) {
+                // convert the candidate to SDP so we can run it through our general parser
+                // see https://twitter.com/lancestout/status/525796175425720320 for details
+                if (evt.candidate) grepSDP("a=" + evt.candidate.candidate);
+            };
+            rtc.createOffer(function (offerDesc) {
+                grepSDP(offerDesc.sdp);
+                rtc.setLocalDescription(offerDesc);
+            }, function (e) {
+                console.warn("offer failed", e);
+            });
+
+
+            var addrs = Object.create(null);
+            addrs["0.0.0.0"] = false;
+            function updateDisplay(newAddr) {
+                if (newAddr in addrs) return;
+                else addrs[newAddr] = true;
+                var displayAddrs = Object.keys(addrs).filter(function (k) {
+                    return addrs[k];
+                });
+                document.getElementById('list').textContent = displayAddrs.join(" or perhaps ") || "n/a";
+            }
+
+            function grepSDP(sdp) {
+                var hosts = [];
+                sdp.split('\r\n').forEach(function (line) { // c.f. http://tools.ietf.org/html/rfc4566#page-39
+                    if (~line.indexOf("a=candidate")) {     // http://tools.ietf.org/html/rfc4566#section-5.13
+                        var parts = line.split(' '),        // http://tools.ietf.org/html/rfc5245#section-15.1
+                            addr = parts[4],
+                            type = parts[7];
+                        if (type === 'host') updateDisplay(addr);
+                    } else if (~line.indexOf("c=")) {       // http://tools.ietf.org/html/rfc4566#section-5.7
+                        var parts = line.split(' '),
+                            addr = parts[2];
+                        updateDisplay(addr);
+                    }
+                });
+            }
+        })(); else {
+            document.getElementById('list').innerHTML = "<code>ifconfig | grep inet | grep -v inet6 | cut -d\" \" -f2 | tail -n1</code>";
+            document.getElementById('list').nextSibling.textContent = "In Chrome and Firefox your IP should display automatically, by the power of WebRTCskull.";
+        }
+    }
+</script>
+</html>

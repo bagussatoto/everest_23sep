@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>{title}</title>
+    {head_tpl}
+</head>
+<!--membuat sidebar colaps bodynya pakai yg ini-->
+<!--<body class="hold-transition skin-blue sidebar-mini sidebar-collapse">-->
+
+<body class="hold-transition skin-yellow sidebar-mini" onload="reLoad();">
+<!--tanda loading pas sedang ngeload halaman-->
+<div id="baseURL" class="hidden">{base}</div>
+<!--end---tanda loading pas sedang ngeload halaman-->
+<div class="wrapper">
+
+    <header class="main-header">
+        <!-- Logo -->
+        <a href="{base}" class="logo">
+            <!-- mini logo for sidebar mini 50x50 pixels -->
+            <span class="logo-mini"><span class="glyphicon glyphicon-home"></span></span>
+            <!-- logo for regular state and mobile devices -->
+            <span class="logo-lg"><img src="{base}public/images/profiles/logo_header.png" height="40px"></span>
+        </a>
+        <!-- Header Navbar: style can be found in header.less -->
+        <nav class="navbar navbar-static-top">
+            <!-- Sidebar toggle button-->
+            <a href="#" class="sidebar-toggle border-cek" data-toggle="offcanvas" role="button">
+                <span class="sr-only">Toggle navigation</span>
+            </a>
+
+            <div class="search-field col-xs-3 border-cek">
+                <form action="#">
+                    <!--<div class="input-group">-->
+                        <!--<div class="input-group-prepend bg-transparent">-->
+                            <!--<i class="input-group-text border-0 mdi mdi-magnify"></i>-->
+                        <!--</div>-->
+                        <input type="text" class="form-control bg-transparent border-0" placeholder="Search projects">
+                    <!--</div>-->
+                </form>
+            </div>
+
+            <div class="navbar-custom-menu border-cek">
+
+                <ul class="nav navbar-nav">
+                    <!--<li class="dropdown messages-menu"><a href="#" class="dropdown-toggle" data-toggle="dropdown"> <i-->
+                            <!--class="glyphicon glyphicon-plus"></i> </a>-->
+                        <!--<ul class="dropdown-menu">-->
+                            <!--<li class="header">Create new transaction</li>-->
+                            <!--<li> {trans_menu}</li>-->
+                        <!--</ul>-->
+                    <!--</li>-->
+                    <!-- User Account: style can be found in dropdown.less -->
+                    <li class="dropdown user user-menu">
+                        <a href="javascript:void(0)" onclick="location.href='{base}Login/authLogout';"
+                           class="dropdown-toggle hidden-sm hidden-xs" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-lock"></span>
+                            <span class="hidden-sm hidden-xs hidden-md">logout</span>
+                        </a>
+                    </li>
+                    <!-- Control Sidebar Toggle Button -->
+
+                    <li>
+                        <!--{menu_right}-->
+                        <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+
+            <ul class="sidebar-menu ">
+                <!--<li class="header">MAIN NAVIGATION</li>-->
+                {menu_left}
+
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                <!--<i class="fa fa-chevron-left"> </i>-->
+                <!--<a class="btn btn-tool" href="javascript:void(0)" onclick="location.href='{btn_back}';"><span-->
+                <!--class="glyphicon glyphicon-arrow-left"></span></a>-->
+                {title}
+                <small>{sub_title}</small>
+            </h1>
+            <!--<ol class="breadcrumb">-->
+            <!--{mapping}-->
+            <!--&lt;!&ndash;<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>&ndash;&gt;-->
+            <!--&lt;!&ndash;<li class="active">Dashboard</li>&ndash;&gt;-->
+            <!--</ol>-->
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+
+
+            <div class="row">
+
+
+                <div class="col-md-3">
+                    <!--<div class="box box-primary">-->
+                        <!--<div class="box-body box-profile">-->
+                            {leftProfile}
+
+                        <!--</div>-->
+                    <!--</div>-->
+                </div>
+
+
+                <div class="col-md-9">
+                    <!--<div class="box box-primary">-->
+                        {rightConten}
+
+                    <!--</div>-->
+                </div>
+            </div>
+
+
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <!--modal-->
+    <!--<div class='modal fade' role='dialog'>-->
+    <div id='myModal' class='modal {bg_modal} fade' role='dialog'>
+        <div class='modal-dialog {lebar_modal}'>
+            <div class='modal-content'>
+                {isi_modal}
+                <!-- Content will be loaded here from 'remote.php' file -->
+            </div>
+        </div>
+    </div>
+    <!--</div>-->
+    <!--modal-end-->
+    <footer class="main-footer overflow-h">
+        <div class="clear-fix"></div>
+        {footer}
+        <!--<div class="pull-right hidden-xs">-->
+        <!--<b>Version</b> 2.3.5-->
+        <!--</div>-->
+        <!--<strong>Copyright &copy; 2014-2016 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights
+        -->
+        <!--reserved.-->
+        <div class="pull-right">{stop_time}</div>
+    </footer>
+
+    <!-- Control Sidebar menu_right_isi-->
+    <aside class="control-sidebar control-sidebar-dark">
+        {menu_right_isi}
+    </aside>
+    <!-- /.control-sidebar -->
+    <!-- Add the sidebar's background. This div must be placed
+         immediately after the control sidebar -->
+    <div class="control-sidebar-bg"></div>
+</div>
+<div>
+    <iframe id="tray" name="tray" style="display:none;width:100%;height:120px;" src="{base}_tray/index"></iframe>
+    <iframe name="result" id="result" style="resize: both;display: {display_iframe};width: 100%;height:800px;"></iframe>
+</div>
+<!-- ./wrapper -->
+
+{foot_tpl}
+
+<!--barcode reader-->
+<script type="text/javascript">
+    if (window.location.hash.substr(1, 2) == "zx") {
+        var bc = window.location.hash.substr(3);
+        localStorage["barcode"] = decodeURI(window.location.hash.substr(3))
+        window.close();
+        self.close();
+        window.location.href = "about:blank";//In case self.close isn't allowed
+    }
+</script>
+<SCRIPT type="text/javascript">
+    var changingHash = false;
+
+    function onbarcode(event) {
+        switch (event.type) {
+            case "hashchange": {
+                if (changingHash == true) {
+                    return;
+                }
+                var hash = window.location.hash;
+                if (hash.substr(0, 3) == "#zx") {
+                    hash = window.location.hash.substr(3);
+                    changingHash = true;
+                    window.location.hash = event.oldURL.split("\#")[1] || ""
+                    changingHash = false;
+                    processBarcode(hash);
+                }
+
+                break;
+            }
+            case "storage": {
+                window.focus();
+                if (event.key == "barcode") {
+                    window.removeEventListener("storage", onbarcode, false);
+                    processBarcode(event.newValue);
+                }
+                break;
+            }
+            default: {
+                console.log(event)
+                break;
+            }
+        }
+    }
+
+    window.addEventListener("hashchange", onbarcode, false);
+
+    function getScan() {
+        var href = window.location.href;
+        var ptr = href.lastIndexOf("#");
+        if (ptr > 0) {
+            href = href.substr(0, ptr);
+        }
+        window.addEventListener("storage", onbarcode, false);
+        setTimeout('window.removeEventListener("storage", onbarcode, false)', 15000);
+        localStorage.removeItem("barcode");
+        //window.open  (href + "#zx" + new Date().toString());
+
+        if (navigator.userAgent.match(/Firefox/i)) {
+            //Used for Firefox. If Chrome uses this, it raises the "hashchanged" event only.
+            window.location.href = ("zxing://scan/?ret=" + encodeURIComponent(href + "#zx{CODE}"));
+        } else {
+            //Used for Chrome. If Firefox uses this, it leaves the scan window open.
+            window.open("zxing://scan/?ret=" + encodeURIComponent(href + "#zx{CODE}"));
+        }
+    }
+
+    function processBarcode(bc) {
+        document.getElementById("scans").innerHTML += "<div>" + bc + "</div>";
+        //put your code in place of the line above.
+    }
+
+</SCRIPT>
+
+
+<script>
+
+    $('#myModal').on('hidden.bs.modal', function () {
+        $(this).removeData('bs.modal');
+    });
+
+    $('body').tooltip({selector: '[data-toggle-tip=tooltip]'});
+    //    $('data-toggle-tip').tooltip({title:"Event", trigger:"focus or hover only", delay:{hide:100}});
+
+    checked = false;
+
+    function checkedAll(frm1) {
+        var aa = document.getElementById(frm1);
+        if (checked == false) {
+            checked = true
+        } else {
+            checked = false
+        }
+        for (var i = 0; i < aa.elements.length; i++) {
+            aa.elements[i].checked = checked;
+        }
+    }
+
+    function detectEnter() {
+        var keyCode = event.keyCode ? event.keyCode : event.which ? event.which
+            : event.charCode;
+
+        if (keyCode == 13) {
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function load() {
+        top.$('#tray').load('{base}_tray/');
+    }
+
+    function reLoad() {
+        setInterval("load()", 30000);
+    }
+</script>
+<script>
+
+//        $("th").resizable();
+</script>
+</body>
+</html>

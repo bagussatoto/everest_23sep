@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{title}</title>
+
+    <style>
+        #someSvgElementId {
+            width: 100%;
+        }
+    </style>
+    <style>
+
+
+        * {
+
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+
+        }
+
+        .halaman-print {
+            width: 215mm;
+            min-height: 300mm;
+
+            /*kecilkan padding untuk mmendapatkan margin yang tipis*/
+            padding: 1mm;
+            margin: 1mm auto;
+            border: 0px #D3D3D3 solid;
+            border-radius: 6px;
+            background: grey;
+            box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+
+        }
+
+        .halaman {
+            width: 210mm;
+            min-height: 297mm;
+
+            /*kecilkan padding untuk mmendapatkan margin yang tipis*/
+            padding: 1mm;
+            margin: 1mm auto;
+            border: 0px #D3D3D3 solid;
+            border-radius: 6px;
+            background: white;
+            box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+
+        }
+
+        .margin-halaman {
+
+            padding: 1mm;
+            border: 0px grey solid;
+            height: 297mm;
+            /*outline: 1mm darkgrey solid;*/
+
+        }
+
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        @media print {
+
+            html, body {
+                width: 210mm;
+                height: 297mm;
+            }
+
+            .halaman {
+                margin: 0;
+                border: initial;
+                border-radius: initial;
+                width: initial;
+                min-height: initial;
+                box-shadow: initial;
+                background: initial;
+                page-break-after: always;
+            }
+
+        }
+    </style>
+
+    <script>
+        $(document).on("ready", function () {
+
+            var penggaris_kiri_kanan = $(".penggaris_kiri_kanan");
+            var penggaris_atas_bawah = $(".penggaris_atas_bawah");
+
+            //mengambil dari ukuran standard ISO kertas International
+            //dengan satuan mm (milimeter)
+            var A4_width = parseFloat(210);
+            var A4_height = parseFloat(279.4);
+
+            var F4_width = parseFloat(215.9);
+            var F4_height = parseFloat(355.6);
+
+
+        });
+    </script>
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-3.3.7-dist/js/bootstrap.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js?v={local_version}"></script>
+
+
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/slimScroll/jquery.slimscroll.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}AdminLTE-2.3.11/dist/js/app.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}multi-step-modal-master/multi-step-modal.js?v={local_version}"></script>
+
+    <script src="{cdn_suport}bootstrap-fileinput-master/js/fileinput.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-toggle-master/js/bootstrap-toggle.min.js?v={local_version}"></script>
+    <script src="{base}assets/custom/hippo_ajax.js?v={local_version}"></script>
+
+    <link rel="stylesheet" href="{base}assets/custom/custom.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-3.3.7-dist/css/bootstrap.min.css?v={local_version}">
+
+    <style>
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #FAFAFA;
+            font-size: 12px;
+            font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+        }
+    </style>
+</head>
+
+<body class="hold-transition skin-purple sidebar-mini" onloads="window.print();" style="">
+
+<div class="halaman-print">
+
+    <div class="halaman">
+        <div class="margin-halaman">
+
+            <div class="main-page1">
+
+
+                <div class="col-md-2 col-xs-2"><img src="{base}assets/images/san_221.png" alt="a"
+                                                    class="img-responsive pull-right"></div>
+                <div class="text-left col-md-10 col-xs-8 border-cekk">
+                    {companyProfile}
+                </div>
+                <div style="border-top: 4px double #000;margin-top: 10px;" class="text-center col-md-12 col-xs-12">
+
+                    <h2 class="ttext-renggang-10 text-bold">
+                        {title}
+                    </h2>
+                </div>
+
+                <div class="col-md-12" style="border: 0px solid blue;">
+                    <!-- data invoice -->
+                    <div>
+                        <div class="col-md-4 col-xs-4 no-padding" style="right: 3px;height: 205px;">
+                            <div class="panel panel-default table-responsive spacer-top-10 ccol-md-6"
+                                 style="margin-left: 3px;margin-right: 3px;height: 203px;">
+                                {reasonDetails}
+                            </div>
+                        </div>
+                        <div class="col-md-4 col-xs-4 no-padding" style="right: 3px;height: 205px;">
+                            <div class="panel panel-default table-responsive spacer-top-10 ccol-md-6"
+                                 style="margin-left: 3px;margin-right: 3px;height: 203px;">
+                                {vendorDetails}
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 col-xs-4 no-padding">
+                            <div class="panel panel-default tablee-responsive sspacer-top-10 ccol-md-6"
+                                 style="margin-left: 3px;margin-right: 3px;;height: 203px;">
+                                {fixedElements}
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="col-md-12 no-padding" style="border: 0px solid red;">
+                            <div class="panel panel-default table-responsive spacer-top-10">
+                                {content}
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="col-md-12 no-padding" style="border: 0px solid black;">
+                            <div class="col-md-6 col-xs-6 no-padding" style="right: 3px;">
+                                <div class="panel panel-default table-responsive sspacer-top-10 ccol-md-6" style="height: 125px;">
+                                    {noteDetails}
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xs-6 no-padding" style="border: 1px ;">
+                                <div>
+                                    <div class="no-padding">
+                                        {sign_1}
+                                    </div>
+                                </div>
+                                <!--<div class="col-md-12 no-padding">-->
+                                <!--{sign_2}-->
+                                <!--</div>-->
+
+                                <!--<table border="0" rules="none" width="100%">-->
+                                <!--<tbody>-->
+                                <!--<tr>-->
+                                <!--<td class="padding-right-5" id="td4" valign="top">-->
+                                <!--{signatures}-->
+                                <!--</td>-->
+
+                                <!--</tr>-->
+                                <!--<tr>-->
+                                <!--<td class="padding-right-5" id="td5" valign="top">-->
+                                <!--{vendorSignitures}-->
+                                <!--</td>-->
+                                <!--</tr>-->
+                                <!--</tbody>-->
+                                <!--</table>-->
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <script>
+                        var td5 = $('#td6').outerHeight();
+                        var td5 = $('#td5').outerHeight();
+                        var td4 = $('#td4').outerHeight();
+                        var td3 = $('#td3').outerHeight();
+                        var td2 = $('#td2').outerHeight();
+                        var td1 = $('#td1').outerHeight();
+                        var kepala = 10;
+                        var height5 = td5 - 48;
+                        var height4 = td4 - kepala;
+                        var height3 = td3 - kepala;
+                        var height2 = td2 - kepala;
+                        var height1 = td1 - kepala;
+                        $('#div7').outerHeight(height5);
+                        $('#div5').outerHeight(height5);
+                        $('#div4').outerHeight(height4);
+                        $('#div3').outerHeight(height3);
+                        $('#div2').outerHeight(height2);
+                        $('#div1').outerHeight(height1);
+                    </script>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+
+    <!--<script>-->
+
+    <!--var penggariskirikanan = document.getElementById('penggaris-kiri-kanan');-->
+    <!--var rulez = new Rulez({-->
+    <!--element: penggariskirikanan,-->
+    <!--});-->
+    <!--rulez.render();-->
+
+    <!--var penggarisatasbawah = document.getElementById('penggaris-atas-bawah');-->
+    <!--var rulez = new Rulez({-->
+    <!--element: penggarisatasbawah,-->
+    <!--layout: 'vertical',-->
+    <!--textDefaults: {-->
+    <!--rotation: 90-->
+    <!--}-->
+    <!--});-->
+    <!--rulez.render();-->
+
+    <!--</script>-->
+</body>
+</html>

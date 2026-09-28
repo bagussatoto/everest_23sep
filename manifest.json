@@ -1,0 +1,26 @@
+{
+  "short_name": "MGK",
+  "name": "MGK",
+  "icons": [
+    {
+      "src": "favkecil.png",
+      "type": "image/png",
+      "sizes": "195x195"
+    },
+    {
+      "src": "favbesar.png",
+      "type": "image/png",
+      "sizes": "514x514"
+    }
+  ],
+  "start_url": "/index.php/auth/Login/index?xxx=",
+  "background_color": "#0a0a0a",
+  "theme_color": "#1db954",
+  "display": "standalone",
+  "orientation": "landscape",
+  "launch_handler": {
+    "client_mode": "navigate-new"
+  },
+  "categories": ["business", "productivity"],
+  "description": "Aplikasi MGK"
+}

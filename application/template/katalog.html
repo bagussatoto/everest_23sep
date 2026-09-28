@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Template Name katalog.html -->
+    <title>{title}</title>
+
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link id="favicon" rel="icon" type='image/x-icon' href="{favicon}?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-3.3.7-dist/css/bootstrap.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}Font-Awesome-master/css/font-awesome.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}ionicons-master/css/ionicons.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}simple-line-icons-master/css/simple-line-icons.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/dist/css/AdminLTE.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}bootstrap3-dialog-master/dist/css/bootstrap-dialog.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/dist/css/skins/_all-skins.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-fileinput-master/css/fileinput.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-toggle-master/css/bootstrap-toggle.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-xlgrid-master/bootstrap-xlgrid.min.css?v={local_version}">
+    <link rel="stylesheet" href="{base}assets/custom/custom.min.css?v={local_version}">
+    <link rel="stylesheet" href="{base}assets/custom/dialog.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}qtip/jquery.qtip.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}HoldOn/HoldOn.css?v={local_version}">
+    <link rel="stylesheet" href="{base}assets/custom/jquery.floatingscroll.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}DataTables-1.10.13/media/css/dataTables.bootstrap.min.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}DataTables-1.10.13/media/css/jquery.dataTables_themeroller.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}DataTables-1.10.13/yadcf-0.9.3/jquery.dataTables.yadcf.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}DataTables-1.10.13/extensions/Buttons/css/buttons.dataTables.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/extensions/FixedHeader/css/fixedHeader.bootstrap.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/extensions/FixedColumns/css/fixedColumns.bootstrap.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/plugins/timepicker/bootstrap-timepicker.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}MomentJs-2.24.0/daterangepicker.min.css?v={local_version}">
+    <link rel="stylesheet" href="{base}assets/custom/highslide.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}DataTables-1.10.13/extensions/FixedHeader/css/fixedHeader.bootstrap.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}DataTables-1.10.13/extensions/FixedColumns/css/fixedColumns.bootstrap.css?v={local_version}">
+
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v={local_version}"></script>
+    <script src="{base}assets/custom/custom.js?v={local_version}"></script>
+    <script src="{cdn_suport}HoldOn/HoldOn.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-3.3.7-dist/js/bootstrap.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js?v={local_version}"></script>
+
+    <script src="{base}assets/custom/jquery.floatingscroll.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/timepicker/bootstrap-timepicker.js?v={local_version}"></script>
+    <script src="{cdn_suport}MomentJs-2.24.0/moment.js?v={local_version}"></script>
+    <script src="{cdn_suport}MomentJs-2.24.0/daterangepicker.js?v={local_version}"></script>
+    <script src="{base}assets/custom/highslide-with-html.js?v={local_version}"></script>
+
+    <script src="{cdn_suport}DataTables-1.10.13/media/js/jquery.dataTables.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/media/js/dataTables.bootstrap.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/media/js/jquery.highlight.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/dataTables.buttons.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.colVis.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.print.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.html5.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.flash.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/yadcf-0.9.3/jquery.dataTables.yadcf.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/FixedHeader/js/dataTables.fixedHeader.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/FixedColumns/js/dataTables.fixedColumns.js?v={local_version}"></script>
+    <script src="{cdn_suport}qtip/jquery.qtip.min.js?v={local_version}"></script>
+
+    <script>
+        (function(e){"function"===typeof define&&define.amd?define(["jquery","datatables.net"],function(u){return e(u,window,document)}):"object"===typeof exports?module.exports=function(u,t){u||(u=window);t&&t.fn.dataTable||(t=require("datatables.net")(u,t).$);return e(t,u,u.document)}:e(jQuery,window,document)})(function(e,u,t,z){function y(a){for(var b=[],c=0,f=a.length;c<f;c++)b[a[c]]=c;return b}function v(a,b,c){b=a.splice(b,1)[0];a.splice(c,0,b)}function A(a,b,c){for(var f=[],h=0,g=a.childNodes.length;h<
+                g;h++)1==a.childNodes[h].nodeType&&f.push(a.childNodes[h]);b=f[b];null!==c?a.insertBefore(b,f[c]):a.appendChild(b)}var D=e.fn.dataTable;e.fn.dataTableExt.oApi.fnColReorder=function(a,b,c,f,h){var g,m,k=a.aoColumns.length;var p=function(w,x,E){if(w[x]&&"function"!==typeof w[x]){var B=w[x].split("."),C=B.shift();isNaN(1*C)||(w[x]=E[1*C]+"."+B.join("."))}};if(b!=c)if(0>b||b>=k)this.oApi._fnLog(a,1,"ColReorder 'from' index is out of bounds: "+b);else if(0>c||c>=k)this.oApi._fnLog(a,1,"ColReorder 'to' index is out of bounds: "+
+                c);else{var l=[];var d=0;for(g=k;d<g;d++)l[d]=d;v(l,b,c);var q=y(l);d=0;for(g=a.aaSorting.length;d<g;d++)a.aaSorting[d][0]=q[a.aaSorting[d][0]];if(null!==a.aaSortingFixed)for(d=0,g=a.aaSortingFixed.length;d<g;d++)a.aaSortingFixed[d][0]=q[a.aaSortingFixed[d][0]];d=0;for(g=k;d<g;d++){var n=a.aoColumns[d];l=0;for(m=n.aDataSort.length;l<m;l++)n.aDataSort[l]=q[n.aDataSort[l]];n.idx=q[n.idx]}e.each(a.aLastSort,function(w,x){a.aLastSort[w].src=q[x.src]});d=0;for(g=k;d<g;d++)n=a.aoColumns[d],"number"==typeof n.mData?
+                n.mData=q[n.mData]:e.isPlainObject(n.mData)&&(p(n.mData,"_",q),p(n.mData,"filter",q),p(n.mData,"sort",q),p(n.mData,"type",q));if(a.aoColumns[b].bVisible){p=this.oApi._fnColumnIndexToVisible(a,b);m=null;for(d=c<b?c:c+1;null===m&&d<k;)m=this.oApi._fnColumnIndexToVisible(a,d),d++;l=a.nTHead.getElementsByTagName("tr");d=0;for(g=l.length;d<g;d++)A(l[d],p,m);if(null!==a.nTFoot)for(l=a.nTFoot.getElementsByTagName("tr"),d=0,g=l.length;d<g;d++)A(l[d],p,m);d=0;for(g=a.aoData.length;d<g;d++)null!==a.aoData[d].nTr&&
+        A(a.aoData[d].nTr,p,m)}v(a.aoColumns,b,c);d=0;for(g=k;d<g;d++)a.oApi._fnColumnOptions(a,d,{});v(a.aoPreSearchCols,b,c);d=0;for(g=a.aoData.length;d<g;d++){m=a.aoData[d];if(n=m.anCells)for(v(n,b,c),l=0,p=n.length;l<p;l++)n[l]&&n[l]._DT_CellIndex&&(n[l]._DT_CellIndex.column=l);Array.isArray(m._aData)&&v(m._aData,b,c)}d=0;for(g=a.aoHeader.length;d<g;d++)v(a.aoHeader[d],b,c);if(null!==a.aoFooter)for(d=0,g=a.aoFooter.length;d<g;d++)v(a.aoFooter[d],b,c);(h||h===z)&&e.fn.dataTable.Api(a).rows().invalidate("data");
+            d=0;for(g=k;d<g;d++)e(a.aoColumns[d].nTh).off(".DT"),this.oApi._fnSortAttachListener(a,a.aoColumns[d].nTh,d);e(a.oInstance).trigger("column-reorder.dt",[a,{from:b,to:c,mapping:q,drop:f,iFrom:b,iTo:c,aiInvertMapping:q}])}};var r=function(a,b){a=(new e.fn.dataTable.Api(a)).settings()[0];if(a._colReorder)return a._colReorder;!0===b&&(b={});var c=e.fn.dataTable.camelToHungarian;c&&(c(r.defaults,r.defaults,!0),c(r.defaults,b||{}));this.s={dt:null,enable:null,init:e.extend(!0,{},r.defaults,b),fixed:0,fixedRight:0,
+            reorderCallback:null,mouse:{startX:-1,startY:-1,offsetX:-1,offsetY:-1,target:-1,targetIndex:-1,fromIndex:-1},aoTargets:[]};this.dom={drag:null,pointer:null};this.s.enable=this.s.init.bEnable;this.s.dt=a;this.s.dt._colReorder=this;this._fnConstruct();return this};e.extend(r.prototype,{fnEnable:function(a){if(!1===a)return fnDisable();this.s.enable=!0},fnDisable:function(){this.s.enable=!1},fnReset:function(){this._fnOrderColumns(this.fnOrder());return this},fnGetCurrentOrder:function(){return this.fnOrder()},
+            fnOrder:function(a,b){var c=[],f,h=this.s.dt.aoColumns;if(a===z){b=0;for(f=h.length;b<f;b++)c.push(h[b]._ColReorder_iOrigCol);return c}if(b){h=this.fnOrder();b=0;for(f=a.length;b<f;b++)c.push(e.inArray(a[b],h));a=c}this._fnOrderColumns(y(a));return this},fnTranspose:function(a,b){b||(b="toCurrent");var c=this.fnOrder(),f=this.s.dt.aoColumns;return"toCurrent"===b?Array.isArray(a)?e.map(a,function(h){return e.inArray(h,c)}):e.inArray(a,c):Array.isArray(a)?e.map(a,function(h){return f[h]._ColReorder_iOrigCol}):
+                    f[a]._ColReorder_iOrigCol},_fnConstruct:function(){var a=this,b=this.s.dt.aoColumns.length,c=this.s.dt.nTable,f;this.s.init.iFixedColumns&&(this.s.fixed=this.s.init.iFixedColumns);this.s.init.iFixedColumnsLeft&&(this.s.fixed=this.s.init.iFixedColumnsLeft);this.s.fixedRight=this.s.init.iFixedColumnsRight?this.s.init.iFixedColumnsRight:0;this.s.init.fnReorderCallback&&(this.s.reorderCallback=this.s.init.fnReorderCallback);for(f=0;f<b;f++)f>this.s.fixed-1&&f<b-this.s.fixedRight&&this._fnMouseListener(f,
+                    this.s.dt.aoColumns[f].nTh),this.s.dt.aoColumns[f]._ColReorder_iOrigCol=f;this.s.dt.oApi._fnCallbackReg(this.s.dt,"aoStateSaveParams",function(m,k){a._fnStateSave.call(a,k)},"ColReorder_State");this.s.dt.oApi._fnCallbackReg(this.s.dt,"aoStateLoadParams",function(m,k){a.s.dt._colReorder.fnOrder(k.ColReorder,!0)});var h=null;this.s.init.aiOrder&&(h=this.s.init.aiOrder.slice());this.s.dt.oLoadedState&&"undefined"!=typeof this.s.dt.oLoadedState.ColReorder&&this.s.dt.oLoadedState.ColReorder.length==this.s.dt.aoColumns.length&&
+            (h=this.s.dt.oLoadedState.ColReorder);if(h)if(a.s.dt._bInitComplete)b=y(h),a._fnOrderColumns.call(a,b);else{var g=!1;e(c).on("draw.dt.colReorder",function(){if(!a.s.dt._bInitComplete&&!g){g=!0;var m=y(h);a._fnOrderColumns.call(a,m)}})}else this._fnSetColumnIndexes();e(c).on("destroy.dt.colReorder",function(){e(c).off("destroy.dt.colReorder draw.dt.colReorder");e.each(a.s.dt.aoColumns,function(m,k){e(k.nTh).off(".ColReorder");e(k.nTh).removeAttr("data-column-index")});a.s.dt._colReorder=null;a.s=null})},
+            _fnOrderColumns:function(a){var b=!1;if(a.length!=this.s.dt.aoColumns.length)this.s.dt.oInstance.oApi._fnLog(this.s.dt,1,"ColReorder - array reorder does not match known number of columns. Skipping.");else{for(var c=0,f=a.length;c<f;c++){var h=e.inArray(c,a);c!=h&&(v(a,h,c),this.s.dt.oInstance.fnColReorder(h,c,!0,!1),b=!0)}this._fnSetColumnIndexes();b&&(e.fn.dataTable.Api(this.s.dt).rows().invalidate("data"),""===this.s.dt.oScroll.sX&&""===this.s.dt.oScroll.sY||this.s.dt.oInstance.fnAdjustColumnSizing(!1),
+                    this.s.dt.oInstance.oApi._fnSaveState(this.s.dt),null!==this.s.reorderCallback&&this.s.reorderCallback.call(this))}},_fnStateSave:function(a){if(null!==this.s){var b,c,f=this.s.dt.aoColumns;a.ColReorder=[];if(a.aaSorting){for(b=0;b<a.aaSorting.length;b++)a.aaSorting[b][0]=f[a.aaSorting[b][0]]._ColReorder_iOrigCol;var h=e.extend(!0,[],a.aoSearchCols);b=0;for(c=f.length;b<c;b++){var g=f[b]._ColReorder_iOrigCol;a.aoSearchCols[g]=h[b];a.abVisCols[g]=f[b].bVisible;a.ColReorder.push(g)}}else if(a.order){for(b=
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       0;b<a.order.length;b++)a.order[b][0]=f[a.order[b][0]]._ColReorder_iOrigCol;h=e.extend(!0,[],a.columns);b=0;for(c=f.length;b<c;b++)g=f[b]._ColReorder_iOrigCol,a.columns[g]=h[b],a.ColReorder.push(g)}}},_fnMouseListener:function(a,b){var c=this;e(b).on("mousedown.ColReorder",function(f){c.s.enable&&1===f.which&&c._fnMouseDown.call(c,f,b)}).on("touchstart.ColReorder",function(f){c.s.enable&&c._fnMouseDown.call(c,f,b)})},_fnMouseDown:function(a,b){var c=this,f=e(a.target).closest("th, td").offset();b=
+                    parseInt(e(b).attr("data-column-index"),10);b!==z&&(this.s.mouse.startX=this._fnCursorPosition(a,"pageX"),this.s.mouse.startY=this._fnCursorPosition(a,"pageY"),this.s.mouse.offsetX=this._fnCursorPosition(a,"pageX")-f.left,this.s.mouse.offsetY=this._fnCursorPosition(a,"pageY")-f.top,this.s.mouse.target=this.s.dt.aoColumns[b].nTh,this.s.mouse.targetIndex=b,this.s.mouse.fromIndex=b,this._fnRegions(),e(t).on("mousemove.ColReorder touchmove.ColReorder",function(h){c._fnMouseMove.call(c,h)}).on("mouseup.ColReorder touchend.ColReorder",
+                    function(h){c._fnMouseUp.call(c,h)}))},_fnMouseMove:function(a){var b=this;if(null===this.dom.drag){if(5>Math.pow(Math.pow(this._fnCursorPosition(a,"pageX")-this.s.mouse.startX,2)+Math.pow(this._fnCursorPosition(a,"pageY")-this.s.mouse.startY,2),.5))return;this._fnCreateDragNode()}this.dom.drag.css({left:this._fnCursorPosition(a,"pageX")-this.s.mouse.offsetX,top:this._fnCursorPosition(a,"pageY")-this.s.mouse.offsetY});var c=this.s.mouse.toIndex;a=this._fnCursorPosition(a,"pageX");for(var f=function(d){for(;0<=
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            d;){d--;if(0>=d)return null;if(b.s.aoTargets[d+1].x!==b.s.aoTargets[d].x)return b.s.aoTargets[d]}},h=function(){for(var d=0;d<b.s.aoTargets.length-1;d++)if(b.s.aoTargets[d].x!==b.s.aoTargets[d+1].x)return b.s.aoTargets[d]},g=function(){for(var d=b.s.aoTargets.length-1;0<d;d--)if(b.s.aoTargets[d].x!==b.s.aoTargets[d-1].x)return b.s.aoTargets[d]},m=1;m<this.s.aoTargets.length;m++){var k=f(m);k||(k=h());var p=k.x+(this.s.aoTargets[m].x-k.x)/2;if(this._fnIsLtr()){if(a<p){var l=k;break}}else if(a>p){l=
+                    k;break}}l?(this.dom.pointer.css("left",l.x),this.s.mouse.toIndex=l.to):(this.dom.pointer.css("left",g().x),this.s.mouse.toIndex=g().to);this.s.init.bRealtime&&c!==this.s.mouse.toIndex&&(this.s.dt.oInstance.fnColReorder(this.s.mouse.fromIndex,this.s.mouse.toIndex),this.s.mouse.fromIndex=this.s.mouse.toIndex,""===this.s.dt.oScroll.sX&&""===this.s.dt.oScroll.sY||this.s.dt.oInstance.fnAdjustColumnSizing(!1),this._fnRegions())},_fnMouseUp:function(a){e(t).off(".ColReorder");null!==this.dom.drag&&(this.dom.drag.remove(),
+                    this.dom.pointer.remove(),this.dom.drag=null,this.dom.pointer=null,this.s.dt.oInstance.fnColReorder(this.s.mouse.fromIndex,this.s.mouse.toIndex,!0),this._fnSetColumnIndexes(),""===this.s.dt.oScroll.sX&&""===this.s.dt.oScroll.sY||this.s.dt.oInstance.fnAdjustColumnSizing(!1),this.s.dt.oInstance.oApi._fnSaveState(this.s.dt),null!==this.s.reorderCallback&&this.s.reorderCallback.call(this))},_fnRegions:function(){var a=this.s.dt.aoColumns,b=this._fnIsLtr();this.s.aoTargets.splice(0,this.s.aoTargets.length);
+                var c=e(this.s.dt.nTable).offset().left,f=[];e.each(a,function(m,k){if(k.bVisible&&"none"!==k.nTh.style.display){k=e(k.nTh);var p=k.offset().left;b&&(p+=k.outerWidth());f.push({index:m,bound:p});c=p}else f.push({index:m,bound:c})});var h=f[0];a=e(a[h.index].nTh).outerWidth();this.s.aoTargets.push({to:0,x:h.bound-a});for(h=0;h<f.length;h++){a=f[h];var g=a.index;a.index<this.s.mouse.fromIndex&&g++;this.s.aoTargets.push({to:g,x:a.bound})}0!==this.s.fixedRight&&this.s.aoTargets.splice(this.s.aoTargets.length-
+                        this.s.fixedRight);0!==this.s.fixed&&this.s.aoTargets.splice(0,this.s.fixed)},_fnCreateDragNode:function(){var a=""!==this.s.dt.oScroll.sX||""!==this.s.dt.oScroll.sY,b=this.s.dt.aoColumns[this.s.mouse.targetIndex].nTh,c=b.parentNode,f=c.parentNode,h=f.parentNode,g=e(b).clone();this.dom.drag=e(h.cloneNode(!1)).addClass("DTCR_clonedTable").append(e(f.cloneNode(!1)).append(e(c.cloneNode(!1)).append(g[0]))).css({position:"absolute",top:0,left:0,width:e(b).outerWidth(),height:e(b).outerHeight()}).appendTo("body");
+                this.dom.pointer=e("<div></div>").addClass("DTCR_pointer").css({position:"absolute",top:a?e(e(this.s.dt.nScrollBody).parent()).offset().top:e(this.s.dt.nTable).offset().top,height:a?e(e(this.s.dt.nScrollBody).parent()).height():e(this.s.dt.nTable).height()}).appendTo("body")},_fnSetColumnIndexes:function(){e.each(this.s.dt.aoColumns,function(a,b){e(b.nTh).attr("data-column-index",a)})},_fnCursorPosition:function(a,b){return-1!==a.type.indexOf("touch")?a.originalEvent.touches[0][b]:a[b]},_fnIsLtr:function(){return"rtl"!==
+                    e(this.s.dt.nTable).css("direction")}});r.defaults={aiOrder:null,bEnable:!0,bRealtime:!0,iFixedColumnsLeft:0,iFixedColumnsRight:0,fnReorderCallback:null};r.version="1.5.6";e.fn.dataTable.ColReorder=r;e.fn.DataTable.ColReorder=r;"function"==typeof e.fn.dataTable&&"function"==typeof e.fn.dataTableExt.fnVersionCheck&&e.fn.dataTableExt.fnVersionCheck("1.10.8")?e.fn.dataTableExt.aoFeatures.push({fnInit:function(a){var b=a.oInstance;a._colReorder?b.oApi._fnLog(a,1,"ColReorder attempted to initialise twice. Ignoring second"):
+                (b=a.oInit,new r(a,b.colReorder||b.oColReorder||{}));return null},cFeature:"R",sFeature:"ColReorder"}):alert("Warning: ColReorder requires DataTables 1.10.8 or greater - www.datatables.net/download");e(t).on("preInit.dt.colReorder",function(a,b){if("dt"===a.namespace){a=b.oInit.colReorder;var c=D.defaults.colReorder;if(a||c)c=e.extend({},a,c),!1!==a&&new r(b,c)}});e.fn.dataTable.Api.register("colReorder.reset()",function(){return this.iterator("table",function(a){a._colReorder.fnReset()})});e.fn.dataTable.Api.register("colReorder.order()",
+                function(a,b){return a?this.iterator("table",function(c){c._colReorder.fnOrder(a,b)}):this.context.length?this.context[0]._colReorder.fnOrder():null});e.fn.dataTable.Api.register("colReorder.transpose()",function(a,b){return this.context.length&&this.context[0]._colReorder?this.context[0]._colReorder.fnTranspose(a,b):a});e.fn.dataTable.Api.register("colReorder.move()",function(a,b,c,f){this.context.length&&(this.context[0]._colReorder.s.dt.oInstance.fnColReorder(a,b,c,f),this.context[0]._colReorder._fnSetColumnIndexes());
+            return this});e.fn.dataTable.Api.register("colReorder.enable()",function(a){return this.iterator("table",function(b){b._colReorder&&b._colReorder.fnEnable(a)})});e.fn.dataTable.Api.register("colReorder.disable()",function(){return this.iterator("table",function(a){a._colReorder&&a._colReorder.fnDisable()})});return r});
+    </script>
+    <style>
+
+        table.dataTable thead th, table.dataTable thead td {
+            white-space: nowrap;
+            max-width: 100px;
+        }
+        table.dataTable tbody th, table.dataTable tbody td {
+            white-space: nowrap;
+        }
+        @media print {
+            a[href]:after {
+                display: none;
+                visibility: hidden;
+            }
+        }
+        @media print
+        {
+            .fl-scrolls,
+            .fl-scrolls.fl-scrolls-hidden,
+            .no-print,
+            .btn,
+            .panel-body.no-padding
+            {
+                display: none !important;
+            }
+
+            table.table {
+                font-family:Verdana, Arial;
+                font-size:10px;
+            }
+        }
+
+        .morris-hover.morris-default-style {
+            border-radius: 10px;
+            padding: 6px;
+            color: #f9f9f9;
+            background: rgb(158, 158, 160);
+            border: solid 2px rgba(113, 112, 117, 0.9);
+            font-weight: 600;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .mark, mark {
+            padding: .1em !important;
+            background-color: #f5bc67 !important;
+        }
+    </style>
+
+    <style>
+
+        .form-control-2 {
+            display: block;
+            width: 100%;
+            height: 34px;
+            padding: 6px 2px !important;
+            font-size: 14px;
+            line-height: 1.42857143;
+            color: #555;
+            background-color: #fff;
+            background-image: none;
+            border: 1px solid #ccc;
+            border-radius: 2px;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+            box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+            -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+            -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+            transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        }
+    </style>
+
+    <style>
+        table {
+            table-layout: auto!important;
+        }
+    </style>
+    <!--{head}-->
+</head>
+<!--membuat sidebar colaps bodynya pakai yg ini-->
+<!--<body class="hold-transition skin-blue sidebar-mini sidebar-collapse">-->
+<!--sidebar-collapse-->
+<body onbeforeunload="custom_holdon(close_holdon)" class="hold-transition skin-blue sidebar-mini" onload="reLoad();">
+<!--tanda loading pas sedang ngeload halaman-->
+<div id="baseURL" class="hidden">{base}</div>
+<!--end---tanda loading pas sedang ngeload halaman-->
+<div class="wrapper">
+<header class="main-header">
+    <a href="{base}" class="logo hidden-xs hidden-sm no-padding">
+        <span class="logo-mini"><span class="glyphicon glyphicon-home"></span></span>
+        <span class="logo-lg"><img src="{base}public/images/profiles/logo_header.png" height="40px"></span>
+    </a>
+    <nav class="navbar navbar-static-top">
+        <div class="no-padding no-border">
+            <!--<div class="hidden-smr hidden-lgr col-sm-2 col-xs-1 col-md-1 col-lg-1 no-padding">-->
+                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+            <a class="sidebar-title"><b class="text-uppercase">{title}</b> <small>{sub_title}</small></a>
+            <!--</div>-->
+<!--            <div class="col-sm-8 col-xs-11 col-md-8 col-lg-8 no-padding text-center">-->
+<!--                <span class="hidden-mdx hidden-lgx hidden-xlx hidden-xxlx">-->
+<!--                    <span class="navbar-brand text-center no-border" style="padding:8px;">-->
+<!--                        <a href="{base}">-->
+<!--                            <a class="btn btn-tool text-white" href="javascript:void(0)" onclick="location.href='{btn_back}';"><span class="glyphicon glyphicon-arrow-left text-yellow"></span></a>-->
+<!--                            <span class="text-white">{title} <small style="color:#eeeeee;text-transform: lowercase;">{sub_title}</small></span>-->
+<!--                        </a>-->
+<!--                    </span>-->
+<!--                </span>-->
+<!--            </div>-->
+
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav" id="menu_top">
+                    {menu_top}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <nav class="navbar navbar-fixed-bottom navbar-2nd">
+        <!--untuk view desktop-->
+        <div class="no-padding no-border">
+            <div style="padding-right:0;padding-left:0;" class="col-sm-2 col-xs-2 col-md-1 col-lg-1">
+                <div class="hidden-xs col-sm-6 col-md-6 col-lg-6 no-padding">
+                    <a href="{base}" class="btn btn__trigger-home btn__trigger--views-home"><i class="glyphicon glyphicon-home"></i></a>
+                </div>
+                <div class="hidden-xxxl hidden-xxl hidden-xl hidden-lg hidden-md hidden-sm col-xs-6 no-padding">
+                    <a href="{base}" class="btn btn__trigger-home-mb btn__trigger--views-home-mb"><i class="glyphicon glyphicon-home"></i></a>
+                </div>
+                <div class="hidden-xs col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding">
+                    <div class="text-bold text-center timbul dtime">
+                        <span class="jam"></span>
+                        <span class="blink">:</span>
+                        <span class="menit"></span>
+                    </div>
+                </div>
+            </div>
+            <div style="padding-right:0;padding-left:0;padding-left: 17px;" class="hidden-lg hidden-md hidden-sm col-xs-8">
+                {info_ucd}
+            </div>
+            <div style="padding-right:0;padding-left:17px;" class="hidden-xs col-sm-7 col-xs-2 col-md-9 col-lg-9">
+
+                {menu_taskbar}
+
+                <!--<a href="#" onclick="swal('Phone 1')" data-toggle="tooltip" data-placement="top" title="Phone 1" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-phone"></i>-->
+                <!--</a>-->
+
+                <!--<a href="#" onclick="swal('Plus 1')" data-toggle="tooltip" data-placement="top" title="Plus 1" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-plus"></i>-->
+                <!--</a>-->
+
+                <!--<a href="#" onclick="swal('User 1')" data-toggle="tooltip" data-placement="top" title="User 1" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-user"></i>-->
+                <!--</a>-->
+
+            </div>
+            <div style="padding-right:0;padding-left:0;" class="col-sm-3 col-xs-2 col-md-2 col-lg-2">
+                {float_menu_bawah}
+            </div>
+        </div>
+        <div class="hidden-sm hidden-md hidden-lg hidden-xl hidden-xxxl hidden-xxl col-xs-12 bg-black text-lime text-bold">
+            <span class="col-xs-8 no-padding">
+                <span class="hari"></span>
+                <span class="tanggal"></span>
+            </span>
+            <span class="col-xs-4 no-padding text-right">
+                <span class="jam"></span>
+                <span class="blink">:</span>
+                <span class="menit"></span>
+            </span>
+        </div>
+    </nav>
+    <nav class="hidden-xs navbar navbar-fixed-bottom navbar-3rd">
+        <div class="no-padding no-border">
+            <span class="col-lg-2 no-padding">
+                <span class="hari timbul text-bold"></span>
+                <span class="tanggal timbul text-bold"></span>
+            </span>
+            <span class="col-lg-10 no-padding">
+                {info_bottom}
+            </span>
+        </div>
+    </nav>
+    <nav class="hidden navbar-4">
+        <a id="showHideBottom" class="btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds btn-default" style="width: 2rem; height: 2rem;padding-left: 5px; padding-right: 5px; padding-top: 4px; padding-bottom: 5px;position: fixed;bottom: 6px;right: 10px;"><i class="fa fa-ellipsis-v"></i></a>
+    </nav>
+</header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+
+            <ul class="sidebar-menu">
+                <!--<li class="header">MAIN NAVIGATION</li>-->
+                {menu_left}
+
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <!--<section class="content-header">-->
+        <!--    <h1> <small>{sub_title}</small></h1>-->
+        <!--</section>-->
+
+        <!-- Main content -->
+        <section class="content">
+
+            <div class="row border-cekk">
+                <div class="col-lg-8 col-md-8">
+                    <div class="input-group">
+                        <span class="input-group-addon" style="background:#e5e5e5;">keyword: </span>
+                        <input type="text" class="form-control" placeholder="Search Product Name" value="{default_key}"
+                               id=q onkeydown="if(detectEnter()){location.href='{self}?q='+this.value;}">
+                        <span class="input-group-addon"><a href="javascript:void(0)"
+                                                           onclick="location.href='{start_page}?q='+document.getElementById('q').value;"><span
+                                class="glyphicon glyphicon-search"></span></a></span>
+                        <span class="input-group-addon"><a href="javascript:void(0)"
+                                                           onclick="location.href='{start_page}';"><span
+                                class="glyphicon glyphicon-remove"></span></a></span>
+
+                        {add_btn}
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                <div class="btn-group pull-right">&nbsp;{navigasi_btn}</div>
+                </div>
+
+                <!--<div class="col-lg-1 col-md-1">-->
+                <!--</div>-->
+
+                <!--<div class="col-lg-2 col-md-2">-->
+                    <!--&lt;!&ndash;<a href="javascript:void(0)" onclick="document.getElementById('fPrice').submit();"&ndash;&gt;-->
+                    <!--<a href="javascript:void(0)" onclick="validasiSubmitDuluBro()"-->
+                       <!--class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> {submit_btn_label}</a>-->
+                <!--</div>-->
+
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 text-right">
+                    <div style="margin-bottom: -5px;">
+                        {page_str}
+                    </div>
+                </div>
+            </div>
+            <!--<div>&nbsp;</div>-->
+            <div class="row">
+
+                <div class="container-fluid">
+                        <!--<span class="pull-right">{add_link}</span>-->
+                        {content}
+
+                </div>
+
+
+            </div>
+            <div>&nbsp;</div>
+            <div class="row">
+                <div class="col-md-12 text-right">
+                    <div style="margin-top: -15px;">
+                        {page_str}
+                    </div>
+                </div>
+
+            </div>
+
+            <!--<div class="row">-->
+                <!--<div class="col-md-10 col-lg-10">-->
+                <!--</div>-->
+                <!--<div class="col-md-2 col-lg-2">-->
+                    <!--&lt;!&ndash;<a href="javascript:void(0)" onclick="document.getElementById('fPrice').submit();"&ndash;&gt;-->
+                    <!--<a href="javascript:void(0)" onclick="validasiSubmitDuluBro()"-->
+                       <!--class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> {submit_btn_label}</a>-->
+                <!--</div>-->
+            <!--</div>-->
+
+            <div>&nbsp;</div>
+
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <!--modal-->
+    <!--<div class='modal fade' role='dialog'>-->
+    <div id='myModal' class='modal {bg_modal} fade' role='dialog'>
+        <div class='modal-dialog {lebar_modal}'>
+            <div class='modal-content'>
+                {isi_modal}
+                <!-- Content will be loaded here from 'remote.php' file -->
+            </div>
+        </div>
+    </div>
+    <!--</div>-->
+    <!--modal-end-->
+    <footer class="main-footer overflow-h">
+        <div class="clear-fix"></div>
+        {footer}
+        <!--<div class="pull-right hidden-xs">-->
+        <!--<b>Version</b> 2.3.5-->
+        <!--</div>-->
+        <!--<strong>Copyright &copy; 2014-2016 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights
+        -->
+        <!--reserved.-->
+        <!--div class="pull-right">{stop_time}</div-->
+    </footer>
+    <!--{float_menu_bawah}-->
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Create the tabs -->
+        <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+            <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+            <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+        </ul>
+        <!-- Tab panes menu kanan-->
+        <div class="tab-content">
+            <!-- Home tab content -->
+            <div class="tab-pane" id="control-sidebar-home-tab">
+                <h3 class="control-sidebar-heading">Recent Activity</h3>
+                <ul class="control-sidebar-menu">
+                    <li>
+                        <a href="javascript:void(0)">
+                            <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+
+                                <p>Will be 23 on April 24th</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <i class="menu-icon fa fa-user bg-yellow"></i>
+
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
+
+                                <p>New phone +1(800)555-1234</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
+                                <p>nora@example.com</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <i class="menu-icon fa fa-file-code-o bg-green"></i>
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
+                                <p>Execution time 5 seconds</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <h3 class="control-sidebar-heading">Tasks Progress</h3>
+                <ul class="control-sidebar-menu">
+                    <li>
+                        <a href="javascript:void(0)">
+                            <h4 class="control-sidebar-subheading">
+                                Custom Template Design
+                                <span class="label label-danger pull-right">70%</span>
+                            </h4>
+                            <div class="progress progress-xxs">
+                                <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <h4 class="control-sidebar-subheading">
+                                Update Resume
+                                <span class="label label-success pull-right">95%</span>
+                            </h4>
+                            <div class="progress progress-xxs">
+                                <div class="progress-bar progress-bar-success" style="width: 95%"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <h4 class="control-sidebar-subheading">
+                                Laravel Integration
+                                <span class="label label-warning pull-right">50%</span>
+                            </h4>
+                            <div class="progress progress-xxs">
+                                <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <h4 class="control-sidebar-subheading">
+                                Back End Framework
+                                <span class="label label-primary pull-right">68%</span>
+                            </h4>
+                            <div class="progress progress-xxs">
+                                <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
+            <div class="tab-pane" id="control-sidebar-settings-tab">
+                <form method="post">
+                    <h3 class="control-sidebar-heading">General Settings</h3>
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Report panel usage
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+                        <p>
+                            Some information about this general settings option
+                        </p>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Allow mail redirect
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+                        <p>
+                            Other sets of options are available
+                        </p>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Expose author name in posts
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+                        <p>
+                            Allow the user to show his name in blog posts
+                        </p>
+                    </div>
+                    <h3 class="control-sidebar-heading">Chat Settings</h3>
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Show me as online
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Turn off notifications
+                            <input type="checkbox" class="pull-right">
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Delete chat history
+                            <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
+                        </label>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </aside>
+    <div class="control-sidebar-bg"></div>
+</div>
+<div>
+    <iframe id="tray" name="tray" style="display:none;width:100%;height:120px;" src="{base}_tray/index"></iframe>
+    <iframe name="result" id="result" style="resize: both;display: {display_iframe};width: 100%;height:800px;"></iframe>
+</div>
+<script src="{cdn_suport}AdminLTE-2.3.11/plugins/slimScroll/jquery.slimscroll.min.js?v={local_version}"></script>
+<script src="{cdn_suport}AdminLTE-2.3.11/dist/js/app.min.js?v={local_version}"></script>
+<script src="{cdn_suport}multi-step-modal-master/multi-step-modal.js?v={local_version}"></script>
+<script src="{cdn_suport}bootstrap-fileinput-master/js/fileinput.min.js?v={local_version}"></script>
+<script src="{cdn_suport}bootstrap-toggle-master/js/bootstrap-toggle.min.js?v={local_version}"></script>
+<script src="{base}assets/custom/hippo_ajax.js?v={local_version}"></script>
+<script src="{base}assets/custom/JS.js?v={local_version}"></script>
+
+<script>
+    $('#myModal').on('hidden.bs.modal', function () {
+        $(this).removeData('bs.modal');
+    });
+    $('body').tooltip({selector: '[data-toggle=tooltip]'});
+    $('data-toggle').tooltip({title: "Event", trigger: "focus or hover only", delay: {hide: 100}});
+    checked = false;
+    function checkedAll(frm1) {
+        var aa = document.getElementById(frm1);
+        if (checked == false) {
+            checked = true
+        }
+        else {
+            checked = false
+        }
+        for (var i = 0; i < aa.elements.length; i++) {
+            aa.elements[i].checked = checked;
+        }
+    }
+    function load() {
+        top.$('#tray').load('{base}_tray/');
+    }
+    function reLoad() {
+        setInterval("load()", 30000);
+    }
+    function detectEnter() {
+        var keyCode = event.keyCode ? event.keyCode : event.which ? event.which
+            : event.charCode;
+        if (keyCode == 13) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+</script>
+<!--
+complete view/ledger
+-->
+<script>
+$(document).ready(function() {
+
+    function fnExcelReport(id_table_tujuan){
+        var tab_text="<table border='2px'><tr bgcolor='#87AFC6'>";
+        var textRange; var j=0;
+        tab = document.getElementById(id_table_tujuan); // id of table
+
+        for(j = 0 ; j < tab.rows.length ; j++){
+            tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
+        }
+
+        tab_text=tab_text+"</table>";
+        tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
+        tab_text= tab_text.replace(/<a[^>]*>|<\/a>/g, "");//remove if u want links in your table
+        tab_text= tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
+        tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params
+        tab_text= tab_text
+        tab_text= tab_text.replace(/<textarea[^>]*>|<\/textarea>/gi, ""); // reomves input params
+        tab_text= tab_text.replace(/<span[^>]*>|<\/span>/g, ""); // reomves input params
+
+        var ua = window.navigator.userAgent;
+        var msie = ua.indexOf("MSIE ");
+
+        if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))      // If Internet Explorer
+        {
+            txtArea1.document.open("txt/html","replace");
+            txtArea1.document.write(tab_text);
+            txtArea1.document.close();
+            txtArea1.focus();
+            sa=txtArea1.document.execCommand("SaveAs",true,"Say Thanks to Sumit.xls");
+        }
+        else                 //other browser not tested on IE 11
+            sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tab_text));
+        return (sa);
+    }
+
+    var table = $(".datatable").DataTable({
+        stateSave: true,
+        lengthMenu: [ [5, 10, 20, 50, 100, -1], [5, 10, 20, 50, 100, 'All'] ],
+        pageLength: 20,
+        dom: 'lBfrtip',
+        fixedHeader: true,
+//        colReorder: true,
+        buttons: [{
+            text: 'Download Excel',
+            action: function (e, dt, node, config) {
+                fnExcelReport('tabel_katalog');
+                }
+            },
+            {
+                text: 'Hide Rows with Column total Value 0',
+                attr: {
+                    id: 'hide'
+                },
+                action: function (e, dt, node, config) {
+                    dt.rows().every(function () {
+                        var data = this.data();
+
+                        if (data !== undefined && data.length == 29) {
+                            var value = $(data[28]).text();
+                            var pid = $(data[2]);
+                            // console.log('uhiu');
+                            console.log(value +' pid,'+ pid);
+
+                            if (value !== 'undefined' && Number(value) == '0') { // Assuming the third column contains the value you want to check
+                                console.log('pid remove', pid);
+                                // this.remove();
+                                dt.rows(this).remove();
+                            }
+                            else {
+                                console.log('pid stay',  value + ' ||| ' + pid);
+                                console.log(pid);
+                            }
+                        }
+                    });
+
+                    dt.draw(); // Redraw the table to reflect the changes
+                }
+            }
+        ],
+    });
+
+    var table = $('datatable').DataTable();
+    //
+    // $("#hide").click(function() {
+    //     table.rows().every(function() {
+    //         var data = this.data();
+    //         if (data[29] == '0') { // Assuming the third column contains the value you want to check
+    //             this.remove();
+    //         }
+    //     });
+    //     table.draw(); // Redraw the table to reflect the changes
+    // });
+
+    $('.table-responsive').floatingScroll();
+    $('.table-responsive').scroll(
+        delay_v2(function () {
+            $('table.datatable').DataTable().fixedHeader.adjust();
+        }, 200)
+    );
+});
+
+    $('#showHideBottom').on('click', function(){
+        $(".navbar-2nd").toggle();
+        $(".navbar-3rd").toggle();
+    });
+    var showHideBottom = function(){
+        $(".navbar-2nd").toggle();
+        $(".navbar-3rd").toggle();
+    }
+
+
+top.$('#isi').addClass('col-md-12 col-lg-12').css('zoom', 0.8);
+
+
+</script>
+{script_bottom}
+</body>
+</html>

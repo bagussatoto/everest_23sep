@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html><!-- transaksi.html -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{title}</title>
+    <!-- Tell the browser to be responsive to screen width template/transaksi.html-->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link id="favicon" rel="icon" type='image/x-icon' href="{favicon}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-3.3.7-dist/css/bootstrap.min.css?v={local_version}">
+    <!-- Font Awesome -->
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css?v={local_version}">-->
+    <link rel="stylesheet" href="{cdn_suport}Font-Awesome-master/css/font-awesome.min.css?v={local_version}">
+    <!-- Ionicons -->
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css?v={local_version}">-->
+    <link rel="stylesheet" href="{cdn_suport}ionicons-master/css/ionicons.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}simple-line-icons-master/css/simple-line-icons.css?v={local_version}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/dist/css/AdminLTE.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}bootstrap3-dialog-master/dist/css/bootstrap-dialog.min.css?v={local_version}">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/dist/css/skins/_all-skins.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-fileinput-master/css/fileinput.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-toggle-master/css/bootstrap-toggle.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.css?v={local_version}">
+    <!--<link rel="stylesheet" href="../../assets/suport/SmartCart-master/dist/css/smart_cart.min.css?v={local_version}">-->
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-xlgrid-master/bootstrap-xlgrid.min.css?v={local_version}">
+    <link rel="stylesheet" href="{base}assets/custom/custom.min.css?v={local_version}">
+    <link rel="stylesheet" href="{base}/assets/custom/dialog.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}numpad/jquery.numpad.grosir2.css?v={local_version}">
+    <!--<link rel="stylesheet" href="{cdn_suport}jquery-mobile/jquery.mobile-1.4.5.min.css?v={local_version}">-->
+    <link rel="stylesheet" href="{cdn_suport}HoldOn/HoldOn.min.css?v={local_version}">
+
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-3.3.7-dist/js/bootstrap.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}numpad/jquery.numpad.grosir2.js?v={local_version}"></script>
+    <!--<script src="{cdn_suport}bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js?v={local_version}"></script>-->
+    <script src="{base}assets/custom/custom.js?v={local_version}"></script>
+    <script src="{cdn_suport}HoldOn/HoldOn.min.js?v={local_version}"></script>
+
+    <!--{head}-->
+    <!--<style>-->
+    <!--</style>-->
+</head>
+
+<!--<body class="hold-transition skin-blue sidebar-mini"-->
+<!--membuat sidebar colaps bodynya pakai yg ini-->
+<body onbeforeunload="custom_holdon(close_holdon)" class="hold-transition skin-blue"
+      onkeydown="if(detectESC()){document.getElementById('itemKeyword').value='';document.getElementById('itemKeyword').focus();}"
+      onload="fillBoxes()">
+<div id="baseURL" class="hidden">{base}</div>
+<div class="wrapper">
+    <header class="main-header">
+        <a href="{base}" class="logo hidden-xs hidden-sm no-padding">
+            <span class="logo-mini"><span class="glyphicon glyphicon-home"></span></span>
+            <span class="logo-lg"><img src="{base}public/images/profiles/logo_header.png" height="40px"></span>
+        </a>
+        <nav class="navbar navbar-static-top">
+            <div class="no-padding no-border">
+                <div class="hidden-sm hidden-lg col-sm-2 col-xs-1 col-md-2 col-lg-2 no-padding">
+                    <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                        <span class="sr-only">Toggle navigation</span>
+                    </a>
+                </div>
+                <div class="col-sm-8 col-xs-11 col-md-8 col-lg-8 no-padding text-center">
+                <span class="hidden-mdx hidden-lgx hidden-xlx hidden-xxlx">
+                    <span class="navbar-brand text-center no-border" style="padding:8px;">
+                        <a href="{base}">
+                            <a class="btn btn-tool text-white" href="javascript:void(0)"
+                               onclick="location.href='{btn_back}';"><span
+                                    class="glyphicon glyphicon-arrow-left text-yellow"></span></a>
+                            <span class="text-white">{title} <small style="color:#eeeeee;text-transform: lowercase;">{sub_title}</small></span>
+                        </a>
+                    </span>
+                </span>
+                </div>
+            </div>
+        </nav>
+        <nav class="navbar navbar-fixed-bottom navbar-2nd">
+            <!--untuk view desktop-->
+            <div class="no-padding no-border">
+                <div style="padding-right:0;padding-left:0;" class="col-sm-2 col-xs-2 col-md-1 col-lg-1">
+                    <div class="hidden-xs col-sm-6 col-md-6 col-lg-6 no-padding">
+                        <a href="{base}" class="btn btn__trigger-home btn__trigger--views-home"><i
+                                class="glyphicon glyphicon-home"></i></a>
+                    </div>
+                    <div class="hidden-xxxl hidden-xxl hidden-xl hidden-lg hidden-md hidden-sm col-xs-6 no-padding">
+                        <a href="{base}" class="btn btn__trigger-home-mb btn__trigger--views-home-mb"><i
+                                class="glyphicon glyphicon-home"></i></a>
+                    </div>
+                    <div class="hidden-xs col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding">
+                        <div class="text-bold text-center timbul dtime">
+                            <span class="jam"></span>
+                            <span class="blink">:</span>
+                            <span class="menit"></span>
+                        </div>
+                    </div>
+                </div>
+                <div style="padding-right:0;padding-left:0;padding-left: 17px;"
+                     class="hidden-lg hidden-md hidden-sm col-xs-8">
+                    {info_ucd}
+                </div>
+                <div style="padding-right:0;padding-left:17px;" class="hidden-xs col-sm-7 col-xs-2 col-md-9 col-lg-9">
+
+                    {menu_taskbar}
+
+                    <!--<a href="#" onclick="swal('Phone 1')" data-toggle="tooltip" data-placement="top" title="Phone 1" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-phone"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('Plus 1')" data-toggle="tooltip" data-placement="top" title="Plus 1" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-plus"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('User 1')" data-toggle="tooltip" data-placement="top" title="User 1" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-user"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('Phone 2')" data-toggle="tooltip" data-placement="top" title="Phone 2" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-phone"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('Plus 2')" data-toggle="tooltip" data-placement="top" title="Plus 2" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-plus"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('User 2')" data-toggle="tooltip" data-placement="top" title="User 2" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-user"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('Phone 3')" data-toggle="tooltip" data-placement="top" title="Phone 3" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-phone"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('Plus 3')" data-toggle="tooltip" data-placement="top" title="Plus 3" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-plus"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('User 3')" data-toggle="tooltip" data-placement="top" title="User 3" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-user"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('Phone 4')" data-toggle="tooltip" data-placement="top" title="Phone 4" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-phone"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('Plus 4')" data-toggle="tooltip" data-placement="top" title="Plus 4" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-plus"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('User 4')" data-toggle="tooltip" data-placement="top" title="User 4" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-user"></i>-->
+                    <!--</a>-->
+
+                </div>
+                <div style="padding-right:0;padding-left:0;" class="col-sm-3 col-xs-2 col-md-2 col-lg-2">
+                    {float_menu_bawah}
+                </div>
+            </div>
+            <div class="hidden-sm hidden-md hidden-lg hidden-xxxl hidden-xxl hidden-xl hidden-xxl col-xs-12 bg-black text-lime text-bold">
+            <span class="col-xs-8 no-padding">
+                <span class="hari"></span>
+                <span class="tanggal"></span>
+            </span>
+                <span class="col-xs-4 no-padding text-right">
+                <span class="jam"></span>
+                <span class="blink">:</span>
+                <span class="menit"></span>
+            </span>
+            </div>
+        </nav>
+        <nav class="hidden-xs navbar navbar-fixed-bottom navbar-3rd">
+            <div class="no-padding no-border">
+            <span class="col-lg-2 no-padding">
+                <span class="hari timbul text-bold"></span>
+                <span class="tanggal timbul text-bold"></span>
+            </span>
+                <span class="col-lg-10 no-padding">
+                {info_bottom}
+            </span>
+            </div>
+        </nav>
+
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+
+            <ul class="sidebar-menu">
+                <!--<li class="header">MAIN NAVIGATION</li>-->
+                {menu_left}
+
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Main content -->
+        <section class="content">
+            <!--<div class="row info-bottom">                <div class="col-lg-11 col-xs-12 text-centerrr">{info_bottom}</div>            </div>-->
+
+            <!--<div class="row">-->
+            <!--<div class="col-md-12">-->
+            <!--<h2>-->
+            <!--<a class="btn btn-tool" href="javascript:void(0)" onclick="location.href='{btn_back}';"><span class="glyphicon glyphicon-arrow-left"></span></a>-->
+            <!--{title}-->
+            <!--<small>{sub_title}</small>-->
+            <!--</h2>-->
+            <!--</div>-->
+            <!--</div>-->
+
+            <div class="row hidden-md hidden-lg hidden-xxxl hidden-xxl hidden-xl hidden-xxl">
+                <div class="col-md-12 text-center">
+                    <ul class="pagination">
+                        <li><a class="text-white bg-light-blue" href="{base}Transaksi/index/{jenisTr}"
+                               data-toggle="tooltip" data-placement="bottom" title="{trName} index"><span
+                                class='fa fa-align-justify'></span><br><small>index</small></a></li>
+                        <li><a class="text-white bg-maroon" href="{base}Transaksi/viewIncomplete/{jenisTr}"
+                               data-toggle="tooltip" data-placement="bottom" title="on going {trName}"><span
+                                class='glyphicon glyphicon-exclamation-sign'></span><br><small>tasks</small></a></li>
+                        <li><a class="text-white bg-orange" href="{base}Transaksi/viewHistory/{jenisTr}"
+                               data-toggle="tooltip" data-placement="bottom" title="{trName} histories"><span
+                                class='glyphicon glyphicon-time'></span><br><small>histories</small></a></li>
+                        <li><a class="text-white bg-blue" href="{base}ActivityReport/viewMonthly/{jenisTr}"
+                               data-toggle="tooltip" data-placement="bottom" title="{trName} reports"><span
+                                class='fa fa-bar-chart'></span><br><small>reports</small></a></li>
+                        <li><a class="text-white bg-fuchsia" href="{base}Transaksi/viewMyActs/{jenisTr}"
+                               data-toggle="tooltip" data-placement="bottom" title="my {trName} activities"><span
+                                class='fa fa-gg'></span><br><small>stlmnt</small></a></li>
+                        <li><a class="text-white bg-fuchsia" href="{base}ActivityReport/viewMySettlement/{jenisTr}"
+                               data-toggle="tooltip" data-placement="bottom" title="my {trName} settlement"><span
+                                class='fa fa-gg'></span><br><small>stlmnt</small></a></li>
+                        <li style="display:{newTrDisp}"><a class="text-white bg-green" href="{newTrTarget}"
+                                                           data-toggle="tooltip" data-placement="bottom"
+                                                           title="new {trName}"><span
+                                class='fa fa-plus'></span><br><small>create</small></span></a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row hidden-xs hidden-sm">
+                <div class="col-md-12 pull-right text-right">
+                    <ul class="pagination">
+                        <li><a href="{base}Transaksi/index/{jenisTr}" data-toggle="tooltip" data-placement="bottom"
+                               title="{trName} index"><span class='fa fa-align-justify'></span>{trName} index</a></li>
+                        <li><a href="{base}Transaksi/viewIncomplete/{jenisTr}" data-toggle="tooltip"
+                               data-placement="bottom" title="on going {trName}"><span
+                                class='glyphicon glyphicon-exclamation-sign'></span> on going </a></li>
+                        <li><a href="{base}Transaksi/viewHistory/{jenisTr}" data-toggle="tooltip"
+                               data-placement="bottom" title="{trName} histories"><span
+                                class='glyphicon glyphicon-time'></span> histories</a></li>
+                        <li><a href="{base}ActivityReport/viewMonthly/{jenisTr}" data-toggle="tooltip"
+                               data-placement="bottom" title="{trName} reports"><span class='fa fa-bar-chart'></span>
+                            reports</a></li>
+                        <li><a href="{base}Transaksi/viewMyActs/{jenisTr}" data-toggle="tooltip" data-placement="bottom"
+                               title="my {trName} activities"><span class='fa fa-gg'></span> my activities</a></li>
+                        <li><a href="{base}ActivityReport/viewMySettlement/{jenisTr}" data-toggle="tooltip"
+                               data-placement="bottom" title="my {trName} settlement"><span class='fa fa-gg'></span> my
+                            settlement</a></li>
+                        <li style="display:{newTrDisp}"><a href="{newTrTarget}" data-toggle="tooltip"
+                                                           data-placement="bottom" title="new {trName}"><span
+                                class='fa fa-plus'></span> new {trName}</a></li>
+                        <!--<li><span class="box-tool pull-right">{add_link}</span></li>-->
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3">
+                    <!--{content_left}-->
+                    <div class='box-solid text-center input-group'>
+                        <input type="hidden" name="pihakID" id="pihakID">
+                        <!--                            {add_pihak}-->
+                        <input type='text' class='form-control'
+                               name='pihakName' id="pihakName"
+                               value=''
+                               placeholder='{pihak_label}'
+                               onclick="getData('{pihak_caller}?search='+this.value, 'pilihan_outlet')"
+                               onkeyup="getData('{pihak_caller}?search='+this.value, 'pilihan_outlet')"
+                               autocomplete="off">
+                        <span class='input-group-btn'>
+                                <a class='btn btn-default' href="javascript:void(0)"
+                                   onclick="document.getElementById('pihakID').value='';document.getElementById('pihakName').value='';document.getElementById('result').src='{pihak_caller_delete}';getData('{pihak_caller}?search='+document.getElementById('pihakName').value, 'pilihan_outlet');"><span
+                                        class="glyphicon glyphicon-remove"></span>
+                                </a>
+                            </span>
+                    </div>
+                    <div id='pilihan_outlet' style="max-height:300px;position:relative;left:0;overflow: auto;"></div>
+
+                    <div class='box-solid text-center input-group'>
+                        <input type="hidden" name="pihak2ID" id="pihak2ID">
+                        <!--                        {add_pihak2}-->
+                        <input type='text' class='form-control'
+                               name='pihak2Name' id="pihak2Name"
+                               value=''
+                               placeholder='{pihak_label2}'
+                               onclick="getData('{pihak_caller2}?search='+this.value, 'pilihan_outlet2')"
+                               onkeyup="getData('{pihak_caller2}?search='+this.value, 'pilihan_outlet2')"
+                               autocomplete="off">
+                        <span class='input-group-btn'>
+                                <a class='btn btn-default' href="javascript:void(0)"
+                                   onclick="document.getElementById('pihak2ID').value='';document.getElementById('pihak2Name').value='';document.getElementById('result').src='{pihak_caller_delete2}';getData('{pihak_caller2}?search='+document.getElementById('pihak2Name').value, 'pilihan_outlet2');"><span
+                                        class="glyphicon glyphicon-remove"></span>
+                                </a>
+                            </span>
+                    </div>
+                    <div id='pilihan_outlet2' style="max-height:300px;position:relative;left:0;overflow: auto;"></div>
+
+
+                    <div class='box-solid text-center' sstyle='margin-top: 10px;'>
+
+                        <div class="input-group btn-block">
+                            {add_item}
+                            <input type='text' class='form-control'
+                                   name='text'
+                                   id='itemKeyword'
+                                   value=''
+                                   placeholder='{selector_label}'
+                                   onclick="getData('{selector_caller}?search='+this.value, 'pilihan_item');  "
+                                   onkeyup="if(detectEnter() && this.value.length>=13){{barcode_action}}else{getData('{selector_caller}?search='+this.value, 'pilihan_item');}"
+                                   autocomplete="off">
+                            {mobile_scan}
+                        </div>
+                        <div id='pilihan_item' style="max-height:300px;position:relative;left:0;overflow: auto;"></div>
+
+
+                    </div>
+
+
+                </div>
+                <div class="col-md-9" onclick="document.getElementById('pilihan_outlet').innerHTML='';
+                    document.getElementById('pilihan_item').innerHTML='';
+                    document.getElementById('pilihan_outlet2').innerHTML='';">
+                    <!--{content_right}-->
+                    <!--<form action="{action_shopping_cart}" name="myForm" id="myForm" method="post" accept-charset="utf-8">-->
+                    <div class="box box-solid border-blue">
+                        <div class="box-header with-border bg-gray">
+                            <div class="col-md-10">
+                                <h3 class="box-title"><i class="fa fa-shopping-cart"></i> {sub_title} - selected items
+                                </h3>
+                            </div>
+                            <div class="col-md-2 pull-right text-right">
+                                <a href="javascript:void(0)"
+                                   onclick="getData('{base}_shoppingCart/viewCart/{jenisTr}?ohyes=ohno','shopping_cart');"><span
+                                        class="glyphicon glyphicon-refresh"></span></a>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <div id="shopping_cart" class="table-responsive no-padding text-center"
+                                 style="min-heightssss:150px;"></div>
+                        </div>
+                        <div class="box-footer bg-gray">
+                            <div class="row">
+                                <div class="col-md-12">
+                                        <textarea class="form-control" placeholder="description note"
+                                                  style="font-style:italic;font-family:Monaco, Menlo, Consolas, 'Courier New', monospace;"
+                                                  onblur="document.getElementById('result').src='{column_recorder}description?val='+encodeURIComponent(this.value);"
+                                                  onmouseout="document.getElementById('result').src='{column_recorder}description?val='+encodeURIComponent(this.value);"
+                                        >{default_description}</textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12" id="iTriggers">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div id="tmpSaver" style="display:{tmpsave_display}">
+                                        <a href="javascript:void(0)" name="btnTmpSave" id="btnTmpSave"
+                                           class="btn btn-default"
+                                           onclick="document.getElementById('result').src='{base}Transaksi/tmpSave/{jenisTr}';"><span
+                                                class='fa fa-sun-o'></span> save temporarily</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 text-right">
+                                    {ext_tool}
+                                </div>
+                                <div class="col-md-4 text-right">
+                                    <a href="javascript:void(0)" name="btnProcess" id="btnProcess"
+                                       class="btn btn-success pull-right"
+                                       onclick="document.getElementById('result').src='{base}Transaksi/validate/{jenisTr}';"><span
+                                            class='fa fa-check'></span> {submit_button}</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <!--</form>-->
+                </div>
+
+                <div class="col-md-12">
+
+                    <div class="box " id="undoneList">
+
+                    </div>
+
+                    <div class="box box-soliddd box-default">
+                        <div class="box-header"><a href="{base}Transaksi/viewHistory/{jenisTr}"><span
+                                class="glyphicon glyphicon-time"></span> {title} histories</a></div>
+                        <div class="box-body" styles="background:#f0f0f0;font-style:italic;">{history_content}</div>
+                        <div class="box-footer text-right" styles="background:#f0f0f0;font-style:italic;">
+                            {history_footer}
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <footer class="main-footer overflow-h">
+        <div class="clear-fix"></div>
+        {footer}
+        <!--<div class="pull-right hidden-xs">-->
+        <!--<b>Version</b> 2.3.5-->
+        <!--</div>-->
+        <!--<strong>Copyright &copy; 2014-2016 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights
+        -->
+        <!--reserved.-->
+        <!--div class="pull-right">{stop_time}</div-->
+    </footer>
+    <!--{float_menu_bawah}-->
+    <div id='myModal' class='modal {bg_modal} fade' role='dialog'>
+        <div class='modal-dialog {size_modal}'>
+            <div class='modal-content'>
+                {isi_modal}
+                <!-- Content will be loaded here from 'remote.php' file -->
+            </div>
+        </div>
+    </div>
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Create the tabs -->
+        <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+            <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+            <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+        </ul>
+        <!-- Tab panes menu kanan-->
+        <div class="tab-content">
+            <!-- Home tab content -->
+            <div class="tab-pane" id="control-sidebar-home-tab">
+                <h3 class="control-sidebar-heading">Recent Activity</h3>
+                <ul class="control-sidebar-menu">
+                    <li>
+                        <a href="javascript:void(0)">
+                            <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+
+                                <p>Will be 23 on April 24th</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <i class="menu-icon fa fa-user bg-yellow"></i>
+
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
+
+                                <p>New phone +1(800)555-1234</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
+
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
+
+                                <p>nora@example.com</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <i class="menu-icon fa fa-file-code-o bg-green"></i>
+
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
+
+                                <p>Execution time 5 seconds</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <!-- /.control-sidebar-menu -->
+
+                <h3 class="control-sidebar-heading">Tasks Progress</h3>
+                <ul class="control-sidebar-menu">
+                    <li>
+                        <a href="javascript:void(0)">
+                            <h4 class="control-sidebar-subheading">
+                                Custom Template Design
+                                <span class="label label-danger pull-right">70%</span>
+                            </h4>
+
+                            <div class="progress progress-xxs">
+                                <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <h4 class="control-sidebar-subheading">
+                                Update Resume
+                                <span class="label label-success pull-right">95%</span>
+                            </h4>
+
+                            <div class="progress progress-xxs">
+                                <div class="progress-bar progress-bar-success" style="width: 95%"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <h4 class="control-sidebar-subheading">
+                                Laravel Integration
+                                <span class="label label-warning pull-right">50%</span>
+                            </h4>
+
+                            <div class="progress progress-xxs">
+                                <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <h4 class="control-sidebar-subheading">
+                                Back End Framework
+                                <span class="label label-primary pull-right">68%</span>
+                            </h4>
+
+                            <div class="progress progress-xxs">
+                                <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <!-- /.control-sidebar-menu -->
+
+            </div>
+            <!-- /.tab-pane -->
+            <!-- Stats tab content -->
+            <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
+            <!-- /.tab-pane -->
+            <!-- Settings tab content -->
+            <div class="tab-pane" id="control-sidebar-settings-tab">
+                <form method="post">
+                    <h3 class="control-sidebar-heading">General Settings</h3>
+
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Report panel usage
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+
+                        <p>
+                            Some information about this general settings option
+                        </p>
+                    </div>
+                    <!-- /.form-group -->
+
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Allow mail redirect
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+
+                        <p>
+                            Other sets of options are available
+                        </p>
+                    </div>
+                    <!-- /.form-group -->
+
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Expose author name in posts
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+
+                        <p>
+                            Allow the user to show his name in blog posts
+                        </p>
+                    </div>
+                    <!-- /.form-group -->
+
+                    <h3 class="control-sidebar-heading">Chat Settings</h3>
+
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Show me as online
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+                    </div>
+                    <!-- /.form-group -->
+
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Turn off notifications
+                            <input type="checkbox" class="pull-right">
+                        </label>
+                    </div>
+                    <!-- /.form-group -->
+
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Delete chat history
+                            <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
+                        </label>
+                    </div>
+                    <!-- /.form-group -->
+                </form>
+            </div>
+            <!-- /.tab-pane -->
+        </div>
+    </aside>
+    <!-- /.control-sidebar -->
+    <!-- Add the sidebar's background. This div must be placed
+         immediately after the control sidebar -->
+    <div class="control-sidebar-bg"></div>
+</div>
+<div>
+    <iframe id="tray" name="tray" style="display:none;width:100%;height:120px;"
+            src="{base}_tray/index/{jenisTr}"></iframe>
+    <iframe name="result" id="result" style="resize: both;display: {display_iframe};width: 100%;height:800px;"></iframe>
+</div>
+<!-- ./wrapper -->
+
+
+<script>
+    /*$.widget.bridge('uibutton', $.ui.button);*/
+</script>
+
+<script src="{cdn_suport}AdminLTE-2.3.11/plugins/slimScroll/jquery.slimscroll.min.js?v={local_version}"></script>
+<script src="{cdn_suport}AdminLTE-2.3.11/dist/js/app.min.js?v={local_version}"></script>
+<script src="{cdn_suport}multi-step-modal-master/multi-step-modal.js?v={local_version}"></script>
+
+<script src="{cdn_suport}bootstrap-fileinput-master/js/fileinput.min.js?v={local_version}"></script>
+<script src="{cdn_suport}bootstrap-toggle-master/js/bootstrap-toggle.min.js?v={local_version}"></script>
+
+<script src="{base}assets/custom/hippo_ajax.js?v={local_version}"></script>
+<script src="{base}assets/custom/JS.js?v={local_version}"></script>
+
+<!--<script>-->
+<!--$(document).ready(function(){-->
+<!--$('[data-toggle="tooltip"]').tooltip();-->
+<!--});-->
+<!--</script>-->
+
+<script type="text/javascript">
+    var changingHash = false;
+
+    function onbarcode(event) {
+        switch (event.type) {
+            case "hashchange": {
+                if (changingHash == true) {
+                    return;
+                }
+                var hash = window.location.hash;
+                if (hash.substr(0, 3) == "#zx") {
+                    hash = window.location.hash.substr(3);
+                    changingHash = true;
+                    window.location.hash = event.oldURL.split("\#")[1] || ""
+                    changingHash = false;
+                    processBarcode(hash);
+                }
+                break;
+            }
+            case "storage": {
+                window.focus();
+                if (event.key == "barcode") {
+                    window.removeEventListener("storage", onbarcode, false);
+                    processBarcode(event.newValue);
+                }
+                break;
+            }
+            default: {
+                console.log(event)
+                break;
+            }
+        }
+    }
+
+    window.addEventListener("hashchange", onbarcode, false);
+
+    function getScan() {
+        var href = window.location.href;
+        var ptr = href.lastIndexOf("#");
+        if (ptr > 0) {
+            href = href.substr(0, ptr);
+        }
+        window.addEventListener("storage", onbarcode, false);
+        setTimeout('window.removeEventListener("storage", onbarcode, false)', 15000);
+        localStorage.removeItem("barcode");
+        //window.open  (href + "#zx" + new Date().toString());
+        if (navigator.userAgent.match(/Firefox/i)) {
+            //Used for Firefox. If Chrome uses this, it raises the "hashchanged" event only.
+            window.location.href = ("zxing://scan/?ret=" + encodeURIComponent(href + "#zx{CODE}"));
+        } else {
+            //Used for Chrome. If Firefox uses this, it leaves the scan window open.
+            window.open("zxing://scan/?ret=" + encodeURIComponent(href + "#zx{CODE}"));
+        }
+    }
+
+    function processBarcode(bc) {
+//        e = jQuery.Event("keyup")
+//        e.which = 13 //choose the one you want
+//        $("#itemKeyword").keyup(function(event){
+//            console.log('stringnya:');
+//            console.log(event);
+//            console.log(e);
+//        }).trigger(e)
+
+        $('#itemKeyword').val(bc);
+//        $('#itemKeyword').trigger(e);
+//
+//        $(function() {
+//            var e = $.Event('onkeyup');
+//            e.which = 13; // Character 'A'
+//            $('#itemKeyword').trigger(e);
+//        });
+
+//        var event = document.createEvent('KeyboardEvent'); // create a key event
+//// define the event
+//        event.initKeyEvent("keyup",       // typeArg,
+//                true,             // canBubbleArg,
+//                true,             // cancelableArg,
+//                null,             // viewArg,  Specifies UIEvent.view. This value may be null.
+//                false,            // ctrlKeyArg,
+//                false,            // altKeyArg,
+//                false,            // shiftKeyArg,
+//                false,            // metaKeyArg,
+//                13,               // keyCodeArg,
+//                13);              // charCodeArg);
+//
+//        document.getElementById('itemKeyword').dispatchEvent(event);
+
+        var keyboardEvent = new KeyboardEvent('keyup', {bubbles: true});
+        Object.defineProperty(keyboardEvent, 'charCode', {
+            get: function () {
+                return this.charCodeVal;
+            }
+        });
+        keyboardEvent.charCodeVal = [13];
+        document.getElementById('itemKeyword').dispatchEvent(keyboardEvent);
+    }
+</script>
+<script>
+
+    $('#myModal').on('hidden.bs.modal', function () {
+        $(this).removeData('bs.modal');
+    });
+
+    //    $('body').tooltip({selector: '[data-toggle=tooltip]'});
+    //        $('data-toggle').tooltip({title:"Event", trigger:"focus or hover only", delay:{hide:100}});
+
+
+    checked = false;
+
+    function checkedAll(frm1) {
+        var aa = document.getElementById(frm1);
+        if (checked == false) {
+            checked = true
+        } else {
+            checked = false
+        }
+        for (var i = 0; i < aa.elements.length; i++) {
+            aa.elements[i].checked = checked;
+        }
+    }
+
+    function load() {
+        top.$('#tray').load('{base}_tray/index/{jenisTr}');
+    }
+
+    function reLoad() {
+        setInterval("load()", 30000);
+    }
+
+    function detectEnter() {
+        var keyCode = event.keyCode ? event.keyCode : event.which ? event.which
+            : event.charCode;
+        if (keyCode == 13) {
+            console.log('entering');
+            return true;
+        } else {
+            return false;
+        }
+        console.log(event);
+    }
+
+    function detectESC() {
+        var keyCode = event.keyCode ? event.keyCode : event.which ? event.which
+            : event.charCode;
+        if (keyCode == 27) {
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function fillBoxes() {
+        if (document.getElementById('shopping_cart')) {
+
+            getData('{base}_shoppingCart/viewCart/{jenisTr}?ohyes=ohno', 'shopping_cart');
+        }
+        if (document.getElementById('itemKeyword')) {
+            document.getElementById('itemKeyword').value = '';
+            document.getElementById('itemKeyword').focus();
+        }
+        setTimeout(function () {
+            getData('{base}Transaksi/viewUndoneItems/{jenisTr}/?ohyes=ohno', 'undoneList');
+        }, 1000);
+        reLoad();
+
+
+    }
+
+    setInterval(function () {
+        $('.tooltip.fade.left.in').fadeOut();
+    }, 5000);
+
+
+    $('#shopping_cart').on('change', function () {
+
+//        console.clear();
+//        setTimeout(function(){
+        var arr_jml = $("input[keyid=jml]");
+        var arr_harga = $("input[keyid=harga]");
+        var arr_discPersen = $("input[keyid=discPersen]");
+        var arr_ppnPersen = $("input[keyid=ppnPersen]");
+
+        if (arr_jml.length > 0) {
+            jQuery.each(arr_jml, function (i, d) {
+
+                var noid = $(d).attr('noid');
+                var pNama = $('span#nama_' + noid).length > 0 ? $('span#nama_' + noid).html() : "";
+                var pQty = $('input#jml_' + noid).length > 0 ? $('input#jml_' + noid).val() : 0;
+                var pUnitPrice = $('input#harga_' + noid).length > 0 ? $('input#harga_' + noid).val() : 0;
+                var pDISC = $('input#discPersen_' + noid).length > 0 ? $('input#discPersen_' + noid).val() : 0;
+                var pPPN = $('input#ppnPersen_' + noid).length > 0 ? $('input#ppnPersen_' + noid).val() : 0;
+
+                var jml = d.value > 0 ? d.value : 0;
+                var harga = arr_harga.length > 0 && arr_harga[i].value > 0 ? arr_harga[i].value : 0;
+
+                //diskon persen
+                var strDiscPercen = arr_discPersen.length > 0 && arr_discPersen[i].value > 0 ? arr_discPersen[i].value : 0;
+                //ppn persen
+                var strPpnPersen = arr_ppnPersen.length > 0 && arr_ppnPersen[i].value > 0 ? arr_ppnPersen[i].value : 0;
+
+                var subHarga = 0
+                subHarga = parseFloat(harga) * parseFloat(jml);
+
+//===========================================
+
+                //diskon satuan (RP)
+                // (10000*10)/100 = 1000
+                var disc = 0;
+                disc = (parseFloat(harga) * parseFloat(strDiscPercen)) / 100;
+
+                //diskon total
+                var totalDisc = 0;
+                totalDisc = parseFloat(disc) * parseFloat(d.value);
+
+                //total sudah di kurang diskon
+                var subTotal_nDisc = 0;
+                subTotal_nDisc = parseFloat(subHarga) - parseFloat(totalDisc);
+
+//===========================================
+
+                var ppn = 0;
+                ppn = (parseFloat(strPpnPersen) * (parseFloat(harga) - parseFloat(disc))) / 100;
+
+                var totalPpn = 0;
+                totalPpn = parseFloat(ppn) * parseFloat(jml);
+
+                var subTotal_nPpn = 0;
+                subTotal_nPpn = parseFloat(subTotal_nDisc) + parseFloat(totalPpn);
+
+//===========================================
+
+
+//            console.log('   ');
+//            console.log('=============');
+
+//            console.log(i);
+//            console.log('jml: ' + d.value);
+//            console.log('hrg: ' + arr_harga[i].value);
+//            console.log('discPersen: ' + arr_discPersen[i].value);
+//            console.log('ppnPersen: ' + arr_ppnPersen[i].value);
+//            console.log('total subHarga: ' + subHarga);
+//            console.log('ppn: ' + ppn);
+//            console.log('total ppn: ' + totalPpn);
+//            console.log('subTotal_nPpn: ' + subTotal_nPpn);
+//            console.log('total disc: ' + totalDisc);
+//            console.log('total incl: ' + arr_ppnPersen[i].value);
+//            console.log('total excl: ' + arr_ppnPersen[i].value);
+
+                //write
+                var discRP = $('span#disc_' + noid);
+                var ppnRP = $('span#ppn_' + noid);
+                var inclRP = $('span#subtotal_' + noid);
+                var exclRP = $('span#sub_harga_' + noid);
+
+//                    console.error('===REKAP===' + ' ===noid ' + noid + '===');
+//                    console.log('NAMA: ' + pNama);
+//                    console.log('QTY: ' + pQty);
+//                    console.log('UNIT_PRICE: ' + pUnitPrice);
+
+//                    console.log('DISC: ' + pDISC);
+//                    console.log('DISC_RP: ' + totalDisc);
+
+                $(discRP).html(totalDisc);
+
+//                    console.log('PPN: ' + pPPN);
+//                    console.log('PPN_RP: ' + totalPpn);
+                $(ppnRP).html(ppn);
+//                    console.log(ppnRP);
+
+//                    console.log('TOTAL_INCL: ' + ((subHarga-totalDisc)+totalPpn));
+                $(inclRP).html(((subHarga - totalDisc) + totalPpn));
+//                    console.log(inclRP);
+
+//                    console.log('TOTAL_EXCL: ' + subHarga);
+                $(exclRP).html(subHarga);
+//                    console.log('=============');
+
+            });
+        }
+//        }, 1000);
+
+    });
+
+    var delay = function () {
+        var a = 0;
+        return function (t, e, th) {
+            clearTimeout(a), a = setTimeout(t, e)
+            console.log(t);
+            console.log(e);
+            console.log($(th).attr('noid'));
+        }
+    }();
+    //    function delay(callback, ms) {
+    //        var timer = 0;
+    //        return function() {
+    //            var context = this, args = arguments;
+    //            clearTimeout(timer);
+    //            timer = setTimeout(function () {
+    //                callback.apply(context, args);
+    //            }, ms || 0);
+    //        };
+    //    }
+
+</script>
+</body>
+</html>

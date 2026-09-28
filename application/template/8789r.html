@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{title}</title>
+
+    <style>
+        html {
+            zoom: 100%;
+        }
+        * {
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+        }
+
+        .pageHeader {
+            position: fixed;
+            /*width: 210mm;*/
+            top: 0mm;
+        }
+
+        .pageBody {
+            /*width: 210mm;*/
+        }
+
+        .pageFooter {
+            position: fixed;
+            /*width: 210mm;*/
+            bottom: 0mm;
+        }
+
+        @page {
+            size: A4 potrait;
+            margin: 3mm;
+        }
+
+        @media print {
+            html, body {
+                /*zoom: initial;*/
+                /*width: 210mm;*/
+                /*height: 297mm;*/
+            }
+        }
+        @media screen {
+            a[href]:after {
+                display: none;
+                visibility: hidden;
+            }
+            td{
+                width: max-content;
+            }
+        }
+        @media print {
+            a[href]:after {
+                display: none;
+                visibility: hidden;
+            }
+            .text-white {
+                display: none;
+                visibility: hidden;
+            }
+        }
+    </style>
+
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-3.3.7-dist/js/bootstrap.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/slimScroll/jquery.slimscroll.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}AdminLTE-2.3.11/dist/js/app.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}multi-step-modal-master/multi-step-modal.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-fileinput-master/js/fileinput.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-toggle-master/js/bootstrap-toggle.min.js?v={local_version}"></script>
+    <script src="{base}assets/custom/hippo_ajax.js?v={local_version}"></script>
+    <link rel="stylesheet" href="{base}assets/custom/custom.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-3.3.7-dist/css/bootstrap.min.css?v={local_version}">
+
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini" onload="" style="">
+
+<div class="spacer">&nbsp;</div>
+
+<div class="row" style="padding-left: 30px;padding-right: 30px;">    <div class="text-left col-md-6 col-xs-6 col-sm-6">
+    {companyProfile}
+</div>
+    <div class="text-left col-md-6 col-xs-6 col-sm-6 no-padding">
+        <img src="{base}assets/images/san_221iso.png" alt="a"  class="img-responsive">
+    </div>
+
+</div>
+
+<div class="row" style="padding-left: 30px;padding-right: 30px;">
+    <div style="border-top: 4px double #000;" class="text-center col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <h3>
+            <heading3 class="text-bold">
+                {title}
+            </heading3>
+        </h3>
+    </div>
+</div>
+<div class="row" style="padding-left: 30px;padding-right: 30px;">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding-left: 0px;padding-right: 5px;">
+            <div class="panel panel-default" style="min-height: 222px;">
+                {customerDetails}
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 no-paddings" style="padding-left: 0px;padding-right: 0px;">
+            <div class="panel panel-default" style="min-height: 222px;">
+                {fixedElements}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" style="padding-left: 30px;padding-right: 30px;">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 no-paddings" style="padding-left: 0px;padding-right: 5px;">
+            <div class="panel panel-default" style="height: 188px;">
+                {deliveryDetails}
+            </div>
+        </div>
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 no-paddings" style="padding-left: 0px;padding-right: 0px;">
+            <div class="panel panel-default" style="height: 188px;">
+                {noteDetails}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" style="padding-left: 45px;padding-right: 45px;">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding text-capitalize">
+        <div class="panel panel-default">
+            {content}
+        </div>
+    </div>
+</div>
+<div class="row" style="padding-left: 45px;padding-right: 45px;">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding text-capitalize">
+        <div class="panel panel-default">
+            {content_3}
+        </div>
+    </div>
+</div>
+
+<div class="row" style="padding-left: 45px;padding-right: 45px;">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 no-padding">
+            <!--<div class="panel panel-default ">-->
+            {customerSignitures}
+            <!--</div>-->
+        </div>
+        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 no-padding">
+            <!--<div class="panel panel-default ">-->
+            {sign_1}
+            <!--</div>-->
+        </div>
+    </div>
+</div>
+
+<div>{footer}</div>
+
+
+
+</body>
+</html>

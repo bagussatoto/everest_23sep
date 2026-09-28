@@ -1,0 +1,111 @@
+<style>
+
+    .sorting:after, .sorting_asc:after, .sorting_desc:after {
+        background : none!important;
+    }
+
+    table.dataTable thead>tr>th.sorting_asc, table.dataTable thead>tr>th.sorting_desc, table.dataTable thead>tr>th.sorting, table.dataTable thead>tr>td.sorting_asc, table.dataTable thead>tr>td.sorting_desc, table.dataTable thead>tr>td.sorting {
+        padding-right: 0px!important;
+    }
+
+    table.dataTable > tbody > tr > td > input {
+        font-size: 10px;
+    }
+    table.dataTable {
+        font-size: 10px;
+    }
+</style>
+
+<div style="padding: 30vh;" id="overlay">
+    <div class="text-center text-white fa-2x">Loading...</div>
+</div>
+<div class="row">
+    <div class="container-fluid">
+        <div class="col-md-10 no-padding">
+        <div class="alert bg-warning text-bold text-red">
+            <i class="fa fa-warning blink"></i> JIKA BARANG TIDAK TERSEDIA, SILAHKAN MELAKUKAN KONFIRMASI KE GUDANG PENGAMBILAN BAHAN.
+        </div>
+    </div>
+        <div style="padding: 9px;" class="col-md-2 no-padding">
+        <div id="btnRefreshModal" class="btn btn-md bg-pink btn-flatx pull-right"><i class="fa fa-refresh"></i>&nbsp;&nbsp;REFRESH DATA</div>
+    </div>
+</div>
+</div>
+<div class="row">
+    <div class="container-fluid">
+        <div class="col-md-12 no-padding">
+            <div class="alert bg-default text-bold text-muted no-padding">
+                <table style="font-size: 12px;width:100%" class="table dataTable compact">
+                    <!--<tr>-->
+                    <!--<th>NOMOR</th>-->
+                    <!--<th>: &nbsp;</th>-->
+                    <!--<th><span class="text-red" onclick="copyToClipboard(this)" title="click to copy text" style="cursor: pointer;" id="nomer"></span></th>-->
+                    <!--</tr>-->
+                    <tr>
+                        <th>NO SPK</th>
+                        <th>: &nbsp;</th>
+                        <th><span class="text-red" onclick="copyToClipboard(this)" title="click to copy text" style="cursor: pointer;" id="no_spk"></span></th>
+                    </tr>
+                    <tr>
+                        <th>PENUGASAN</th>
+                        <th>: &nbsp;</th>
+                        <th><span class="text-red" onclick="copyToClipboard(this)" title="click to copy text" style="cursor: pointer;" id="task_nama"></span></th>
+                    </tr>
+                    <tr>
+                        <th>PELAKSANA</th>
+                        <th>: &nbsp;</th>
+                        <th><span class="text-red" onclick="copyToClipboard(this)" title="click to copy text" style="cursor: pointer;" id="employee_nama"></span></th>
+                    </tr>
+                    <tr>
+                        <th>OWNER</th>
+                        <th>: &nbsp;</th>
+                        <th><span class="text-red" onclick="copyToClipboard(this)" title="click to copy text" style="cursor: pointer;" id="owner_nama"></span></th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="container-fluid">
+        <div class="tab-table"></div>
+        <!--<div class="alert bg-warning notice-info" style="padding-top: 10px;">-->
+        <!--<div class="text-red text-bold" style="font-size: 18px;">KETERANGAN:</div>-->
+        <!--<div class="text-bold text-muted">-->
+        <!--<span class="btn btn-xs btn-flat btn-success text-boldx"><i class="fa fa-check-circle"></i> Selesai Dikerjakan</span> &nbsp;&nbsp;&nbsp; Klik untuk mengubah status Tugas menjadi selesai-->
+        <!--</div>-->
+        <!--<div class="text-bold text-muted" style="margin-top: 6px;">-->
+        <!--<span class="btn btn-xs btn-flat btn-warning text-boldx"><i class="fa fa-fire"></i> Dalam Pengerjaan</span> &nbsp;&nbsp;&nbsp; Klik untuk mengubah status Tugas menjadi On Proses-->
+        <!--</div>-->
+        <!--</div>-->
+    </div>
+</div>
+
+<div class="row">
+    <div class="container-fluid">
+        <div class="col-md-12 no-padding">
+            <div class="box box-solid">
+                <div class="box-header fa-2x text-bold box-warning">HISTORY PEKERJAAN</div>
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table id="list_bahan_baku_used" class="table">
+                            <thead>
+                            <tr>
+                                <td>No</td>
+                                <td>NO SUB TASKLIST</td>
+                                <td>NAMA</td>
+                                <td>ROOM</td>
+                                <td>PELAKSANA</td>
+                                <td>TANGGAL</td>
+                                <td>Keterangan</td>
+                            </tr>
+                            </thead>
+                            <tbody></tbody>
+                            <tfoot></tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{title}</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <!-- Template Name komposisi.html -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link id="favicon" rel="icon" type='image/x-icon' href="{favicon}">
+
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-3.3.7-dist/css/bootstrap.min.css?v={local_version}">
+    <!-- Font Awesome -->
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css?v={local_version}">-->
+    <link rel="stylesheet" href="{cdn_suport}Font-Awesome-master/css/font-awesome.min.css?v={local_version}">
+    <!-- Ionicons -->
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css?v={local_version}">-->
+    <link rel="stylesheet" href="{cdn_suport}ionicons-master/css/ionicons.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}simple-line-icons-master/css/simple-line-icons.css?v={local_version}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/dist/css/AdminLTE.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}bootstrap3-dialog-master/dist/css/bootstrap-dialog.min.css?v={local_version}">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/dist/css/skins/_all-skins.min.css?v={local_version}">
+
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-fileinput-master/css/fileinput.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-toggle-master/css/bootstrap-toggle.min.css?v={local_version}">
+
+    <link rel="stylesheet" href="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.css?v={local_version}">
+    <!--<link rel="stylesheet" href="../../assets/suport/SmartCart-master/dist/css/smart_cart.min.css?v={local_version}">-->
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-xlgrid-master/bootstrap-xlgrid.min.css?v={local_version}">
+    <link rel="stylesheet" href="{base}assets/custom/custom.min.css?v={local_version}">
+    <link rel="stylesheet" href="{base}/assets/custom/dialog.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}HoldOn/HoldOn.min.css?v={local_version}">
+<!--    <link rel="stylesheet" href="{base}assets/custom/jquery.floatingscroll.css?v={local_version}">-->
+
+
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-3.3.7-dist/js/bootstrap.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js?v={local_version}"></script>
+    <!--<script src="{cdn_suport}bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js?v={local_version}"></script>-->
+    <script src="{base}assets/custom/custom.js?v={local_version}"></script>
+    <script src="{base}assets/custom/jquery.floatingscroll.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}HoldOn/HoldOn.min.js?v={local_version}"></script>
+    <script src="{base}assets/custom/hippo_ajax.js?v={local_version}"></script>
+
+    <!--{head}-->
+</head>
+
+
+<body onbeforeunloads="custom_holdon(close_holdon)" onload="$('#bahanContainer').html('<img src=\'../../assets/images/loading_16_p.gif\'>').addClass('text-center'); $('#bahanContainer').load('{base}_productPkgEditor/search?sID={prodID}&key='+localStorage.lastSearch)" class="hold-transition skin-blue sidebar-mini">
+
+<div id="baseURL" class="hidden">{base}</div>
+<div class="wrapper">
+    <!-- Content Wrapper. Contains page content -->
+    <div style="background-color: transparent;">
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-lg-12 col-xl-12"
+                     oonclick="document.getElementById('pilihan_outlet').innerHTML='';document.getElementById('pilihan_item').innerHTML='';">
+                    <!--{content_right}-->
+                    <!--<form action="{action_shopping_cart}" name="myForm" id="myForm" method="post" accept-charset="utf-8">-->
+                    <div class="row">
+                        <div class="col-md-3 col-sm-3">
+                            <div class="input-group">
+                                <input id="pilih_produk" type="text" class="form-control" placeholder="pilih produk" autofocus
+                                       style="font-family:Monaco, Menlo, Consolas, 'Courier New', monospace;"
+                                       onclick="$('#bahanContainer').load('{base}_productPkgEditor/search?sID={prodID}&key=')"
+                                       onkeyup="if(this.value.length>2){ $('#bahanContainer').load('{base}_productPkgEditor/search?sID={prodID}&key='+ encodeURI(this.value) ); } else { return false; }">
+                                <span class="input-group-btn">
+                                                <a class="btn btn-default" href="javascript:void(0)"
+                                                   onclick="localStorage.lastSearch=null;document.getElementById('bahanContainer').innerHTML='';document.getElementById('pilih_produk').value='';$('#bahanContainer').load('{base}_productPkgEditor/search?sID={prodID}&key=')"><span
+                                                        class="glyphicon glyphicon-remove"></span></a>
+                                            </span>
+                            </div>
+                            <div id='bahanContainer' style="max-height:350px;position:relative;left:0;overflow: auto;"></div>
+                        </div>
+
+                        <div class="col-md-9 col-sm-9">
+                            <div style="margin-bottom: 100px;" class="panel panel-danger boxx-solid bborder-blue">
+                                {composition}
+                            </div>
+                        </div>
+
+                    </div>
+                    <div align="center" style="font-size: 20px;background-color: yellow;position: fixed;bottom: 50px;width: 100%;z-index:2;left:0;" id="msgAlert" class="panel-footer overflow-h hidden"></div>
+                    <div style="position: fixed;bottom: 0;width: 100%;z-index:2;left:0;" class="panel-footer overflow-h">
+                        <div class="col-md-2 col-sm-2"><label class="checkbox-inline"><input type="checkbox" id="showHarga">Show Harga</label></div>
+                        <div class="col-md-8 col-sm-8"><button type="button" name="btnKalkulasi" id="btnKalkulasi" stylee="margin-top: 10px;" class="btn btn-warning pull-right hidden" onclick="localStorage.btnKalkulasi=null;$(this).addClass('hidden');if($('#result2').length>0){document.getElementById('result2').contentWindow.location.reload();top.close_holdon()}else{location.reload()}"> <span class="glyphicon glyphicon-retweet"></span> KALKULASI / REFRESH </button></div>
+                        <div class="col-md-2 col-sm-2"><button type="button" name="btnProcess" {btn_attr} id="btnProcess" stylee="margin-top: 10px;"
+                                            class="btn btn-info pull-right"
+                                            onclick="document.getElementById('result').src='{base}ProductPkgEditor/save/{prodID}';">
+                                        <span class='glyphicon glyphicon-save'></span> Save Components
+                                    </button>
+                                </div>
+
+                            </div>
+                    <!--</form>-->
+                </div>
+            </div>
+
+
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <div>
+        <iframe id="tray" name="tray" style="display:none;width:100%;height:120px;" src="{base}_tray/index"></iframe>
+        <iframe name="result" id="result" style="resize: both;display:none;width: 100%;height:800px;"></iframe>
+    </div>
+</div>
+<script>
+
+    if(localStorage.lastSearch.length>0){
+        $('#pilih_produk').val( localStorage.lastSearch );
+    }
+
+    if(localStorage.btnKalkulasi!=null && localStorage.btnKalkulasi.length>5){
+        $('#btnKalkulasi').removeClass('hidden');
+        $('#btnProcess').attr('onclick',"javascript:void(0)");
+        $('#btnProcess').prop('disabled',true);
+        $('#btnProcess').removeClass('btn-info');
+    }
+
+    var isShow = localStorage.getItem('k2hsby3')!='' ? localStorage.getItem('k2hsby3') : 0;
+    var col_jual =  $("[chid='k2hsby3\\[\\]']");
+
+    if(isShow>0){
+        jQuery.each(col_jual, function(i,d){
+            $(col_jual[i]).removeClass('hidden');
+        });
+        $('#showHarga').prop('checked', true);
+    }
+
+    top.console.log( 'k2hsby3 : ' + localStorage.getItem('k2hsby3') );
+
+    $('#showHarga').on('change', function(){
+
+        var isChecked = $(this).is(':checked'); //true or false
+        var col_jual =  $("[chid='k2hsby3\\[\\]']");
+
+        if(isChecked){
+            jQuery.each(col_jual, function(i,d){
+                $(col_jual[i]).removeClass('hidden');
+            });
+            localStorage.setItem('k2hsby3', 1);
+        }else{
+            jQuery.each(col_jual, function(i,d){
+                $(col_jual[i]).addClass('hidden');
+            });
+            localStorage.setItem('k2hsby3', 0);
+        }
+
+        $(this).find('thead>tr>th').each(function(index, loopelement) {
+            top.console.log(index + ' ' + $(loopelement).prop('class') );
+        });
+
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,46 @@
+
+<script>
+    getData('{base}_shoppingCart/viewCart/{jenisTr}?ohyes=ohno','shopping_cart');
+</script>
+
+
+
+<div class="panel panel-body">
+    <h4 class="text-blue">{title} <span class="text-muted"><span class="glyphicon glyphicon-menu-right"></span> {sub_title}</span></h4>
+
+
+<div class="col-lg-12 no-padding">
+    <div class="box box-solidddd box-default">
+        <div class="box-header">
+            <span class="pull-left"></span>
+        </div>
+        <div class="box-body no-padding table-responsive">{content}</div>
+
+    </div>
+</div>
+
+
+<div class="col-lg-12 no-padding">
+    <div class="box box-solidddd box-default">
+        <div class="box-header">
+            <span class="pull-left"></span>
+
+        </div>
+        <div class="box-body" id="shopping_cart">{elements}</div>
+
+    </div>
+</div>
+
+
+
+<div class="col-lg-12 no-padding">
+    <div class="box box-solidddd box-info">
+        <div class="box-header">
+            <span class="pull-left">{payment_subtitle}</span>
+
+        </div>
+        <div class="box-body">{payment_str}</div>
+
+    </div>
+</div>
+</div>

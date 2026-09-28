@@ -1,0 +1,442 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>PURCHASING ORDER</title>
+
+    <style>
+        #someSvgElementId {
+            width: 100%;
+        }
+    </style>
+    <style>
+
+
+        * {
+
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+
+        }
+
+
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        @media print {
+            html, body {
+                width: 210mm;
+                height: 297mm;
+            }
+        }
+    </style>
+
+
+
+    <style>
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #FAFAFA;
+            font-size: 11px;
+            font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+        }
+
+        .row-eq-height {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+        }
+
+        @media print {
+            a[href]:after {
+                display: none;
+                visibility: hidden;
+            }
+            td {
+                width: max-content;
+            }
+            span.text-white {
+                display: none;
+                visibility: hidden;
+            }
+        }
+
+        @media screen {
+            a[href]:after {
+                display: none;
+                visibility: hidden;
+            }
+            td {
+                width: max-content;
+            }
+        }
+    </style>
+    <script src="https://cdn.mayagrahakencana.com/assets/suport/AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v=1.11.10-build-61"></script>
+    <script src="https://cdn.mayagrahakencana.com/assets/suport/bootstrap-3.3.7-dist/js/bootstrap.min.js?v=1.11.10-build-61"></script>
+    <script src="https://cdn.mayagrahakencana.com/assets/suport/sweetalert2-master/dist/sweetalert2.min.js?v=1.11.10-build-61"></script>
+    <script src="https://cdn.mayagrahakencana.com/assets/suport/bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js?v=1.11.10-build-61"></script>
+    <script src="https://cdn.mayagrahakencana.com/assets/suport/AdminLTE-2.3.11/plugins/slimScroll/jquery.slimscroll.min.js?v=1.11.10-build-61"></script>
+    <script src="https://cdn.mayagrahakencana.com/assets/suport/AdminLTE-2.3.11/dist/js/app.min.js?v=1.11.10-build-61"></script>
+    <script src="https://cdn.mayagrahakencana.com/assets/suport/multi-step-modal-master/multi-step-modal.js?v=1.11.10-build-61"></script>
+
+    <script src="https://cdn.mayagrahakencana.com/assets/suport/bootstrap-fileinput-master/js/fileinput.min.js?v=1.11.10-build-61"></script>
+    <script src="https://cdn.mayagrahakencana.com/assets/suport/bootstrap-toggle-master/js/bootstrap-toggle.min.js?v=1.11.10-build-61"></script>
+    <script src="https://san.mayagrahakencana.com/assets/custom/hippo_ajax.js?v=1.11.10-build-61"></script>
+    <script src="https://san.mayagrahakencana.com/assets/custom/JS.js?v=1.11.10-build-61"></script>
+
+    <link rel="stylesheet" href="https://san.mayagrahakencana.com/assets/custom/custom.min.css?v=1.11.10-build-61">
+    <link rel="stylesheet"
+          href="https://cdn.mayagrahakencana.com/assets/suport/bootstrap-3.3.7-dist/css/bootstrap.min.css?v=1.11.10-build-61">
+
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body class="skin-blue sidebar-mini" onload="" style="height: auto;">
+
+<div class="page-header-chp" style="text-align: inherit">
+    <div style="">
+        <table>
+            <tbody>
+            <tr>
+                <td colspan="2" valign="top" class="padding-bottom-10">
+                    <div style="float: left; width: 20%;">
+                        <img src="../../assets/images/san_221.png" alt="a" class="img-responsive">
+                    </div>
+                    <div style="float: left; width: 80%;" class="text-center">
+                        <!--{companyProfile__}-->
+                        <div style="font-size: 1.5em !important;">PT. Everest Electronic</div>
+                        Komp Grogol Permai Blok B No 5-6<br>
+                        Jl. Prof. Dr. Latumenten Kav. 19, Jakarta 11460<br>
+                        Telp: 0215668436<br>
+                        NPWP: 84.199.878.4-036.000<br>
+                    </div>
+                </td>
+
+                <td rowspan="2" id="td3" width="45%" valign="top">
+                    <div class="panel panel-default" style="height: 100%;">
+                        <div class="panel-heading text-center">PURCHASING ORDER</div>
+                        <div class="panel-body" style="padding: 5px;">
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td style="width: 1em;white-space: nowrap;vertical-align: top;">No PO</td>
+                                    <td style="width: 1em;white-space: nowrap;vertical-align: top;"> :</td>
+                                    <td style="vertical-align: top;" class="text-uppercase"><a href="javascript:void(0);"
+                                                                                               title="open PO.SP.-1.31-00031"
+                                                                                               data-toggle="tooltip"
+                                                                                               data-placement="auto"
+                                                                                               onclick="showModal('https://san.mayagrahakencana.com/Transaksi/viewResume/461r.-1.31-00031','view resume for PO.SP.-1.31-00031')"><span
+                                            style="color:#000000;text-align:center;" class="">PO.SP.-1.31-00031</span></a>
+                                    </td>
+                                </tr>
+                                <tr></tr>
+                                <tr>
+                                    <td style="width: 1em;white-space: nowrap;vertical-align: top;">Date</td>
+                                    <td style="width: 1em;white-space: nowrap;vertical-align: top;"> :</td>
+                                    <td style="vertical-align: top;" class="text-uppercase">29 October 2019</td>
+                                </tr>
+                                <tr></tr>
+                                <tr>
+                                    <td style="width: 1em;white-space: nowrap;vertical-align: top;">Delivery Date</td>
+                                    <td style="width: 1em;white-space: nowrap;vertical-align: top;"> :</td>
+                                    <td style="vertical-align: top;" class="text-uppercase">15 November 2019</td>
+                                </tr>
+                                <tr></tr>
+                                <tr>
+                                    <td style="width: 1em;white-space: nowrap;vertical-align: top;">Term of Payment</td>
+                                    <td style="width: 1em;white-space: nowrap;vertical-align: top;"> :</td>
+                                    <td style="vertical-align: top;" class="text-uppercase">30 days after invoice received
+                                    </td>
+                                </tr>
+                                <tr></tr>
+                                <tr>
+                                    <td style="width: 1em;white-space: nowrap;vertical-align: top;">Payment method</td>
+                                    <td style="width: 1em;white-space: nowrap;vertical-align: top;"> :</td>
+                                    <td style="vertical-align: top;" class="text-uppercase">credit</td>
+                                </tr>
+                                <tr></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td valign="top" id="td1" style="width: 30%;">
+                    <div class="panel panel-default">
+                        <div class="panel-heading text-center">VENDOR</div>
+                        <div class="panel-body" style="padding: 5px;">
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td colspan="3">ATMI SOLO, PT</td>
+                                </tr>
+                                <tr></tr>
+                                <tr>
+                                    <td colspan="3">Jl. Mojo No. 1, Karangasem, Laweyan, Surakarta</td>
+                                </tr>
+                                <tr></tr>
+                                <tr>
+                                    <td style="width: 1em;white-space: nowrap;vertical-align: top;">Phone</td>
+                                    <td style="width: 1em;white-space: nowrap;vertical-align: top;"> :</td>
+                                    <td style="vertical-align: top;" class="text-uppercase">0271 714466</td>
+                                </tr>
+                                <tr></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </td>
+                <td valign="top" id="td2" cclass="padding-left-5 padding-right-5"
+                    style="width: 30%;padding-left:2px;padding-right:2px;">
+                    <div class="panel panel-default">
+                        <div class="panel-heading text-center">DELIVERY DETAILS</div>
+                        <div class="panel-body" style="padding: 5px;">
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td colspan="3">PT INDOSAN BERKAT BERSAMA</td>
+                                </tr>
+                                <tr></tr>
+                                <tr>
+                                    <td colspan="3">NGEMPLAK LOR RT 01/III, WIROGUNAN, KARTASURA</td>
+                                </tr>
+                                <tr></tr>
+                                <tr>
+                                    <td style="width: 1em;white-space: nowrap;vertical-align: top;">Phone</td>
+                                    <td style="width: 1em;white-space: nowrap;vertical-align: top;"> :</td>
+                                    <td style="vertical-align: top;" class="text-uppercase">08129114445</td>
+                                </tr>
+                                <tr></tr>
+                                <tr>
+                                    <td style="width: 1em;white-space: nowrap;vertical-align: top;">Attn</td>
+                                    <td style="width: 1em;white-space: nowrap;vertical-align: top;"> :</td>
+                                    <td style="vertical-align: top;" class="text-uppercase">RIZKY/ADJI</td>
+                                </tr>
+                                <tr></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="page-footer">
+    <div style="padding-left:15px;padding-right:15px;">
+        <table border="0" rules="none" width="100%">
+            <tbody>
+            <tr>
+                <td rowspan="2" id="td4" valign="top" style="width: 50%;padding-right: 2px;">
+                    <div id="nota_height" class="panel panel-default no-margin">
+                        <div class="panel-heading text-center">NOTES <span class="text-white">14893</span></div>
+                        <div class="panel-body" style="padding: 5px; min-height: 125px;">
+                            <table>
+                                <tbody>
+                                <tr>
+                                    <td colspan="3">ORDER 75 UNIT BULAN OKTOBER 2019</td>
+                                </tr>
+                                <tr></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="panel-footer text-center">Please return signed PO to purchasing@indosan.com as
+                            confirmation of acceptance<br>
+                            Please mention PO No. in all correspondence and commercial document such as invoice, Packing
+                            List, BL/AWB, DO.
+                        </div>
+                    </div>
+                </td>
+                <td valign="top" style="padding-right: 2px;padding-left: 2px;white-space: nowrap;">
+                    <!--<div class="panel panel-default" style="white-space: nowrap;">-->
+                    <div class="panel panel-default text-center">
+                        <div class="panel-heading">Prepared by</div>
+                        <br><br><br><br>(Budi Setiawan)
+                    </div>
+                    <!--</div>-->
+                </td>
+                <td valign="top" style="padding-left: 2px;white-space: nowrap;">
+                    <!--<div class="panel panel-default" style="white-space: nowrap;">-->
+                    <div class="panel panel-default text-center">
+                        <div class="panel-heading">Approval by</div>
+                        <br><br><br><br>(Shirley)
+                    </div>
+                    <!--</div>-->
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" style="padding-left: 2px;white-space: nowrap;">
+                    <!--<div class="panel panel-default" style="white-space: nowrap;">-->
+                    <div class="panel panel-default text-center">
+                        <div class="panel-heading">Confirmed &amp; Acknowledged by</div>
+                        <br><br><br><br>(ATMI SOLO, PT )
+                    </div>
+                    <!--</div>-->
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="col-md-12">
+        SAN/F/PUR002/R00
+    </div>
+</div>
+
+<table class="table table-bordered table-condensed" style="width: 100%;">
+
+    <thead>
+    <tr>
+        <td>
+            <!--place holder for the fixed-position header-->
+            <div class="page-header-space"></div>
+        </td>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <td>
+            <!--*** CONTENT GOES HERE ***-->
+            <div class="page">PAGE 1</div>
+            <div class="page">PAGE 2</div>
+            <div class="page">
+
+                
+                <table class="table table-bordered table-condensed" style="width: 100%;">
+                    <tbody>
+                    <tr bgcolor="#f5f5f5">
+                        <th class="text-muted" style="font-weight:bold;" align="right" width="5">No.</th>
+                        <th class="text-muted" style="font-weight:bold;">Description</th>
+                        <th class="text-muted" style="font-weight:bold;">Part No.</th>
+                        <th class="text-muted" style="font-weight:bold;">Qty</th>
+                        <th class="text-muted" style="font-weight:bold;">UOM</th>
+                        <th class="text-muted" style="font-weight:bold;">Unit Price</th>
+                        <th class="text-muted" style="font-weight:bold;">Total Price</th>
+                    </tr>
+                    <tr>
+                        <td align="right">1.</td>
+                        <td><span style="color:#565656;text-align:left;" class=""><span
+                                style="font-family: Consolas, Monaco, Courier New, Courier, monospace;"> FRAME EIGER A55CK</span></span>
+                        </td>
+                        <td></td>
+                        <td>5</td>
+                        <td><span style="color:#565656;text-align:center;" class="btn-block text-right">unit</span></td>
+                        <td><span class="pull-right">1,446,000</span></td>
+                        <td><span class="pull-right">7,230,000</span></td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td colspan="6"
+                            style="font-style:italic;font-family:Monaco, Menlo, Consolas, 'Courier New', monospace;">PLAT
+                            SPCC<br>INNER : 0,9 MM<br>OUTER : 0,9 MM<br>WARNA DARK GREY RAL 7024
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">2.</td>
+                        <td><span style="color:#565656;text-align:left;" class=""><span
+                                style="font-family: Consolas, Monaco, Courier New, Courier, monospace;"> FRAME EIGER A69CK</span></span>
+                        </td>
+                        <td></td>
+                        <td>15</td>
+                        <td><span style="color:#565656;text-align:center;" class="btn-block text-right">unit</span></td>
+                        <td><span class="pull-right">1,536,000</span></td>
+                        <td><span class="pull-right">23,040,000</span></td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td colspan="6"
+                            style="font-style:italic;font-family:Monaco, Menlo, Consolas, 'Courier New', monospace;">PLAT
+                            SPCC<br>INNER : 0,9 MM<br>OUTER : 0,9 MM<br>WARNA DARK GREY RAL 7024
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align="right">3.</td>
+                        <td><span style="color:#565656;text-align:left;" class=""><span
+                                style="font-family: Consolas, Monaco, Courier New, Courier, monospace;"> FRAME EIGER A175CK</span></span>
+                        </td>
+                        <td></td>
+                        <td>20</td>
+                        <td><span style="color:#565656;text-align:center;" class="btn-block text-right">unit</span></td>
+                        <td><span class="pull-right">2,368,000</span></td>
+                        <td><span class="pull-right">47,360,000</span></td>
+                    </tr>
+                    <tr>
+                        <td>&nbsp;</td>
+                        <td colspan="6"
+                            style="font-style:italic;font-family:Monaco, Menlo, Consolas, 'Courier New', monospace;">PLAT
+                            SPCC<br>INNER : 0,9 MM<br>OUTER : 0,9 MM<br>WARNA DARK GREY RAL 7024
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="6" class="text-right"><sub>
+                            <r>(excl VAT)</r>
+                        </sub><br>Total Amount
+                        </td>
+                        <td class="text-right"><span class="pull-right">211,566,000</span></td>
+                    </tr>
+                    <tr>
+                        <td colspan="6" class="text-right">VAT</td>
+                        <td class="text-right"><span class="pull-right">21,156,600</span></td>
+                    </tr>
+                    <tr>
+                        <td colspan="6" class="text-right">Total</td>
+                        <td class="text-right"><span style="color:#005689;font-weight:bold;text-align:right;"
+                                                     class="btn-block text-right">232,722,600</span></td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </td>
+    </tr>
+    </tbody>
+
+    <tfoot>
+    <tr>
+        <td>
+            <!--place holder for the fixed-position footer-->
+            <div class="page-footer-space"></div>
+        </td>
+    </tr>
+    </tfoot>
+
+</table>
+
+<!--<script>-->
+<!--var body_nota_height = $(".panel-body", $("#nota_height")).height()-->
+<!--if (parseFloat(body_nota_height) <= 120) {-->
+<!--$(".panel-body", $("#nota_height")).css('min-height', '125px');-->
+<!--}-->
+<!--$("span[style='color:#000000;text-align:center;']", $("td[colspan=3]")).css('font-size', '25px');-->
+<!--</script>-->
+
+<script>
+
+
+
+</script>
+
+</body>
+
+</html>
+
+
+
+
+<!--</body>-->
+<!--</html>-->

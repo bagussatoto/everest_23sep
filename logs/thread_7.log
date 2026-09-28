@@ -1,0 +1,19 @@
+=== WORKER STARTED (Range: 203218 - 232249) ===
+Cursor 203218: Updated 892 rows.
+Cursor 205218: Updated 989 rows.
+Cursor 207218: Updated 976 rows.
+Cursor 209218: Updated 966 rows.
+Cursor 211218: Updated 987 rows.
+Cursor 213218: Updated 985 rows.
+Cursor 215218: Updated 990 rows.
+Cursor 217218: Updated 899 rows.
+Cursor 219218: Updated 980 rows.
+Cursor 221218: Updated 971 rows.
+Cursor 223218: Updated 956 rows.
+Cursor 225218: Updated 972 rows.
+Cursor 227218: Updated 992 rows.
+Cursor 229218: Updated 993 rows.
+Cursor 231218: Updated 509 rows.
+=== WORKER COMPLETED ===
+Updated: 14057 rows
+Time: 1,437.77s

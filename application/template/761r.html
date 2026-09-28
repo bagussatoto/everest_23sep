@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <!--
+    {cdn_suport} {cdn_suport}/
+    {cdn_suport} {cdn_suport}/suport/
+    {base}   https://demo.mayagrahakencana.com/debug/th_san/
+    -->
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{title}</title>
+
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="icon" type="image/png"
+          href="{base}/public/images/sys/head_top.ico">
+    <link rel="stylesheet"
+          href="{cdn_suport}/bootstrap-3.3.7-dist/css/bootstrap.min.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}/Font-Awesome-master/css/font-awesome.min.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}/ionicons-master/css/ionicons.min.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}/simple-line-icons-master/css/simple-line-icons.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}/suport/AdminLTE-2.3.11/dist/css/AdminLTE.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}/suport/bootstrap3-dialog-master/dist/css/bootstrap-dialog.min.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}/AdminLTE-2.3.11/dist/css/skins/_all-skins.min.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}/bootstrap-fileinput-master/css/fileinput.min.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}/bootstrap-toggle-master/css/bootstrap-toggle.min.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}/DataTables-1.10.13/media/css/jquery.dataTables.min.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}/DataTables-1.10.13/extensions/FixedHeader/css/fixedHeader.dataTables.min.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}/suport/sweetalert2-master/dist/sweetalert2.min.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}/suport/bootstrap-xlgrid-master/bootstrap-xlgrid.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}/custom/custom.min.css?v={local_version}">
+
+    <script src="{cdn_suport}/suport/AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}/suport/bootstrap-3.3.7-dist/js/bootstrap.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}/suport/sweetalert2-master/dist/sweetalert2.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}/suport/bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}/suport/rulez.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}/DataTables-1.10.13/media/js/jquery.dataTables.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}/custom/custom.js?v={local_version}"></script>
+
+    <style rel="stylesheet">
+        body {
+            font-size: 12px;
+            font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+        }
+    </style>
+
+    <style>
+
+        #someSvgElementId {
+            width: 100%;
+        }
+
+    </style>
+    <style>
+        body {
+
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #FAFAFA;
+            font: 10pt "Tahoma";
+
+        }
+
+        * {
+
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+
+        }
+
+        .halaman-print {
+            width: 215mm;
+            min-height: 300mm;
+
+            /*kecilkan padding untuk mmendapatkan margin yang tipis*/
+            padding: 1mm;
+            margin: 1mm auto;
+            border: 1px #D3D3D3 solid;
+            border-radius: 6px;
+            background: grey;
+            box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+
+        }
+
+        .halaman {
+            width: 210mm;
+            min-height: 297mm;
+
+            /*kecilkan padding untuk mmendapatkan margin yang tipis*/
+            padding: 1mm;
+            margin: 1mm auto;
+            border: 1px #D3D3D3 solid;
+            border-radius: 6px;
+            background: white;
+            box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+
+        }
+
+        .margin-halaman {
+
+            padding: 1mm;
+            border: 1px grey solid;
+            height: 297mm;
+            /*outline: 1mm darkgrey solid;*/
+
+        }
+
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        @media print {
+
+            html, body {
+                width: 210mm;
+                height: 297mm;
+            }
+
+            .halaman {
+                margin: 0;
+                border: initial;
+                border-radius: initial;
+                width: initial;
+                min-height: initial;
+                box-shadow: initial;
+                background: initial;
+                page-break-after: always;
+            }
+
+        }
+    </style>
+
+    <script>
+        $(document).on("ready", function () {
+
+            var penggaris_kiri_kanan = $(".penggaris_kiri_kanan");
+            var penggaris_atas_bawah = $(".penggaris_atas_bawah");
+
+            //mengambil dari ukuran standard ISO kertas International
+            //dengan satuan mm (milimeter)
+            var A4_width = parseFloat(210);
+            var A4_height = parseFloat(279.4);
+
+            var F4_width = parseFloat(215.9);
+            var F4_height = parseFloat(355.6);
+
+
+        });
+    </script>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini" onload="" style="">
+
+<div class="halaman-print">
+
+    <div class="halaman">
+        <div class="margin-halaman">
+
+            <div class="main-page1">
+                <div class="spacer">&nbsp;</div>
+                <div class="col-md-12">
+                    <table border="0" rules="none" width="100%">
+                        <tbody>
+                        <tr>
+                            <td colspan="2" valign="top" class="padding-bottom-10">
+                                <div style="float: left; width: 20%;"><img src="../../assets/images/san_221.png" alt="a"
+                                                                           class="img-responsive"></div>
+                                <div style="float: left; width: 80%;" class="text-center border-cekk">
+                                    <!--<div class="text-uppercase font-size-1-5">PT. Everest Electronic</div>-->
+                                    <!--<div style="width: 400px;display: block; margin-left: auto; margin-right: auto; text-align: center;">-->
+                                        <!--Komp Grogol Permai Blok B No 5-6<br>Jl. Prof. Dr. Latumenten Kav. 19, Jakarta-->
+                                        <!--11460-->
+                                    <!--</div>-->
+                                    <!--<div>Telp: 0215668436</div>-->
+                                    <!--<div>NPWP: 84.199.878.4-036.000</div>-->
+                                    {header}
+                                </div>
+                            </td>
+                            <td rowspan="2" id="td3" width="35%" valign="top" cclass="padding-left-5">
+                                <div class="panel panel-danger no-margin">
+                                    <!--<div class="panel-heading font-size-1-2 text-center">PURCHASE REQUEST</div>-->
+                                    <!--<div class="panel-body" id="div3" style="height: 135px;">-->
+                                        <!--<div class="no-padding no-margin font-size-1-2 ">-->
+                                            <!--<small>No:</small>-->
+                                        <!--</div>-->
+                                        <!--<div style="margin-top: 20px; padding-bottom: 0;" class="border-cekk">-->
+                                            <!--<table class="table">-->
+                                                <!--<thead>-->
+                                                <!--<tr></tr>-->
+                                                <!--</thead>-->
+                                                <!--<tbody>-->
+                                                <!--<tr>-->
+                                                    <!--<td width="110px" style="padding:2px;" class="border-top-none">-->
+                                                        <!--Date-->
+                                                    <!--</td>-->
+                                                    <!--<td style="padding:2px;" class="border-top-none">error: dateTime-->
+                                                    <!--</td>-->
+                                                <!--</tr>-->
+                                                <!--<tr>-->
+                                                    <!--<td width="110px" style="padding:2px;" class="border-top-none">-->
+                                                        <!--Required Date-->
+                                                    <!--</td>-->
+                                                    <!--<td style="padding:2px;" class="border-top-none">error: dateTime-->
+                                                    <!--</td>-->
+                                                <!--</tr>-->
+                                                <!--</tbody>-->
+                                            <!--</table>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                    {request_purchase}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td valign="top" id="td1" class="ppadding-right-5"></td>
+                            <td valign="top" id="td2" cclass="padding-left-5 padding-right-5"
+                                style="padding-left:2px;padding-right:2px;"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-md-12">
+                    <div class="panel panel-info table-responsive spacer-top-10">
+                        <!--<table class="table table-bordered table-condensed table-hover">-->
+                            <!--<thead>-->
+                            <!--<tr>-->
+                                <!--<th class="bg-info text-center" width="40px">No</th>-->
+                                <!--<th class="bg-info text-center">Description</th>-->
+                                <!--<th class="bg-info text-center">Part No.</th>-->
+                                <!--<th class="bg-info text-center">Qty</th>-->
+                                <!--<th class="bg-info text-center">UOM</th>-->
+                                <!--<th class="bg-info text-center">Actual Stock</th>-->
+                            <!--</tr>-->
+                            <!--</thead>-->
+                        <!--</table>-->
+                        {content}
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <table border="0" rules="none" width="100%">
+                        <tbody>
+                        <tr>
+                            <td class="ppadding-right-5" width="50%" rowspan="2" id="td4" valign="top"
+                                style="padding-right: 2px;">
+                                <div class="panel panel-default no-margin">
+                                    <!--<div class="panel-heading text-center font-size-1-2">NOTES</div>-->
+                                    <!--<div class="panel-body" id="div4" style="height: 260px;">1. <br></div>-->
+                                    <!--<div class="panel-footer text-center">Original: Purchasing Dept | Copy: Request-->
+                                        <!--Dept.-->
+                                    <!--</div>-->
+                                    {notes}
+                                </div>
+                            </td>
+                            <td class="ppadding-left-5 ppadding-right-5" valign="top"
+                                style="padding-right: 2px;padding-left: 2px;">
+                                <div class="panel panel-default no-margin">
+                                    <!--<div class="panel-heading text-center font-size-1-2">Prepare by:</div>-->
+                                    <!--<div class="panel-body text-center" iid="div5">-->
+                                        <!--<div class="height-ttd">&nbsp;</div>-->
+                                    <!--</div>-->
+                                    <!--<div class="panel-footer text-center">&nbsp;</div>-->
+                                    {prepare}
+                                </div>
+                            </td>
+                            <td class="ppadding-left-5" valign="top" style="padding-left: 2px;">
+                                <div class="panel panel-default no-margin">
+                                    <!--<div class="panel-heading text-center font-size-1-2">Approval by:</div>-->
+                                    <!--<div class="panel-body text-center" id="div6">-->
+                                        <!--<div class="height-ttd">&nbsp;</div>-->
+
+                                    <!--</div>-->
+                                    <!--<div class="panel-footer text-center">&nbsp;</div>-->
+                                    {approval}
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="ppadding-left-5 ppadding-top-10" style="padding-left: 2px;">
+                                <div class="panel panel-default no-margin">
+                                    <!--<div class="panel-heading text-center font-size-1-2">Received &amp; Processed by:-->
+                                    <!--</div>-->
+                                    <!--<div class="ppanel-body text-left" id="div7">-->
+                                        <!--<div class="hheight-ttd">&nbsp;</div>-->
+                                        <!--Purchasing Dept:-->
+                                    <!--</div>-->
+                                    <!--<div class="ppanel-body text-left" id="div7">-->
+                                        <!--<div class="hheight-ttd">&nbsp;</div>-->
+                                        <!--Date:-->
+                                    <!--</div>-->
+                                    <!--<div class="panel-footer text-center">Purchasing Dept.</div>-->
+                                    {received}
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <script>
+                    var td4 = $('#td4').outerHeight();
+                    var td3 = $('#td3').outerHeight();
+                    var td2 = $('#td2').outerHeight();
+                    var td1 = $('#td1').outerHeight();
+                    var kepala = 10;
+                    var height4 = td4 - kepala;
+                    var height3 = td3 - kepala;
+                    var height2 = td2 - kepala;
+                    var height1 = td1 - kepala;
+                    $('#div4').outerHeight(height4);
+                    $('#div3').outerHeight(height3);
+                    $('#div2').outerHeight(height2);
+                    $('#div1').outerHeight(height1);
+                </script>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{cdn_suport}/suport/AdminLTE-2.3.11/plugins/slimScroll/jquery.slimscroll.min.js?v={local_version}"></script>
+<script src="{cdn_suport}/suport/AdminLTE-2.3.11/dist/js/app.min.js?v={local_version}"></script>
+<script src="{cdn_suport}/suport/multi-step-modal-master/multi-step-modal.js?v={local_version}"></script>
+<script src="{cdn_suport}/bootstrap-fileinput-master/js/fileinput.min.js?v={local_version}"></script>
+<script src="{cdn_suport}/bootstrap-toggle-master/js/bootstrap-toggle.min.js?v={local_version}"></script>
+<script src="{cdn_suport}/custom/hippo_ajax.js?v={local_version}"></script>
+
+</body>
+</html>

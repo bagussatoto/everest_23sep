@@ -1,0 +1,492 @@
+<html lang="en" style="height: auto;"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--<meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
+
+    <!--466r_mod.html-->
+    
+    <title>DELIVERY NOTE</title>
+
+    <link rel="stylesheet" href="https://everest.mayagrahakencana.com/assets/custom/custom.min.css?v=1.0101.2024.Ev">
+
+    <link rel="stylesheet" href="https://cdn.mayagrahakencana.com/assets/suport/bootstrap-3.3.7-dist/css/bootstrap.min.css?v=1.0101.2024.Ev">
+    <link rel="stylesheet" href="https://cdn.mayagrahakencana.com/assets/suport/Font-Awesome-master/css/font-awesome.min.css?v=1.0101.2024.Ev">
+    <link rel="stylesheet" href="https://cdn.mayagrahakencana.com/assets/suport/AdminLTE-2.3.11/dist/css/AdminLTE.css?v=1.0101.2024.Ev">
+
+    <script src="https://cdn.mayagrahakencana.com/assets/suport/AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v=1.0101.2024.Ev"></script>
+    <script src="https://cdn.mayagrahakencana.com/assets/suport/bootstrap-3.3.7-dist/js/bootstrap.min.js?v=1.0101.2024.Ev"></script>
+    <script src="https://cdn.mayagrahakencana.com/assets/suport/sweetalert2-master/dist/sweetalert2.min.js?v=1.0101.2024.Ev"></script>
+    <script src="https://cdn.mayagrahakencana.com/assets/suport/bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js?v=1.0101.2024.Ev"></script>
+    <script src="https://cdn.mayagrahakencana.com/assets/suport/AdminLTE-2.3.11/plugins/slimScroll/jquery.slimscroll.min.js?v=1.0101.2024.Ev"></script>
+    <script src="https://cdn.mayagrahakencana.com/assets/suport/AdminLTE-2.3.11/dist/js/app.min.js?v=1.0101.2024.Ev"></script>
+    <script src="https://cdn.mayagrahakencana.com/assets/suport/multi-step-modal-master/multi-step-modal.js?v=1.0101.2024.Ev"></script>
+    <script src="https://cdn.mayagrahakencana.com/assets/suport/bootstrap-fileinput-master/js/fileinput.min.js?v=1.0101.2024.Ev"></script>
+    <script src="https://cdn.mayagrahakencana.com/assets/suport/bootstrap-toggle-master/js/bootstrap-toggle.min.js?v=1.0101.2024.Ev"></script>
+    <script src="https://everest.mayagrahakencana.com/assets/custom/hippo_ajax.js?v=1.0101.2024.Ev"></script>
+
+    <style>
+        @page {
+            size: A4;
+            margin: 2mm 3mm 10mm 3mm; /* Mengatur margin sesuai kebutuhan */
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .header, .footer {
+            position: fixed;
+            width: 100%;
+            /*background-color: #f5f5f5;*/
+            text-align: center;
+            /*border: 1px solid #ddd;*/
+            box-sizing: border-box;
+            z-index: 100;
+        }
+
+        .header {
+            top: 0;
+            height: 125mm; /* Sesuaikan sesuai kebutuhan */
+            border-bottom: 0px solid #ddd;
+        }
+
+        .footer {
+            bottom: 0px;
+            height: 75mm; /* Sesuaikan sesuai kebutuhan */
+            /*border-top: 1px solid #ddd;*/
+        }
+
+        .page {
+            page-break-before: always;
+            padding-top: 100mm; /* Ruang untuk header */
+            padding-bottom: 70mm; /* Ruang untuk footer */
+            box-sizing: border-box;
+        }
+
+        .contentx {
+            margin-top: 0mm; /* Jarak tambahan dari atas konten */
+            }
+
+        @media print {
+            a[href]:after {
+                display: none;
+                visibility: hidden;
+            }
+
+            .header, .footer {
+                display: block;
+            }
+
+            .header{
+                height: 105mm; /* Sesuaikan sesuai kebutuhan */
+            }
+            .text-white {
+                display: none;
+                visibility: hidden;
+            }
+
+            .col-sm-1, .col-xs-1{
+                margin-right: -25px;
+            }
+
+            .hidden-on-print {
+                display: none !important;
+            }
+        }
+        .img-thumbnail{
+            border: none !important;
+        }
+
+        .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2{
+            width: 24% !important;
+        }
+    </style>
+
+    <style type="text/css">
+        .panel-element>.panel-heading{
+            padding: 3px 15px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .panel-element>.panel-body{
+            padding: 0 15px;
+        }
+        /*.table-condensed>tbody>tr>td{*/
+        .panel-element>.panel-body>.table-condensed>tbody>tr>td{
+            padding: 0 !important;
+            border-top: none;
+            text-transform: capitalize;
+        }
+        .tbl-label{
+            width: 100px;
+            /*text-transform: capitalize;*/
+        }
+
+        .panel-content>.table>tbody>tr>td{
+            padding: 0 !important;
+            border-top: none;
+            text-transform: capitalize;
+        }
+        .nilai_nota, .harga, .subtotal {
+            text-align: right;
+        }
+
+        .total {
+            font-weight: bold;
+            font-size: 16px !important;
+        }
+
+        .jumlah {
+            border-top: 3px double #ddd !important;
+            height: 30px;
+            vertical-align: top !important;
+            font-weight: bold;
+            text-align: right;
+        }
+        .grand_total{
+            font-weight: bolder;
+            font-size: 18px !important;
+        }
+
+        .total_point {
+            font-weight: bold;
+        }
+    </style>
+
+    <style type="text/css">
+        .dpp, .jumlah_total, .harga_satuan, .sub_nett1{
+            text-align: right;
+        }
+        .jumlah, .total{
+            font-weight: bold;
+            border-top: unset !important;
+            height: unset !important;
+        }
+        .total_bruto{
+            font-weight: bold;
+
+        }
+        .table {
+            margin-bottom: 0;
+        }
+        .table>tbody>tr>td, .table>tbody>tr>th{
+            padding: 0 5px;
+        }
+        body{
+            font-family: Arial;
+            font-size: 14px !important;
+        }
+        .ttd{
+            height: 120px;
+        }
+        .bg-success{
+            background-color: #0a53ff91 !important;
+        }
+        .box-header{
+            padding: 3px 10px !important;
+            background-color: #0a53ff91 !important;
+            background: #0a53ff91 !important;
+            color: unset !important;
+        }
+        .box.box-solid.box-danger {
+            border: 1px solid #c0c0c0 !important;
+        }
+        .alert{
+            padding: 5px 10px !important;
+        }
+        .alert-danger{
+            color: #000 !important;
+            background-color: #ffffff !important;
+            border-color: #c0c0c0 !important;
+        }
+        .Description{
+            white-space: nowrap;
+        }
+    </style>
+
+</head>
+<body style="height: auto;">
+
+<div class="hidden-on-print text-uppercase" style="background-color: black;padding-left: 20px;z-index: 10000;position: fixed;width: 100%;"><label class="text-white"><input checked="" type="checkbox" name="serial" id="lyserial"> tampilkan serial number</label>  <label class="text-white"><input type="checkbox" id="checkboxTitle" checkedd=""> Packing List</label> <button type="button" id="print" onclick="window.print();" title="print/cetak"> <i class="glyphicon glyphicon-print"></i></button></div><script>
+
+            function sendSerial() {
+                var checkbox = document.getElementById('lyserial');
+                var lgValue = checkbox.checked ? 1 : 0;
+                var colspan = $('td.bottom-borderless').attr('colspan');
+                console.log('lgValue', lgValue)
+                // Kirim nilai lg ke server atau lakukan tindakan yang sesuai
+                // var new_colspan = colspan -1;           
+                if(lgValue == 1){            
+                    // var new_colspan = Number(colspan) + Number(2);
+                    console.log('masuk');
+                    $('.serial_uye').removeClass('hidden');
+                    // $('td.bottom-borderless').attr('colspan', new_colspan);
+                }
+                else {                
+                    // var new_colspan = colspan - 2;
+                    $('.serial_uye').addClass('hidden');
+                    // $('td.bottom-borderless').attr('colspan', new_colspan);
+                }
+            }
+
+            function toUrl(){
+                var checkbox = document.getElementById('lyserial');
+                var lgValue = checkbox.checked ? 1 : 0;
+
+                var defUrl = window.location.protocol + '//' + window.location.hostname + window.location.pathname;
+                if(lgValue == 1){
+                    console.log('sini checked');
+                    console.log('masuk');
+                    window.location.href = defUrl + '?hs=0';
+//console.log(defUrl + '?hs=0')
+                }
+                else {
+                    console.log('sini tidak checked');
+//                    console.log(defUrl + '?hs=1');
+                    window.location.href = defUrl + '?hs=1';
+                }
+            }
+
+            // var ceksimpel = $('#lysimpel');
+            var cekserial = document.getElementById('lyserial');
+            cekserial.addEventListener('change', toUrl);
+            
+//            console.log(cekserial);
+            if(cekserial.checked){
+
+            }
+            else {
+//                console.log('cekkkkk:',cekserial);
+//                $('.serial_uye').addClass('hidden');
+            }
+
+            // function sendSimpel() {
+            //     var checkbox = document.getElementById('lysimpel');
+            //     var lgValue = checkbox.checked ? 1 : 0;
+            //     var colspan = $('td.bottom-borderless').attr('colspan');
+            //     console.log('lgValue', lgValue)
+            //     // Kirim nilai lg ke server atau lakukan tindakan yang sesuai
+            //     // var new_colspan = colspan -1;           
+            //     if(lgValue == 1){            
+            //         var new_colspan = Number(colspan) + Number(2);
+            //         $('.lysimpel').removeClass('hidden');
+            //         $('td.bottom-borderless').attr('colspan', new_colspan);
+            //     }
+            //     else {                
+            //         var new_colspan = colspan - 2;
+            //         $('.lysimpel').addClass('hidden');
+            //         $('td.bottom-borderless').attr('colspan', new_colspan);
+            //     }
+            // }
+            // // var ceksimpel = $('#lysimpel');
+            // var ceksimpel = document.getElementById('lysimpel');
+            // ceksimpel.addEventListener('change',sendSimpel);
+            // // var ceklengkap = document.getElementById('lylengkap');
+            // // ceklengkap.addEventListener('change',sendLengkap);
+            //
+            // // Fungsi untuk mengirimkan nilai lg berdasarkan status checkbox
+            // function sendLGValue() {
+            //     var checkbox = document.getElementById('myCheckbox');
+            //     var lgValue = checkbox.checked ? 1 : 0;
+            //
+            //     // Kirim nilai lg ke server atau lakukan tindakan yang sesuai           
+            //     if(lgValue == 1){                
+            //         $('#logo').removeClass('hidden');
+            //         // $('#cprofile').removeClass('hidden');
+            //         // $('#isi_cprofile').removeClass('hidden');
+            //     }
+            //     else {                
+            //         $('#logo').addClass('hidden');
+            //         // $('#cprofile').addClass('hidden');
+            //         // $('#isi_cprofile').addClass('hidden');
+            //     }
+            // }
+            // // Tambahkan event listener untuk checkbox
+            // var checkbox = document.getElementById('myCheckbox');
+            // checkbox.addEventListener('change', sendLGValue);
+            //
+            // function sendAddrValue() {
+            //     var checkbox = document.getElementById('myCheckAddr');
+            //     var lgValue = checkbox.checked ? 1 : 0;
+            //
+            //     // Kirim nilai lg ke server atau lakukan tindakan yang sesuai           
+            //     if(lgValue == 1){                
+            //         $('#logo').removeClass('hidden');
+            //         $('#cprofile').removeClass('hidden');
+            //         $('#myCheckbox').attr('value', 'true');
+            //          $('.temp').addClass('hidden');
+            //         $('.ttd').removeClass('hidden');
+            //         $('h4.text-renggang-5').removeClass('hidden');
+            //         $('p.no-margin').removeClass('hidden');
+            //     }
+            //     else {                
+            //         $('#logo').addClass('hidden');
+            //         $('#cprofile').addClass('hidden');
+            //         $('#ttd_salesman').addClass('hidden');
+            //         $('#ttd_sign_1').addClass('hidden');
+            //         $('#ttd_sign_2>.pic').html('(_____________)');
+            //         // $('.ttd').addClass('hidden');
+            //         // $('.col-xs-2').html('<div class=\'temp sign_1\' style=margin-top:55px;>( ________ )</div>');
+            //         $('h4.text-renggang-5').addClass('hidden');
+            //         $('p.no-margin').addClass('hidden');
+            //         // $('#isi_cprofile').addClass('hidden');
+            //     }
+            // }   
+            // // Tambahkan event listener untuk checkbox
+            // var checkbox = document.getElementById('myCheckAddr');
+            // checkbox.addEventListener('change', sendAddrValue);
+            //
+            // function sendRKValue() {
+            //     var checkboxrk = document.getElementById('checkboxrekening');
+            //     var lgValue = checkboxrk.checked ? 1 : 0;
+            //
+            //     // Kirim nilai lg ke server atau lakukan tindakan yang sesuai           
+            //     if(lgValue == 1){                
+            //         $('#rekeningbank').removeClass('hidden');
+            //     }
+            //     else {                
+            //         $('#rekeningbank').addClass('hidden');
+            //     }
+            // }
+            // var checkboxrekening = document.getElementById('checkboxrekening');
+            // checkboxrekening.addEventListener('change', sendRKValue);
+            
+            function sendTitle() {
+                var checkboxtl = document.getElementById('checkboxTitle');
+                var lgValue = checkboxtl.checked ? 1 : 0;
+            
+                 console.log('lgValue', lgValue)
+                // Kirim nilai lg ke server atau lakukan tindakan yang sesuai           
+                if(lgValue == 1){                
+                    $('#title').addClass('hidden');
+                    $('#status_pembayaran').addClass('hidden');
+                    $('#title_alt').removeClass('hidden');                    
+                }
+                else {                
+                    $('#title').removeClass('hidden');
+                    $('#status_pembayaran').removeClass('hidden');
+                    $('#title_alt').addClass('hidden');
+                }
+            }
+            var checkboxtitle = document.getElementById('checkboxTitle');
+            checkboxtitle.addEventListener('change', sendTitle);
+            
+            // function sendSku() {
+            //     var checkboxtl = document.getElementById('sku');
+            //     var lgValue = checkboxtl.checked ? 1 : 0;
+            // var colspan = $('td.bottom-borderless').attr('colspan');
+            //
+            //      // console.log('lgValue', lgValue)
+            //     // Kirim nilai lg ke server atau lakukan tindakan yang sesuai           
+            //     if(lgValue == 1){
+            //         var new_colspan = Number(colspan) + Number(1);
+            //         // $('#title').addClass('hidden');
+            //         $('.sku').removeClass('hidden');
+            //         $('td.bottom-borderless').attr('colspan', new_colspan);                                        
+            //     }
+            //     else {
+            //         var new_colspan = Number(colspan) - Number(1);
+            //         // $('#title').removeClass('hidden');
+            //         $('.sku').addClass('hidden');
+            //         $('td.bottom-borderless').attr('colspan', new_colspan);
+            //     }
+            // }
+            // var checkboxtitle = document.getElementById('sku');
+            // checkboxtitle.addEventListener('change', sendSku);
+            // document.addEventListener('DOMContentLoaded', function() {  
+            //         top.$('.sku').addClass('hidden');
+            //         $('td.bottom-borderless').attr('colspan', 6);
+            // }); 
+            
+        </script>
+            <div class="page">
+
+                <div class="header hiddenx">
+                    <div class="spacer">&nbsp;</div>
+                    <div>
+                        <div class="row" style="margin-bottom: 10px;">
+                            <div id="cprofile" class="text-left col-md-6 col-xs-6 col-sm-6">
+                                <div class="text-left overflow-h">
+                                    <div id="logo" class="text-left no-padding {lg_hidden}" style="margin-top:2px;margin-right: 0px; height: 100px;width: 102px;float: left;">
+                                    <!-- {logo_header_print_00} -->
+                                    <img src="https://everest.mayagrahakencana.com/public/images/profiles/logo_header_full.png" class="img-thumbnail">
+                                    </div>
+                                    <div id="isi_cprofile" class="dborder-cek" style="font-size: 1em;"><div><span class="no-margin text-uppercase text-bold" style="text-decoration: underline;font-size: 1.1em;">PT. Everest Electronic</span></div><div style=";" class="text-uppercase">air conditioner  - spare part</div><div style="">Jl. KH Hasyim Ashari No.144, Pinang</div><div>pinang Tangerang Banten 15145</div><div>Telepon : <b>021-7329480</b></div></div>
+                                </div>
+                            </div>
+                            <div class="text-right"><div class="bborder-cek "><div class="text-uppercase" style="float: left;text-align: left; overflow: hidden;"><h4 id="title" class="no-margin text-renggang-55 text-bold" style="font-size: 24px;">DELIVERY NOTE</h4><h4 id="title_alt" class="hidden no-margin text-renggang-55 text-bold">packing list</h4><div class="alert alert-danger" style="min-height: 71px;margin-bottom: 0px;"><p class="no-margin">Date: 19 February 2025 15:21</p><p class="no-margin">No: <a href="javascript:void(0);" style="white-space: nowrap;" titles="#open 5822spd.1.2386.4-10922" data-toggles="tooltip" data-placements="auto" onclick="showModal('https://everest.mayagrahakencana.com/Transaksi/viewResume/5822spd.1.2386.4-10922','view resume for 5822spd.1.2386.4-10922')"><span href="https://everest.mayagrahakencana.com/Addons/ViewDetails/nomer/5822spd.1.2386.4-10922" name="qtips" style="color:#000000;text-align:center;" class="">5822spd.1.2386.4-10922</span></a> <i class="hidden-on-print" style="color: #FFFFFF">351400</i></p><p class="no-margin">Customer ID: 2386 <i class="hidden-on-print" style="color: #FFFFFF">351400</i></p></div></div></div></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-left col-md-6 col-xs-6 col-sm-6" style="padding: 3px;">
+                            <div class="box box-danger box-solid" style="margin-bottom: 5px;"><div class="box-header with-border"><h3 class="box-title text-uppercase">Bill TO <small class="hidden-on-print">114</small></h3></div><div class="box-body" style="height: 140px;overflow: hidden; "><div class="text-uppercase text-bold">PT. RAIHAN ANUGRAH PRATAMA</div><div class="text-capitalize" style="height: 69px; ">RUKAN SENTRA SALEMBA MAS, JL. SALEMBA RAYA KAV.GF VI, 34-36,  KENARI, KOTA ADM. JAKARTA PUSAT, DKI JAKARTA, 10430,</div><hr class="no-margin no-padding">Up To: <hr class="no-margin no-padding">Phone: 0</div></div>
+                        </div>
+                        <div class="text-left col-md-6 col-xs-6 col-sm-6" style="padding: 3px;">
+                            <div class="box box-danger box-solid" style="margin-bottom: 5px;"><div class="box-header with-border"><h3 class="box-title text-uppercase">DELIVERed to</h3></div><div class="box-body" style="height: 141px;overflow: hidden;"><div class="text-uppercase text-bold">PT. RAIHAN ANUGRAH PRATAMA</div><div class="text-capitalize" style="height: 69px;">KANTOR SEKRETARIAT KABINET GEDUNG 3 JL. VETERAN NO. 18 2, RT.2/RW.3, GAMBIR</div><hr class="no-margin no-padding">Up To: PT. RAIHAN ANUGRAH PRATAMA<hr class="no-margin no-padding">Phone: -</div></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="text-left col-md-3 col-xs-3 col-sm-3" style="padding: 3px;">
+                            <div class="box box-danger box-solid"><div class="box-header with-border"><h3 class="box-title text-uppercase">order date</h3></div><div class="box-body"><div class="text-capitalize">19-February-2025</div></div></div>
+                        </div>
+                        <div class="text-left col-md-3 col-xs-3 col-sm-3" style="padding: 3px;">
+                            <div class="box box-danger box-solid"><div class="box-header with-border"><h3 class="box-title text-uppercase">nomer so</h3></div><div class="box-body"><div class="text-capitalize">5822so.1.2386.3-11687</div></div></div>
+                        </div>
+                        <div class="text-left col-md-3 col-xs-3 col-sm-3" style="padding: 3px;">
+                            <div class="box box-danger box-solid"><div class="box-header with-border"><h3 class="box-title text-uppercase">salesman</h3></div><div class="box-body"><div class="text-capitalize">Maria</div></div></div>
+                        </div>
+                        <div class="text-left col-md-3 col-xs-3 col-sm-3" style="padding: 3px;">
+                            <div class="box box-danger box-solid"><div class="box-header with-border"><h3 class="box-title text-uppercase">status</h3></div><div class="box-body"><div class="text-capitalize">cash / delivery  <b></b></div></div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="contentx" styles="border: 1px solid red;">
+                    <div class="panel-contentt" style="padding: 0 3px;"><table class="table dataTable compact table-bordered"><thead><tr class="bg-success text-uppercase"><th>no</th><th class="sku">sku</th><th>Description</th><th class="Qty">Qty</th></tr></thead><tbody><tr line="3495"><td>1</td><td title="produk_kode" class="sku"><span onclick="showImageSwal('SCE50AV -L','')">SCE50AV -L
+</span> </td><td title="produk_nama" class="Description"><span style="color:#565656;text-align:left;" class=""><span> DAIKIN CASETTE SCE50AV-L</span></span> </td><td title="jml" class="Qty"><span style="color:#000000;text-align:right;" class="btn-block text-right">3</span> </td></tr><tr line="3524" class="serial_uye"><td>&nbsp;</td><td colspan="3" style="font-size:12px;"><b class="text-uppercase">outdoor(RE50AV14/O)</b>: 20250211:1715:1993:0001:23953:0057:OT, 20250211:1715:1993:0001:23953:0055:OT</td></tr><tr line="3544" class="serial_uye"><td>&nbsp;</td><td colspan="3" style="font-size:12px;white-space: nowrap;">20250211:1715:1993:0001:23953:0056:OT</td></tr><tr line="3524" class="serial_uye"><td>&nbsp;</td><td colspan="3" style="font-size:12px;"><b class="text-uppercase">indoor(FCE50AV14/I)</b>: 20250211:1715:1993:0001:23953:0059:IN, 20250211:1715:1993:0001:23953:0058:IN</td></tr><tr line="3544" class="serial_uye"><td>&nbsp;</td><td colspan="3" style="font-size:12px;white-space: nowrap;">20250211:1715:1993:0001:23953:0060:IN</td></tr><tr line="3524" class="serial_uye"><td>&nbsp;</td><td colspan="3" style="font-size:12px;"><b class="text-uppercase">produk(BC50FA4)</b>: 20250211:1715:1993:0001:23953:0063:PART, 20250211:1715:1993:0001:23953:0062:PART</td></tr><tr line="3544" class="serial_uye"><td>&nbsp;</td><td colspan="3" style="font-size:12px;white-space: nowrap;">20250211:1715:1993:0001:23953:0061:PART</td></tr><tr style="border-color:coral;"><td> </td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr style="border-color:coral;"><td> </td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr style="border-color:coral;"><td> </td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr style="border-color:coral;"><td> </td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr style="border-color:coral;"><td> </td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr style="border-color:coral;"><td> </td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr><tr style="border-color:coral;"><td> </td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr></tbody><tfoot><tr class="table-botom-borderless " title="sum_jml"><td colspan="3" align="right" class="text-uppercase text-renggang-10 total">total</td><td class="nilai_nota total" title="sum_jml">3</td></tr></tfoot></table></div>
+                </div>
+                <div class="footerx hiddenx" style="padding: 0 3px;margin-top: 5px;">
+                    <div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 no-padding">
+                            <div class="alert alert-danger" style="min-height: 90px">Notes:<br></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 no-padding text-center border-cekk">
+                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 no-padding text-center">
+                                <div id="ttd_logistik" style="" title="logistik" class="logistik  ttd table-bordered text-uppercase"><span>ka.&nbsp;logistic<br><br><br><br><br>(MARTIN)</span></div>
+                            </div>
+                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 no-padding text-center">
+                                <div id="ttd_sign_2" style="" title="sign_2" class="sign_2 hidden  table-bordered text-uppercase"><span>approval<br><br><br><br><br>(everest)</span></div>
+                                <div id="ttd_sign_4" style="" title="sign_4" class="sign_4  ttd table-bordered text-uppercase"><span>checker<br><br><br><br><br>(Gugung by system)</span></div>
+                            </div>
+                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 no-padding text-center">
+                                <div id="ttd_driver" style="" title="driver" class="driver  ttd table-bordered text-uppercase"><span>driver<br><br><br><br><br>(_____________)</span></div>
+                            </div>
+                            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 no-padding text-center">
+                                <div id="ttd_worker" style="" title="worker" class="worker hidden  table-bordered text-uppercase"><span>teknisi<br><br><br><br><br>(_____________)</span></div>
+                            </div>
+                        </div>
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 no-padding text-center">
+                            <div id="ttd_customer" style="" title="customer" class="customer  ttd table-bordered text-uppercase"><span>ttd &amp; cap penerima<br><br><br><br><br>(_____________)</span></div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-top: 50px;" class="text-right col-xs-8 col-sm-8 col-md-8 col-lg-8 no-padding">
+                        &nbsp;
+                    </div>
+                    <div style="margin-top: 50px;" class="custom-footer text-right col-xs-4 col-sm-4 col-md-4 col-lg-4 no-padding">
+                        <!-- printed@2025-02-19 18:19 | --> Halaman ke-1 dari 1 Halaman
+                    </div>
+            
+                </div>
+
+            </div>
+        
+
+
+
+ </body></html>

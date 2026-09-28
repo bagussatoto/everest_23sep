@@ -1,0 +1,90 @@
+<div class="row">
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+    <!--<title>{title}</title>-->
+<!--<meta charset="utf-8">-->
+<!--<meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+<!--<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">-->
+    <link id="favicon" rel="icon" type='image/x-icon' href="{favicon}">
+
+    <!--<link rel="stylesheet" href="{base}assets/numpad/jquery.numpad.grosir2.css?v={local_version}">-->
+    <!--<link rel="stylesheet" href="{base}assets/jquery-mobile/jquery.mobile-1.4.5.min.css?v={local_version}">-->
+    <link rel="stylesheet" href="{cdn_suport}numpad/jquery.numpad.grosir2.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}jquery-mobile/jquery.mobile-1.4.5.min.css?v={local_version}">
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v={local_version}"></script>
+    <style>
+        .ui-btn {margin: .0em 0 !important;}
+        input {
+            color: transparent !important;
+            text-shadow: 0 0 0 #fff  !important;
+            font-weight: 700  !important;
+            font-size: 22px  !important;
+            &:focus {
+                outline: none  !important;
+            }
+        }
+    </style>
+<!--</head>-->
+<!--<body>-->
+
+<div id="col2" class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="background-color: white; border-radius: 10px;">
+    <table class="table">
+        <tbody>
+        <!--<tr>-->
+            <!--<td colspan="4">-->
+                <!--<div class="text-bold text-center text-red col-xs-12 col-sm-12 col-md-12 col-md-12">-->
+                    <!--<div style="font-size:0.8em" class="no-padding">{produk_nama}</div>-->
+                <!--</div>-->
+            <!--</td>-->
+        <!--</tr>-->
+        <tr>
+            <td colspan="4">
+                <!--<div class='meta'> {lang_min}: <span id='mins' class="text-bold">{valueMOQ}</span> </div>-->
+                <div class="ui-input-text ui-body-b ui-corner-all ui-shadow-inset">
+                    <input style="cursor: none;" data-theme="b" type="text" autofocus="on" class="nmpd-display" value="{curValue}">
+                    <input type="hidden" class="produk_moq" value="{valueMOQ}">
+                    <div class='errNotif text-red text-center'></div>
+                </div>
+
+                <!--<div class='text-red'> {lang_total}: <span id='totals' class="text-bold">{total}</span> </div>-->
+            </td>
+        </tr>
+        <tr>
+            <td><a class="numero tujuh ui-link ui-btn ui-btn-b ui-shadow ui-corner-all">7</a></td>
+            <td><a class="numero delapan ui-link ui-btn ui-btn-b ui-shadow ui-corner-all">8</a></td>
+            <td><a class="numero sembilan ui-link ui-btn ui-btn-b ui-shadow ui-corner-all">9</a></td>
+            <td><a class="del ui-link ui-btn ui-btn-a ui-shadow ui-corner-all"> {lang_delete} </a></td>
+        </tr>
+        <tr>
+            <td><a class="numero empat ui-link ui-btn ui-btn-b ui-shadow ui-corner-all">4</a></td>
+            <td><a class="numero lima ui-link ui-btn ui-btn-b ui-shadow ui-corner-all">5</a></td>
+            <td><a class="numero enam ui-link ui-btn ui-btn-b ui-shadow ui-corner-all">6</a></td>
+            <td><a class="clear ui-link ui-btn ui-btn-a ui-shadow ui-corner-all"> {lang_clear} </a></td>
+        </tr>
+        <tr>
+            <td><a class="numero satu ui-link ui-btn ui-btn-b ui-shadow ui-corner-all">1</a></td>
+            <td><a class="numero dua ui-link ui-btn ui-btn-b ui-shadow ui-corner-all">2</a></td>
+            <td><a class="numero tiga ui-link ui-btn ui-btn-b ui-shadow ui-corner-all">3</a></td>
+            <td><a class="cancel ui-link ui-btn ui-btn-a ui-shadow ui-corner-all"> {lang_cancel} </a></td>
+        </tr>
+        <tr>
+            <td><a class="neg ui-link ui-btn ui-btn-a ui-shadow ui-corner-all">−</a></td>
+            <td><a class="numero nol ui-link ui-btn ui-btn-b ui-shadow ui-corner-all">0</a></td>
+            <td><a class="sep ui-link ui-btn ui-btn-a ui-shadow ui-corner-all">+</a></td>
+            <td><a class="done ui-link ui-btn ui-btn-a ui-shadow ui-corner-all"> {lang_enter} </a></td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <!--<div id="diskon_informasi"> {diskon_details} </div>-->
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+{script_bottom}
+<!--</body>-->
+<!--</html>-->
+</div>

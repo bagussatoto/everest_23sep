@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{title}</title>
+
+    <style>
+        #someSvgElementId {
+            width: 100%;
+        }
+    </style>
+    <style>
+
+
+        * {
+
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+
+        }
+        @media print {
+            a[href]:after {
+                display: none;
+                visibility: hidden;
+            }
+            td{
+                width: max-content;
+            }
+            span.text-white{
+                display: none;
+                visibility: hidden;
+            }
+        }
+        .halaman-print {
+            width: 215mm;
+            min-height: 300mm;
+
+            /*kecilkan padding untuk mmendapatkan margin yang tipis*/
+            padding: 1mm;
+            margin: 1mm auto;
+            border: 0px #D3D3D3 solid;
+            border-radius: 6px;
+            background: grey;
+            box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+
+        }
+
+        .halaman {
+            width: 210mm;
+            min-height: 297mm;
+
+            /*kecilkan padding untuk mmendapatkan margin yang tipis*/
+            padding: 1mm;
+            margin: 1mm auto;
+            border: 0px #D3D3D3 solid;
+            border-radius: 6px;
+            background: white;
+            box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+
+        }
+
+        .margin-halaman {
+
+            padding: 1mm;
+            border: 0px grey solid;
+            height: 297mm;
+            /*outline: 1mm darkgrey solid;*/
+
+        }
+
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        @media print {
+
+            html, body {
+                width: 210mm;
+                height: 297mm;
+            }
+
+            .halaman {
+                margin: 0;
+                border: initial;
+                border-radius: initial;
+                width: initial;
+                min-height: initial;
+                box-shadow: initial;
+                background: initial;
+                page-break-after: always;
+            }
+
+        }
+    </style>
+
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-3.3.7-dist/js/bootstrap.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/slimScroll/jquery.slimscroll.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}AdminLTE-2.3.11/dist/js/app.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}multi-step-modal-master/multi-step-modal.js?v={local_version}"></script>
+
+    <script src="{cdn_suport}bootstrap-fileinput-master/js/fileinput.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-toggle-master/js/bootstrap-toggle.min.js?v={local_version}"></script>
+    <script src="{base}assets/custom/hippo_ajax.js?v={local_version}"></script>
+
+    <link rel="stylesheet" href="{base}assets/custom/custom.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-3.3.7-dist/css/bootstrap.min.css?v={local_version}">
+
+    <style>
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #FAFAFA;
+            font-size: 11px;
+            font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+        }
+        .row-eq-height {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display:         flex;
+        }
+        @media print {
+            a[href]:after {
+                display: none;
+                visibility: hidden;
+            }
+            td{
+                width: max-content;
+            }
+        }
+        @media screen {
+            a[href]:after {
+                display: none;
+                visibility: hidden;
+            }
+            td{
+                width: max-content;
+            }
+        }
+    </style>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini" onload="" style="">
+
+<div class="spacer">&nbsp;</div>
+
+<div style="padding-left:15px;padding-right:15px;">
+    <table>
+        <tbody>
+        <tr>
+            <td colspan="2" valign="top" class="padding-bottom-10">
+                <div style="float: left; width: 20%;">
+                    <img src="../../assets/images/san_221.png" alt="a" class="img-responsive">
+                </div>
+                <div style="float: left; width: 80%;" class="text-center">
+                    <!--{companyProfile__}-->
+                    <div style="font-size: 1.5em !important;">PT. Everest Electronic</div>
+                    Komp Grogol Permai Blok B No 5-6<br>
+                    Jl. Prof. Dr. Latumenten Kav. 19, Jakarta 11460<br>
+                    Telp: 0215668436<br>
+                    NPWP: 84.199.878.4-036.000<br>
+                </div>
+            </td>
+
+            <td rowspan="2" id="td3" width="45%" valign="top">
+                <div class="panel panel-default" style="min-height: 250px;">
+                    {fixedElements}
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td valign="top" id="td1" style="width: 30%;">
+                <div class="panel panel-default" style="min-height: 180px;">
+                    {vendorDetails}
+                </div>
+            </td>
+            <td valign="top" id="td2" cclass="padding-left-5 padding-right-5" style="width: 30%;padding-left:2px;padding-right:2px;">
+                <div class="panel panel-default" style="min-height: 180px;">
+                    {deliveryDetails}
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+
+<div class="col-md-12 col-lg-12">
+    <div class="panel panel-default">
+        {content}
+    </div>
+</div>
+
+<div style="padding-left:15px;padding-right:15px;">
+    <table border="0" rules="none" width="100%">
+        <tbody>
+        <tr>
+            <td rowspan="2" id="td4" valign="top" style="width: 50%;padding-right: 2px;">
+                <div id="nota_height" class="panel panel-default no-margin">
+                    {noteDetails}
+                    <div class="panel-footer text-center">Please return signed PO to purchasing@indosan.com as confirmation of acceptance<br>
+                        Please mention PO No. in all correspondence and commercial document such as invoice, Packing List, BL/AWB, DO.</div>
+                </div>
+            </td>
+            <td valign="top" style="padding-right: 2px;padding-left: 2px;white-space: nowrap;">
+                <!--<div class="panel panel-default" style="white-space: nowrap;">-->
+                {sign_1}
+                <!--</div>-->
+            </td>
+            <td valign="top" style="padding-left: 2px;white-space: nowrap;">
+                <!--<div class="panel panel-default" style="white-space: nowrap;">-->
+                {sign_2}
+                <!--</div>-->
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="padding-left: 2px;white-space: nowrap;">
+                <!--<div class="panel panel-default" style="white-space: nowrap;">-->
+                {vendorSignitures}
+                <!--</div>-->
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="col-md-12">
+    {footer}
+</div>
+
+<script>
+    var body_nota_height = $(".panel-body", $("#nota_height") ).height()
+    if( parseFloat(body_nota_height) <= 120 ){
+        $(".panel-body", $("#nota_height") ).height(115)
+    }
+    $("span[style='color:#000000;text-align:center;']", $("td[colspan=3]") ).css('font-size', '25px');
+</script>
+
+</body>
+</html>

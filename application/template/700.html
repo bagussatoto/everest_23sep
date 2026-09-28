@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{title}</title>
+
+
+    <style>
+        #someSvgElementId {
+            width: 100%;
+        }
+    </style>
+    <style>
+
+
+        * {
+
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+
+        }
+        @media print {
+            a[href]:after {
+                display: none;
+                visibility: hidden;
+            }
+            td{
+                width: max-content;
+            }
+            span.text-white{
+                display: none;
+                visibility: hidden;
+            }
+        }
+        .halaman-print {
+            width: 215mm;
+            min-height: 300mm;
+
+            /*kecilkan padding untuk mmendapatkan margin yang tipis*/
+            padding: 1mm;
+            margin: 1mm auto;
+            border: 0px #D3D3D3 solid;
+            border-radius: 6px;
+            background: grey;
+            box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+
+        }
+
+        .halaman {
+            width: 210mm;
+            min-height: 297mm;
+
+            /*kecilkan padding untuk mmendapatkan margin yang tipis*/
+            padding: 1mm;
+            margin: 1mm auto;
+            border: 0px #D3D3D3 solid;
+            border-radius: 6px;
+            background: white;
+            box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+
+        }
+
+        .margin-halaman {
+
+            padding: 1mm;
+            border: 0px grey solid;
+            height: 297mm;
+            /*outline: 1mm darkgrey solid;*/
+
+        }
+
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        @media print {
+
+            html, body {
+                width: 210mm;
+                height: 297mm;
+            }
+
+            .halaman {
+                margin: 0;
+                border: initial;
+                border-radius: initial;
+                width: initial;
+                min-height: initial;
+                box-shadow: initial;
+                background: initial;
+                page-break-after: always;
+            }
+
+        }
+    </style>
+    <style>
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #FAFAFA;
+            font-size: 11px;
+            font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+        }
+        .row-eq-height {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display:         flex;
+        }
+        @media print {
+            a[href]:after {
+                display: none;
+                visibility: hidden;
+            }
+            td{
+                width: max-content;
+            }
+        }
+        @media screen {
+            a[href]:after {
+                display: none;
+                visibility: hidden;
+            }
+            td{
+                width: max-content;
+            }
+        }
+    </style>
+
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-3.3.7-dist/js/bootstrap.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js?v={local_version}"></script>
+
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/slimScroll/jquery.slimscroll.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}AdminLTE-2.3.11/dist/js/app.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}multi-step-modal-master/multi-step-modal.js?v={local_version}"></script>
+
+    <script src="{cdn_suport}bootstrap-fileinput-master/js/fileinput.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-toggle-master/js/bootstrap-toggle.min.js?v={local_version}"></script>
+    <script src="{base}assets/custom/hippo_ajax.js?v={local_version}"></script>
+
+    <link rel="stylesheet" href="{base}assets/custom/custom.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-3.3.7-dist/css/bootstrap.min.css?v={local_version}">
+
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini" onload="" style="">
+
+
+<div class="" style="width: 50%;float: left;position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;">
+    {companyProfile}
+</div>
+<div class="" style="width: 50%;float: left;position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;">
+    <img src="{base}assets/images/san_221iso.png" alt="images" class="img-responsive pull-right">
+</div>
+
+<div style="border-top: 4px double #000;margin-top: 10px;" class="text-center col-md-12 col-xs-12">
+    <h2 class="ttext-renggang-10 text-bold">
+        {title}
+    </h2>
+</div>
+
+<div class="" style="width: 100%;float: left;position: relative; min-height: 1px; padding-right: 1px; padding-left: 1px;">
+    <div class="" style="width: 50%;float: left;position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;">
+        <div class="panel panel-default" style="height: 210px;">
+            {customerDetails}
+        </div>
+    </div>
+    <div class="" style="width: 50%;float: left;position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;">
+        <div class="panel panel-default" style="height: 210px;">
+            {fixedElements}
+        </div>
+    </div>
+</div>
+
+<div class="" style="width: 100%;float: left;position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;">
+    <div class="panel panel-default table-responsive spacer-top-10">
+        {content}
+    </div>
+</div>
+<!--<div class="row" style="padding-left: 45px;padding-right: 45px;">-->
+<!--    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding text-capitalize">-->
+<!--        <div class="panel panel-default">-->
+<!--            {content_3}-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<div class="" style="width: 100%;float: left;position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;">
+    <div class="text-capitalize" style="width: 60%;float: left;position: relative; min-height: 1px; padding-right: 5px; padding-left: 0px;">
+        <div class="panel panel-default" style="min-height: 125px;">
+            {noteDetails}
+        </div>
+    </div>
+    <div class="" style="width: 40%;float: left;position: relative; min-height: 1px; padding-right: 0px; padding-left: 5px;">
+        <div class="panel panel-default text-center">
+            <div class="panel-heading text-center">PT. Everest Electronic</div>
+            <div class="panel-body" style="min-height: 145px;"></div>
+            <div class="panel-footer text-center">FINANCE DEPARTEMENT</div>
+        </div>
+    </div>
+    <div class="col-md-12 col-lg-12 text-left">
+        {footer}
+    </div>
+</div>
+
+</body>
+</html>

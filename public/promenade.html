@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flowchart Proyek Hampton Promenade</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #2c3e50);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            margin: 20px auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            width: 100%;
+        }
+
+        h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #e74c3c;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .case-number {
+            background: #e74c3c;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            font-size: 1rem;
+        }
+
+        .flowchart-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .flowchart-container::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #1a2a6c, #e74c3c);
+        }
+
+        .flow-step {
+            display: flex;
+            margin-bottom: 30px;
+            position: relative;
+            align-items: center;
+            padding: 15px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            background: #f8f9fa;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .flow-step:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            background: #fff;
+        }
+
+        .step-number {
+            background: #2c3e50;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex-grow: 1;
+        }
+
+        .step-title {
+            font-size: 1.4rem;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .step-title i {
+            margin-right: 10px;
+            color: #e74c3c;
+        }
+
+        .sub-steps {
+            padding-left: 20px;
+            border-left: 3px solid #3498db;
+            margin-top: 10px;
+        }
+
+        .sub-step {
+            margin: 10px 0;
+            padding: 10px;
+            background: #e8f4fc;
+            border-radius: 8px;
+            position: relative;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .sub-step::before {
+            content: "•";
+            color: #3498db;
+            font-weight: bold;
+            font-size: 1.5rem;
+            margin-right: 10px;
+        }
+
+        .arrow {
+            display: flex;
+            justify-content: center;
+            margin: 10px 0;
+        }
+
+        .arrow i {
+            font-size: 2rem;
+            color: #e74c3c;
+            animation: bounce 1.5s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .legend {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 5px 15px;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+
+        .color-1 {
+            background: #2c3e50;
+        }
+
+        .color-2 {
+            background: #e74c3c;
+        }
+
+        .color-3 {
+            background: #3498db;
+        }
+
+        .color-4 {
+            background: #2ecc71;
+        }
+
+        .responsibility {
+            margin-top: 40px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            width: 100%;
+        }
+
+        .responsibility h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            font-size: 1.8rem;
+        }
+
+        .role-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .role-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border-left: 4px solid #3498db;
+        }
+
+        .role-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .role-card h3 {
+            color: #e74c3c;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .role-card ul {
+            padding-left: 20px;
+        }
+
+        .role-card li {
+            margin: 8px 0;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: white;
+            margin-top: 30px;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .flow-step {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .step-number {
+                margin-bottom: 15px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+        }
+
+        .btn-ijinkan {
+            background-color: #f44336; /* Warna merah terang */
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn-ijinkan:hover {
+            background-color: #d32f2f; /* Warna lebih gelap saat hover */
+            transform: scale(1.05);
+        }
+
+        .btn-ijinkan:active {
+            background-color: #b71c1c;
+            transform: scale(0.97);
+        }
+    </style>
+
+    <style>
+        /* Step Number bulat */
+        .step-number {
+            background: #2c3e50;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-right: 20px;
+            flex-shrink: 0;
+            margin-bottom: 10px;
+            margin-left: 15px;
+        }
+
+        .step-tutorial {
+            text-transform: capitalize;
+            font-style: italic;
+            font-size: .9em;
+        }
+
+        /* Bungkus vertikal angka + play */
+        .step-number-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-right: 5px;
+            text-align: center;
+        }
+
+        /* Modal */
+        .video-modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .video-modal-content {
+            position: relative;
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 0px;
+            width: 80%;
+            max-width: 800px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .video-modal iframe {
+            width: 100%;
+            height: 450px;
+            border: none;
+        }
+
+        .video-modal-close {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #f49804;
+            cursor: pointer;
+        }
+
+        .step-number i {
+            font-size: 1.3rem;
+            color: white;
+            cursor: pointer;
+        }
+
+        .step-number i:hover {
+            color: #f39c12;
+        }
+    </style>
+</head>
+
+<body onload="tryPlayAudio()">
+<!-- Kontainer audio control + seek bar -->
+<div style="
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    display: none;
+" id="audio-wrapper">
+
+    <!-- Tombol mute/unmute -->
+    <div id="audio-control" style="
+    background: white;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+">
+    <button onclick="toggleAudio()" style="
+        background: none;
+        border: none;
+        color: orangered;
+        font-size: 22px;
+        cursor: pointer;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    " id="sound-btn">
+        <i class="fas fa-volume-up"></i>
+    </button>
+    </div>
+
+    <!-- Seek Slider -->
+    <input type="range" id="seek-slider" min="0" max="100" value="0" step="0.1" style="
+        width: 100px;
+        appearance: none;
+        background: #ccc;
+        height: 4px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-top: 15px;
+    ">
+</div>
+
+
+<!--stop-->
+
+<!-- Notifikasi jika autoplay gagal -->
+<div id="sound-notice"
+     style="display:none; position:fixed; top:80px; right:20px; z-index:9999; background:#f8d7da; color:#721c24; padding:15px; border-radius:8px; border:1px solid #f5c6cb;">
+    🔒 Suara diblokir oleh browser.<br>
+    <button type="button" class="btn-ijinkan" onclick="manualPlay()" style="margin-top:10px; padding:5px 10px;">Izinkan
+        Suara
+    </button>
+</div>
+
+<!-- Audio element -->
+<audio id="bg-audio" src="project.mp3" loop></audio>
+
+<script>
+    const audio = document.getElementById("bg-audio");
+    const controlBtn = document.getElementById("sound-btn");
+    const icon = controlBtn.querySelector("i");
+    // const controlDiv = document.getElementById("audio-control");
+    const controlDiv = document.getElementById("audio-wrapper");
+    const notice = document.getElementById("sound-notice");
+    const seekSlider = document.getElementById("seek-slider");
+
+    let isSeeking = false;
+
+    function tryPlayAudio() {
+        audio.play().then(() => {
+            controlDiv.style.display = "flex";
+            icon.className = "fas fa-volume-up";
+        }).catch((err) => {
+            console.warn("Autoplay diblokir:", err);
+            notice.style.display = "block";
+            controlDiv.style.display = "none";
+        });
+    }
+
+    function manualPlay() {
+        audio.play().then(() => {
+            notice.style.display = "none";
+            controlDiv.style.display = "flex";
+            icon.className = "fas fa-volume-up";
+        }).catch(err => {
+            alert("Gagal memutar suara: " + err.message);
+        });
+    }
+
+    function toggleAudio() {
+        if (audio.paused) {
+            audio.play();
+            icon.className = "fas fa-volume-up";
+        } else {
+            audio.pause();
+            icon.className = "fas fa-volume-mute";
+        }
+    }
+
+    // Coba autoplay saat halaman dimuat
+    window.addEventListener('load', tryPlayAudio);
+
+    // Update seek slider while audio plays
+    audio.addEventListener("timeupdate", () => {
+        if (!isSeeking && audio.duration) {
+            const progress = (audio.currentTime / audio.duration) * 100;
+            seekSlider.value = progress;
+        }
+    });
+
+    // Handle manual seeking
+    seekSlider.addEventListener("input", () => {
+        isSeeking = true;
+    });
+
+    seekSlider.addEventListener("change", () => {
+        const time = (seekSlider.value / 100) * audio.duration;
+        audio.currentTime = time;
+        isSeeking = false;
+    });
+</script>
+
+<!-- Modal (cukup satu) -->
+<div class="video-modal" id="videoModal">
+    <div class="video-modal-content">
+        <span class="video-modal-close" onclick="closeVideoModal()">&times;</span>
+        <iframe id="videoFrame" src="" allowfullscreen></iframe>
+    </div>
+</div>
+
+<script>
+    function openVideoModal(videoUrl) {
+        const modal = document.getElementById("videoModal");
+        const iframe = document.getElementById("videoFrame");
+        iframe.src = videoUrl;
+        modal.style.display = "block";
+    }
+
+    function closeVideoModal() {
+        const modal = document.getElementById("videoModal");
+        const iframe = document.getElementById("videoFrame");
+        iframe.src = "";
+        modal.style.display = "none";
+    }
+
+</script>
+
+<div class="container">
+    <header>
+        <h1><i class="fas fa-project-diagram"></i> Flowchart Proyek Hampton Promenade</h1>
+        <div class="subtitle">Alur Kerja Penyelesaian Proyek</div>
+        <div class="case-number">CONTOH KASUS: SO.PJ.210.18</div>
+    </header>
+
+    <div class="flowchart-container">
+        <!-- Langkah 1 -->
+        <div class="flow-step">
+            <!--<div class="step-number">1</div>-->
+            <div class="step-number-group">
+                <div class="step-number">1</div>
+                <a href="javascript:void(0);" class="step-tutorial"
+                   onclick="openVideoModal('https://www.youtube.com/embed/BvG_g0JeRQQ')">tutorial <br>klik disini</a>
+            </div>
+
+            <div class="step-content">
+                <h3 class="step-title"><i class="fas fa-truck-loading"></i> Distribusikan Barang & Supplies</h3>
+                <div class="sub-steps">
+                    <div class="sub-step">Distribusikan barang dari Gudang Project DC ke Gudang Project (on site) sesuai
+                        SPK
+                    </div>
+                    <div class="sub-step">Terima barang agar bisa digunakan (proses auto/manual)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="arrow">
+            <i class="fas fa-arrow-down"></i>
+        </div>
+
+        <!-- Langkah 2 -->
+        <div class="flow-step">
+            <div class="step-number-group">
+                <div class="step-number">2</div>
+                <a href="javascript:void(0);" class="step-tutorial"
+                   onclick="openVideoModal('https://www.youtube.com/embed/NtyTO7WYp64')">tutorial <br>klik
+                    disini</a>
+            </div>
+            <div class="step-content">
+                <h3 class="step-title"><i class="fas fa-tasks"></i> Selesaikan Tasklist</h3>
+                <div class="sub-steps">
+                    <div class="sub-step">Kirim foto sebagai bukti kerja</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="arrow">
+            <i class="fas fa-arrow-down"></i>
+        </div>
+
+        <!-- Langkah 3 -->
+        <div class="flow-step">
+            <div class="step-number-group">
+                <div class="step-number">3</div>
+                <a href="javascript:void(0);" class="step-tutorial"
+                   onclick="openVideoModal('https://www.youtube.com/embed/tK8c99qI7PU')">tutorial <br>klik disini</a>
+            </div>
+            <div class="step-content">
+                <h3 class="step-title"><i class="fas fa-check-circle"></i> Lakukan Quality Control (QC)</h3>
+                <div class="sub-steps">
+                    <div class="sub-step">Approve oleh Supervisor</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="arrow">
+            <i class="fas fa-arrow-down"></i>
+        </div>
+
+        <!-- Langkah 4 -->
+        <div class="flow-step">
+            <div class="step-number-group">
+                <div class="step-number">4</div>
+                <a href="javascript:void(0);" class="step-tutorial"
+                   onclick="openVideoModal('https://www.youtube.com/embed/uJg8DHoWpP0')">tutorial <br>klik disini</a>
+            </div>
+            <div class="step-content">
+                <h3 class="step-title"><i class="fas fa-money-bill-wave"></i> Realisasi Biaya / Bayar Biaya</h3>
+                <div class="sub-steps">
+                    <div class="sub-step">Biaya yang timbul masuk ke bagian Finance untuk dibayar</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="arrow">
+            <i class="fas fa-arrow-down"></i>
+        </div>
+
+        <!-- Langkah 5 -->
+        <div class="flow-step">
+            <div class="step-number-group">
+                <div class="step-number">5</div>
+                <a href="javascript:void(0);" class="step-tutorial"
+                   onclick="openVideoModal('https://www.youtube.com/embed/rsTNZsMKHsU')">tutorial <br>klik disini</a>
+            </div>
+            <div class="step-content">
+                <h3 class="step-title"><i class="fas fa-file-invoice"></i> Buat Termin</h3>
+                <div class="sub-steps">
+                    <div class="sub-step">Bagian Project membuat termin tagihan</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="arrow">
+            <i class="fas fa-arrow-down"></i>
+        </div>
+
+        <!-- Langkah 6 -->
+        <div class="flow-step">
+            <div class="step-number-group">
+            <div class="step-number">6</div>
+                <a href="javascript:void(0);" class="step-tutorial"
+                   onclick="openVideoModal('https://www.youtube.com/embed/6_KjsEhIE5g ')">tutorial <br>klik disini</a>
+            </div>
+            <div class="step-content">
+                <h3 class="step-title"><i class="fas fa-receipt"></i> Menerima Pembayaran</h3>
+                <div class="sub-steps">
+                    <div class="sub-step">Bagian A/R menerima pembayaran</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="arrow">
+            <i class="fas fa-arrow-down"></i>
+        </div>
+
+        <!-- Langkah 7 -->
+        <div class="flow-step">
+            <div class="step-number">7</div>
+            <div class="step-content">
+                <h3 class="step-title"><i class="fas fa-flag-checkered"></i> Tutup Project</h3>
+                <div class="sub-steps">
+                    <div class="sub-step">Jika sudah lunas, project ditutup oleh Kepala Project</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="legend">
+        <div class="legend-item">
+            <div class="legend-color color-1"></div>
+            <span>Langkah Utama</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color color-2"></div>
+            <span>Sub-langkah</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color color-3"></div>
+            <span>Alur Proses</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color color-4"></div>
+            <span>Tanggung Jawab</span>
+        </div>
+    </div>
+
+    <div class="responsibility">
+        <h2><i class="fas fa-users"></i> Tanggung Jawab Tim</h2>
+        <div class="role-grid">
+            <div class="role-card">
+                <h3><i class="fas fa-warehouse"></i> Logistik/Gudang</h3>
+                <ul>
+                    <li>Distribusi barang sesuai SPK</li>
+                    <li>Penerimaan barang di lokasi</li>
+                    <li>Manajemen gudang on-site</li>
+                </ul>
+            </div>
+
+            <div class="role-card">
+                <h3><i class="fas fa-hard-hat"></i> Tim Lapangan</h3>
+                <ul>
+                    <li>Eksekusi tasklist</li>
+                    <li>Unggah bukti foto pekerjaan</li>
+                    <li>Pelaksanaan pekerjaan teknis</li>
+                </ul>
+            </div>
+
+            <div class="role-card">
+                <h3><i class="fas fa-user-shield"></i> Supervisor</h3>
+                <ul>
+                    <li>Approve tasklist</li>
+                    <li>Quality Control (QC)</li>
+                    <li>Pengawasan lapangan</li>
+                </ul>
+            </div>
+
+            <div class="role-card">
+                <h3><i class="fas fa-calculator"></i> Finance</h3>
+                <ul>
+                    <li>Pembayaran biaya operasional</li>
+                    <li>Manajemen keuangan proyek</li>
+                    <li>Pembuatan termin tagihan</li>
+                </ul>
+            </div>
+
+            <div class="role-card">
+                <h3><i class="fas fa-file-invoice-dollar"></i> A/R</h3>
+                <ul>
+                    <li>Penerimaan pembayaran</li>
+                    <li>Verifikasi kelunasan</li>
+                    <li>Manajemen tagihan</li>
+                </ul>
+            </div>
+
+            <div class="role-card">
+                <h3><i class="fas fa-user-tie"></i> Kepala Proyek</h3>
+                <ul>
+                    <li>Penutupan proyek</li>
+                    <li>Final approval</li>
+                    <li>Koordinasi keseluruhan</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 Proyek Hampton Promenade | Sistem Manajemen Proyek Everest</p>
+    </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,2052 @@
+<!DOCTYPE html>
+<html>
+<!-- home.html -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{title}</title>
+    <!-- Tell the browser to be responsive to screen width -->
+
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link id="favicon" rel="icon" type='image/x-icon' href="{favicon}?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-3.3.7-dist/css/bootstrap.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}Font-Awesome-master/css/font-awesome.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}ionicons-master/css/ionicons.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}simple-line-icons-master/css/simple-line-icons.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/dist/css/AdminLTE.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}bootstrap3-dialog-master/dist/css/bootstrap-dialog.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/dist/css/skins/_all-skins.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-fileinput-master/css/fileinput.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-toggle-master/css/bootstrap-toggle.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-xlgrid-master/bootstrap-xlgrid.min.css?v={local_version}">
+    <link rel="stylesheet" href="{base}assets/custom/custom.min.css?v={local_version}">
+    <link rel="stylesheet" href="{base}assets/custom/dialog.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}qtip/jquery.qtip.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}HoldOn/HoldOn.css?v={local_version}">
+    <link rel="stylesheet" href="{base}assets/custom/jquery.floatingscroll.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}DataTables-1.10.13/media/css/dataTables.bootstrap.min.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}DataTables-1.10.13/media/css/jquery.dataTables_themeroller.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}DataTables-1.10.13/yadcf-0.9.3/jquery.dataTables.yadcf.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}DataTables-1.10.13/extensions/Buttons/css/buttons.dataTables.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}DataTables-1.10.13/extensions/FixedHeader/css/fixedHeader.bootstrap.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}DataTables-1.10.13/extensions/FixedColumns/css/fixedColumns.bootstrap.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}AdminLTE-2.3.11/plugins/timepicker/bootstrap-timepicker.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}MomentJs-2.24.0/daterangepicker.min.css?v={local_version}">
+
+    <link rel="stylesheet"
+          href="{cdn_suport}DataTables-1.10.13/extensions/FixedHeader/css/fixedHeader.bootstrap.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}DataTables-1.10.13/extensions/FixedColumns/css/fixedColumns.bootstrap.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-select-1.13.9/dist/css/bootstrap-select.css?v={local_version}">
+
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v={local_version}"></script>
+    <script src="{base}assets/custom/custom.js?v={local_version}"></script>
+    <script src="{cdn_suport}HoldOn/HoldOn.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-3.3.7-dist/js/bootstrap.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js?v={local_version}"></script>
+
+    <script src="{base}assets/custom/jquery.floatingscroll.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/timepicker/bootstrap-timepicker.js?v={local_version}"></script>
+    <script src="{cdn_suport}MomentJs-2.24.0/moment.js?v={local_version}"></script>
+    <script src="{cdn_suport}MomentJs-2.24.0/daterangepicker.js?v={local_version}"></script>
+
+    <script src="{cdn_suport}DataTables-1.10.13/media/js/jquery.dataTables.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/media/js/dataTables.bootstrap.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/media/js/jquery.highlight.js?v={local_version}"></script>
+
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/dataTables.buttons.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.colVis.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.print.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.html5.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.flash.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/yadcf-0.9.3/jquery.dataTables.yadcf.js?v={local_version}"></script>
+
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/FixedHeader/js/dataTables.fixedHeader.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/FixedColumns/js/dataTables.fixedColumns.js?v={local_version}"></script>
+    <script src="{cdn_suport}qtip/jquery.qtip.min.js?v={local_version}"></script>
+
+    <script src="{cdn_suport}bootstrap-select-1.13.9/dist/js/bootstrap-select.js?v={local_version}"></script>
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <!--<script src="https://dunggramer.github.io/disable-devtool/disable-devtool.min.js" defer></script>-->
+
+    <script src="//code.responsivevoice.org/responsivevoice.js?key=6R9YKMzF"></script>
+
+    <style>
+        table tbody th, table tbody td {
+            white-space: nowrap;
+            max-width: 100px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    </style>
+
+    <style type="text/css">
+
+        .grecaptcha-badge {
+            display: none !important
+        }
+
+        .opaq8 {
+            opacity: 0.8
+        }
+
+        .flex-vertical-center, .main-first-section, .register-div, .login-div {
+            display: flex;
+            flex-direction: column;
+            justify-content: center
+        }
+
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+            -webkit-appearance: none
+        }
+
+        .hide-scrollbar {
+            scrollbar-width: none
+        }
+
+        /*.text-green {*/
+        /*color: #1db954*/
+        /*}*/
+
+        /*.text-red {*/
+        /*color: #f45b5b*/
+        /*}*/
+
+        /*.text-blue {*/
+        /*color: #00b3e3 !important*/
+        /*}*/
+
+        /*.text-brown {*/
+        /*color: #b98b1d*/
+        /*}*/
+
+        /*.text-grey {*/
+        /*color: #c8c8c8*/
+        /*}*/
+
+        @-moz-keyframes spin {
+            100% {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg)
+            }
+        }
+
+        @-webkit-keyframes spin {
+            100% {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg)
+            }
+        }
+
+        @keyframes spin {
+            100% {
+                -webkit-transform: rotate(360deg);
+                transform: rotate(360deg)
+            }
+        }
+
+        /*a {*/
+        /*color: #1db954*/
+        /*}*/
+
+        /*a:hover {*/
+        /*color: #189945*/
+        /*}*/
+
+        /**:focus, input, .navbar-toggler:focus {*/
+        /*outline: none*/
+        /*}*/
+
+        /*.text-my-primary {*/
+        /*color: #1db954*/
+        /*}*/
+
+        /*.navbar {*/
+        /*padding: 0 1rem !important*/
+        /*}*/
+
+        /*.nav-primary {*/
+        /*background-color: #2f2e2e*/
+        /*}*/
+
+        /*.nav-primary .nav-link, .navbar-dark .nav-link {*/
+        /*color: white !important*/
+        /*}*/
+
+        /*.navbar-toggler {*/
+        /*outline: none;*/
+        /*border: none*/
+        /*}*/
+
+        /*.nav-primary li {*/
+        /*padding-top: .4rem;*/
+        /*padding-bottom: .4rem*/
+        /*}*/
+
+        /*.nav-item:hover, .navbar-toggler:hover, .dropdown-item:hover {*/
+        /*background-color: #38383d;*/
+        /*color: white*/
+        /*}*/
+
+        /*.dropdown-menu {*/
+        /*font-size: unset;*/
+        /*background: #2f2e2e*/
+        /*}*/
+
+        /*.dropdown-item {*/
+        /*color: white*/
+        /*}*/
+
+        /*.dropdown-item.active {*/
+        /*color: #1db954;*/
+        /*background: #2f2e2e*/
+        /*}*/
+
+        /*@media (min-width: 768px) {*/
+        /*nav li.dropdown:hover > div.dropdown-menu {*/
+        /*display: block*/
+        /*}*/
+        /*}*/
+
+        .main-first-section {
+            background-image: url("https://static.finnhub.io/img/finnhub_2020-05-09_20_51/wave.gif");
+            background-color: #0a0a0a;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center right;
+            position: relative;
+            overflow: hidden;
+            align-items: stretch;
+            height: 80vh;
+            color: white
+        }
+
+        /*.buttons {*/
+        /*display: flex;*/
+        /*flex-wrap: wrap;*/
+        /*justify-content: flex-start*/
+        /*}*/
+
+        /*.buttons a, .buttons button {*/
+        /*margin-left: 5px;*/
+        /*margin-bottom: 5px*/
+        /*}*/
+
+        /*.btn-black {*/
+        /*background-color: #363636;*/
+        /*border-color: transparent;*/
+        /*padding: 12px 20px;*/
+        /*font-weight: 600;*/
+        /*color: white !important*/
+        /*}*/
+
+        /*.btn-black:hover {*/
+        /*opacity: 0.9*/
+        /*}*/
+
+        /*.btn-primary {*/
+        /*background-color: #1db954;*/
+        /*border-color: transparent;*/
+        /*padding: 12px 20px;*/
+        /*font-weight: 500;*/
+        /*color: white*/
+        /*}*/
+
+        /*.btn-primary:hover {*/
+        /*background-color: #189945;*/
+        /*border-color: transparent*/
+        /*}*/
+
+        /*.btn-transparent {*/
+        /*border-color: #1db954;*/
+        /*background-color: transparent;*/
+        /*padding: 12px 20px;*/
+        /*font-weight: 500*/
+        /*}*/
+
+        /*.btn-transparent:hover {*/
+        /*background-color: #1db954;*/
+        /*color: white !important*/
+        /*}*/
+
+        /*.btn-side-by-side {*/
+        /*display: inline-block;*/
+        /*margin-right: 5px*/
+        /*}*/
+
+        /*@media only screen and (max-width: 526px) {*/
+        /*.btn-side-by-side {*/
+        /*margin-bottom: 5px*/
+        /*}*/
+        /*}*/
+
+        /*.primary-form {*/
+        /*position: relative;*/
+        /*display: flex;*/
+        /*flex-direction: column;*/
+        /*z-index: 1;*/
+        /*padding: 30px 15px;*/
+        /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
+        /*margin-left: auto;*/
+        /*margin-right: auto;*/
+        /*width: 33vw;*/
+        /*min-width: 350px;*/
+        /*background-color: white;*/
+        /*min-height: 400px*/
+        /*}*/
+
+        /*.primary-form input {*/
+        /*padding: 12px 7px;*/
+        /*margin-top: 12px;*/
+        /*width: 100%*/
+        /*}*/
+
+        .register-div {
+            height: 100vh;
+            background-image: url("https://static.finnhub.io/img/finnhub_2020-05-09_20_51/photo-1534469589579-86bd01bc003a.jpg");
+            background-color: #0a0a0a;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center
+        }
+
+        .login-div {
+            height: 100vh;
+            background-image: url("https://static.finnhub.io/img/finnhub_2020-05-09_20_51/racks-server.jpg");
+            background-color: #0a0a0a;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center
+        }
+
+        /*.loader {*/
+        /*position: absolute;*/
+        /*left: 45%;*/
+        /*top: 45%;*/
+        /*border: 5px solid #f3f3f3;*/
+        /*border-top: 5px solid #1db954;*/
+        /*border-radius: 50%;*/
+        /*width: 50px;*/
+        /*height: 50px;*/
+        /*animation: spin 2s linear infinite;*/
+        /*z-index: 999*/
+        /*}*/
+
+        .main-about-section, .timeseries-section {
+            padding: 100px 15px;
+            background: linear-gradient(135deg, #343434 0%, #010101 100%);
+            color: white;
+            position: relative
+        }
+
+        .hero {
+            align-items: stretch;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background-color: #222;
+            color: #fff
+        }
+
+        .hero-body {
+            flex-grow: 1;
+            flex-shrink: 0
+        }
+
+        .tick {
+            min-width: 180px;
+            border-right: 1px solid #363636;
+            padding: 0 1rem;
+            white-space: nowrap
+        }
+
+        .subtitle.is-6 {
+            font-size: .9rem;
+            color: #ffffff
+        }
+
+        .subtitle {
+            color: #6b6b6b;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.25
+        }
+
+        .columns .column {
+            display: inline-block;
+            flex-basis: 0;
+            flex-grow: 1;
+            flex-shrink: 1;
+            padding: .25rem
+        }
+
+        .columns.is-mobile {
+            display: flex
+        }
+
+        .columns {
+            margin-top: .25rem;
+            margin-bottom: .25rem
+        }
+
+        .price {
+            color: #ffffff;
+            position: relative
+        }
+
+        #ticker {
+            flex-shrink: 0;
+            overflow: scroll
+        }
+
+        #ticker .tick {
+            min-width: 155px;
+            border-right: 1px solid #fefefe;
+            padding: 0 1rem;
+            white-space: nowrap
+        }
+
+        .column {
+            display: block;
+            flex-basis: 0;
+            flex-grow: 1;
+            flex-shrink: 1
+        }
+
+        .is-pulled-right {
+            float: right !important
+        }
+
+        /*.icon {*/
+        /*display: inline-flex;*/
+        /*justify-content: center;*/
+        /*height: 1.5rem;*/
+        /*width: 1.5rem*/
+        /*}*/
+
+        .pricing-bg {
+            min-height: 80vh;
+            background-image: url("https://static.finnhub.io/img/finnhub_2020-05-09_20_51/racks-server.jpg");
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 8vw), 0 100%);
+            background-color: #0a0a0a;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center
+        }
+
+        .pricing-parent-div {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 100px 15px
+        }
+
+        .pricing-parent-div .pricing-div {
+            margin-right: 15px
+        }
+
+        .pricing-div {
+            flex: 1 1 0;
+            padding: 12px 15px;
+            border: 2px solid #363636;
+            border-radius: 5px;
+            max-width: 400px;
+            min-height: 350px;
+            background: white
+        }
+
+        .pricing-div:hover {
+            transform: scale(1.01, 1.01)
+        }
+
+        @media only screen and (max-width: 768px) {
+            .pricing-parent-div {
+                display: flex;
+                flex-direction: column;
+                padding-left: 0;
+                padding-right: 0
+            }
+
+            .pricing-div {
+                flex: unset;
+                margin-bottom: 10px;
+                max-width: unset
+            }
+
+            .pricing-parent-div .pricing-div {
+                margin-right: 0
+            }
+        }
+
+        .pricing-number {
+            color: #1db954;
+            font-weight: bold;
+            font-size: 1.2rem
+        }
+
+        /*.form-control {*/
+        /*background: #F4F7FB*/
+        /*}*/
+
+        .pricing-div ul {
+            list-style-type: none;
+            margin-left: 0;
+            padding-left: 20px
+        }
+
+        .fa-check-circle {
+            color: #1db954;
+            margin-right: 15px
+        }
+
+        /*.overlay {*/
+        /*position: fixed;*/
+        /*top: 0;*/
+        /*left: 0;*/
+        /*width: 100%;*/
+        /*height: 100%;*/
+        /*background-color: #2f2c2cab;*/
+        /*z-index: 99*/
+        /*}*/
+
+        /*.overlay-card-payment {*/
+        /*border: 2px solid #363636;*/
+        /*border-radius: 5px;*/
+        /*background: whitesmoke;*/
+        /*padding: 20px;*/
+        /*box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);*/
+        /*position: relative;*/
+        /*top: 40%;*/
+        /*width: 100vw;*/
+        /*max-width: 600px;*/
+        /*z-index: 10*/
+        /*}*/
+
+        /*.overlay-close {*/
+        /*position: absolute;*/
+        /*right: 10px;*/
+        /*top: 10px*/
+        /*}*/
+
+        /*.overlay-close:hover {*/
+        /*opacity: 0.8;*/
+        /*cursor: pointer*/
+        /*}*/
+
+        /*.overlay-close:after {*/
+        /*content: 'x'*/
+        /*}*/
+
+        .image-3d-left {
+            transform-style: preserve-3d;
+            transition: transform 1s;
+            backface-visibility: hidden;
+            transform: perspective(350px) rotateY(-12deg);
+            cursor: pointer
+        }
+
+        @media (max-width: 768px) {
+            .image-3d-left {
+                transform: none
+            }
+        }
+
+        .image-3d-left:hover {
+            transform: perspective(350px) rotateY(0deg)
+        }
+
+        .portfolio_image_area {
+            padding: 100px 15px
+        }
+
+        .portfolio_image_area .single_Portfolio {
+            position: relative;
+            margin-bottom: 30px;
+            overflow: hidden;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px
+        }
+
+        .portfolio_image_area .single_Portfolio .portfolio_thumb {
+            height: 350px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;
+            overflow: hidden
+        }
+
+        @media (max-width: 767px) {
+            .portfolio_image_area .single_Portfolio .portfolio_thumb {
+                height: auto
+            }
+        }
+
+        .portfolio_image_area .single_Portfolio .portfolio_thumb img {
+            width: 100%;
+            height: 100%;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px
+        }
+
+        .portfolio_image_area .single_Portfolio .portfolio_hover {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            background: #fff;
+            border: 0;
+            -webkit-transform: scale(0.9);
+            -moz-transform: scale(0.9);
+            -ms-transform: scale(0.9);
+            transform: scale(0.9);
+            -webkit-transition: 0.5s;
+            -moz-transition: 0.5s;
+            -o-transition: 0.5s;
+            transition: 0.5s;
+            opacity: 0;
+            overflow: hidden;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px
+        }
+
+        .portfolio_image_area .single_Portfolio .portfolio_hover .title {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            text-align: center;
+            -webkit-transform: translateY(-50%);
+            -moz-transform: translateY(-50%);
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%)
+        }
+
+        .portfolio_image_area .single_Portfolio .portfolio_hover span {
+            font-size: 14px;
+            color: #1db954;
+            font-weight: 400;
+            font-family: "Roboto", sans-serif
+        }
+
+        .portfolio_image_area .single_Portfolio .portfolio_hover h3 {
+            color: #1F1F1F;
+            font-size: 24px;
+            font-weight: 700;
+            margin-top: 11px;
+            margin-bottom: 25px
+        }
+
+        .portfolio_image_area .single_Portfolio .portfolio_hover .boxed-btn3:hover {
+            border: 1px solid #1db954 !important;
+            color: #1db954 !important;
+            background: #fff !important
+        }
+
+        .portfolio_image_area .single_Portfolio:hover .portfolio_hover {
+            -webkit-transform: scale(1);
+            -moz-transform: scale(1);
+            -ms-transform: scale(1);
+            transform: scale(1);
+            opacity: 1
+        }
+
+        .how_we_work_area {
+            position: relative
+        }
+
+        .how_we_work_area .work_info {
+            padding: 75px 0
+        }
+
+        @media only screen and (min-width: 768px) {
+            .how_we_work_area .work_info {
+                padding: 150px 0
+            }
+
+            .how_we_work_area::before {
+                position: absolute;
+                content: '';
+                width: 50%;
+                right: 0;
+                top: 0;
+                height: 100%;
+                background-image: url(https://static.finnhub.io/img/finnhub_2020-05-09_20_51/racks-server.jpg);
+                background-size: cover;
+                background-position: center center;
+                -webkit-border-radius: 20px 0 0 20px;
+                -moz-border-radius: 20px 0 0 20px;
+                border-radius: 20px 0 0 20px
+            }
+        }
+
+        .floating-box {
+            background: #f9f7f7;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)
+        }
+
+        .floating-box:hover {
+            box-shadow: 0 10px 30px 0 rgba(0, 0, 0, 0.2), 0 12px 40px 0 rgba(0, 0, 0, 0.19);
+            transform: scale(1.01, 1.01)
+        }
+
+        .footer-default ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0
+        }
+
+        .footer-default li {
+            float: left
+        }
+
+        .fab {
+            padding: 15px;
+            font-size: 25px;
+            width: 25px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 50%;
+            box-sizing: unset;
+            margin-left: 5px
+        }
+
+        .fab:hover {
+            text-decoration: none;
+            color: #1db954
+        }
+
+        .fa-facebook-f, .fa-linkedin-in, .fa-pinterest-p, .fa-twitter, .fa-github, .fa-youtube, .fa-reddit, .fa-github-square, .fa-kickstarter-k {
+            background: #3b3c3e;
+            color: white
+        }
+
+        .footer-icon {
+            font-size: 1.2rem;
+            margin-right: 10px
+        }
+
+        .footer-icon:hover {
+            color: #1db954
+        }
+
+        .client-logo-div {
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+            overflow: auto;
+            flex: 1 0 10px;
+            padding-left: 30px;
+            padding-right: 30px
+        }
+
+        .client-logo-div img {
+            max-height: 100px;
+            min-width: 120px;
+            margin-right: 25px
+        }
+
+        @media only screen and (max-width: 526px) {
+            .client-logo-div {
+                padding-left: 5px;
+                padding-right: 5px
+            }
+        }
+
+        /*.card-header::before {*/
+        /*content: '';*/
+        /*position: absolute;*/
+        /*width: 12px;*/
+        /*height: 2px;*/
+        /*top: 22px;*/
+        /*right: 15px;*/
+        /*margin-left: -6px;*/
+        /*margin-top: -1px;*/
+        /*background: #aaadb1*/
+        /*}*/
+
+        /*.card-header::after {*/
+        /*content: '';*/
+        /*position: absolute;*/
+        /*width: 2px;*/
+        /*height: 12px;*/
+        /*top: 22px;*/
+        /*right: 20px;*/
+        /*margin-left: -1px;*/
+        /*margin-top: -6px;*/
+        /*transition: transform .25s ease, opacity .25s ease 75ms;*/
+        /*background: #aaadb1*/
+        /*}*/
+
+        .widget-embed-code pre {
+            border-radius: 10px;
+            padding: 1rem !important
+        }
+
+        .open-estimate-parent .tab-list {
+            border-bottom: 1px solid #ccc;
+            padding-left: 0
+        }
+
+        .open-estimate-parent .tab-list-item {
+            display: inline-block;
+            list-style: none;
+            margin-bottom: -1px;
+            padding: 0.5rem 0.75rem
+        }
+
+        .open-estimate-parent .tab-list-active {
+            background-color: white;
+            border: solid #ccc;
+            border-width: 1px 1px 0 1px
+        }
+
+        .open-estimate-parent .open-estimate-info {
+            padding-bottom: 0.1px;
+            display: flex;
+            flex-wrap: wrap
+        }
+
+        .open-estimate-parent .price-text {
+            padding-top: 8px;
+            font-size: 1.2rem
+        }
+
+        .open-estimate-parent .open-estimate-tab-count {
+            font-size: 1.0rem
+        }
+
+        .open-estimate-parent .open-estimate-tab-header {
+            padding-top: 20px;
+            padding-bottom: 10px;
+            margin-right: 10px
+        }
+
+        .open-estimate-parent .open-estimate-sub {
+            border: none !important
+        }
+
+        .open-estimate-parent .open-estimate-sub-tab {
+            text-align: center;
+            background: #fff;
+            font-size: 1.05rem;
+            padding: 10px 10px 15px 10px;
+            font-weight: 600;
+            bottom: 0px;
+            color: black;
+            box-shadow: inset 0 6px 0 0 #1db954;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            border-left: 1px solid rgba(0, 0, 0, 0.1);
+            border-right: 1px solid rgba(0, 0, 0, 0.1);
+            border-bottom: none !important
+        }
+
+        .open-estimate-parent .open-estimate-header {
+            display: flex;
+            flex-wrap: wrap;
+            min-height: fit-content;
+            border-top: 1px solid rgba(0, 0, 0, 0.1)
+        }
+
+        .open-estimate-parent .open-estimate-header-item.active {
+            box-shadow: inset 0 6px 0 0 #1db954
+        }
+
+        .open-estimate-parent .open-estimate-header-item {
+            padding: 10px 15px 5px;
+            color: black;
+            font-size: 1.05rem;
+            border-right: 1px solid #E9ECF0;
+            cursor: pointer
+        }
+
+        .open-estimate-parent .open-estimate-header-item:hover {
+            color: black;
+            text-decoration: none;
+            box-shadow: inset 0 6px 0 0 #1db954
+        }
+
+        .open-estimate-parent .open-estimate-table {
+            border-right: 1px solid rgba(0, 0, 0, 0.1);
+            margin: 0 !important
+        }
+
+        .open-estimate-parent .open-estimate-table th {
+            min-width: 10%
+        }
+
+        .open-estimate-parent .open-estimate-table td {
+            min-width: 10%;
+            max-width: 20%;
+            overflow: auto
+        }
+
+        .open-estimate-parent .open-estimate-table-row {
+            box-shadow: inset 4px 0 0 0 #198DE6
+        }
+
+        .open-estimate-parent .open-estimate-table-row-wall-stwall-st {
+            box-shadow: inset 4px 0 0 0 #666
+        }
+
+        .open-estimate-parent .open-estimate-table-row-actuals {
+            box-shadow: inset 4px 0 0 0 #008002
+        }
+
+        .open-estimate-parent .open-estimate-table-row-points {
+            box-shadow: inset 4px 0 0 0 #b056b2
+        }
+
+        .open-estimate-parent .open-estimate-table-row-index {
+            font-weight: bold;
+            box-shadow: inset 4px 0 0 0 #1db954;
+            border-right: 1px solid rgba(0, 0, 0, 0.1)
+        }
+
+        .open-estimate-parent .open-estimate-table td input {
+            width: 70px;
+            border-color: rgba(0, 0, 0, 0.1)
+        }
+
+        .open-estimate-parent .open-estimate-sub-table-last {
+            border-left: none !important
+        }
+
+        .open-estimate-parent .open-estimate-sub-table-left-header {
+            border-bottom: none !important;
+            border-top: none !important
+        }
+
+        .open-estimate-parent .open-estimate-sub-table-left-header-special {
+            border-left: 1px solid rgba(0, 0, 0, 0.1);
+            border-bottom: none !important;
+            border-top: none !important
+        }
+
+        .open-estimate-parent .open-estimate-sub-table-left {
+            border-left: 1px solid rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            border-top: 1px solid rgba(0, 0, 0, 0.1)
+        }
+
+        .open-estimate-parent .open-estimate-sub-table-edit {
+            min-width: 30px;
+            border-color: rgba(0, 0, 0, 0.1)
+        }
+
+        .open-estimate-parent .open-estimate-sub-table-edit.active {
+            min-width: 60px;
+            border-color: #1db954
+        }
+
+        .open-estimate-parent .open-estimate-table-bottom {
+            text-align: center;
+            background: #fff;
+            font-size: 1.05rem;
+            padding: 10px 10px 15px 10px;
+            font-weight: 600;
+            color: black;
+            border-left: 1px solid rgba(0, 0, 0, 0.1)
+        }
+
+        .open-estimate-parent .open-estimate-table-bottom-button {
+            text-align: center;
+            background: #fff;
+            font-size: 1.05rem;
+            padding: 10px 10px 15px 10px;
+            font-weight: 600;
+            color: black;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            border-left: 1px solid rgba(0, 0, 0, 0.1)
+        }
+
+        .open-estimate-parent .open-estimate-sub-table-button {
+            border-radius: 100px;
+            color: #FFFFFF;
+            background: #189945;
+            border: none;
+            outline: none;
+            width: 90%;
+            padding-top: 5px;
+            padding-bottom: 5px;
+            text-align: center;
+            transition: all 0.5s;
+            cursor: pointer
+        }
+
+        .open-estimate-parent .open-estimate-sub-table-button:hover {
+            border-radius: 100px;
+            color: #FFFFFF;
+            background: #1db954;
+            border: none;
+            padding-top: 5px;
+            padding-bottom: 5px
+        }
+
+        .open-estimate-parent .open-estimate-sub-table-button span {
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            transition: 0.5s
+        }
+
+        .open-estimate-parent .open-estimate-sub-table-button span:after {
+            content: '\BB';
+            opacity: 0;
+            font-size: 2.0rem;
+            position: absolute;
+            top: -13.5px;
+            right: 0;
+            transition: 0.5s
+        }
+
+        .open-estimate-parent .open-estimate-sub-table-button:hover span {
+            padding-right: 25px
+        }
+
+        .open-estimate-parent .open-estimate-sub-table-button:hover span:after {
+            opacity: 1;
+            right: 0
+        }
+
+        .open-estimate-parent .open-estimate-sub-table-button:active {
+            outline: none;
+            border: none;
+            background-color: #1db954;
+            box-shadow: 0 1px #666;
+            transform: translateY(4px)
+        }
+
+        .open-estimate-parent .open-estimate-sub-table-button:focus {
+            outline: 0;
+            border: none
+        }
+
+        .open-estimate-parent .historical-consensus-tabs-menu {
+            float: left;
+            border-right: 1px solid #B1B1B1
+        }
+
+        .open-estimate-parent .historical-consensus-highcharts-container {
+            padding-top: 20px;
+            height: 620px
+        }
+
+        .open-estimate-parent .historical-consensus-figures {
+            clear: both
+        }
+
+        .open-estimate-parent .historical-consensus-highcharts-figure, .open-estimate-parent .historical-consensus-highcharts-data-table table {
+            min-width: 310px;
+            color: #ccc
+        }
+
+        .open-estimate-parent .historical-consensus-highcharts-data-table table {
+            font-family: Verdana, sans-serif;
+            border-collapse: collapse;
+            border: 1px solid #ebebeb;
+            margin: 10px auto;
+            text-align: center;
+            width: 100%;
+            max-width: 500px
+        }
+
+        .open-estimate-parent .historical-consensus-highcharts-data-table caption {
+            padding: 1em 0;
+            font-size: 1.2em;
+            color: #555
+        }
+
+        .open-estimate-parent .historical-consensus-highcharts-data-table th {
+            font-weight: 600;
+            padding: 0.5em
+        }
+
+        .open-estimate-parent .historical-consensus-highcharts-data-table td, .open-estimate-parent .historical-consensus-highcharts-data-table th, .open-estimate-parent .historical-consensus-highcharts-data-table caption {
+            padding: 0.5em
+        }
+
+        .open-estimate-parent .historical-consensus-highcharts-data-table thead tr, .open-estimate-parent .historical-consensus-highcharts-data-table tr:nth-child(even) {
+            background: #f8f8f8
+        }
+
+        .open-estimate-parent .historical-consensus-highcharts-data-table tr:hover {
+            background: #f1f7ff
+        }
+
+        .open-estimate-parent .historical-consensus-div {
+            padding-top: 30px
+        }
+
+        .open-estimate-parent .historical-consensus-tables {
+            border-left: 1px solid rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1)
+        }
+
+        .open-estimate-parent .searchbox {
+            width: 100%;
+            height: fit-content;
+            border-radius: 9px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            align-items: center;
+            display: flex;
+            color: grey;
+            cursor: pointer;
+            padding: 3px 6px;
+            background: #fff
+        }
+
+        .open-estimate-parent .searchbox .fa-search {
+            margin-right: 2px;
+            margin-left: 2px;
+            color: black
+        }
+
+        .open-estimate-parent .input-searchbox {
+            border: none;
+            border-radius: 3px;
+            height: 32px;
+            padding: 8px 24px 8px 12px;
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 12px;
+            line-height: 1.33;
+            background-color: #fff;
+            color: #0e1318
+        }
+
+        .open-estimate-parent .twitter-typeahead {
+            width: 100%;
+            min-width: 200px
+        }
+
+        .open-estimate-parent .twitter-typeahead .tt-suggestion strong {
+            color: #1db954
+        }
+
+        .open-estimate-parent .twitter-typeahead .typeahead, .open-estimate-parent .twitter-typeahead .tt-query, .open-estimate-parent .twitter-typeahead .tt-hint {
+            height: 32px;
+            line-height: 30px;
+            outline: medium none;
+            padding: 8px 12px
+        }
+
+        .open-estimate-parent .twitter-typeahead .tt-query {
+            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset
+        }
+
+        .open-estimate-parent .twitter-typeahead .tt-menu {
+            width: 100%;
+            box-shadow: 0 0 50px #777777
+        }
+
+        .open-estimate-parent .twitter-typeahead .tt-menu .tt-suggestion:last-child {
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px
+        }
+
+        .open-estimate-parent .twitter-typeahead .tt-suggestion {
+            background-color: white;
+            border: none;
+            line-height: 24px;
+            padding: 10px 20px 5px 20px
+        }
+
+        .open-estimate-parent .twitter-typeahead .tt-suggestion.tt-cursor {
+            background: #eff3f5;
+            font-weight: bold;
+            cursor: pointer
+        }
+
+        .open-estimate-parent .twitter-typeahead .suggestion-section {
+            font-size: 0.9rem
+        }
+
+        .open-estimate-parent .twitter-typeahead .suggestion-description {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: none;
+            padding-left: 5px;
+            opacity: 0.5;
+            color: black
+        }
+
+        .open-estimate-parent .twitter-typeahead .tt-suggestion.tt-cursor .suggestion-description {
+            display: block;
+            font-weight: normal
+        }
+
+        .open-estimate-parent #follow-button {
+            color: #1db954;
+            font-weight: bold;
+            font-family: "Helvetica";
+            align-content: center;
+            font-size: 10pt;
+            background-color: #ffffff;
+            border: 1px solid;
+            border-color: #1db954;
+            border-radius: 3px;
+            width: fit-content;
+            height: fit-content;
+            cursor: hand;
+            display: inline-block;
+            margin-top: 3px;
+            margin-left: 6px
+        }
+
+        .open-estimate-parent #follow-button:hover {
+            background: #1db954;
+            color: #ffffff
+        }
+
+        .open-estimate-parent #follow-button.active {
+            background: #1db954;
+            color: #ffffff
+        }
+
+        .open-estimate-parent .list-group {
+            overflow-y: hidden;
+            height: 100%;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+            border-radius: 0.25rem
+        }
+
+        .open-estimate-parent .list-group-scroll {
+            overflow-y: scroll !important
+        }
+
+        .open-estimate-parent .list-group-item {
+            height: fit-content;
+            margin-bottom: -1.5px !important
+        }
+
+        .upcoming-reports {
+            background: #2f2e2e;
+            color: #FFFFFF
+        }
+
+        .upcoming-reports .nav-link:hover {
+            color: #1db954 !important;
+            text-decoration: underline
+        }
+
+        .upcoming-reports .ur-tooltip {
+            max-width: 440px;
+            overflow-wrap: break-word;
+            background: black
+        }
+
+        .upcoming-reports .tooltip-highlight {
+            color: #1db954
+        }
+
+
+        .marquee {
+            background-color: #ddd;
+            width: 500px;
+            margin: 0 auto;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .marquee span {
+            display: inline-block;
+            font-size: 20px;
+            position: relative;
+            left: 100%;
+            animation: marquee 8s linear infinite;
+        }
+
+        .marquee:hover span {
+            animation-play-state: paused;
+        }
+
+        .marquee span:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .marquee span:nth-child(2) {
+            animation-delay: 0.8s;
+        }
+
+        .marquee span:nth-child(3) {
+            animation-delay: 1.6s;
+        }
+
+        .marquee span:nth-child(4) {
+            animation-delay: 2.4s;
+        }
+
+        .marquee span:nth-child(5) {
+            animation-delay: 3.2s;
+        }
+
+        @keyframes marquee {
+            0% {
+                left: 100%;
+            }
+            100% {
+                left: -100%;
+            }
+        }
+
+    </style>
+    <script>
+        console.log = function() {};
+        console.warn = function() {};
+        // console.error() = function() {};
+    </script>
+    <!--{head}-->
+</head>
+<!--membuat sidebar colaps bodynya pakai yg ini-->
+<!--<body class="hold-transition skin-blue sidebar-mini sidebar-collapse">-->
+<!--sidebar-collapse-->
+<body onbeforeunload="custom_holdon(close_holdon)" class="hold-transition skin-blue sidebar-mini" onload="reLoad();">
+<!--tanda loading pas sedang ngeload halaman-->
+<div id="baseURL" class="hidden">{base}</div>
+<!--end---tanda loading pas sedang ngeload halaman-->
+<div class="wrapper">
+    <header class="main-header">
+        <a href="{base}" class="logo hidden-xs hidden-sm no-padding">
+            <span class="logo-mini"><span class="glyphicon glyphicon-home"></span></span>
+            <span class="logo-lg"><img src="{base}public/images/profiles/logo_header.png" height="40px"></span>
+        </a>
+        <nav class="navbar navbar-static-top">
+            <div class="no-padding no-border">
+                <!--<div class="hidden-smr hidden-lgr col-sm-2 col-xs-1 col-md-1 col-lg-1 no-padding">-->
+                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+                <a class="sidebar-title"><b class="text-uppercase">{title}</b></a>
+                <!--</div>-->
+                <!--            <div class="col-sm-8 col-xs-11 col-md-8 col-lg-8 no-padding text-center">-->
+                <!--                <span class="hidden-mdx hidden-lgx hidden-xlx hidden-xxlx">-->
+                <!--                    <span class="navbar-brand text-center no-border" style="padding:8px;">-->
+                <!--&lt;!&ndash;                        <a href="{base}">&ndash;&gt;-->
+                <!--&lt;!&ndash;                            <a class="btn btn-tool text-white" href="javascript:void(0)" onclick="location.href='{btn_back}';"><span class="glyphicon glyphicon-arrow-left text-yellow"></span></a>&ndash;&gt;-->
+                <!--&lt;!&ndash;                            <span class="text-white">{title} <small style="color:#eeeeee;text-transform: lowercase;">{sub_title}</small></span>&ndash;&gt;-->
+                <!--&lt;!&ndash;                        </a>&ndash;&gt;-->
+                <!--                    </span>-->
+                <!--                </span>-->
+                <!--            </div>-->
+
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav" id="menu_top">
+                        {menu_top}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <nav class="navbar navbar-fixed-bottom navbar-2nd">
+            <!--untuk view desktop-->
+            <div class="no-padding no-border">
+                <div style="padding-right:0;padding-left:0;" class="col-sm-2 col-xs-2 col-md-1 col-lg-1">
+                    <div class="hidden-xs col-sm-6 col-md-6 col-lg-6 no-padding">
+                        <a href="{base}" class="btn btn__trigger-home btn__trigger--views-home"><i
+                                class="glyphicon glyphicon-home"></i></a>
+                    </div>
+                    <div class="hidden-xxxl hidden-xxl hidden-xl hidden-lg hidden-md hidden-sm col-xs-6 no-padding">
+                        <a href="{base}" class="btn btn__trigger-home-mb btn__trigger--views-home-mb"><i
+                                class="glyphicon glyphicon-home"></i></a>
+                    </div>
+                    <div class="hidden-xs col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding">
+                        <div class="text-bold text-center timbul dtime">
+                            <span class="jam"></span>
+                            <span class="blink">:</span>
+                            <span class="menit"></span>
+                        </div>
+                    </div>
+                </div>
+                <div style="padding-right:0;padding-left:0;padding-left: 17px;"
+                     class="hidden-lg hidden-md hidden-sm col-xs-8">
+                    {info_ucd}
+                </div>
+                <div style="padding-right:0;padding-left:17px;" class="hidden-xs col-sm-7 col-xs-2 col-md-9 col-lg-9">
+
+                    {menu_taskbar}
+
+                    <!--<a href="#" onclick="swal('Phone 1')" data-toggle="tooltip" data-placement="top" title="Phone 1" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-phone"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('Plus 1')" data-toggle="tooltip" data-placement="top" title="Plus 1" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-plus"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('User 1')" data-toggle="tooltip" data-placement="top" title="User 1" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-user"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('Phone 2')" data-toggle="tooltip" data-placement="top" title="Phone 2" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-phone"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('Plus 2')" data-toggle="tooltip" data-placement="top" title="Plus 2" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-plus"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('User 2')" data-toggle="tooltip" data-placement="top" title="User 2" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-user"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('Phone 3')" data-toggle="tooltip" data-placement="top" title="Phone 3" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-phone"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('Plus 3')" data-toggle="tooltip" data-placement="top" title="Plus 3" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-plus"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('User 3')" data-toggle="tooltip" data-placement="top" title="User 3" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-user"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('Phone 4')" data-toggle="tooltip" data-placement="top" title="Phone 4" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-phone"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('Plus 4')" data-toggle="tooltip" data-placement="top" title="Plus 4" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-plus"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('User 4')" data-toggle="tooltip" data-placement="top" title="User 4" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-user"></i>-->
+                    <!--</a>-->
+
+                </div>
+                <div style="padding-right:0;padding-left:0;" class="col-sm-3 col-xs-2 col-md-2 col-lg-2">
+                    {float_menu_bawah}
+                </div>
+            </div>
+            <div class="hidden-sm hidden-md hidden-lg hidden-xl hidden-xxl hidden-xxxl col-xs-12 bg-black text-lime text-bold">
+            <span class="col-xs-8 no-padding">
+                <span class="hari"></span>
+                <span class="tanggal"></span>
+            </span>
+                <span class="col-xs-4 no-padding text-right">
+                <span class="jam"></span>
+                <span class="blink">:</span>
+                <span class="menit"></span>
+            </span>
+            </div>
+        </nav>
+        <nav class="hidden-xs navbar navbar-fixed-bottom navbar-3rd">
+            <div class="no-padding no-border">
+            <span class="col-lg-2 no-padding">
+                <span class="hari timbul text-bold"></span>
+                <span class="tanggal timbul text-bold"></span>
+            </span>
+                <span class="col-lg-10 no-padding">
+                {info_bottom}
+            </span>
+            </div>
+        </nav>
+
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+
+            <ul class="sidebar-menu">
+                <!--<li class="header">MAIN NAVIGATION</li>-->
+                {menu_left}
+
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <!--<section class="content-header">-->
+        <!--    <h1>{title} <small>{sub_title}</small></h1>-->
+        <!--</section>-->
+
+        <!-- Main content -->
+        <section class="content">
+
+            <div class="row">
+                <div id="best_salesman" class="col-md-12" style="margin-bottom: 19px;"></div>
+                <div id="pending_aset" class="col-md-12" style="margin-bottom: 0px;"></div>
+                <div id="todolist" class="col-md-12" stylee="margin-bottom: 19px;"></div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12" id="summary_indeks"></div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-3 col-xl-3 col-xxs-12" id="graph_penjualan"></div>
+                <!--<div class="col-md-4 col-xl-2 col-xxs-12">-->
+                <!--    <div class="row">-->
+
+                <div class="col-md-9 col-xl-9 col-xxs-12" id="sales_harian"></div>
+                <!--<div class="col-md-3 col-xl-3 col-xxs-12" id="sales_donut"></div>-->
+                <!--<div class="col-md-3 col-xl-3 col-xxs-12" id="sales_donut_past"></div>-->
+                <!--<div class="col-md-3 col-xl-3 col-xxs-12" id="sales_donut_ttm"></div>-->
+            </div>
+            <!--</div>-->
+            <div class="row">
+                <!--<div class="col-md-3 col-xl-3 col-xxs-12" id="pertumbuhan"></div>-->
+                <!--<div class="col-md-3 col-xl-3 col-xxs-12" id="margin"></div>-->
+                <!--<div class="col-md-6 col-xl-6 col-xxs-12" id="show_top_ten"></div>-->
+                <div class="col-md-6 col-xl-6 col-xxs-12" sstyle="padding-left: 1px;" id="graph"></div>
+                <div class="col-md-6 col-xl-6 col-xxs-12" id="show_top_ten"></div>
+            </div>
+            <div class="row">
+                <!--<div class="col-md-2 col-xxs-12" id="graph_produksi" style="margin-right: 0;"></div>-->
+                <!--<div class="col-md-4 col-xxs-12" sstyle="padding-left: 1px;" id="graph_pro"></div>-->
+                <!--<div class="col-md-2 col-xxs-12" id="graph_produksi2"></div>-->
+                <!--<div class="col-md-4 col-xxs-12" sstyle="padding-left: 1px;" id="graph_pro2"></div>-->
+                <div class="col-md-4 col-xl-2 col-xxs-12" id="graph_produksi" style="margin-right: 0;"></div>
+                <div class="col-md-8 col-xl-4 col-xxs-12" sstyle="padding-left: 1px;" id="graph_pro"></div>
+                <div class="col-md-4 col-xl-2 col-xxs-12" id="graph_produksi2"></div>
+                <div class="col-md-8 col-xl-4 col-xxs-12" sstyle="padding-left: 1px;" id="graph_pro2"></div>
+            </div>
+
+            <div class="row">
+                <div id="rasio_indeks"></div>
+            </div>
+
+            <div class="row">
+                <!--<div class="col-md-3 col-xxs-12" id="sales_donut"></div>-->
+                <!--<div class="col-md-3 col-xxs-12" id="sales_pie"></div>-->
+                <!--<div class="col-md-4 col-xxs-12" id="seller_pie"></div>-->
+            </div>
+
+
+            <div class="row">
+                <!--<div id="kurs">===============</div>-->
+                <!--<div class="clearfix">&nbsp;</div>-->
+
+                <!--<div class="clearfix"></div>-->
+                <!---->
+                <!--<div class="clearfix"></div>-->
+                <!--<div class="none">-->
+                <!---->
+                <!--</div>-->
+                <!--<div class="clearfix"></div>-->
+                <!---->
+                <!--<div class="clearfix"></div>-->
+                <!--<div class="none">-->
+                <!---->
+                <!--&lt;!&ndash;<div class="col-md-8 col-xxs-12" sstyle="padding-left: 1px;" id="graph"></div>&ndash;&gt;-->
+                <!--</div>-->
+                <!--<div id="graph_pie"></div>-->
+                <div class="hidden-lg hidden-md col-xs-12 text-center">{scaner}</div>
+
+                <div class="col-lg-12 hidden-xs">
+
+                    <div class="box box-soliddd box-danger" style="display:{prop_display}">
+                        <div class="box-header with-border">
+                            <span class="pull-left text-red text-uppercase blink"><h4
+                                    class="no-padding no-margin text-uppercase">{onprogress_title}</h4></span>
+                            <span class="box-tool pull-right">{add_link}</span>
+                        </div>
+                        <div class="box-body" style="max-height: 550px; overflow: scroll; overflow-x: hidden;">
+                            {onprogress_content}
+                        </div>
+                        <div class="box-footer text-right">{onprogress_footer}</div>
+                    </div>
+
+                    <!--</div> //untuk test-->
+
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <span class="pull-left"><h4 class="no-padding no-margin text-uppercase">{history_title}</h4></span>
+                            <!--<span class="pull-right"></span>-->
+                        </div>
+                        <div class="box-body" style="backgroundddd:#f0f0f0;font-style:italic;">
+                            {history_content}
+                        </div>
+                        <div class="box-footer text-right" style="backgrounddd:#f0f0f0;font-style:italic;">
+                            {history_footer}
+                        </div>
+                    </div>
+
+                    <!--<div class="overlay">-->
+                    <!--<i class="fa fa-refresh fa-spin"></i>-->
+                    <!--</div>-->
+                    <div class="box box-solid box-success">
+                        <div class="box-header with-border">
+                            <span class="pull-left"><h4
+                                    class="no-padding no-margin text-uppercase">{recap_title}</h4></span>
+                            <!--<span class="pull-right"></span>-->
+                        </div>
+                        <div class="box-body" style="max-height: 800px; overflow: scroll; overflow-x: hidden;">
+                            {recap_content}
+                        </div>
+                        <div class="box-footer text-right">{recap_footer}</div>
+                    </div>
+
+                </div>
+
+                <!--{dashboard_content}-->
+
+            </div>
+
+
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <footer class="main-footer overflow-h">
+        <div class="clear-fix"></div>
+        {footer}
+        <!--<div class="pull-right hidden-xs">-->
+        <!--<b>Version</b> 2.3.5-->
+        <!--</div>-->
+        <!--<strong>Copyright &copy; 2014-2016 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights
+        -->
+        <!--reserved.-->
+        <div class="pull-right">{stop_time}</div>
+    </footer>
+    <!--{float_menu_bawah}-->
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Create the tabs -->
+        <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+            <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+            <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+        </ul>
+        <!-- Tab panes menu kanan-->
+        <div class="tab-content">
+            <!-- Home tab content -->
+            <div class="tab-pane" id="control-sidebar-home-tab">
+                <h3 class="control-sidebar-heading">Recent Activity</h3>
+                <ul class="control-sidebar-menu">
+                    <li>
+                        <a href="javascript:void(0)">
+                            <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+
+                                <p>Will be 23 on April 24th</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <i class="menu-icon fa fa-user bg-yellow"></i>
+
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
+
+                                <p>New phone +1(800)555-1234</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
+
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
+
+                                <p>nora@example.com</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <i class="menu-icon fa fa-file-code-o bg-green"></i>
+
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
+
+                                <p>Execution time 5 seconds</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <!-- /.control-sidebar-menu -->
+
+                <h3 class="control-sidebar-heading">Tasks Progress</h3>
+                <ul class="control-sidebar-menu">
+                    <li>
+                        <a href="javascript:void(0)">
+                            <h4 class="control-sidebar-subheading">
+                                Custom Template Design
+                                <span class="label label-danger pull-right">70%</span>
+                            </h4>
+
+                            <div class="progress progress-xxs">
+                                <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <h4 class="control-sidebar-subheading">
+                                Update Resume
+                                <span class="label label-success pull-right">95%</span>
+                            </h4>
+
+                            <div class="progress progress-xxs">
+                                <div class="progress-bar progress-bar-success" style="width: 95%"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <h4 class="control-sidebar-subheading">
+                                Laravel Integration
+                                <span class="label label-warning pull-right">50%</span>
+                            </h4>
+
+                            <div class="progress progress-xxs">
+                                <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <h4 class="control-sidebar-subheading">
+                                Back End Framework
+                                <span class="label label-primary pull-right">68%</span>
+                            </h4>
+
+                            <div class="progress progress-xxs">
+                                <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <!-- /.control-sidebar-menu -->
+
+            </div>
+            <!-- /.tab-pane -->
+            <!-- Stats tab content -->
+            <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
+            <!-- /.tab-pane -->
+            <!-- Settings tab content -->
+            <div class="tab-pane" id="control-sidebar-settings-tab">
+                <form method="post">
+                    <h3 class="control-sidebar-heading">General Settings</h3>
+
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Report panel usage
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+
+                        <p>
+                            Some information about this general settings option
+                        </p>
+                    </div>
+                    <!-- /.form-group -->
+
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Allow mail redirect
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+
+                        <p>
+                            Other sets of options are available
+                        </p>
+                    </div>
+                    <!-- /.form-group -->
+
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Expose author name in posts
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+
+                        <p>
+                            Allow the user to show his name in blog posts
+                        </p>
+                    </div>
+                    <!-- /.form-group -->
+
+                    <h3 class="control-sidebar-heading">Chat Settings</h3>
+
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Show me as online
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+                    </div>
+                    <!-- /.form-group -->
+
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Turn off notifications
+                            <input type="checkbox" class="pull-right">
+                        </label>
+                    </div>
+                    <!-- /.form-group -->
+
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Delete chat history
+                            <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
+                        </label>
+                    </div>
+                    <!-- /.form-group -->
+                </form>
+            </div>
+            <!-- /.tab-pane -->
+        </div>
+    </aside>
+    <!-- /.control-sidebar -->
+    <!-- Add the sidebar's background. This div must be placed
+         immediately after the control sidebar -->
+    <div class="control-sidebar-bg"></div>
+</div>
+<div>
+    <iframe id="tray" name="tray" style="display:none;width:100%;height:120px;" srcx="{base}_tray/index"></iframe>
+    <iframe name="result" id="result" style="resize: both;display: {display_iframe};width: 100%;height:800px;"></iframe>
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 2.2.3 -->
+<!--<script src="../../assets/suport/AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v={local_version}"></script>-->
+<!-- jQuery UI 1.11.4 -->
+<!--<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js?v={local_version}"></script>-->
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+    /*$.widget.bridge('uibutton', $.ui.button);*/
+</script>
+<!-- Bootstrap 3.3.6 -->
+<!--<script src="../../assets/suport/AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v={local_version}"></script>-->
+<!--<script src="../../assets/suport/bootstrap-3.3.7-dist/js/bootstrap.min.js?v={local_version}"></script>-->
+<!-- Slimscroll -->
+<script src="{cdn_suport}AdminLTE-2.3.11/plugins/slimScroll/jquery.slimscroll.min.js?v={local_version}"></script>
+<!-- FastClick -->
+<!--<script src="../../assets/suport/AdminLTE-2.3.11/plugins/fastclick/fastclick.js?v={local_version}"></script>-->
+<!-- AdminLTE App -->
+<script src="{cdn_suport}AdminLTE-2.3.11/dist/js/app.min.js?v={local_version}"></script>
+<script src="{cdn_suport}multi-step-modal-master/multi-step-modal.js?v={local_version}"></script>
+
+<script src="{cdn_suport}bootstrap-fileinput-master/js/fileinput.min.js?v={local_version}"></script>
+<script src="{cdn_suport}bootstrap-toggle-master/js/bootstrap-toggle.min.js?v={local_version}"></script>
+<!-- datatable-->
+<!--<script src="../../assets/suport/DataTables-1.10.13/media/js/jquery.dataTables.min.js?v={local_version}"></script>-->
+<!--<script src="../../assets/suport/DataTables-1.10.13/extensions/FixedHeader/js/dataTables.fixedHeader.min.js?v={local_version}"></script>-->
+<!--<script src="../../assets/suport/SmartCart-master/dist/js/jquery.smartCart.min.js?v={local_version}"></script>-->
+<script src="{base}assets/custom/hippo_ajax.js?v={local_version}"></script>
+<script src="{base}assets/custom/JS.js?v={local_version}"></script>
+
+<!--barcode reader-->
+<script type="text/javascript">
+    if (window.location.hash.substr(1, 2) == "zx") {
+        var bc = window.location.hash.substr(3);
+        localStorage["barcode"] = decodeURI(window.location.hash.substr(3))
+        window.close();
+        self.close();
+        window.location.href = "about:blank";//In case self.close isn't allowed
+    }
+</script>
+<SCRIPT type="text/javascript">
+    var changingHash = false;
+
+    function onbarcode(event) {
+        switch (event.type) {
+            case "hashchange": {
+                if (changingHash == true) {
+                    return;
+                }
+                var hash = window.location.hash;
+                if (hash.substr(0, 3) == "#zx") {
+                    hash = window.location.hash.substr(3);
+                    changingHash = true;
+                    window.location.hash = event.oldURL.split("\#")[1] || ""
+                    changingHash = false;
+                    processBarcode(hash);
+                }
+
+                break;
+            }
+            case "storage": {
+                window.focus();
+                if (event.key == "barcode") {
+                    window.removeEventListener("storage", onbarcode, false);
+                    processBarcode(event.newValue);
+                }
+                break;
+            }
+            default: {
+                console.log(event)
+                break;
+            }
+        }
+    }
+
+    window.addEventListener("hashchange", onbarcode, false);
+
+    function getScan() {
+        var href = window.location.href;
+        var ptr = href.lastIndexOf("#");
+        if (ptr > 0) {
+            href = href.substr(0, ptr);
+        }
+        window.addEventListener("storage", onbarcode, false);
+        setTimeout('window.removeEventListener("storage", onbarcode, false)', 15000);
+        localStorage.removeItem("barcode");
+        //window.open  (href + "#zx" + new Date().toString());
+
+        if (navigator.userAgent.match(/Firefox/i)) {
+            //Used for Firefox. If Chrome uses this, it raises the "hashchanged" event only.
+            window.location.href = ("zxing://scan/?ret=" + encodeURIComponent(href + "#zx{CODE}"));
+        } else {
+            //Used for Chrome. If Firefox uses this, it leaves the scan window open.
+            window.open("zxing://scan/?ret=" + encodeURIComponent(href + "#zx{CODE}"));
+        }
+    }
+
+    function processBarcode(bc) {
+        document.getElementById("scans").innerHTML += "<div>" + bc + "</div>";
+        //put your code in place of the line above.
+    }
+
+</SCRIPT>
+<!--<script>-->
+<!--var ulnavtab = $("ul.nav-tabs > li > div.button");-->
+<!--ulnavtab.on("click", function () {-->
+<!--$('.modal').modal('hide');-->
+<!--});-->
+
+<!--ulnavtab.on("shown.bs.tab", function () {-->
+<!--var $a = $(this),-->
+<!--href = $a.attr("href");-->
+<!--if (href && href.length > 1) {-->
+<!--var sel = '[href="' + href.substr(1) + '"]',-->
+<!--$el = $(sel);-->
+<!--if ($el) {-->
+<!--window.location.hash = href;-->
+<!--$('.modal').modal('hide');-->
+<!--$('#confirmModal').removeData('bs.modal');-->
+<!--$('#myModal').removeData('bs.modal');-->
+<!--$('#myModalSearch').removeData('bs.modal');-->
+<!--$('#myModalApp').removeData('bs.modal');-->
+<!--//                console.log(href);-->
+<!--$('.modal-backdrop').remove();-->
+<!--} else {-->
+<!--console.warn("Could not find:", sel);-->
+<!--}-->
+<!--} else {-->
+<!--console.warn("Clicked but no href found");-->
+<!--}-->
+<!--return false;-->
+<!--});-->
+
+<!--$("li.floating-box > div.button.blue.medium").click(function () {-->
+<!--var hash = window.location.hash;-->
+<!--var divhref = $('#tabselect div[href="' + hash + '"]');-->
+<!--divhref.tab('show');-->
+<!--var div_hash = hash.substr(1);-->
+<!--var div_hovered = $('#div_' + div_hash);-->
+<!--div_hovered.toggleClass("hovered");-->
+<!--$(hash).toggleClass("hovered");-->
+
+<!--var hovered = $("div.button.blue.medium.hovered");-->
+<!--hovered.removeClass("hovered");-->
+
+<!--});-->
+
+
+<!--// on load of the page: switch to the currently selected tab-->
+<!--var hash = window.location.hash;-->
+<!--$('#tabselect div[href="' + hash + '"]').tab('show');-->
+<!--</script>-->
+
+<script>
+
+    $('#myModal').on('hidden.bs.modal', function () {
+        $(this).removeData('bs.modal');
+    });
+
+    $('body').tooltip({selector: '[data-toggle-tip=tooltip]'});
+    //    $('data-toggle-tip').tooltip({title:"Event", trigger:"focus or hover only", delay:{hide:100}});
+
+    checked = false;
+
+    function checkedAll(frm1) {
+        var aa = document.getElementById(frm1);
+        if (checked == false) {
+            checked = true
+        } else {
+            checked = false
+        }
+        for (var i = 0; i < aa.elements.length; i++) {
+            aa.elements[i].checked = checked;
+        }
+    }
+
+    function load() {
+        top.$('#tray').load('{base}_tray/');
+    }
+
+    function reLoad() {
+        setInterval("load()", 30000);
+    }
+
+    console.log = function() {}
+
+
+//"toVoiceWelcome" => $toVoiceWelcome,
+//"toVoiceCabang" => $toVoiceCabang,
+
+    console.error('referer', document.referrer);
+
+    if (document.referrer.includes("/auth/Login/authCheck")) {
+        console.log("User masuk dari halaman login");
+        var bahasa = "Indonesian Female";
+//        var bahasa = "Indonesian Male";
+//        console.error('welcomeVoice tidak null');
+        responsiveVoice.speak("{toVoiceWelcome}. Anda login di {toVoiceCabang}", bahasa);
+//        responsiveVoice.speak("Anda login di cabang {toVoiceCabang}", bahasa);
+//        console.error('welcomeVoice direset = undefined');
+//        localStorage.removeItem("welcomeVoice");
+    }
+
+//    if( localStorage.welcomeVoice != undefined ){ }
+
+    // document.onkeydown = (e) => {
+    //     if (e.key == 123) {
+    //         e.preventDefault();
+    //     }
+    //     if (e.ctrlKey && e.shiftKey && e.key == 'I') {
+    //         e.preventDefault();
+    //     }
+    //     if (e.ctrlKey && e.shiftKey && e.key == 'C') {
+    //         e.preventDefault();
+    //     }
+    //     if (e.ctrlKey && e.shiftKey && e.key == 'J') {
+    //         e.preventDefault();
+    //     }
+    //     if (e.ctrlKey && e.key == 'U') {
+    //         e.preventDefault();
+    //     }
+    // };
+</script>
+{script_bottom}
+</body>
+</html>

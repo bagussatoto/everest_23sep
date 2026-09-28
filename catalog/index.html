@@ -1,0 +1,31 @@
+<html>
+<head>
+    <title>PRODUK KATALOG</title>
+    <link rel="stylesheet" href="https://cdn.mayagrahakencana.com/assets/suport/bootstrap-3.3.7-dist/css/bootstrap.min.css?v=1.0.6-trial">
+    <script src="https://cdn.mayagrahakencana.com/assets/suport/AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v=1.0.6-trial"></script>
+    <script src="https://cdn.mayagrahakencana.com/assets/suport/bootstrap-3.3.7-dist/js/bootstrap.min.js?v=1.0.6-trial"></script>
+</head>
+
+<body>
+
+<div id="cont"></div>
+
+<script>
+
+    var URL=window.location.href;
+    var arr=URL.split('/');
+    var urlTmp = arr[4];
+    var splitUrl = urlTmp.split('?b=');
+    var base64Qr = atob(splitUrl[1])
+    var arrQr = base64Qr.split('|');
+
+    var id_produk = arrQr[0]
+    var produk_batch = arrQr[1]
+
+console.log(arrQr)
+
+//    document.getElementById("cont").innerHTML = base64Qr;
+
+</script>
+</body>
+</html>

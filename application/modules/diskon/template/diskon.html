@@ -1,0 +1,1173 @@
+<!DOCTYPE html>
+<html>
+<!-- diskon.html *-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{title}</title>
+
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link id="favicon" rel="icon" type='image/x-icon' href="{favicon}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-3.3.7-dist/css/bootstrap.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}Font-Awesome-master/css/font-awesome.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}ionicons-master/css/ionicons.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}simple-line-icons-master/css/simple-line-icons.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/dist/css/AdminLTE.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}bootstrap3-dialog-master/dist/css/bootstrap-dialog.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/dist/css/skins/_all-skins.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-fileinput-master/css/fileinput.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-toggle-master/css/bootstrap-toggle.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-xlgrid-master/bootstrap-xlgrid.min.css?v={local_version}">
+    <link rel="stylesheet" href="{base}assets/custom/custom.min.css?v={local_version}">
+    <link rel="stylesheet" href="{base}assets/custom/dialog.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}HoldOn/HoldOn.css?v={local_version}">
+    <link rel="stylesheet" href="{base}assets/custom/jquery.floatingscroll.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}DataTables-1.10.13/media/css/dataTables.bootstrap.min.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}DataTables-1.10.13/media/css/jquery.dataTables_themeroller.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}DataTables-1.10.13/yadcf-0.9.3/jquery.dataTables.yadcf.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}DataTables-1.10.13/extensions/Buttons/css/buttons.dataTables.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}DataTables-1.10.13/extensions/FixedHeader/css/fixedHeader.bootstrap.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}DataTables-1.10.13/extensions/FixedColumns/css/fixedColumns.bootstrap.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-select-1.13.9/dist/css/bootstrap-select.css?v={local_version}">
+
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v={local_version}"></script>
+    <script src="{base}assets/custom/custom.js?v={local_version}"></script>
+    <script src="{cdn_suport}HoldOn/HoldOn.js?v={local_version}"></script>
+    <script src="{cdn_suport}geo/js/geo.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-3.3.7-dist/js/bootstrap.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js?v={local_version}"></script>
+    <script src="{base}assets/custom/jquery.floatingscroll.min.js?v={local_version}"></script>
+    <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwIbo3IKzMgKOkXzTv3xG83IT26SLUHWY"></script>-->
+
+    <script src="{cdn_suport}DataTables-1.10.13/media/js/jquery.dataTables.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/media/js/dataTables.bootstrap.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/media/js/jquery.highlight.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/dataTables.buttons.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.colVis.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.print.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.html5.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.flash.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/yadcf-0.9.3/jquery.dataTables.yadcf.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/FixedHeader/js/dataTables.fixedHeader.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/FixedColumns/js/dataTables.fixedColumns.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-select-1.13.9/dist/js/bootstrap-select.js?v={local_version}"></script>
+
+    <!-- AREA ================= update MAPS OPENSTREETMAP -->
+    <!--<link rel="stylesheet" href="{cdn_suport}geo/js/leaflet-routing-machine/dist/leaflet-routing-machine.css" />-->
+    <!--<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css">-->
+    <!--<link rel="stylesheet" type="text/css" href="//unpkg.com/leaflet@1.3.4/dist/leaflet.css">-->
+    <!--<link rel="stylesheet" type="text/css" href="//unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css">-->
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <!--<script src="//unpkg.com/leaflet@1.3.4/dist/leaflet.js" integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="-->
+    <!--crossorigin=""></script>-->
+
+    <!-- Load Esri Leaflet from CDN -->
+    <!--<script src="//unpkg.com/esri-leaflet@2.3.3/dist/esri-leaflet.js"-->
+    <!--integrity="sha512-cMQ5e58BDuu1pr9BQ/eGRn6HaR6Olh0ofcHFWe5XesdCITVuSBiBZZbhCijBe5ya238f/zMMRYIMIIg1jxv4sQ=="-->
+    <!--crossorigin=""></script>-->
+
+    <!--<link rel="stylesheet" href="//unpkg.com/esri-leaflet-geocoder@2.3.2/dist/esri-leaflet-geocoder.css"-->
+    <!--integrity="sha512-IM3Hs+feyi40yZhDH6kV8vQMg4Fh20s9OzInIIAc4nx7aMYMfo+IenRUekoYsHZqGkREUgx0VvlEsgm7nCDW9g=="-->
+    <!--crossorigin="">-->
+    <!--<script src="//unpkg.com/esri-leaflet-geocoder@2.3.2/dist/esri-leaflet-geocoder.js"-->
+    <!--integrity="sha512-8twnXcrOGP3WfMvjB0jS5pNigFuIWj4ALwWEgxhZ+mxvjF5/FBPVd5uAxqT8dd2kUmTVK9+yQJ4CmTmSg/sXAQ=="-->
+    <!--crossorigin=""></script>-->
+    <!--<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>-->
+    <!--<script type="text/javascript" src="{cdn_suport}geo/js/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>-->
+    <!--<script src="{cdn_suport}leaflet.ajax.js?v={local_version}"></script>-->
+
+    <!--<script src="//unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>-->
+
+    <!--<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>-->
+    <!--<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />-->
+
+    <style>
+        #switch{
+            top: 50%;
+            left: 0;
+            width: 142px;
+            height: 36px;
+        }
+        .toggle{
+            position: relative;
+            border: 2px solid #444249;
+            border-radius: 20px;
+            -webkit-transition: border-color .6s  ease-out;
+            transition: border-color .6s  ease-out;
+            box-sizing: border-box;
+        }
+        .toggle.toggle-on{
+            border-color: rgba(137, 194, 217, .4);
+            -webkit-transition: all .5s .15s ease-out;
+            transition: all .5s .15s ease-out;
+        }
+        .toggle-button{
+            position: absolute;
+            top: 4px;
+            width: 24px;
+            bottom: 4px;
+            right: 110px;
+            background-color: #444249;
+            border-radius: 19px;
+            cursor: pointer;
+            -webkit-transition: all .3s .1s, width .1s, top .1s, bottom .1s;
+            transition: all .3s .1s, width .1s, top .1s, bottom .1s;
+        }
+        .toggle-on .toggle-button{
+            top: 3px;
+            width: 135px;
+            bottom: 3px;
+            right: 3px;
+            border-radius: 23px;
+            background-color: #3afa3c;
+            box-shadow: 0 0 16px #249f23;
+            -webkit-transition: all .2s .1s, right .1s;
+            transition: all .2s .1s, right .1s;
+        }
+        .toggle-text-on{
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            line-height: 33px;
+            text-align: center;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 18px;
+            font-weight: normal;
+            cursor: pointer;
+            -webkit-user-select: none; /* Chrome/Safari */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* IE10+ */
+            color: rgba(0,0,0,0);
+        }
+        .toggle-on .toggle-text-on{
+            color: #ff003f;
+            -webkit-transition: color .3s .15s;
+            transition: color .3s .15s;
+        }
+        .toggle-text-off{
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 6px;
+            line-height: 33px;
+            text-align: center;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+            -webkit-user-select: none; /* Chrome/Safari */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* IE10+ */
+            cursor: pointer;
+            color: #444249;
+        }
+        .toggle-on .toggle-text-off{
+            color: rgba(0,0,0,0);
+        }
+        /* used for streak effect */
+        .glow-comp{
+            position: absolute;
+            opacity: 0;
+            top: 10px;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+            border-radius: 6px;
+            background-color: rgba(75, 122, 141, .1);
+            box-shadow: 0 0 12px rgba(75, 122, 141, .2);
+            -webkit-transition: opacity 4.5s 1s;
+            transition: opacity 4.5s 1s;
+        }
+        .toggle-on .glow-comp{
+            opacity: 1;
+            -webkit-transition: opacity 1s;
+            transition: opacity 1s;
+        }
+    </style>
+
+    <style>
+        .odd {
+            background-color: #f2faff !important;
+        }
+        .even {
+            background-color: #fff !important;
+        }
+        @media (max-width: 767px) {
+            .form-control {
+                padding: 6px 1px !important;
+            }
+        }
+        .colorswap {
+            background: transparent;
+            animation: mymove 2s;
+        }
+        @keyframes mymove {
+            from {background-color: green;}
+            to {background-color: transparent;}
+        }
+        #overlay {
+            position: absolute;
+            display: none;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 2;
+            cursor: pointer;
+        }
+        #text{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            font-size: 50px;
+            color: white;
+            transform: translate(-50%,-50%);
+            -ms-transform: translate(-50%,-50%);
+        }
+        tr td .form-control{
+            height: 27px !important;
+            padding: 2px 2px !important;
+        }
+        select option[value=*] {
+            background: rgba(100, 100, 100, 0.3);
+        }
+    </style>
+
+    <style>
+        .odd {
+            background-color: #f2faff !important;
+        }
+
+        .even {
+            background-color: #fff !important;
+        }
+
+        @media (max-width: 767px) {
+            .form-control {
+                padding: 6px 1px !important;
+            }
+        }
+
+        .colorswap {
+            background: transparent;
+            animation: mymove 2s;
+        }
+
+        @keyframes mymove {
+            from {
+                background-color: green;
+            }
+            to {
+                background-color: transparent;
+            }
+        }
+
+        #overlay {
+            position: absolute;
+            display: none;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            cursor: pointer;
+        }
+
+        #text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            font-size: 50px;
+            color: white;
+            transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+        }
+
+    </style>
+
+    <style>
+        thead {
+            background: lightgray;
+        }
+        table.dataTable tbody th, table.dataTable tbody td {
+            white-space: nowrap;
+        }
+        .select2 {
+            z-index: 1050;
+        }
+        .modal .select2 {
+            z-index: 1099;
+        }
+        .dataTables_processing{
+            font-size: 2em !important;
+            height: 110px !important;
+            width: 400px !important;
+            background-color: #abdde5 !important;
+            top: 20px !important;
+            z-index: 5000 !important;
+        }
+
+        #loader {
+            border: 16px solid #b0dfe6b5;
+            border-radius: 50%;
+            border-top: 16px solid #ff5722;
+            width: 80px;
+            height: 80px;
+            -webkit-animation: spin 2s linear infinite;
+            animation: spin 2s linear infinite;
+            margin-left:-85px;
+            margin-top:-75px;
+        }
+
+        .loading_2{
+            /*align-items: center;*/
+            /*background-color: yellow;*/
+            color: cornsilk;
+            /*-webkit-animation: kelip 1s infinite;  !* Safari 4+ *!*/
+            /*-moz-animation: kelip 1s infinite;  !* Fx 5+ *!*/
+            /*-o-animation: kelip 1s infinite;  !* Opera 12+ *!*/
+            /*animation: kelip 1s infinite;  !* IE 10+, Fx 29+ *!*/
+            /*display: flex;*/
+            /*height: 100%;*/
+            /*justify-content: center;*/
+            /*margin: 0;*/
+
+            text-decoration: blink;
+            -webkit-animation-name: kelip;
+            -webkit-animation-duration: 0.6s;
+            -webkit-animation-iteration-count: infinite;
+            -webkit-animation-timing-function: ease-in-out;
+            -webkit-animation-direction: alternate;
+        }
+
+        @-webkit-keyframes kelip {
+            /*0%, 49% {*/
+            /*    background-color: rgb(255, 248, 249);*/
+            /*    border: 3px solid #e50000;*/
+            /*}*/
+            /*50%, 100% {*/
+            /*    background-color: #e5d4bf;*/
+            /*    border: 3px solid rgb(117, 209, 63);*/
+            /*}*/
+
+            from {
+                opacity: 1.0;
+            }
+            to {
+                opacity: 0.0;
+            }
+        }
+
+        .loader {
+            width: 60px;
+
+        }
+
+        .loader-wheel {
+            animation: spin 1s infinite linear;
+            border: 2px solid rgba(30, 30, 30, 0.5);
+            border-left: 4px solid #fff;
+            border-radius: 50%;
+            height: 50px;
+            margin-bottom: 10px;
+            width: 50px;
+        }
+
+        .loader-text {
+            color: #fff;
+            font-family: arial, sans-serif;
+        }
+
+        .loader-text:after {
+            content: 'Loading boss';
+            animation: load 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes load {
+            0% {
+                content: 'Loading';
+            }
+            33% {
+                content: 'Loading.';
+            }
+            67% {
+                content: 'Loading..';
+            }
+            100% {
+                content: 'Loading...';
+            }
+        }
+    </style>
+
+    <style type="text/css">
+        /*hr {*/
+        /*    margin-top: 5px;*/
+        /*    margin-bottom: 5px;*/
+        /*}*/
+        .wrapper-radio{
+            border: 0px solid red;
+            /*width: 90px;*/
+            margin-top: 8px;
+        }
+        .btn-radio {
+            border: 1px solid #1a1a1a;
+            display: inline-block;
+            padding: 2px 10px;
+            position: relative;
+            text-align: center;
+            transition: background 600ms ease, color 600ms ease;
+        }
+
+        .rad-l{
+            border-radius: 5px 0 0 5px;
+        }
+        .rad-r{
+            border-radius: 0 5px 5px 0;
+        }
+
+        input[type="radio"].toggle-radio {
+            display: none;
+
+        & + label {
+              cursor: pointer;
+              min-width: 30px;
+              color: #bbbbbb;
+
+        &:hover {
+             background: none;
+             color: #1a1a1a;
+         }
+
+        &:after {
+             background: #1a1a1a;
+             content: "";
+             height: 100%;
+             position: absolute;
+             top: 0;
+             transition: left 200ms cubic-bezier(0.77, 0, 0.175, 1);
+             width: 100%;
+             z-index: -1;
+         }
+        }
+
+        &.toggle-left + label {
+             border-right: 0;
+
+        &:after {
+             left: 100%
+         }
+        }
+        &.toggle-center + label {
+             margin-left: -2px;
+
+        &:after {
+             left: -100%;
+         }
+        }
+        &.toggle-right + label {
+             margin-left: -3px;
+
+        &:after {
+             left: -100%;
+         }
+        }
+
+        &:checked + label {
+             background-color: #9eff2d;
+             cursor: default;
+             color: #e30000;
+             transition: color 200ms;
+
+        &:after {
+             left: 0;
+         }
+        }
+
+        }
+
+    </style>
+
+</head>
+<!--sidebar-collapse-->
+<body onbeforeunload="custom_holdon(close_holdon)" class="hold-transition {skin_header} sidebar-mini sidebar-collapse"
+      onload="fillBoxes();">
+<div id="baseURL" class="hidden">{base}</div>
+<div class="wrapper">
+    <header class="main-header">
+        <a href="{base}" class="logo hidden-xs hidden-sm no-padding">
+            <span class="logo-mini"><span class="glyphicon glyphicon-home"></span></span>
+            <!--            <span class="logo-lg"><img src="{base}public/images/profiles/logo_header.png?v={local_version}" height="40px"></span>-->
+            <span class="logo-lg">{logo_header}</span>
+        </a>
+        <nav class="navbar navbar-static-top">
+            <div class="no-padding no-border">
+                <!--                <div class="hidden-sm hidden-lgr col-sm-2 col-xs-1 col-md-1 col-lg-1 no-padding">-->
+                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+                <a class="sidebar-title"><b class="text-uppercase">{title}</b></a>
+                <!--                </div>-->
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav" id="menu_top">
+                        {menu_top}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <nav class="navbar navbar-fixed-bottom navbar-2nd">
+            <!--untuk view desktop-->
+            <div class="no-padding no-border">
+                <div style="padding-right:0;padding-left:0;" class="col-sm-2 col-xs-2 col-md-1 col-lg-1">
+                    <div class="hidden-xs col-sm-6 col-md-6 col-lg-6 no-padding">
+                        <a href="{base}" class="btn btn__trigger-home btn__trigger--views-home"><i
+                                class="glyphicon glyphicon-home"></i></a>
+                    </div>
+                    <div class="hidden-xl hidden-xxl hidden-lg hidden-md hidden-sm col-xs-6 no-padding">
+                        <a href="{base}" class="btn btn__trigger-home-mb btn__trigger--views-home-mb"><i
+                                class="glyphicon glyphicon-home"></i></a>
+                    </div>
+                    <div class="hidden-xs col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding">
+                        <div class="text-bold text-center timbul dtime">
+                            <span class="jam"></span>
+                            <span class="blink">:</span>
+                            <span class="menit"></span>
+                        </div>
+                    </div>
+                </div>
+                <div style="padding-right:0;padding-left:0;padding-left: 17px;" class="hidden-lg col-xs-8">
+                    {info_ucd}
+                </div>
+                <div style="padding-right:0;padding-left:0;" class="col-sm-10 col-xs-2 col-md-11 col-lg-11">
+                    {float_menu_bawah}
+                </div>
+            </div>
+            <div class="hidden-sm hidden-md hidden-lg hidden-xl hidden-xxl col-xs-12 bg-black text-lime text-bold">
+            <span class="col-xs-8 no-padding">
+                <span class="hari"></span>
+                <span class="tanggal"></span>
+            </span>
+                <span class="col-xs-4 no-padding text-right">
+                <span class="jam"></span>
+                <span class="blink">:</span>
+                <span class="menit"></span>
+            </span>
+            </div>
+        </nav>
+
+        <nav class="hidden-xs navbar navbar-fixed-bottom navbar-3rd">
+            <div class="no-padding no-border">
+            <span class="col-lg-2 no-padding">
+                <span class="hari timbul text-bold"></span>
+                <span class="tanggal timbul text-bold"></span>
+            </span>
+                <span class="col-lg-10 no-padding">
+                {info_bottom}
+            </span>
+            </div>
+        </nav>
+
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+            {searching}
+            <ul class="sidebar-menu">
+                <!--<li class="header">MAIN NAVIGATION</li>-->
+                {menu_left}
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <div id="search_result"></div>
+
+        <section class="content">
+
+            <div class="row hidden-md hidden-lg hidden-xl hidden-xxl">
+                <div class="col-md-12 text-center">
+                    <ul class="pagination">
+                        <li>
+                            <a class="text-white bg-light-blue" href="{base}{modul}/Transaksi/index/{jenisTr}"
+                               data-toggle="tooltip" data-placement="bottom" title="{trName} index">
+                                <span class='fa fa-align-justify'></span>
+                                <br>
+                                <small>index</small>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="text-white bg-maroon" href="{base}{modul}/Transaksi/viewIncomplete/{jenisTr}"
+                               data-toggle="tooltip" data-placement="bottom" title="on going {trName}">
+                                <span class='glyphicon glyphicon-exclamation-sign'></span>
+                                <br>
+                                <small>tasks</small>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="text-white bg-orange" href="{base}{modul}/Transaksi/viewHistory/{jenisTr}"
+                               data-toggle="tooltip" data-placement="bottom" title="{trName} histories">
+                                <span class='glyphicon glyphicon-time'></span>
+                                <br>
+                                <small>histories</small>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="text-white bg-blue" href="{base}{modul}ActivityReport/viewMonthly/{jenisTr}"
+                               data-toggle="tooltip" data-placement="bottom" title="{trName} reports">
+                                <span class='fa fa-bar-chart'></span>
+                                <br>
+                                <small>reports</small>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="text-white bg-fuchsia" href="{base}{modul}/Transaksi/viewMyActs/{jenisTr}"
+                               data-toggle="tooltip" data-placement="bottom" title="my {trName} activities">
+                                <span class='fa fa-gg'></span>
+                                <br>
+                                <small>my act</small>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="text-white bg-fuchsia"
+                               href="{base}{modul}ActivityReport/viewMySettlement/{jenisTr}" data-toggle="tooltip"
+                               data-placement="bottom" title="my {trName} settlement">
+                                <span class='fa fa-gg'></span>
+                                <br>
+                                <small>my stlmnt</small>
+                            </a>
+                        </li>
+                        <li style="display:{newTrDisp}">
+                            <a class="text-white bg-green" href="{newTrTarget}" data-toggle="tooltip"
+                               data-placement="bottom" title="new {trName}">
+                                <span class='fa fa-plus'></span>
+                                <br>
+                                <small>create</small>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!--<div class="row" style="margin-bottom: 20px;">-->
+                <!--<div class="col-md-12 pull-right text-right" style="background: lightgray; border-radius: 5px;">-->
+                    <!--<div class="col-md-12" style="padding: 5px;">-->
+                        <!--<div class='box-solid text-center input-group'>-->
+                            <!--<input type="hidden" name="pihakID" id="pihakID">-->
+                            <!--{add_pihak}-->
+                            <!--<input type='text' class='form-control'-->
+                                   <!--name='pihakName' id="pihakName"-->
+                               <!--value=''-->
+                                   <!--placeholder='{pihak_label}'-->
+                               <!--onclick="getData('{pihak_caller}?search='+encodeURI(this.value), 'pilihan_outlet')"-->
+                               <!--onkeyup="getData('{pihak_caller}?search='+encodeURI(this.value), 'pilihan_outlet')"-->
+                                   <!--autocomplete="off">-->
+                            <!--<span class='input-group-btn'>-->
+                                <!--<a class='btn btn-default' href="javascript:void(0)"-->
+                                   <!--onclick{modeedit}="document.getElementById('pihakID').value='';document.getElementById('pihakName').value='';document.getElementById('result').src='{pihak_caller_delete}';getData('{pihak_caller}?search='+document.getElementById('pihakName').value, 'pilihan_outlet');"><span-->
+                                        <!--class="glyphicon glyphicon-remove"></span>-->
+                                <!--</a>-->
+                            <!--</span>-->
+                        <!--</div>-->
+                        <!--<div id='pilihan_outlet'-->
+                             <!--style="max-height: 300px;position: absolute;left: 40px;overflow: auto;z-index: 3;"></div>-->
+
+
+                        <!--<div class='box-solid text-center' sstyle='margin-top: 10px;'>-->
+                            <!--<div class="input-group btn-block">-->
+                                <!--{add_item}-->
+                                <!--<input type='text' class='form-control'-->
+                                       <!--name='text'-->
+                                       <!--id='itemKeyword'-->
+                                       <!--value=''-->
+                                       <!--placeholder='{selector_label}'-->
+                                   <!--onclick="getData('{selector_caller}?search='+encodeURI(this.value), 'pilihan_item')"-->
+                                       <!--autocomplete="off">-->
+                                <!--{mobile_scan}-->
+                            <!--</div>-->
+                            <!--<div id='pilihan_item'-->
+                                 <!--style="max-height: 300px;position: absolute;left:40px;overflow: auto;z-index: 1;"></div>-->
+                        <!--</div>-->
+
+                        <!--{tmp_request}-->
+
+                    <!--</div>-->
+
+                <!--</div>-->
+            <!--</div>-->
+
+            <div class="row">
+
+                <div class="col-md-12">
+                    <!--{content_right}-->
+                    <!--<form action="{action_shopping_cart}" name="myForm" id="myForm" method="post" accept-charset="utf-8">-->
+
+                            {content}
+
+                   <!--</form>-->
+                </div>
+
+                <div class="col-md-12">
+                    <div id="requestItems"></div>
+                    <!--<div id="undoneList"></div>-->
+                    <div id="container-report"></div>
+
+                </div>
+            </div>
+
+
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <footer class="main-footer overflow-h">
+        <div class="clear-fix"></div>
+        {footer}
+
+    </footer>
+    <!--{float_menu_bawah}-->
+    <div id='myModal' class='modal {bg_modal} fade' role='dialog'>
+        <div class='modal-dialog {size_modal}'>
+            <div class='modal-content'>
+                {isi_modal}
+                <!-- Content will be loaded here from 'remote.php' file -->
+            </div>
+        </div>
+    </div>
+
+
+
+         <!--immediately after the control sidebar &ndash;&gt;-->
+    <div class="control-sidebar-bg"></div>
+</div>
+<div id="result_bottom">
+    <iframe id="tray" name="tray" style="display:none;width:100%;height:120px;"
+            ssrc="{base}_tray/index/{jenisTr}"></iframe>
+    <iframe name="result" id="result" style="resize: both;display: {display_iframe};width: 100%;height:800px;"></iframe>
+</div>
+<!-- ./wrapper -->
+
+
+<script>
+    /*$.widget.bridge('uibutton', $.ui.button);*/
+</script>
+
+<script src="{cdn_suport}AdminLTE-2.3.11/plugins/slimScroll/jquery.slimscroll.min.js?v={local_version}"></script>
+<script src="{cdn_suport}AdminLTE-2.3.11/dist/js/app.min.js?v={local_version}"></script>
+<script src="{cdn_suport}multi-step-modal-master/multi-step-modal.js?v={local_version}"></script>
+
+<script src="{cdn_suport}bootstrap-fileinput-master/js/fileinput.min.js?v={local_version}"></script>
+<script src="{cdn_suport}bootstrap-toggle-master/js/bootstrap-toggle.min.js?v={local_version}"></script>
+
+<script src="{base}assets/custom/hippo_ajax.js?v={local_version}"></script>
+<script src="{base}assets/custom/JS.js?v={local_version}"></script>
+
+<!--<script>-->
+<!--$(document).ready(function(){-->
+<!--$('[data-toggle="tooltip"]').tooltip();-->
+<!--});-->
+<!--</script>-->
+
+<script type="text/javascript">
+    var changingHash = false;
+
+    function onbarcode(event) {
+        switch (event.type) {
+            case "hashchange": {
+                if (changingHash == true) {
+                    return;
+                }
+                var hash = window.location.hash;
+                if (hash.substr(0, 3) == "#zx") {
+                    hash = window.location.hash.substr(3);
+                    changingHash = true;
+                    window.location.hash = event.oldURL.split("\#")[1] || ""
+                    changingHash = false;
+                    processBarcode(hash);
+                }
+                break;
+            }
+            case "storage": {
+                window.focus();
+                if (event.key == "barcode") {
+                    window.removeEventListener("storage", onbarcode, false);
+                    processBarcode(event.newValue);
+                }
+                break;
+            }
+            default: {
+                console.log(event)
+                break;
+            }
+        }
+    }
+
+    window.addEventListener("hashchange", onbarcode, false);
+
+    function getScan() {
+        var href = window.location.href;
+        var ptr = href.lastIndexOf("#");
+        if (ptr > 0) {
+            href = href.substr(0, ptr);
+        }
+        window.addEventListener("storage", onbarcode, false);
+        setTimeout('window.removeEventListener("storage", onbarcode, false)', 15000);
+        localStorage.removeItem("barcode");
+        //window.open  (href + "#zx" + new Date().toString());
+        if (navigator.userAgent.match(/Firefox/i)) {
+            //Used for Firefox. If Chrome uses this, it raises the "hashchanged" event only.
+            window.location.href = ("zxing://scan/?ret=" + encodeURIComponent(href + "#zx{CODE}"));
+        } else {
+            //Used for Chrome. If Firefox uses this, it leaves the scan window open.
+            window.open("zxing://scan/?ret=" + encodeURIComponent(href + "#zx{CODE}"));
+        }
+    }
+
+    function processBarcode(bc) {
+//        e = jQuery.Event("keyup")
+//        e.which = 13 //choose the one you want
+//        $("#itemKeyword").keyup(function(event){
+//            console.log('stringnya:');
+//            console.log(event);
+//            console.log(e);
+//        }).trigger(e)
+
+        $('#itemKeyword').val(bc);
+//        $('#itemKeyword').trigger(e);
+//
+//        $(function() {
+//            var e = $.Event('onkeyup');
+//            e.which = 13; // Character 'A'
+//            $('#itemKeyword').trigger(e);
+//        });
+
+//        var event = document.createEvent('KeyboardEvent'); // create a key event
+//// define the event
+//        event.initKeyEvent("keyup",       // typeArg,
+//                true,             // canBubbleArg,
+//                true,             // cancelableArg,
+//                null,             // viewArg,  Specifies UIEvent.view. This value may be null.
+//                false,            // ctrlKeyArg,
+//                false,            // altKeyArg,
+//                false,            // shiftKeyArg,
+//                false,            // metaKeyArg,
+//                13,               // keyCodeArg,
+//                13);              // charCodeArg);
+//
+//        document.getElementById('itemKeyword').dispatchEvent(event);
+
+        var keyboardEvent = new KeyboardEvent('keyup', {bubbles: true});
+        Object.defineProperty(keyboardEvent, 'charCode', {
+            get: function () {
+                return this.charCodeVal;
+            }
+        });
+        keyboardEvent.charCodeVal = [13];
+        document.getElementById('itemKeyword').dispatchEvent(keyboardEvent);
+    }
+</script>
+<script>
+
+//    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+//        var target = $(e.target).attr("href") // activated tab
+//
+//        switch(target){
+//            case '#produk' :
+//                    console.log('masuk ke produk');
+//                    loadProdukHarga()
+//                break;
+//        }
+//        console.log('target: ', target);
+//    });
+
+    $('#myModal').on('hidden.bs.modal', function () {
+        $(this).removeData('bs.modal');
+    });
+
+    //    $('body').tooltip({selector: '[data-toggle=tooltip]'});
+    //        $('data-toggle').tooltip({title:"Event", trigger:"focus or hover only", delay:{hide:100}});
+
+
+    checked = false;
+
+    function checkedAll(frm1) {
+        var aa = document.getElementById(frm1);
+        if (checked == false) {
+            checked = true
+        } else {
+            checked = false
+        }
+        for (var i = 0; i < aa.elements.length; i++) {
+            aa.elements[i].checked = checked;
+        }
+    }
+
+    var tray;
+    function load() {
+//        document.getElementById('tray').src = '{base}_tray/index/{jenisTr}';
+        tray = $('#tray').load('{base}_tray/index/{jenisTr}');
+
+    }
+
+    function reLoad() {
+        setInterval("load()", 30000);
+    }
+
+    function detectEnter() {
+        var keyCode = event.keyCode ? event.keyCode : event.which ? event.which
+            : event.charCode;
+        if (keyCode == 13) {
+            console.log('entering');
+            return true;
+        } else {
+            return false;
+        }
+        console.log(event);
+    }
+
+    function detectESC() {
+        var keyCode = event.keyCode ? event.keyCode : event.which ? event.which
+            : event.charCode;
+        if (keyCode == 27) {
+
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    function fillBoxes() {
+
+        // localStorage.setItem('loadShoppingCart', "idle");
+        //
+        // if (document.getElementById('shopping_cart')) {
+        //     top.$('#shopping_cart').load('{base}{modul}/_shoppingCart/viewCart/{jenisTr}?ohyes=ohno');
+        // }
+        // if (document.getElementById('itemKeyword')) {
+        //     document.getElementById('itemKeyword').value = '';
+        //     document.getElementById('itemKeyword').focus();
+        // }
+
+        // var viewRequestItems = function () {
+        //     top.$('#requestItems').html("<div class='row' style='margin-top: 14px; padding-bottom: 14px;'> <span class='col-lg-12 text-center'><img width='5%' src='{base}assets/images/loading_16_p.gif'></span> </div>")
+        //     setTimeout(function () {
+        //         if ($('#requestItems').find('img').length > 0) {
+        //             /*getData('{base}{modul}/Transaksi/viewRequestItems/{jenisTr}/?ohyes=ohno', 'requestItems', viewRequestItems())*/
+        //             top.$('#requestItems').load('{base}{modul}/Transaksi/viewRequestItems/{jenisTr}/?ohyes=ohno', function () {
+        //                 viewRequestItems
+        //             })
+        //         }
+        //     }, 8000);
+        //     callQtips()
+        // }
+
+        // var viewundoneList = function () {
+        //     top.$('#undoneList').html("<div class='row' style='margin-top: 14px; padding-bottom: 14px;'> <span class='col-lg-12 text-center'><img width='5%' src='{base}assets/images/loading_16_p.gif'></span> </div>");
+        //     setTimeout(function () {
+        //         if (top.$('#undoneList').find('img').length > 0) {
+        //             //                    getData('{base}{modul}/Transaksi/viewUndoneItems/{jenisTr}/?ohyes=ohno', 'undoneList', viewundoneList())
+        //             top.$('#undoneList').load('{base}{modul}/Transaksi/viewUndoneItems/{jenisTr}/?ohyes=ohno', function () {
+        //                 viewundoneList
+        //             })
+        //         }
+        //     }, 10000);
+        // }
+
+//         setTimeout(function () {
+//             top.$('#undoneList').html("<div class='row' style='margin-top: 14px; padding-bottom: 14px;'> <span class='col-lg-12 text-center'><img width='5%' src='{base}assets/images/loading_16_p.gif'></span> </div>");
+// //            getData('{base}{modul}/Transaksi/viewUndoneItems/{jenisTr}/?ohyes=ohno', 'undoneList', viewundoneList());
+//             top.$('#undoneList').load('{base}{modul}/Transaksi/viewUndoneItems/{jenisTr}/?ohyes=ohno', function () {
+//                 viewundoneList
+//             });
+//         }, 1000);
+
+//         setTimeout(function () {
+// //            getData('{base}{modul}/Transaksi/viewRequestItems/{jenisTr}/?ohyes=ohno', 'requestItems', viewRequestItems())
+//             top.$('#requestItems').load('{base}{modul}/Transaksi/viewRequestItems/{jenisTr}/?ohyes=ohno', function () {
+//                 viewRequestItems
+//             });
+//             setTimeout(function () {
+//                 $('#requestItems').trigger('change')
+//                 $('#selectAll*').click(function (event) {
+//                     if (this.checked) {
+//                         // Iterate each checkbox
+//                         $(':checkbox').each(function () {
+//                             this.checked = true;
+//                         });
+//                     } else {
+//                         $(':checkbox').each(function () {
+//                             this.checked = false;
+//                         });
+//                     }
+//                 });
+//             }, 3500)
+//         }, 1500);
+//
+//         reLoad();
+    }
+
+    setInterval(function () {
+        if ($('table.transaksi_id').length > 0) {
+            if (typeof $('table.transaksi_id').attr('id') == 'undefined') {
+                $('table.transaksi_id').dataTable({
+                    "columnDefs": [{
+                        "targets": 0,
+                        "orderable": false
+                    }]
+                })
+                $('input#selectAll_transaksi_id').on('click', function () {
+                    alert("selectAll_transaksi_id selected");
+                })
+            }
+        }
+        if ($('table.produk_id').length > 0) {
+            if (typeof $('table.produk_id').attr('id') == 'undefined') {
+                $('table.produk_id').dataTable({
+                    "columnDefs": [{
+                        "targets": 0,
+                        "orderable": false
+                    }]
+                })
+                $('input#selectAll_produk_id').on('click', function () {
+                    var checkBox = $("input[name='prdID\\[\\]']");
+                    jQuery.each(checkBox, function (i, d) {
+                        if ($('#selectAll_produk_id:checkbox:checked').length > 0) {
+                            $(checkBox).prop('checked', true)
+                        } else {
+                            $(checkBox).prop('checked', false)
+                        }
+                    });
+                })
+            }
+        }
+        if ($('table.vendor_id').length > 0) {
+            if (typeof $('table.vendor_id').attr('id') == 'undefined') {
+                $('table.vendor_id').dataTable({
+                    "columnDefs": [{
+                        "targets": 0,
+                        "orderable": false
+                    }]
+                })
+            }
+        }
+    }, 1000);
+
+    setInterval(function () {
+        $('.tooltip.fade.left.in').fadeOut();
+    }, 5000);
+
+    var shopping_cart = document.getElementById('shopping_cart');
+    var randomSubParent = document.getElementById('randomSubParent');
+
+    function scrollParentToChild(parent, child) {
+        var parentRect = parent.getBoundingClientRect();
+        var parentViewableArea = {
+            height: parent.clientHeight,
+            width: parent.clientWidth
+        };
+        var childRect = child.getBoundingClientRect();
+        var isViewable = (childRect.top >= parentRect.top) && (childRect.top <= parentRect.top + parentViewableArea.height);
+        if (!isViewable) {
+            parent.scrollTop = (childRect.top + parent.scrollTop) - parentRect.top
+        }
+    }
+
+    var delay = function () {
+        var a = 0;
+        return function (t, e, th) {
+            clearTimeout(a), a = setTimeout(t, e)
+            console.log(t);
+            console.log(e);
+            console.log($(th).attr('noid'));
+        }
+    }();
+
+    var callQtips = function () {
+        setTimeout(function () {
+            $("span[name='qtips']").each(function () {
+                $(this).qtip({
+                    content: {
+                        text: function (event, api) {
+                            $.ajax({
+                                url: api.elements.target.attr('href') // Use href attribute as URL
+                            })
+                                .then(function (content) {
+                                    // Set the tooltip content upon successful retrieval
+                                    api.set('content.text', content);
+                                }, function (xhr, status, error) {
+                                    // Upon failure... set the tooltip content to error
+                                    api.set('content.text', status + ': ' + error);
+                                });
+                            return 'Loading...'; // Set some initial text
+                        }
+                    },
+                    position: {
+                        viewport: $(window)
+                    },
+                    hide: {
+                        fixed: true,
+                        delay: 300
+                    },
+                    style: 'qtip-wiki'
+                });
+            });
+        }, 3500);
+    }
+
+    setInterval(function () {
+        var loadShoppingCart = null != localStorage.getItem('loadShoppingCart') ? localStorage.getItem('loadShoppingCart') : "idle";
+        //check to refresh
+        if ("idle" != loadShoppingCart) {
+            //refresh
+            if (parseFloat(loadShoppingCart) <= 0) {
+//                console.log('shoppingcart di refresh ('+loadShoppingCart+')');
+                document.getElementById("overlay").style.display = "block";
+                $('#shopping_cart').load('{base}{modul}/_shoppingCart/viewCart/{jenisTr}?ohyes=ohno');
+                localStorage.setItem('loadShoppingCart', "idle");
+            }
+            //abaikan #1
+            else {
+//                console.log('hitung mundur ('+loadShoppingCart+')');
+                $('#btn_kalkulasi').removeClass('hidden');
+                $('#kalkulasi').html('(' + loadShoppingCart + ')');
+                $('#kalkulasi').addClass('text-bold');
+                localStorage.setItem('loadShoppingCart', parseFloat(loadShoppingCart) - 1);
+            }
+        }
+        //abaikan #2
+        else {
+//            console.log('abaikan shoppingcart tidak di refresh');
+        }
+    }, 1000);
+
+</script>
+{scriptBottom}
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--<meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
+
+    <title>{title}</title>
+
+    <link rel="stylesheet" href="{base}assets/custom/custom.min.css?v={local_version}">
+
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-3.3.7-dist/css/bootstrap.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}Font-Awesome-master/css/font-awesome.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/dist/css/AdminLTE.css?v={local_version}">
+
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-3.3.7-dist/js/bootstrap.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/slimScroll/jquery.slimscroll.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}AdminLTE-2.3.11/dist/js/app.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}multi-step-modal-master/multi-step-modal.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-fileinput-master/js/fileinput.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-toggle-master/js/bootstrap-toggle.min.js?v={local_version}"></script>
+    <script src="{base}assets/custom/hippo_ajax.js?v={local_version}"></script>
+
+    <style>
+        @page {
+            size: A4;
+            margin: 2mm 3mm 10mm 3mm; /* Mengatur margin sesuai kebutuhan */
+        }
+
+        body {
+            /*size: A4;*/
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        .header, .footer {
+            position: fixed;
+            width: 100%;
+            /*background-color: #f5f5f5;*/
+            text-align: center;
+            /*border: 1px solid #ddd;*/
+            box-sizing: border-box;
+            z-index: 100;
+        }
+
+        .header {
+            top: 0;
+            height: 125mm; /* Sesuaikan sesuai kebutuhan */
+            border-bottom: 0px solid #ddd;
+        }
+
+        .footer {
+            bottom: 0px;
+            height: 70mm; /* Sesuaikan sesuai kebutuhan */
+            /*border-top: 1px solid #ddd;*/
+        }
+
+        .page {
+            page-break-before: always;
+            padding-top: 100mm; /* Ruang untuk header */
+            padding-bottom: 20mm; /* Ruang untuk footer */
+            box-sizing: border-box;
+            zoom: 0.84;
+        }
+
+        .contentx {
+            margin-top: 0mm; /* Jarak tambahan dari atas konten */
+        }
+
+        @media print {
+            /*body {*/
+                /*transform: scale(0.85);*/
+            /*}*/
+            a[href]:after {
+                display: none;
+                visibility: hidden;
+            }
+            .header, .footer {
+                display: block;
+            }
+            .header{
+                height: 105mm; /* Sesuaikan sesuai kebutuhan */
+            }
+            .text-white {
+                display: none;
+                visibility: hidden;
+            }
+            .col-sm-1, .col-xs-1{
+                margin-right: -25px;
+            }
+            .hidden-on-print {
+                display: none !important;
+            }
+        }
+        .img-thumbnail{
+            border: none !important;
+        }
+        .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2{
+            width: 24% !important;
+        }
+    </style>
+
+    <style type="text/css">
+        .panel-element>.panel-heading{
+            padding: 3px 15px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .panel-element>.panel-body{
+            padding: 0 15px;
+        }
+        /*.table-condensed>tbody>tr>td{*/
+        .panel-element>.panel-body>.table-condensed>tbody>tr>td{
+            padding: 0 !important;
+            border-top: none;
+            text-transform: capitalize;
+        }
+        .tbl-label{
+            width: 100px;
+            /*text-transform: capitalize;*/
+        }
+        .panel-content>.table>tbody>tr>td{
+            padding: 0 !important;
+            border-top: none;
+            text-transform: capitalize;
+        }
+        .nilai_nota, .harga, .subtotal {
+            text-align: right;
+        }
+
+        .total {
+            font-weight: bold;
+            font-size: 16px !important;
+        }
+
+        .jumlah {
+            border-top: 3px double #ddd !important;
+            height: 30px;
+            vertical-align: top !important;
+            font-weight: bold;
+            text-align: right;
+        }
+        .grand_total{
+            font-weight: bolder;
+            font-size: 18px !important;
+        }
+
+        .total_point {
+            font-weight: bold;
+        }
+    </style>
+
+    <style type='text/css'>
+        .dpp, .jumlah_total, .harga_satuan, .sub_nett1{
+            text-align: right;
+        }
+        .jumlah, .total{
+            font-weight: bold;
+            border-top: unset !important;
+            height: unset !important;
+        }
+        .total_bruto{
+            font-weight: bold;
+
+        }
+        .table {
+            margin-bottom: 0;
+        }
+        .table>tbody>tr>td, .table>tbody>tr>th{
+            padding: 0 5px;
+        }
+        body{
+            font-family: Arial;
+            font-size: 14px !important;
+        }
+        .ttd{
+            height: 120px;
+        }
+        .bg-success{
+            background-color: #0a53ff91 !important;
+        }
+        .box-header{
+            padding: 3px 10px !important;
+            background-color: #0a53ff91 !important;
+            background: #0a53ff91 !important;
+            color: unset !important;
+        }
+        .box.box-solid.box-danger {
+            border: 1px solid #c0c0c0 !important;
+        }
+        .alert{
+            padding: 5px 10px !important;
+        }
+        .alert-danger{
+            color: #000 !important;
+            background-color: #ffffff !important;
+            border-color: #c0c0c0 !important;
+        }
+        .Description{
+            white-space: nowrap;
+        }
+    </style>
+
+</head>
+<body>
+
+{newContent}
+
+</body>
+</html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!--<meta name="582spo_mod">-->
+    <title>{title}</title>
+
+    <style>
+        html {
+            zoom: 100%;
+        }
+
+        * {
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+        }
+
+        /*body{*/
+        /*    font-family: sans-serif;*/
+        /*    !*font-size: .8em !important;*!*/
+        /*    line-heigh:0 !important;*/
+        /*}*/
+        .pageHeader {
+            position: fixed;
+            /*width: 210mm;*/
+            top: 0mm;
+        }
+
+        .pageBody {
+            /*width: 210mm;*/
+        }
+
+        .pageFooter {
+            position: fixed;
+            /*width: 210mm;*/
+            bottom: 0mm;
+        }
+
+        @page {
+            size: A4 potrait;
+            margin: 3mm;
+        }
+
+        @media print {
+            html, body {
+                /*zoom: initial;*/
+                /*width: 210mm;*/
+                /*height: 297mm;*/
+            }
+        }
+
+        @media screen {
+            a[href]:after {
+                display: none;
+                visibility: hidden;
+            }
+
+            td {
+                width: max-content;
+            }
+        }
+
+        @media print {
+            a[href]:after {
+                display: none;
+                visibility: hidden;
+            }
+
+            .text-white {
+                display: none;
+                visibility: hidden;
+            }
+
+            .col-sm-1, .col-xs-1{
+                margin-right: -25px;
+            }
+
+            .hidden-on-print {
+                display: none !important;
+            }
+        }
+        .img-thumbnail{
+            border: none !important;
+        }
+    </style>
+    <style type="text/css">
+        .panel-default{
+            border-color: #161212 !important;
+        }
+        .table-bordered>tbody>tr>th, .table-bordered>tbody>tr>td{
+            border-color: #161212 !important;
+        }
+        .panel-element>.panel-heading{
+            padding: 3px 15px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .panel{
+            margin-bottom: 5px !important;
+        }
+        .panel-element>.panel-body{
+            padding: 0 15px;
+        }
+        /*.table-condensed>tbody>tr>td{*/
+        .panel-element>.panel-body>.table-condensed>tbody>tr>td{
+            padding: 0 !important;
+            border-top: none;
+            text-transform: capitalize;
+        }
+        .tbl-label{
+            width: 100px;
+            /*text-transform: capitalize;*/
+        }
+
+        .panel-content>.table>tbody>tr>td{
+            padding: 0 !important;
+            border-top: none;
+            text-transform: capitalize;
+        }
+        .alert{
+            padding: 5px !important;
+            margin-bottom: 5px !important;
+        }
+        .alert-danger{
+            color: #000 !important;
+            border-color: #000 !important;
+        }
+        .nilai_nota, .harga, .subtotal {
+            text-align: right;
+        }
+
+        .total {
+            font-weight: bold;
+            font-size: 16px !important;
+        }
+
+        .jumlah {
+            border-top: 3px double #ddd !important;
+            /*height: 30px;*/
+            vertical-align: top !important;
+            font-weight: bold;
+            text-align: right;
+        }
+        .grand_total{
+            font-weight: bolder;
+            font-size: 18px !important;
+        }
+
+        .total_point {
+            font-weight: bold;
+        }
+    </style>
+    <link rel="stylesheet" href="{base}assets/custom/custom.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-3.3.7-dist/css/bootstrap.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}Font-Awesome-master/css/font-awesome.min.css?v={local_version}">
+
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-3.3.7-dist/js/bootstrap.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/slimScroll/jquery.slimscroll.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}AdminLTE-2.3.11/dist/js/app.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}multi-step-modal-master/multi-step-modal.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-fileinput-master/js/fileinput.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-toggle-master/js/bootstrap-toggle.min.js?v={local_version}"></script>
+    <script src="{base}assets/custom/hippo_ajax.js?v={local_version}"></script>
+
+
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini" onload="" style="">
+{option}
+<div class="spacer">&nbsp;</div>
+
+<div class="row over-flow-h" style="padding-left: 30px;padding-right: 30px; ">
+
+    <div class="text-right" style="overflow: hidden;">{tanggal_transaksi}</div>
+
+    <div class="row" style="margin-bottom: 10px;">
+        <div id="cprofile" class="text-left col-md-6 col-xs-6 col-sm-6">
+            <!--<div id="logo" class="text-left col-md-1 col-xs-1 col-sm-1 no-padding {lg_hidden}" style="margin-top:2px;margin-right: -10px; height: 84px;width: 102px;">-->
+            <div id="logo" class="text-left no-padding {lg_hidden}" style="margin-top:2px;margin-right: 0px; height: 100px;width: 102px;float: left;">
+                {logo_header_print_00}
+            </div>
+            <!--<div>-->
+                {companyProfile}
+            <!--</div>-->
+            <!--test-->
+
+        </div>
+        <div class="text-left col-md-6 col-xs-6 col-sm-6">
+            {pihakProfile}
+        </div>
+    </div>
+</div>
+
+<div class="row" style="padding-left: 30px;padding-right: 30px;">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding text-capitalize">
+        <div class="panel panel-default no-padding">
+            {content}
+        </div>
+    </div>
+</div>
+<div class="row" style="padding-left: 30px;padding-right: 30px;">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding text-capitalize">
+        <!--<div class="panel panel-default">-->
+            {content_3}
+        <!--</div>-->
+    </div>
+</div>
+<div class="row" style="padding-left: 30px;padding-right: 30px;">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding text-capitalize">
+        <!--<div class="panel panel-default">-->
+            {noteDetails}
+        <!--</div>-->
+    </div>
+</div>
+<div class="row" style="padding-left: 15px;padding-right: 15px;">
+    <div class="col-md-12" style="border: 0px solid red;">
+        <div classs="panel panel-default">
+            {fakturElement}
+        </div>
+    </div>
+</div>
+<div class="row" style="padding-left: 30px;padding-right: 30px;font-size: .9em;">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 no-padding">
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 no-padding">
+            <!--<div class="panel panel-default ">-->
+            {statik_note}
+            <!--</div>-->
+        </div>
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 no-padding text-center">
+            <!--<div class="panel panel-default ">-->
+            <!--{pemilikSign}-->
+            {salesman}
+            <!--</div>-->
+        </div>
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 no-padding text-center">
+            <!--<div class="panel panel-default ">-->
+            {customerSignitures}
+            <!--</div>-->
+        </div>
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 no-padding text-center">
+            <!--<div class="panel panel-default ">-->
+            {sign_1}
+            <!--</div>-->
+        </div>
+<!--        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 no-padding text-center">-->
+<!--            &lt;!&ndash;<div class="panel panel-default ">&ndash;&gt;-->
+<!--            {sign_2}-->
+<!--            &lt;!&ndash;</div>&ndash;&gt;-->
+<!--        </div>-->
+    </div>
+</div>
+
+<div class="" id="rekeningbank">{footer}</div>
+
+{lain_lain}
+
+<div id='myModal' class='modal {bg_modal} fade' role='dialog'>
+    <div class='modal-dialog {size_modal}'>
+        <div class='modal-content'>
+            {isi_modal}
+        </div>
+    </div>
+</div>
+<script>
+    $('#myModal').on('hidden.bs.modal', function () {
+        $(this).removeData('bs.modal');
+    });
+</script>
+</body>
+</html>

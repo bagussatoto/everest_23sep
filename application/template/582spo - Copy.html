@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{title}</title>
+
+    <style>
+        html {
+            zoom: 90%;
+            line-height: 1;
+        }
+        * {
+            line-height: 1;
+            font-family: monospace, monospace;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+        }
+
+        .pageHeader {
+            position: fixed;
+            /*width: 210mm;*/
+            top: 0mm;
+        }
+
+        .pageBody {
+            /*width: 210mm;*/
+        }
+
+        .pageFooter {
+            position: fixed;
+            /*width: 210mm;*/
+            bottom: 0mm;
+        }
+
+        @page {
+            font-family: monospace, monospace;
+            width: 80mm;
+            margin: 3mm;
+        }
+
+        @media print {
+            html, body {
+                /*zoom: initial;*/
+                width: 80mm;
+                font-family: monospace, monospace;
+                /*height: 297mm;*/
+            }
+            .newPages { page-break-before: always; }
+            .pageHeader {
+                position: fixed;
+                /*width: 210mm;*/
+                top: 0;
+            }
+            .pageFooter {
+                position: fixed;
+                width: 100%;
+                bottom: 0;
+            }
+        }
+
+        dsh {
+            display: block;
+            unicode-bidi: isolate;
+            margin-block-start: 0.1em;
+            margin-block-end: 0.1em;
+            margin-inline-start: auto;
+            margin-inline-end: auto;
+            overflow: hidden;
+            border-style: dashed;
+            border-width: 1px;
+        }
+
+    </style>
+
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-3.3.7-dist/js/bootstrap.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/slimScroll/jquery.slimscroll.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}AdminLTE-2.3.11/dist/js/app.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}multi-step-modal-master/multi-step-modal"></script>
+    <script src="{cdn_suport}bootstrap-fileinput-master/js/fileinput.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-toggle-master/js/bootstrap-toggle.min.js?v={local_version}"></script>
+    <script src="{base}assets/custom/hippo_ajax.js?v={local_version}"></script>
+    <link rel="stylesheet" href="{base}assets/custom/custom.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-3.3.7-dist/css/bootstrap.min.css?v={local_version}">
+
+</head>
+
+<body>
+
+    <div style="margin: 0" class="row">
+        <div style='font-size: 0.7em;' class="text-center col-xs-8 col-sm-8 col-md-8 col-lg-8 no-padding">
+            {companyProfile}
+        </div>
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 pull-left no-padding">
+            <img src="{base}assets/images/logo_small.png" alt="a"  class="img-responsive">
+        </div>
+    </div>
+    <dsh></dsh>
+
+    <div style="margin: 0" class="row">
+        <div> {tanggal} {hours} {nota} {kasir}</div>
+    </div>
+
+    <dsh></dsh>
+
+    <div style="margin: 0" class="row">
+        <div style='font-size: 1.2em;' class='text-bold col-xs-12 no-padding'>NAMA BARANG / KODE</div>
+        <div style='font-size: 1.2em;' class='text-bold text-center col-xs-3 no-padding'>QTY</div>
+        <div style='font-size: 1.2em;' class='text-bold text-center col-xs-3 no-padding'>H.SATUAN</div>
+        <div style='font-size: 1.2em;' class='text-bold text-center col-xs-3 no-padding'>DISC</div>
+        <div style='font-size: 1.2em;' class='text-bold text-right col-xs-3 no-padding'>TOTAL</div>
+        <dsh></dsh><dsh></dsh>
+        {content}
+    </div>
+
+    <dsh></dsh>
+
+    <div style="margin: 0" class="row">
+
+        <div style='font-size: 1.2em;' class='text-bold text-center col-xs-6 no-padding'>{totalItems}</div>
+        <div style='font-size: 1.2em;' class='text-bold text-center col-xs-3 no-padding'>{totalDiskon}</div>
+        <div style='font-size: 1.2em;' class='text-bold text-right col-xs-3 no-padding'>{grandTotal}</div>
+
+        <div style='font-size: 1.1em;' class='col-xs-6 text-left no-padding'>{totalUnit}</div>
+        <div style='font-size: 1.1em;' class='col-xs-3 text-center no-padding'></div>
+        <div style='font-size: 1.1em;' class='col-xs-3 text-right no-padding'>- - - - </div>
+
+        <div class='text-bold col-xs-9 text-left no-padding'>HARGA JUAL .................:</div>
+        <div class='text-bold col-xs-3 text-right no-padding'>{hargaJual}</div>
+
+        <div class='text-bold col-xs-9 text-left no-padding'>TOTAL YANG HARUS DIBAYAR....:</div>
+        <div class='text-bold col-xs-3 text-right no-padding'>{harusDibayar}</div>
+
+        <div class='text-bold col-xs-9 text-left no-padding'>TUNAI.......................:</div>
+        <div class='text-bold col-xs-3 text-right no-padding'>{tunai}</div>
+
+        <div class='text-bold col-xs-9 text-left no-padding'>KEMBALI.....................:</div>
+        <div class='text-bold col-xs-3 text-right no-padding'>{kembali}</div>
+
+        <div class='text-bold col-xs-9 text-left no-padding'>LEBIH HEMAT  ------------> </div>
+        <div class='text-bold col-xs-3 text-right no-padding'>{hemat}</div>
+
+        <div class='clearfix'>&nbsp;</div>
+        <div class='clearfix'>&nbsp;</div>
+
+        <!--<div style='font-size: 0.7em;' class='text-bold col-xs-2 text-left no-padding'>BTKP</div>-->
+        <!--<div style='font-size: 0.7em;' class='text-bold col-xs-1 text-left no-padding'>:</div>-->
+        <!--<div style='font-size: 0.7em;' class='text-bold col-xs-3 text-left no-padding'>{btkp}</div>-->
+
+        <!--<div style='font-size: 0.7em;' class='text-bold col-xs-2 text-left no-padding'>POT. BTKP</div>-->
+        <!--<div style='font-size: 0.7em;' class='text-bold col-xs-1 text-left no-padding'>:</div>-->
+        <!--<div style='font-size: 0.7em;' class='text-bold col-xs-3 text-left no-padding'>{potbtkp}</div>-->
+
+        <!--<div class='clearfix'>&nbsp;</div>-->
+
+        <!--<div style='font-size: 0.7em;' class='text-bold col-xs-2 text-left no-padding'>BKP</div>-->
+        <!--<div style='font-size: 0.7em;' class='text-bold col-xs-1 text-left no-padding'>:</div>-->
+        <!--<div style='font-size: 0.7em;' class='text-bold col-xs-3 text-left no-padding'>{bkp}</div>-->
+
+        <!--<div style='font-size: 0.7em;' class='text-bold col-xs-2 text-left no-padding'>POT. BKP</div>-->
+        <!--<div style='font-size: 0.7em;' class='text-bold col-xs-1 text-left no-padding'>:</div>-->
+        <!--<div style='font-size: 0.7em;' class='text-bold col-xs-3 text-left no-padding'>{potbkp}</div>-->
+
+        <!--<div style='font-size: 0.7em;' class='text-bold col-xs-2 text-left no-padding'>DPP</div>-->
+        <!--<div style='font-size: 0.7em;' class='text-bold col-xs-1 text-left no-padding'>:</div>-->
+        <!--<div style='font-size: 0.7em;' class='text-bold col-xs-3 text-left no-padding'>{dpp}</div>-->
+
+        <!--<div style='font-size: 0.7em;' class='text-bold col-xs-2 text-left no-padding'>PPN</div>-->
+        <!--<div style='font-size: 0.7em;' class='text-bold col-xs-1 text-left no-padding'>:</div>-->
+        <!--<div style='font-size: 0.7em;' class='text-bold col-xs-3 text-left no-padding'>{ppn}</div>-->
+
+        <!--<div class='clearfix'>&nbsp;</div>-->
+
+        <div style='font-size: 1em;' class='col-xs-12 text-center no-padding'>** Terima Kasih **</div>
+        <div style='font-size: 1em;' class='col-xs-12 text-center no-padding'>{information}</div>
+
+        <dsh></dsh>
+
+        <div style='font-size: 1em;' class='col-xs-12 text-center no-padding'></div>
+        <div style='font-size: 1em;' class='col-xs-12 text-center no-padding'></div>
+
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<!-- viewdetails.html -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{title}</title>
+    <!-- Tell the browser to be responsive to screen width -->
+
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link id="favicon" rel="icon" type='image/x-icon' href="{base}favicon.png">
+    <!-- Bootstrap 3.3.6 -->
+    <!--<link rel="stylesheet" href="../../assets/suport/AdminLTE-2.3.11/bootstrap/css/bootstrap.min.css?v={local_version}">-->
+    <!--<link rel="stylesheet" href="{cdn_suport}bootstrap-3.3.7-dist/css/bootstrap.min.css?v={local_version}">-->
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-3.3.7-dist/css/bootstrap.min.css?v={local_version}">
+    <!-- Font Awesome -->
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css?v={local_version}">-->
+    <link rel="stylesheet" href="{cdn_suport}Font-Awesome-master/css/font-awesome.min.css?v={local_version}">
+    <!-- Ionicons -->
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css?v={local_version}">-->
+    <link rel="stylesheet" href="{cdn_suport}ionicons-master/css/ionicons.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}simple-line-icons-master/css/simple-line-icons.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}qtip/jquery.qtip.min.css?v={local_version}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/dist/css/AdminLTE.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}bootstrap3-dialog-master/dist/css/bootstrap-dialog.min.css?v={local_version}">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/dist/css/skins/_all-skins.min.css?v={local_version}">
+    <!-- iCheck -->
+    <!--<link rel="stylesheet" href="../../assets/suport/AdminLTE-2.3.11/plugins/iCheck/flat/blue.css?v={local_version}">-->
+    <!-- Morris chart -->
+    <!--<link rel="stylesheet" href="../../assets/suport/AdminLTE-2.3.11/plugins/morris/morris.css?v={local_version}">-->
+    <!-- jvectormap -->
+    <!--<link rel="stylesheet" href="../../assets/suport/AdminLTE-2.3.11/plugins/jvectormap/jquery-jvectormap-1.2.2.css?v={local_version}">-->
+    <!-- Date Picker -->
+    <!--<link rel="stylesheet" href="../../assets/suport/AdminLTE-2.3.11/plugins/datepicker/datepicker3.css?v={local_version}">-->
+    <!-- Daterange picker -->
+    <!--<link rel="stylesheet" href="../../assets/suport/AdminLTE-2.3.11/plugins/daterangepicker/daterangepicker.css?v={local_version}">-->
+    <!-- bootstrap wysihtml5 - text editor -->
+    <!--<link rel="stylesheet"-->
+    <!--href="../../assets/suport/AdminLTE-2.3.11/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css?v={local_version}">-->
+
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-fileinput-master/css/fileinput.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-toggle-master/css/bootstrap-toggle.min.css?v={local_version}">
+    <!-- data table-->
+    <!--<link rel="stylesheet" href="../../assets/suport/DataTables-1.10.13/media/css/jquery.dataTables.min.css?v={local_version}">-->
+    <!--<link rel="stylesheet"-->
+    <!--href="../../assets/suport/DataTables-1.10.13/extensions/FixedHeader/css/fixedHeader.dataTables.min.css?v={local_version}">-->
+
+    <!--<link rel="stylesheet" href="../../assets/suport/bootstrap-table-develop/dist/bootstrap-table.min.css?v={local_version}">-->
+    <link rel="stylesheet" href="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.css?v={local_version}">
+    <!--<link rel="stylesheet" href="../../assets/suport/SmartCart-master/dist/css/smart_cart.min.css?v={local_version}">-->
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-xlgrid-master/bootstrap-xlgrid.min.css?v={local_version}">
+    <link rel="stylesheet" href="{base}assets/custom/custom.min.css?v={local_version}">
+    <link rel="stylesheet" href="{base}/assets/custom/dialog.css?v={local_version}">
+    <link rel="stylesheet" href="{base}assets/custom/jquery.floatingscroll.css?v={local_version}">
+    <!--<link rel="stylesheet" href="{base}/assets/custom/highslide.css?v={local_version}">-->
+    <link rel="stylesheet" href="{cdn_suport}HoldOn/HoldOn.min.css?v={local_version}">
+    <!--<link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/media/css/dataTables.bootstrap.min.css?v={local_version}">-->
+    <link rel="stylesheet"
+          href="{cdn_suport}DataTables-1.10.13/media/css/jquery.dataTables_themeroller.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}DataTables-1.10.13/yadcf-0.9.3/jquery.dataTables.yadcf.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}DataTables-1.10.13/extensions/Buttons/css/buttons.dataTables.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}DataTables-1.10.13/extensions/FixedHeader/css/fixedHeader.bootstrap.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}DataTables-1.10.13/extensions/FixedColumns/css/fixedColumns.bootstrap.css?v={local_version}">
+
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v={local_version}"></script>
+
+    <!--    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>-->
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/raphael/raphael-min.js?v={local_version}"></script>
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/morris/morris.js?v={local_version}"></script>
+    <!--<script src="{cdn_suport}AdminLTE-2.3.11/plugins/morris/morris.min.js?v={local_version}"></script>-->
+
+    <script src="{cdn_suport}bootstrap-3.3.7-dist/js/bootstrap.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js?v={local_version}"></script>
+    <!--<script src="{cdn_suport}bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js?v={local_version}"></script>-->
+    <script src="{base}assets/custom/custom.js?v={local_version}"></script>
+    <!--<script src="{cdn_suport}custom/highslide-with-html.js?v={local_version}"></script>-->
+    <script src="{cdn_suport}HoldOn/HoldOn.min.js?v={local_version}"></script>
+
+    <script src="{base}assets/custom/jquery.floatingscroll.min.js?v={local_version}"></script>
+
+    <script src="{cdn_suport}DataTables-1.10.13/media/js/jquery.dataTables.min.js?v={local_version}"></script>
+    <!--<script src="{cdn_suport}DataTables-1.10.13/media/js/dataTables.bootstrap.min.js?v={local_version}"></script>-->
+    <script src="{cdn_suport}DataTables-1.10.13/media/js/jquery.highlight.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/dataTables.buttons.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.colVis.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.print.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.html5.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.flash.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/FixedHeader/js/dataTables.fixedHeader.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/FixedColumns/js/dataTables.fixedColumns.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/yadcf-0.9.3/jquery.dataTables.yadcf.js?v={local_version}"></script>
+
+
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+    <link rel="stylesheet" type="text/css"
+          href="//cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.20/b-1.6.1/b-colvis-1.6.1/b-flash-1.6.1/b-html5-1.6.1/b-print-1.6.1/datatables.min.css"/>
+    <!--<link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/plugins/datatables/extensions/b-html5-1.61/b-print-1.6.1/datatables.min.css?v={local_version}">-->
+
+    <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>-->
+    <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>-->
+    <script type="text/javascript"
+            src="//cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.20/b-1.6.1/b-colvis-1.6.1/b-flash-1.6.1/b-html5-1.6.1/b-print-1.6.1/datatables.min.js"></script>
+    <!--<script src="{cdn_suport}AdminLTE-2.3.11/plugins/datatables/extensions/b-html5-1.61/b-print-1.6.1/datatables.min.js?v={local_version}"></script>-->
+    <!--{head}-->
+    <script src="{cdn_suport}qtip/jquery.qtip.min.js?v={local_version}"></script>
+
+
+    <style>
+
+        @media print {
+            a[href]:after {
+                display: none;
+                visibility: hidden;
+            }
+        }
+
+        @media print {
+            .fl-scrolls,
+            .fl-scrolls.fl-scrolls-hidden,
+            .no-print,
+            .btn,
+            .panel-body.no-padding {
+                display: none !important;
+            }
+
+            table.table {
+                font-family: Verdana, Arial;
+                font-size: 10px;
+            }
+        }
+
+        .morris-hover.morris-default-style {
+            border-radius: 10px;
+            padding: 6px;
+            color: #f9f9f9;
+            background: rgb(158, 158, 160);
+            border: solid 2px rgba(113, 112, 117, 0.9);
+            font-weight: 600;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .mark, mark {
+            padding: .1em !important;
+            background-color: #f5bc67 !important;
+        }
+    </style>
+</head>
+<body>
+{content}
+</body>
+</html>

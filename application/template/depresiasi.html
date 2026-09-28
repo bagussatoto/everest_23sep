@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <!-- Template Name depresiasi.html -->
+    <title>{title}</title>
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link id="favicon" rel="icon" type='image/x-icon' href="{favicon}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-3.3.7-dist/css/bootstrap.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}Font-Awesome-master/css/font-awesome.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}ionicons-master/css/ionicons.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}simple-line-icons-master/css/simple-line-icons.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/dist/css/AdminLTE.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap3-dialog-master/dist/css/bootstrap-dialog.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/dist/css/skins/_all-skins.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-fileinput-master/css/fileinput.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-toggle-master/css/bootstrap-toggle.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-xlgrid-master/bootstrap-xlgrid.min.css?v={local_version}">
+    <link rel="stylesheet" href="{base}assets/custom/custom.min.css?v={local_version}">
+    <link rel="stylesheet" href="{base}/assets/custom/dialog.css?v={local_version}">
+    <link rel="stylesheet" href="{base}assets/custom/jquery.floatingscroll.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}HoldOn/HoldOn.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}qtip/jquery.qtip.min.css?v={local_version}">
+    <!--<link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/media/css/dataTables.bootstrap.min.css?v={local_version}">-->
+    <link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/media/css/jquery.dataTables_themeroller.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/yadcf-0.9.3/jquery.dataTables.yadcf.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/extensions/Buttons/css/buttons.dataTables.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-select-1.13.9/dist/css/bootstrap-select.css?v={local_version}">
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.20/b-1.6.1/b-colvis-1.6.1/b-flash-1.6.1/b-html5-1.6.1/b-print-1.6.1/datatables.min.css"/>
+    <link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/extensions/FixedHeader/css/fixedHeader.bootstrap.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/extensions/FixedColumns/css/fixedColumns.bootstrap.css?v={local_version}">
+
+    <!--<script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>-->
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-3.3.7-dist/js/bootstrap.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js?v={local_version}"></script>
+    <script src="{base}assets/custom/custom.js?v={local_version}"></script>
+    <script src="{cdn_suport}HoldOn/HoldOn.min.js?v={local_version}"></script>
+    <script src="{base}assets/custom/jquery.floatingscroll.min.js?v={local_version}"></script>
+    <script src="{base}assets/custom/moment.min.js?v={local_version}"></script>
+    <script src="{base}assets/custom/moment-precise-range.js?v={local_version}"></script>
+    <script src="{cdn_suport}qtip/jquery.qtip.min.js?v={local_version}"></script>
+
+    <script src="{cdn_suport}DataTables-1.10.13/media/js/jquery.dataTables.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/media/js/dataTables.bootstrap.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/media/js/jquery.highlight.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/dataTables.buttons.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.colVis.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.print.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.html5.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.flash.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/yadcf-0.9.3/jquery.dataTables.yadcf.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-select-1.13.9/dist/js/bootstrap-select.js?v={local_version}"></script>
+
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript" src="//cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.20/b-1.6.1/b-colvis-1.6.1/b-flash-1.6.1/b-html5-1.6.1/b-print-1.6.1/datatables.min.js"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/FixedHeader/js/dataTables.fixedHeader.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/FixedColumns/js/dataTables.fixedColumns.js?v={local_version}"></script>
+
+    <style>
+        .btn-group-mn>.btn, .btn-mn {
+            padding: 1px 5px;
+            font-size: 8px;
+            line-height: 1.5;
+            border-radius: 3px;
+        }
+        @media print {
+            a[href]:after {
+                display: none;
+                visibility: hidden;
+            }
+            td{
+                width: max-content;
+            }
+            span.text-white{
+                display: none;
+                visibility: hidden;
+            }
+        }
+        @-o-keyframes fadeIt {
+            1%   { background-color: #FFFFFF; }
+            50%  { background-color: #AD301B; }
+            100% { background-color: #FFFFFF; }
+        }
+
+        @keyframes fadeIt {
+            1%   { background-color: #FFFFFF; }
+            50%  { background-color: #AD301B; }
+            100% { background-color: #FFFFFF; }
+        }
+
+        .backgroundAnimated{
+            background-image:none !important;
+            -o-animation: fadeIt 3s ease-in-out;
+            animation: fadeIt 3s ease-in-out;
+        }
+
+    </style>
+
+</head>
+
+
+<body onbeforeunload="custom_holdon(close_holdon)" class="hold-transition skin-blue" onload="reLoad();">
+
+<!--tanda loading pas sedang ngeload halaman-->
+<div id="baseURL" class="hidden">{base}</div>
+<!--end---tanda loading pas sedang ngeload halaman-->
+<div class="wrapper">
+<header class="main-header">
+    <a href="{base}" class="logo hidden-xs hidden-sm no-padding">
+        <span class="logo-mini"><span class="glyphicon glyphicon-home"></span></span>
+        <span class="logo-lg"><img src="{base}public/images/profiles/logo_header.png" height="40px"></span>
+    </a>
+    <nav class="navbar navbar-static-top">
+        <div class="no-padding no-border">
+            <div class="hidden-sm hidden-lg col-sm-2 col-xs-1 col-md-2 col-lg-2 no-padding">
+                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+            </div>
+            <div class="col-sm-8 col-xs-11 col-md-8 col-lg-8 no-padding text-center">
+                <span class="hidden-mdx hidden-lgx hidden-xlx hidden-xxlx">
+                    <span class="navbar-brand text-center no-border" style="padding:8px;">
+                        <a href="{base}">
+                            <a class="btn btn-tool text-white" href="javascript:void(0)" onclick="location.href='{btn_back}';"><span class="glyphicon glyphicon-arrow-left text-yellow"></span></a>
+                            <span class="text-white">{title} <small style="color:#eeeeee;text-transform: lowercase;">{sub_title}</small></span>
+                        </a>
+                    </span>
+                </span>
+            </div>
+        </div>
+    </nav>
+    <nav class="navbar navbar-fixed-bottom navbar-2nd">
+        <!--untuk view desktop-->
+        <div class="no-padding no-border">
+            <div style="padding-right:0;padding-left:0;" class="col-sm-2 col-xs-2 col-md-1 col-lg-1">
+                <div class="hidden-xs col-sm-6 col-md-6 col-lg-6 no-padding">
+                    <a href="{base}" class="btn btn__trigger-home btn__trigger--views-home"><i class="glyphicon glyphicon-home"></i></a>
+                </div>
+                <div class="hidden-xxxl hidden-xxl hidden-xl hidden-lg hidden-md hidden-sm col-xs-6 no-padding">
+                    <a href="{base}" class="btn btn__trigger-home-mb btn__trigger--views-home-mb"><i class="glyphicon glyphicon-home"></i></a>
+                </div>
+                <div class="hidden-xs col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding">
+                    <div class="text-bold text-center timbul dtime">
+                        <span class="jam"></span>
+                        <span class="blink">:</span>
+                        <span class="menit"></span>
+                    </div>
+                </div>
+            </div>
+            <div style="padding-right:0;padding-left: 17px;" class="hidden-lg hidden-md hidden-sm col-xs-8">
+                {info_ucd}
+            </div>
+            <div style="padding-right:0;padding-left:17px;" class="hidden-xs col-sm-7 col-xs-2 col-md-9 col-lg-9">
+                {menu_taskbar}
+            </div>
+            <div style="padding-right:0;padding-left:0;" class="col-sm-3 col-xs-2 col-md-2 col-lg-2">
+                {float_menu_bawah}
+            </div>
+        </div>
+        <div class="hidden-sm hidden-md hidden-lg hidden-xl hidden-xxxl hidden-xxl col-xs-12 bg-black text-lime text-bold">
+            <span class="col-xs-8 no-padding">
+                <span class="hari"></span>
+                <span class="tanggal"></span>
+            </span>
+            <span class="col-xs-4 no-padding text-right">
+                <span class="jam"></span>
+                <span class="blink">:</span>
+                <span class="menit"></span>
+            </span>
+        </div>
+    </nav>
+    <nav class="hidden-xs navbar navbar-fixed-bottom navbar-3rd">
+        <div class="no-padding no-border">
+            <span class="col-lg-2 no-padding">
+                <span class="hari timbul text-bold"></span>
+                <span class="tanggal timbul text-bold"></span>
+            </span>
+            <span class="col-lg-10 no-padding">
+                {info_bottom}
+            </span>
+        </div>
+    </nav>
+
+</header>
+<!-- Left side column. contains the logo and sidebar -->
+<aside class="main-sidebar">
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+        <ul class="sidebar-menu ">
+            <!--<li class="header">MAIN NAVIGATION</li>-->
+            {menu_left}
+        </ul>
+    </section>
+    <!-- /.sidebar -->
+</aside>
+
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+    <section class="content">
+        <div class="row">
+            <div class="col-md-12">
+                {error_msg}
+            </div>
+            <div class="col-md-12">
+                {menu_depresiasi}
+            </div>
+            <div class="col-md-12">
+                {title_depresiasi}
+            </div>
+
+            <div class="col-md-12">
+                <div class="box box-solidddd box-danger" style="display:{prop_display}">
+                    <div class="box-header">
+                        <span class="pull-left text-uppercase text-red">{data_propose_title}</span>
+                    </div>
+                    <div class="box-body">{data_propose_content}</div>
+                </div>
+
+                <!--<div style="padding: 3px;" class="box">-->
+
+                <div style="padding:3px;" class="nav-tabs-custom">
+                    <ul class="nav nav-tabs">
+                        <li id="tab-pending"><a href="#pending-assets" data-toggle="tab">Pending Assets  &nbsp; <span class="badge bg-red">{badge_pending}</span></a> </li>
+                        <li id="tab-active"><a href="#active-assets" data-toggle="tab">Active Assets  &nbsp; <span class="badge bg-green">{badge_active}</span></a></li>
+                        <li id="tab-sold"><a href="#sold-assets" data-toggle="tab">Sold/Disposed Assets &nbsp; <span class="badge bg-blue">{badge_sold}</span></a></li>
+                        <!--<li id="tab-depreciation"><a href="#depreciation" data-toggle="tab">Depreciation  &nbsp; <span class="badge bg-yellow">{badge_depre}</span></a></li>-->
+                        <!--<li class="pull-right header"><i class="fa fa-th"></i> Custom Tabs</li>-->
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane" id="pending-assets">
+                            <div class="box-header">
+                                <!--<div class="col-sm-3 text-center no-padding">-->
+                                <!--<div class="input-group">-->
+                                <!--<span class="input-group-addon" style="background:#e0e0e0;">-->
+                                <!--<span class="glyphicon glyphicon-remove" style="cursor: hand;" onclick="document.getElementById('qPending').value='';location.href='{this_page_pending_assets}&k=';"></span>-->
+                                <!--</span>-->
+                                <!--<input type="text" id="qPending" class="form-control" value="{search_str_pending_assets}" placeholder="search {title_pending_assets}" onkeydown="if(detectEnter()==true){location.href='{this_page_pending_assets}&kPending='+this.value+'#pending-assets';}">-->
+                                <!--<span class="input-group-addon" style="background:#e0e0e0;">-->
+                                <!--<span class="glyphicon glyphicon-search" style="cursor: hand;" onclick="if(document.getElementById('qPending').value.length>0){location.href='{this_page_pending_assets}&kPending='+document.getElementById('qPending').value;}"></span>-->
+                                <!--</span>-->
+                                <!--</div>-->
+                                <!--</div>-->
+                                <div style="font-size: 25px;margin-top: 12px;" class="col-sm-12 box-header text-bold text-capitalize no-padding">{sub_title_pending_assets}</div>
+                                <div class="col-sm-6 text-center"><ul class="pager no-padding" style="padding:0px;margin:0px;">{link_str_pending_assets}</ul></div>
+                                <div class="col-sm-3 text-center">{edit_link_pending_assets}{add_link_pending_assets}</div>
+                            </div>
+                            <div class="box-body no-padding" style="position:relative;left:0;overflow:auto;max-height: 550px;">
+                                <div _class="col-md-3 col-sm-3" class="{reg_folders_classname_pending_assets} no-padding" id="reg_folders_pending_assets" style="background:#f0f0f7;">{folders_pending_assets}</div>
+                                <div _class="col-md-9 col-sm-9" class="{reg_items_classname_pending_assets} no-padding" id="reg_items_pending_assets">{data_active_content_pending_assets}</div>
+                            </div>
+                            <!--<div class="box-footer text-right" style="background:#f0f0f7;">{data_active_footer_pending_assets}</div>-->
+
+                        </div>
+                        <!-- /.tab-pane -->
+                        <div class="tab-pane" id="active-assets">
+
+                            <div class="box-header">
+                                <!--<div class="col-sm-3 text-center no-padding">-->
+                                <!--<div class="input-group">-->
+                                <!--<span class="input-group-addon" style="background:#e0e0e0;">-->
+                                <!--<span class="glyphicon glyphicon-remove" style="cursor: hand;" onclick="document.getElementById('qActive').value='';location.href='{this_page_active_assets}&k=';"></span>-->
+                                <!--</span>-->
+                                <!--<input type="text" id="qActive" class="form-control" value="{search_str_active_assets}" placeholder="search {title_active_assets}" onkeydown="if(detectEnter()==true){location.href='{this_page_active_assets}&kActive='+this.value+'#active-assets';}">-->
+                                <!--<span class="input-group-addon" style="background:#e0e0e0;">-->
+                                <!--<span class="glyphicon glyphicon-search" style="cursor: hand;" onclick="if(document.getElementById('qActive').value.length>0){location.href='{this_page_active_assets}&kActive='+document.getElementById('qActive').value;}"></span>-->
+                                <!--</span>-->
+                                <!--</div>-->
+                                <!--</div>-->
+                                <div style="font-size: 25px;margin-top: 12px;" class="col-sm-12 box-header text-bold text-capitalize no-padding">{sub_title_active_assets}</div>
+                                <div class="col-sm-6 text-center"><ul class="pager no-padding" style="padding:0px;margin:0px;">{link_str_active_assets}</ul></div>
+                                <div class="col-sm-3 text-center">{edit_link_active_assets}{add_link_active_assets}</div>
+                            </div>
+                            <div class="box-body no-padding" style="position:relative;left:0;overflow:auto;max-height: 550px;">
+                                <div _class="col-md-3 col-sm-3" class="{reg_folders_classnameActive} no-padding" id="reg_folders_classnameActive" style="background:#f0f0f7;">{folders_active_assets}</div>
+                                <div _class="col-md-9 col-sm-9" class="{reg_items_classnameActive} no-padding" id="reg_items_classnameActive">{data_active_content_active_assets}</div>
+                            </div>
+                            <!--<div class="box-footer text-right" style="background:#f0f0f7;">{data_active_footer_active_assets}</div>-->
+
+                        </div>
+                        <!-- /.tab-pane -->
+                        <div class="tab-pane" id="sold-assets">
+
+                            <div class="box-header">
+                                <!--<div class="col-sm-3 text-center no-padding">-->
+                                <!--<div class="input-group">-->
+                                <!--<span class="input-group-addon" style="background:#e0e0e0;">-->
+                                <!--<span class="glyphicon glyphicon-remove" style="cursor: hand;" onclick="document.getElementById('qSold').value='';location.href='{this_page_sold_assets}&kSold=';"></span>-->
+                                <!--</span>-->
+                                <!--<input type="text" id="qSold" class="form-control" value="{search_str_sold_assets}" placeholder="search {title_sold_assets}" onkeydown="if(detectEnter()==true){location.href='{this_page_sold_assets}&kSold='+this.value+'#sold-assets';}">-->
+                                <!--<span class="input-group-addon" style="background:#e0e0e0;">-->
+                                <!--<span class="glyphicon glyphicon-search" style="cursor: hand;" onclick="if(document.getElementById('qSold').value.length>0){location.href='{this_page_sold_assets}&kSold='+document.getElementById('qSold').value;}"></span>-->
+                                <!--</span>-->
+                                <!--</div>-->
+                                <!--</div>-->
+                                <div style="font-size: 25px;margin-top: 12px;" class="col-sm-12 box-header text-bold text-capitalize no-padding">{sub_title_sold_assets}</div>
+                                <div class="col-sm-6 text-center"><ul class="pager no-padding" style="padding:0px;margin:0px;">{link_str_sold_assets}</ul></div>
+                                <div class="col-sm-3 text-center">{edit_link_sold_assets}{add_link_sold_assets}</div>
+                            </div>
+                            <div class="box-body no-padding" style="position:relative;left:0;overflow:auto;max-height: 550px;">
+                                <div _class="col-md-3 col-sm-3" class="{reg_folders_classname_sold_assets} no-padding" id="reg_folders_sold_assets" style="background:#f0f0f7;">{folders_sold_assets}</div>
+                                <div _class="col-md-9 col-sm-9" class="{reg_items_classname_sold_assets} no-padding" id="reg_items_sold_assets">{data_active_content_sold_assets}</div>
+                            </div>
+                            <!--<div class="box-footer text-right" style="background:#f0f0f7;">{data_active_footer_sold_assets}</div>-->
+
+                        </div>
+                        <!-- /.tab-pane -->
+                        <div class="tab-pane" id="depreciation">
+
+                            <div class="box-header">
+                                <!--<div class="col-sm-3 text-center no-padding">-->
+                                <!--<div class="input-group">-->
+                                <!--<span class="input-group-addon" style="background:#e0e0e0;">-->
+                                <!--<span class="glyphicon glyphicon-remove" style="cursor: hand;" onclick="document.getElementById('qDepre').value='';location.href='{this_page_depreciation}&kDepre=';"></span>-->
+                                <!--</span>-->
+                                <!--<input type="text" id="qDepre" class="form-control" value="{search_str_depreciation}" placeholder="search {title_depreciation}" onkeydown="if(detectEnter()==true){location.href='{this_page_depreciation}&kDepre='+this.value+'#depreciation';}">-->
+                                <!--<span class="input-group-addon" style="background:#e0e0e0;">-->
+                                <!--<span class="glyphicon glyphicon-search" style="cursor: hand;" onclick="if(document.getElementById('qDepre').value.length>0){location.href='{this_page_depreciation}&kDepre='+document.getElementById('qDepre').value;}"></span>-->
+                                <!--</span>-->
+                                <!--</div>-->
+                                <!--</div>-->
+                                <div style="font-size: 25px;margin-top: 12px;" class="col-sm-12 box-header text-bold text-capitalize no-padding">{sub_title_depreciation}</div>
+                                <div class="col-sm-6 text-center"><ul class="pager no-padding" style="padding:0px;margin:0px;">{link_str_depreciation}</ul></div>
+                                <div class="col-sm-3 text-center">{edit_link_depreciation}{add_link_depreciation}</div>
+                            </div>
+                            <div class="box-body no-padding" style="position:relative;left:0;overflow:auto;max-height: 550px;">
+                                <div _class="col-md-3 col-sm-3" class="{reg_folders_classname_depreciation} no-padding" id="reg_folders_depreciation" style="background:#f0f0f7;">{folders_depreciation}</div>
+                                <div _class="col-md-9 col-sm-9" class="{reg_items_classname_depreciation} no-padding" id="reg_items_depreciation">{data_active_content_depreciation}</div>
+                            </div>
+                            <!--<div class="box-footer text-right" style="background:#f0f0f7;">{data_active_footer_depreciation}</div>-->
+
+                        </div>
+                        <!-- /.tab-pane -->
+                    </div>
+                    <!-- /.tab-content -->
+                </div>
+
+                <!--</div>//-->
+
+                <div class="box box-info">
+                    <div class="box-header">
+                        <span class="pull-left">{data_hist_title}</span>
+                        <span class="pull-right"></span>
+                    </div>
+                    <div class="box-body" style="font-style:italic;">{data_hist_content}</div>
+                    <!--<div class="box-footer text-right">{data_hist_footer}</div>-->
+                </div>
+                <div class="panel-body pull-right" style="background:#f0f0f0;">
+                    <!--<a class="btn btn-default" href=#content title="ke atas" data-toggle="tooltip" data-placement="top"><span class="glyphicon glyphicon-chevron-up"></span> atas</a>-->
+                    <a id='printBtn' class="btn btn-default" href="javascript:void(0)" title="tampilkan versi cetak" data-toggle="tooltip" data-placement="top" onclick="createPrintVersion(window.location.href)"><span class="glyphicon glyphicon-print"></span> cetak</a>
+                </div>
+            </div>
+        </div>
+
+
+    </section>
+    <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+<!--modal-->
+<!--<div class='modal fade' role='dialog'>-->
+<div id='myModal' class='modal {bg_modal} fade' role='dialog'>
+    <div class='modal-dialog {lebar_modal}'>
+        <div class='modal-content'>
+            {isi_modal}
+            <!-- Content will be loaded here from 'remote.php' file -->
+        </div>
+    </div>
+</div>
+<!--</div>-->
+<!--modal-end-->
+<footer class="main-footer overflow-h">
+    <div class="clear-fix"></div>
+    {footer}
+
+</footer>
+<!--{float_menu_bawah}-->
+
+<aside class="control-sidebar control-sidebar-dark">
+    {menu_right_isi}
+
+</aside>
+
+<div class="control-sidebar-bg"></div>
+</div>
+<div>
+    <iframe id="tray" name="tray" style="display:none;width:100%;height:120px;" src="{base}_tray/index"></iframe>
+    <iframe name="result" id="result" style="resize: both;display: {display_iframe};width: 100%;height:800px;"></iframe>
+</div>
+<!-- ./wrapper -->
+
+<script src="{cdn_suport}AdminLTE-2.3.11/plugins/slimScroll/jquery.slimscroll.min.js?v={local_version}"></script>
+<script src="{cdn_suport}AdminLTE-2.3.11/dist/js/app.min.js?v={local_version}"></script>
+<script src="{cdn_suport}multi-step-modal-master/multi-step-modal.js?v={local_version}"></script>
+<script src="{cdn_suport}bootstrap-fileinput-master/js/fileinput.min.js?v={local_version}"></script>
+<script src="{cdn_suport}bootstrap-toggle-master/js/bootstrap-toggle.min.js?v={local_version}"></script>
+<script src="{base}assets/custom/hippo_ajax.js?v={local_version}"></script>
+<script src="{base}assets/custom/JS.js?v={local_version}"></script>
+
+<script>
+
+    $('#myModal').on('hidden.bs.modal', function () {
+        $(this).removeData('bs.modal');
+    });
+
+    $('body').tooltip({selector: '[data-toggle=tooltip]'});
+
+    checked = false;
+    function checkedAll(frm1) {
+        var aa = document.getElementById(frm1);
+        if (checked == false) {
+            checked = true
+        } else {
+            checked = false
+        }
+        for (var i = 0; i < aa.elements.length; i++) {
+            aa.elements[i].checked = checked;
+        }
+    }
+
+    function load() {
+        top.$('#tray').load('{base}_tray/');
+    }
+
+    function reLoad() {
+        setInterval("load()", 30000);
+    }
+
+    var default_url = $("#asset_search").attr("action");
+    $(document).ready(function () {
+        "#pending-assets" == location.hash ? ($("#pending-assets").addClass("active"), $("#tab-pending").addClass("active")) : "#active-assets" == location.hash ? ($("#active-assets").addClass("active"), $("#tab-active").addClass("active")) : "#sold-assets" == location.hash ? ($("#sold-assets").addClass("active"), $("#tab-sold").addClass("active")) : "#depreciation" == location.hash ? ($("#depreciation").addClass("active"), $("#tab-depreciation").addClass("active")) : "" == location.hash && ($("#pending-assets").addClass("active"),
+                $("#tab-pending").addClass("active")),
+                $("#tab-pending a").each(function () {
+                    href = $(this).attr("href") + "#pending-assets", $(this).attr("href", href)
+                }),
+                $("#tab-active a").each(function () {
+                    href = $(this).attr("href") + "#active-assets", $(this).attr("href", href)
+                }),
+                $("#tab-sold a").each(function () {
+                    href = $(this).attr("href") + "#sold-assets", $(this).attr("href", href)
+                })
+    }),
+            $("#tab-pending").click(function () {
+                window.location.hash = "pending-assets",
+                        $("#asset_search").attr("action", default_url + window.location.hash)
+            }),
+            $("#tab-active").click(function () {
+                window.location.hash = "active-assets",
+                        $("#asset_search").attr("action", default_url + window.location.hash)
+            }),
+            $("#tab-sold").click(function () {
+                window.location.hash = "sold-assets",
+                        $("#asset_search").attr("action", default_url + window.location.hash)
+            }),
+            $("#tab-depreciation").click(function () {
+                window.location.hash = "depreciation",
+                        $("#asset_search").attr("action", default_url + window.location.hash)
+            });
+
+    $(document).ready( function () {
+        var theadCheck = $(".datatablesPending > thead");
+        if(theadCheck.length > 0){
+            $('.datatablesPending').DataTable({
+                dom: 'lBfrtip',
+                lengthMenu: [ [10, 20, 50, 100, -1], [10, 20, 50, 100, 'All'] ],
+                pageLength: -1,
+                fixedHeader: true,
+                stateSave: true,
+            });
+        }
+    } );
+
+    $(document).ready( function () {
+        var theadCheck = $(".datatablesActive > thead");
+        var datatablesActive;
+        if( theadCheck.length > 0 ){
+            $(".datatablesActive").append(
+                    $('<tfoot/>').append( $(".datatablesActive thead tr").clone() )
+            );
+            datatablesActive = $('.datatablesActive').DataTable({
+                dom: 'lBfrtip',
+                lengthMenu: [ [10, 20, 50, 100, -1], [10, 20, 50, 100, 'All'] ],
+                pageLength: -1,
+                fixedHeader: true,
+                stateSave: true,
+                footerCallback: function (row, data, start, end, display) {
+                    var api = this.api();
+                    // Remove the formatting to get integer data for summation
+                    var intVal = function (i) {
+                        return typeof i === 'string' ?
+                                i.replace(/[\$,]/g, '') * 1 :
+                                typeof i === 'number' ?
+                                        i : 0;
+                    };
+                    // Total over all pages
+                    total3 = api
+                            .column(3)
+                            .data()
+                            .reduce(function (a, b) {
+                                b = intVal( $(b, 'span').html() );
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                    // Total over this page
+                    pageTotal3 = api
+                            .column(3, {
+                                page: 'current'
+                            })
+                            .data()
+                            .reduce(function (a, b) {
+                                b = intVal( $(b, 'span').html() );
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                    // Update footer
+                    $(api.column(3).footer()).html(
+                            addCommas(pageTotal3)
+                    );
+                    // Total over all pages
+                    total4 = api
+                            .column(4)
+                            .data()
+                            .reduce(function (a, b) {
+                                b = intVal( $(b, 'span').html() );
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                    // Total over this page
+                    pageTotal4 = api
+                            .column(4, {
+                                page: 'current'
+                            })
+                            .data()
+                            .reduce(function (a, b) {
+                                b = intVal( $(b, 'span').html() );
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                    // Update footer
+                    $(api.column(4).footer()).html(
+                            addCommas(pageTotal4)
+                    );
+                }
+            });
+
+//            new $.fn.dataTable.FixedHeader( datatablesActive );
+        }
+
+    } );
+
+    $(document).ready( function () {
+        var theadCheck = $(".datatablesDisposed > thead");
+        var datatablesDisposed;
+        if( theadCheck.length > 0 ){
+            datatablesDisposed = $(".datatablesDisposed").append(
+                    $('<tfoot/>').append( $(".datatablesDisposed thead tr").clone() )
+            );
+            $('.datatablesDisposed').DataTable({
+                dom: 'lBfrtip',
+                lengthMenu: [ [10, 20, 50, 100, -1], [10, 20, 50, 100, 'All'] ],
+                pageLength: -1,
+                stateSave: true,
+                footerCallback: function (row, data, start, end, display) {
+                    var api = this.api();
+                    // Remove the formatting to get integer data for summation
+                    var intVal = function (i) {
+                        return typeof i === 'string' ?
+                                i.replace(/[\$,]/g, '') * 1 :
+                                typeof i === 'number' ?
+                                        i : 0;
+                    };
+                    // Total over all pages
+                    total3 = api
+                            .column(2)
+                            .data()
+                            .reduce(function (a, b) {
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                    // Total over this page
+                    pageTotal3 = api
+                            .column(2, {
+                                page: 'current'
+                            })
+                            .data()
+                            .reduce(function (a, b) {
+                                b = intVal( $(b, 'span').html() );
+                                return intVal(a) + intVal(b);
+                            }, 0);
+                    // Update footer
+                    $(api.column(2).footer()).html(
+                            addCommas(pageTotal3)
+                    );
+                }
+            });
+
+            new $.fn.dataTable.FixedHeader( datatablesDisposed );
+        }
+
+    } );
+</script>
+</body>
+</html>

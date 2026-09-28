@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Break Example</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .section {
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+        }
+
+        /* Gaya khusus untuk cetak */
+        @media print {
+            .section {
+                page-break-inside: avoid; /* Hindari memotong elemen ini di tengah */
+            }
+
+            .section.page-break {
+                page-break-before: always; /* Mulai halaman baru sebelum elemen ini */
+            }
+
+            .section.break-after {
+                page-break-after: always; /* Mulai halaman baru setelah elemen ini */
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="section">
+    <h2>Section 1</h2>
+    <p>Konten untuk bagian pertama. Ini adalah contoh bagian yang tidak akan terputus oleh halaman baru.</p>
+</div>
+
+<div class="section page-break">
+    <h2>Section 2 (Break Before)</h2>
+    <p>Konten ini akan dimulai di halaman baru karena menggunakan `page-break-before: always`.</p>
+    <p>Konten ini akan dimulai di halaman baru karena menggunakan `page-break-before: always`.</p>
+    <p>Konten ini akan dimulai di halaman baru karena menggunakan `page-break-before: always`.</p>
+    <p>Konten ini akan dimulai di halaman baru karena menggunakan `page-break-before: always`.</p>
+    <p>Konten ini akan dimulai di halaman baru karena menggunakan `page-break-before: always`.</p>
+    <p>Konten ini akan dimulai di halaman baru karena menggunakan `page-break-before: always`.</p>
+    <p>Konten ini akan dimulai di halaman baru karena menggunakan `page-break-before: always`.</p>
+    <p>Konten ini akan dimulai di halaman baru karena menggunakan `page-break-before: always`.</p>
+    <p>Konten ini akan dimulai di halaman baru karena menggunakan `page-break-before: always`.</p>
+    <p>Konten ini akan dimulai di halaman baru karena menggunakan `page-break-before: always`.</p>
+    <p>Konten ini akan dimulai di halaman baru karena menggunakan `page-break-before: always`.</p>
+    <p>Konten ini akan dimulai di halaman baru karena menggunakan `page-break-before: always`.</p>
+    <p>Konten ini akan dimulai di halaman baru karena menggunakan `page-break-before: always`.</p>
+    <p>Konten ini akan dimulai di halaman baru karena menggunakan `page-break-before: always`.</p>
+    <p>Konten ini akan dimulai di halaman baru karena menggunakan `page-break-before: always`.</p>
+    <p>Konten ini akan dimulai di halaman baru karena menggunakan `page-break-before: always`.</p>
+    <p>Konten ini akan dimulai di halaman baru karena menggunakan `page-break-before: always`.</p>
+    <p>Konten ini akan dimulai di halaman baru karena menggunakan `page-break-before: always`.</p>
+    <p>Konten ini akan dimulai di halaman baru karena menggunakan `page-break-before: always`.</p>
+</div>
+
+<div class="section">
+    <h2>Section 3</h2>
+    <p>Konten untuk bagian ketiga. Bagian ini akan berada di halaman yang sama dengan bagian sebelumnya kecuali kontennya terlalu panjang.</p>
+</div>
+
+<div class="section break-after">
+    <h2>Section 4 (Break After)</h2>
+    <p>Setelah konten ini, halaman baru akan dimulai karena menggunakan `page-break-after: always`.</p>
+</div>
+
+<div class="section">
+    <h2>Section 5</h2>
+    <p>Konten untuk bagian kelima. Bagian ini akan muncul di halaman baru jika bagian sebelumnya menggunakan `page-break-after: always`.</p>
+</div>
+
+</body>
+</html>

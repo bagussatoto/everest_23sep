@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html>
+<!-- diskon.html *-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{title}</title>
+
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link id="favicon" rel="icon" type='image/x-icon' href="{favicon}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-3.3.7-dist/css/bootstrap.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}Font-Awesome-master/css/font-awesome.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}ionicons-master/css/ionicons.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}simple-line-icons-master/css/simple-line-icons.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/dist/css/AdminLTE.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}bootstrap3-dialog-master/dist/css/bootstrap-dialog.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/dist/css/skins/_all-skins.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-fileinput-master/css/fileinput.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-toggle-master/css/bootstrap-toggle.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-xlgrid-master/bootstrap-xlgrid.min.css?v={local_version}">
+    <link rel="stylesheet" href="{base}assets/custom/custom.min.css?v={local_version}">
+    <link rel="stylesheet" href="{base}assets/custom/dialog.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}HoldOn/HoldOn.css?v={local_version}">
+    <link rel="stylesheet" href="{base}assets/custom/jquery.floatingscroll.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}DataTables-1.10.13/media/css/dataTables.bootstrap.min.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}DataTables-1.10.13/media/css/jquery.dataTables_themeroller.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}DataTables-1.10.13/yadcf-0.9.3/jquery.dataTables.yadcf.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}DataTables-1.10.13/extensions/Buttons/css/buttons.dataTables.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}DataTables-1.10.13/extensions/FixedHeader/css/fixedHeader.bootstrap.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}DataTables-1.10.13/extensions/FixedColumns/css/fixedColumns.bootstrap.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-select-1.13.9/dist/css/bootstrap-select.css?v={local_version}">
+
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v={local_version}"></script>
+    <script src="{base}assets/custom/custom.js?v={local_version}"></script>
+    <script src="{cdn_suport}HoldOn/HoldOn.js?v={local_version}"></script>
+    <script src="{cdn_suport}geo/js/geo.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-3.3.7-dist/js/bootstrap.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js?v={local_version}"></script>
+    <script src="{base}assets/custom/jquery.floatingscroll.min.js?v={local_version}"></script>
+    <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwIbo3IKzMgKOkXzTv3xG83IT26SLUHWY"></script>-->
+
+    <script src="{cdn_suport}DataTables-1.10.13/media/js/jquery.dataTables.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/media/js/dataTables.bootstrap.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/media/js/jquery.highlight.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/dataTables.buttons.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.colVis.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.print.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.html5.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.flash.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/yadcf-0.9.3/jquery.dataTables.yadcf.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/FixedHeader/js/dataTables.fixedHeader.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/FixedColumns/js/dataTables.fixedColumns.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-select-1.13.9/dist/js/bootstrap-select.js?v={local_version}"></script>
+
+    <!-- AREA ================= update MAPS OPENSTREETMAP -->
+    <!--<link rel="stylesheet" href="{cdn_suport}geo/js/leaflet-routing-machine/dist/leaflet-routing-machine.css" />-->
+    <!--<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css">-->
+    <!--<link rel="stylesheet" type="text/css" href="//unpkg.com/leaflet@1.3.4/dist/leaflet.css">-->
+    <!--<link rel="stylesheet" type="text/css" href="//unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css">-->
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <!--<script src="//unpkg.com/leaflet@1.3.4/dist/leaflet.js" integrity="sha512-nMMmRyTVoLYqjP9hrbed9S+FzjZHW5gY1TWCHA5ckwXZBadntCNs8kEqAWdrb9O7rxbCaA4lKTIWjDXZxflOcA=="-->
+    <!--crossorigin=""></script>-->
+
+    <!-- Load Esri Leaflet from CDN -->
+    <!--<script src="//unpkg.com/esri-leaflet@2.3.3/dist/esri-leaflet.js"-->
+    <!--integrity="sha512-cMQ5e58BDuu1pr9BQ/eGRn6HaR6Olh0ofcHFWe5XesdCITVuSBiBZZbhCijBe5ya238f/zMMRYIMIIg1jxv4sQ=="-->
+    <!--crossorigin=""></script>-->
+
+    <!--<link rel="stylesheet" href="//unpkg.com/esri-leaflet-geocoder@2.3.2/dist/esri-leaflet-geocoder.css"-->
+    <!--integrity="sha512-IM3Hs+feyi40yZhDH6kV8vQMg4Fh20s9OzInIIAc4nx7aMYMfo+IenRUekoYsHZqGkREUgx0VvlEsgm7nCDW9g=="-->
+    <!--crossorigin="">-->
+    <!--<script src="//unpkg.com/esri-leaflet-geocoder@2.3.2/dist/esri-leaflet-geocoder.js"-->
+    <!--integrity="sha512-8twnXcrOGP3WfMvjB0jS5pNigFuIWj4ALwWEgxhZ+mxvjF5/FBPVd5uAxqT8dd2kUmTVK9+yQJ4CmTmSg/sXAQ=="-->
+    <!--crossorigin=""></script>-->
+    <!--<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>-->
+    <!--<script type="text/javascript" src="{cdn_suport}geo/js/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>-->
+    <!--<script src="{cdn_suport}leaflet.ajax.js?v={local_version}"></script>-->
+
+    <!--<script src="//unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>-->
+
+    <!--<script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>-->
+    <!--<link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />-->
+
+    <style>
+        #switch{
+            top: 50%;
+            left: 0;
+            width: 142px;
+            height: 36px;
+        }
+        .toggle{
+            position: relative;
+            border: 2px solid #444249;
+            border-radius: 20px;
+            -webkit-transition: border-color .6s  ease-out;
+            transition: border-color .6s  ease-out;
+            box-sizing: border-box;
+        }
+        .toggle.toggle-on{
+            border-color: rgba(137, 194, 217, .4);
+            -webkit-transition: all .5s .15s ease-out;
+            transition: all .5s .15s ease-out;
+        }
+        .toggle-button{
+            position: absolute;
+            top: 4px;
+            width: 24px;
+            bottom: 4px;
+            right: 110px;
+            background-color: #444249;
+            border-radius: 19px;
+            cursor: pointer;
+            -webkit-transition: all .3s .1s, width .1s, top .1s, bottom .1s;
+            transition: all .3s .1s, width .1s, top .1s, bottom .1s;
+        }
+        .toggle-on .toggle-button{
+            top: 3px;
+            width: 135px;
+            bottom: 3px;
+            right: 3px;
+            border-radius: 23px;
+            background-color: #3afa3c;
+            box-shadow: 0 0 16px #249f23;
+            -webkit-transition: all .2s .1s, right .1s;
+            transition: all .2s .1s, right .1s;
+        }
+        .toggle-text-on{
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            line-height: 33px;
+            text-align: center;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 18px;
+            font-weight: normal;
+            cursor: pointer;
+            -webkit-user-select: none; /* Chrome/Safari */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* IE10+ */
+            color: rgba(0,0,0,0);
+        }
+        .toggle-on .toggle-text-on{
+            color: #ff003f;
+            -webkit-transition: color .3s .15s;
+            transition: color .3s .15s;
+        }
+        .toggle-text-off{
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 6px;
+            line-height: 33px;
+            text-align: center;
+            font-family: 'Quicksand', sans-serif;
+            font-size: 14px;
+            font-weight: bold;
+            -webkit-user-select: none; /* Chrome/Safari */
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* IE10+ */
+            cursor: pointer;
+            color: #444249;
+        }
+        .toggle-on .toggle-text-off{
+            color: rgba(0,0,0,0);
+        }
+        /* used for streak effect */
+        .glow-comp{
+            position: absolute;
+            opacity: 0;
+            top: 10px;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+            border-radius: 6px;
+            background-color: rgba(75, 122, 141, .1);
+            box-shadow: 0 0 12px rgba(75, 122, 141, .2);
+            -webkit-transition: opacity 4.5s 1s;
+            transition: opacity 4.5s 1s;
+        }
+        .toggle-on .glow-comp{
+            opacity: 1;
+            -webkit-transition: opacity 1s;
+            transition: opacity 1s;
+        }
+    </style>
+
+    <style>
+        .odd {
+            background-color: #f2faff !important;
+        }
+        .even {
+            background-color: #fff !important;
+        }
+        @media (max-width: 767px) {
+            .form-control {
+                padding: 6px 1px !important;
+            }
+        }
+        .colorswap {
+            background: transparent;
+            animation: mymove 2s;
+        }
+        @keyframes mymove {
+            from {background-color: green;}
+            to {background-color: transparent;}
+        }
+        #overlay {
+            position: absolute;
+            display: none;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 2;
+            cursor: pointer;
+        }
+        #text{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            font-size: 50px;
+            color: white;
+            transform: translate(-50%,-50%);
+            -ms-transform: translate(-50%,-50%);
+        }
+        tr td .form-control{
+            height: 27px !important;
+            padding: 2px 2px !important;
+        }
+        select option[value=*] {
+            background: rgba(100, 100, 100, 0.3);
+        }
+    </style>
+
+    <style>
+        .odd {
+            background-color: #f2faff !important;
+        }
+
+        .even {
+            background-color: #fff !important;
+        }
+
+        @media (max-width: 767px) {
+            .form-control {
+                padding: 6px 1px !important;
+            }
+        }
+
+        .colorswap {
+            background: transparent;
+            animation: mymove 2s;
+        }
+
+        @keyframes mymove {
+            from {
+                background-color: green;
+            }
+            to {
+                background-color: transparent;
+            }
+        }
+
+        #overlay {
+            position: absolute;
+            display: none;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            cursor: pointer;
+        }
+
+        #text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            font-size: 50px;
+            color: white;
+            transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+        }
+
+    </style>
+
+    <style>
+        thead {
+            background: lightgray;
+        }
+        table.dataTable tbody th, table.dataTable tbody td {
+            white-space: nowrap;
+        }
+        .select2 {
+            z-index: 100000;
+        }
+        .dataTables_processing{
+            font-size: 2em !important;
+            height: 110px !important;
+            width: 400px !important;
+            background-color: #abdde5 !important;
+            top: 20px !important;
+            z-index: 5000 !important;
+        }
+
+        #loader {
+            border: 16px solid #b0dfe6b5;
+            border-radius: 50%;
+            border-top: 16px solid #ff5722;
+            width: 80px;
+            height: 80px;
+            -webkit-animation: spin 2s linear infinite;
+            animation: spin 2s linear infinite;
+            margin-left:-85px;
+            margin-top:-75px;
+        }
+
+        .loading_2{
+            /*align-items: center;*/
+            /*background-color: yellow;*/
+            color: cornsilk;
+            /*-webkit-animation: kelip 1s infinite;  !* Safari 4+ *!*/
+            /*-moz-animation: kelip 1s infinite;  !* Fx 5+ *!*/
+            /*-o-animation: kelip 1s infinite;  !* Opera 12+ *!*/
+            /*animation: kelip 1s infinite;  !* IE 10+, Fx 29+ *!*/
+            /*display: flex;*/
+            /*height: 100%;*/
+            /*justify-content: center;*/
+            /*margin: 0;*/
+
+            text-decoration: blink;
+            -webkit-animation-name: kelip;
+            -webkit-animation-duration: 0.6s;
+            -webkit-animation-iteration-count: infinite;
+            -webkit-animation-timing-function: ease-in-out;
+            -webkit-animation-direction: alternate;
+        }
+
+        @-webkit-keyframes kelip {
+            /*0%, 49% {*/
+            /*    background-color: rgb(255, 248, 249);*/
+            /*    border: 3px solid #e50000;*/
+            /*}*/
+            /*50%, 100% {*/
+            /*    background-color: #e5d4bf;*/
+            /*    border: 3px solid rgb(117, 209, 63);*/
+            /*}*/
+
+            from {
+                opacity: 1.0;
+            }
+            to {
+                opacity: 0.0;
+            }
+        }
+
+        .loader {
+            width: 60px;
+
+        }
+
+        .loader-wheel {
+            animation: spin 1s infinite linear;
+            border: 2px solid rgba(30, 30, 30, 0.5);
+            border-left: 4px solid #fff;
+            border-radius: 50%;
+            height: 50px;
+            margin-bottom: 10px;
+            width: 50px;
+        }
+
+        .loader-text {
+            color: #fff;
+            font-family: arial, sans-serif;
+        }
+
+        .loader-text:after {
+            content: 'Loading boss';
+            animation: load 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes load {
+            0% {
+                content: 'Loading';
+            }
+            33% {
+                content: 'Loading.';
+            }
+            67% {
+                content: 'Loading..';
+            }
+            100% {
+                content: 'Loading...';
+            }
+        }
+    </style>
+
+</head>
+<!--sidebar-collapse-->
+<body>
+<div id="baseURL" class="hidden">{base}</div>
+<div class="wrapper">
+{content}
+</div>
+
+<script src="{cdn_suport}AdminLTE-2.3.11/plugins/slimScroll/jquery.slimscroll.min.js?v={local_version}"></script>
+<script src="{cdn_suport}AdminLTE-2.3.11/dist/js/app.min.js?v={local_version}"></script>
+<script src="{cdn_suport}multi-step-modal-master/multi-step-modal.js?v={local_version}"></script>
+
+<script src="{cdn_suport}bootstrap-fileinput-master/js/fileinput.min.js?v={local_version}"></script>
+<script src="{cdn_suport}bootstrap-toggle-master/js/bootstrap-toggle.min.js?v={local_version}"></script>
+
+<script src="{base}assets/custom/hippo_ajax.js?v={local_version}"></script>
+<script src="{base}assets/custom/JS.js?v={local_version}"></script>
+
+</body>
+</html>

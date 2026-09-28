@@ -1,0 +1,345 @@
+<?php
+
+
+class MdlGajiBpjsPph extends MdlMother_static
+{
+    protected $tableName = "static";
+    protected $indexFields = "id";
+
+
+    protected $listedFieldsForm = array();
+    protected $listedFieldsHidden = array();
+    protected $search;
+    protected $filters = array(
+        "jenis='gaji'",
+        "status='1'",
+        "trash='0'",
+    );
+
+    protected $validationRules = array(
+        "nama" => array("required", "singleOnly"),
+
+    );
+
+    protected $listedFieldsView = array("nama", "name");
+    protected $fields = array(
+        "id" => array(
+            "label" => "id",
+            "type" => "int", "length" => "24", "kolom" => "id",
+            "inputType" => "hidden",// hidden
+            //--"inputName" => "id",
+        ),
+        "name" => array(
+            "label" => "name",
+            "type" => "int", "length" => "24", "kolom" => "name",
+            "inputType" => "text",
+        ),
+        "nama" => array(
+            "label" => "name",
+            "type" => "int", "length" => "24", "kolom" => "nama",
+            "inputType" => "text",
+        ),
+        "rekening" => array(
+            "label" => "name",
+            "type" => "varchar", "length" => "255", "kolom" => "rekening",
+            "inputType" => "text",
+        ),
+        "kategori_id" => array(
+            "label" => "kategori_id",
+            "type" => "varchar", "length" => "255", "kolom" => "kategori_id",
+            "inputType" => "text",
+        ),
+        "rek_coa" => array(
+            "label" => "rek_coa",
+            "type" => "varchar", "length" => "255", "kolom" => "rek_coa",
+            "inputType" => "text",
+        ),
+        "extern_coa" => array(
+            "label" => "extern_coa",
+            "type" => "varchar", "length" => "255", "kolom" => "extern_coa",
+            "inputType" => "text",
+        ),
+        "disabled" => array(
+            "label" => "name",
+            "type" => "varchar", "length" => "255", "kolom" => "disabled",
+            "inputType" => "text",
+        ),
+    );
+    /**
+     * @var array
+     * copy dari san complit, semua tersedia.
+     * everest semua ditanggung perusahaan, sehingga fitur ditanggung karyawan didisable
+     * tetap tampil UI memberikan info komponen biaya ada tapi fitur masih off
+     */
+    protected $staticData = array(
+//        array(
+//            "id" => 1,
+//            "name" => "gaji",
+//            "nama" => "gaji",
+//            "rekening" => "hutang gaji",
+//            "disabled" => 0,
+//            "kategori_id"=>"1",
+//            "kategori_nama"=>"gaji",
+//        ),
+        array(
+            "id" => 2,
+            "name" => "BPJS KESEHATAN DITANGGUNG KARYAWAN",
+            "nama" => "BPJS KESEHATAN DITANGGUNG KARYAWAN",
+            "rekening" => "hutang bpjs kesehatan",
+            "disabled" => 0,
+            "kategori_id" => "2",
+            "kategori_nama" => "bpjs",
+            "rek_coa"=>"2010060",
+            "extern_coa"=>"2010060010",
+            "extern_coa_name"=>"bpjs ditanggung karyawan",
+        ),
+        array(
+            "id" => 6,
+            "name" => "BPJS KETENAGAKERJAAN DITANGGUNG KARYAWAN",
+            "nama" => "BPJS KETENAGAKERJAAN DITANGGUNG KARYAWAN",
+            "rekening" => "hutang bpjs tenagakerja",
+            "disabled" => 0,
+            "kategori_id" => "2",
+            "kategori_nama" => "bpjs",
+            "rek_coa"=>"2010060",
+            "extern_coa"=>"2010060010",
+            "extern_coa_name"=>"bpjs ditanggung karyawan",
+        ),
+//        array(
+//            "id" => 7,
+//            "name" => "BPJS PENSIUN DITANGGUNG KARYAWAN",
+//            "nama" => "BPJS PENSIUN DITANGGUNG KARYAWAN",
+//            "rekening" => "hutang bpjs pensiun",
+//            "disabled" => 0,
+//            "kategori_id" => "2",
+//            "kategori_nama" => "bpjs",
+//            "rek_coa"=>"2010060",
+//            "extern_coa"=>"2010060010",
+//        ),
+        array(
+            "id" => 3,
+            "name" => "PPh ps21 DITANGGUNG KARYAWAN",
+            "nama" => "PPh ps21 DITANGGUNG KARYAWAN",
+            "rekening" => "hutang pph21 karyawan",
+            "disabled" => 0,
+            "kategori_id" => "3",
+            "kategori_nama" => "pph21",
+        ),
+        array(
+            "id" => 4,
+            "name" => "BPJS KESEHATAN DITANGGUNG PERUSAHAAN",
+            "nama" => "BPJS KESEHATAN DITANGGUNG PERUSAHAAN",
+            "rekening" => "biaya bpjs kesehatan perusahaan",
+            "disabled" => 0,
+            "kategori_id" => "2",
+            "kategori_nama" => "bpjs",
+            "rek_coa"=>"2010060",
+            "extern_coa"=>"2010060020",
+            "extern_coa_name"=>"bpjs ditanggung perusahaan",
+        ),
+        array(
+            "id" => 8,
+            "name" => "BPJS KETENAGAKERJAAN DITANGGUNG PERUSAHAAN",
+            "nama" => "BPJS KETENAGAKERJAAN DITANGGUNG PERUSAHAAN",
+            "rekening" => "biaya bpjs tenagakerja perusahaan",
+            "disabled" => 0,
+            "kategori_id" => "2",
+            "kategori_nama" => "bpjs",
+            "rek_coa"=>"2010060",
+            "extern_coa"=>"2010060020",
+            "extern_coa_name"=>"bpjs ditanggung perusahaan",
+        ),
+
+        array(
+            "id" => 5,
+            "name" => "PPh ps21 DITANGGUNG PERUSAHAAN",
+            "nama" => "PPh ps21 DITANGGUNG PERUSAHAAN",
+            "rekening" => "biaya pph21 perusahaan",
+            "disabled" => 0,
+            "kategori_id" => "3",
+            "kategori_nama" => "pph21",
+        ),
+
+
+    );
+    protected $listedFields = array(
+        "nama" => "name",
+        "due_days" => "due days",
+        "status" => "status",
+
+    );
+
+    public function __construct()
+    {
+
+    }
+
+    //region gs
+
+    public function getTableName()
+    {
+        return $this->tableName;
+    }
+
+    public function setTableName($tableName)
+    {
+        $this->tableName = $tableName;
+    }
+
+    public function getIndexFields()
+    {
+        return $this->indexFields;
+    }
+
+    public function setIndexFields($indexFields)
+    {
+        $this->indexFields = $indexFields;
+    }
+
+    public function getListedFieldsForm()
+    {
+        return $this->listedFieldsForm;
+    }
+
+    public function setListedFieldsForm($listedFieldsForm)
+    {
+        $this->listedFieldsForm = $listedFieldsForm;
+    }
+
+    public function getListedFieldsHidden()
+    {
+        return $this->listedFieldsHidden;
+    }
+
+    public function setListedFieldsHidden($listedFieldsHidden)
+    {
+        $this->listedFieldsHidden = $listedFieldsHidden;
+    }
+
+    public function getSearch()
+    {
+        return $this->search;
+    }
+
+    public function setSearch($search)
+    {
+        $this->search = $search;
+    }
+
+    public function getFilters()
+    {
+        return $this->filters;
+    }
+
+    public function setFilters($filters)
+    {
+        $this->filters = $filters;
+    }
+
+    public function getValidationRules()
+    {
+        return $this->validationRules;
+    }
+
+    public function setValidationRules($validationRules)
+    {
+        $this->validationRules = $validationRules;
+    }
+
+    public function getListedFieldsView()
+    {
+        return $this->listedFieldsView;
+    }
+
+    public function setListedFieldsView($listedFieldsView)
+    {
+        $this->listedFieldsView = $listedFieldsView;
+    }
+
+    public function getFields()
+    {
+        return $this->fields;
+    }
+
+    public function setFields($fields)
+    {
+        $this->fields = $fields;
+    }
+
+    public function getListedFields()
+    {
+        return $this->listedFields;
+    }
+
+    public function setListedFields($listedFields)
+    {
+        $this->listedFields = $listedFields;
+    }
+    //endregion
+
+
+    //@override with static data
+    public function lookupAll()
+    {
+        if (isset($this->staticData) && is_array($this->staticData) && sizeof($this->staticData) > 0) {
+
+            $iCtr = 0;
+            $sql = "";
+
+            foreach ($this->staticData as $iSpec) {
+                $iCtr++;
+                $sql .= 'SELECT ';
+                $fCtr = 0;
+                foreach ($this->fields as $fID => $fSpec) {
+                    $fCtr++;
+                    $sql .= "'" . $iSpec[$fID] . "' as $fID";
+                    if ($fCtr < sizeof($this->fields)) {
+                        $sql .= ",";
+                    }
+                }
+                if ($iCtr < sizeof($this->staticData)) {
+                    $sql .= " union ";
+                }
+            }
+
+            return $this->db->query($sql);
+        }
+        else {
+
+            return null;
+        }
+
+    }
+
+    public function lookupByKeyword($key)
+    {
+        if (isset($this->staticData) && is_array($this->staticData) && sizeof($this->staticData) > 0) {
+
+            $iCtr = 0;
+            $sql = "";
+
+            foreach ($this->staticData as $iSpec) {
+                $iCtr++;
+                $sql .= 'SELECT ';
+                $fCtr = 0;
+                foreach ($this->fields as $fID => $fSpec) {
+                    $fCtr++;
+                    $sql .= "'" . $iSpec[$fID] . "' as $fID";
+                    if ($fCtr < sizeof($this->fields)) {
+                        $sql .= ",";
+                    }
+                }
+                if ($iCtr < sizeof($this->staticData)) {
+                    $sql .= " union ";
+                }
+            }
+
+            return $this->db->query($sql);
+        }
+        else {
+
+            return null;
+        }
+
+    }
+}

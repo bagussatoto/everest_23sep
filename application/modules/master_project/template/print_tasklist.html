@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{title}</title>
+
+    <style>
+        .dropzone {
+            background: white;
+            border-radius: 5px;
+            border: 2px dashed rgb(0, 135, 247);
+            border-image: none;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        html {
+            zoom: 100%;
+        }
+        * {
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+        }
+
+        .pageHeader {
+            position: fixed;
+            top: 0mm;
+        }
+
+        .pageBody {
+            /*width: 210mm;*/
+        }
+
+        .pageFooter {
+            position: fixed;
+            bottom: 0mm;
+        }
+
+        @page {
+            /*size: A4 potrait;*/
+            /*size: A4 landscape;*/
+            margin: 5mm;
+        }
+
+        @media print {
+            html, body {
+                /*zoom: initial;*/
+                /*width: 210mm;*/
+                /*width: 200mm;*/
+                /*height: 297mm;*/
+                /*height: 280mm;*/
+                /*size: A4 potrait;*/
+                /*margin: 150mm;*/
+            }
+        }
+        @media screen {
+            a[href]:after {
+                display: none;
+                visibility: hidden;
+            }
+            td{
+                width: max-content;
+            }
+        }
+        @media print {
+            a[href]:after {
+                display: none;
+                visibility: hidden;
+            }
+
+            .hidden-on-print {
+                display: none !important;
+            }
+        }
+
+        @media print {
+            div.page-break {page-break-before: always;}
+
+            .col-print-1 {width:8%;  float:left;}
+            .col-print-2 {width:16%; float:left;}
+            .col-print-3 {width:25%; float:left;}
+            .col-print-4 {width:33%; float:left;}
+            .col-print-5 {width:42%; float:left;}
+            .col-print-6 {width:50%; float:left;}
+            .col-print-7 {width:58%; float:left;}
+            .col-print-8 {width:66%; float:left;}
+            .col-print-9 {width:75%; float:left;}
+            .col-print-10{width:83%; float:left;}
+            .col-print-11{width:92%; float:left;}
+            .col-print-12{width:100%; float:left;}
+
+            td,th {
+                padding: 1px!important;
+            }
+
+
+            table.table-bordered{
+                border:1px solid black !important;
+                margin-top:10px !important;
+            }
+            table.table-bordered > thead > tr > th{
+                border:1px solid black !important;
+            }
+            table.table-bordered > tbody > tr > td{
+                border:1px solid black !important;
+            }
+            .table-bordered > tbody > tr > th {
+                border: 1px solid black !important;
+            }
+        }
+        @media screen {
+            div.page-break {page-break-before: always;}
+
+            .col-print-1 {width:8%;  float:left;}
+            .col-print-2 {width:16%; float:left;}
+            .col-print-3 {width:25%; float:left;}
+            .col-print-4 {width:33%; float:left;}
+            .col-print-5 {width:42%; float:left;}
+            .col-print-6 {width:50%; float:left;}
+            .col-print-7 {width:58%; float:left;}
+            .col-print-8 {width:66%; float:left;}
+            .col-print-9 {width:75%; float:left;}
+            .col-print-10{width:83%; float:left;}
+            .col-print-11{width:92%; float:left;}
+            .col-print-12{width:100%; float:left;}
+
+            td,th {
+                padding: 1px!important;
+            }
+
+            table.table-bordered{
+                border:1px solid black !important;
+                margin-top:10px !important;
+            }
+            table.table-bordered > thead > tr > th{
+                border:1px solid black !important;
+            }
+            table.table-bordered > tbody > tr > td{
+                border:1px solid black !important;
+            }
+            .table-bordered > tbody > tr > th {
+                border: 1px solid black !important;
+            }
+        }
+    </style>
+
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-3.3.7-dist/js/bootstrap.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/slimScroll/jquery.slimscroll.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}AdminLTE-2.3.11/dist/js/app.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}multi-step-modal-master/multi-step-modal.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-fileinput-master/js/fileinput.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-toggle-master/js/bootstrap-toggle.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}JsBarcode/JsBarcode.all.min.js?v={local_version}"></script>
+    <script src="{base}assets/custom/hippo_ajax.js?v={local_version}"></script>
+    <link rel="stylesheet" href="{base}assets/custom/custom.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-3.3.7-dist/css/bootstrap.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/media/css/dataTables.bootstrap.min.css?v={local_version}">
+
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini" onload="" style="">
+{option}
+<!--<div class="spacer">&nbsp;</div>-->
+<!--<div class="container-fluid">-->
+
+<div class="row" style="padding-left: 15px;padding-right: 15px;">
+
+    <table width=100 class="table dataTable table-bordered">
+        <tbody>
+        <tr>
+            <!--width:15%!important;-->
+            <td rowspan="2" style="width: 12% !important;"><img style="padding: 5px;width: 157px;" src="{base}public/images/profiles/logo_header_full.png" alt="images" class="img-responsive"></td>
+            <td style="width:40%!important;text-align: center;">
+                <!--<div><span style="color: blue;font-family: ui-monospace;font-size: 21px;">PT. EVEREST</span>&nbsp;&nbsp;<span style="color: red;font-family: ui-monospace;font-size: 21px; text-transform: uppercase;">Electronic </span></div>-->
+                <div class="text-uppercase" style="font-size: 21px;font-weight: bold;">{companyProfile_alias}</div>
+                <div style="font-size: 11px;">{companyProfile}</div>
+            </td>
+            <td rowspan="2"  style="width:45%!important;">
+                {tableHeader}
+                <div class="text-center"><canvas id="barcodeSPK">{barcodeSPK}</canvas></div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class="col-print-12 col-sm-12 col-xs-12 no-paddingx">
+                    <div class="text-bold text-center" style="font-size: 18px;">
+                        {titleHeader}
+    </div>
+    </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<!--<div class="row" style="padding-left: 15px;padding-right: 15px;">-->
+    <!--<div style="border-top: 4px double #000;margin-top: 10px;width:100%" class="text-center text-capitalize">-->
+        <!--<div class="text-bold" style="font-size: 14px;">-->
+            <!--No. {nomer}-->
+        <!--</div>-->
+    <!--</div>-->
+<!--</div>-->
+
+<div class="row" style="margin-top: 5px;padding-left: 15px;padding-right: 15px;">
+    <div class="col-print-12" style="border: 0px solid red;">
+        {content}
+    </div>
+</div>
+
+    <!--</div>-->
+<div class="baris_sign" style="width: 100%;float: left;position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;bottom: 5px;">
+    <div class="" style="width: 1%;float: left;position: relative; min-height: 1px; padding-right: 0px; padding-left: 5px;">
+        &nbsp;
+    </div>
+    <div class="" style="width: 20%;float: left;position: relative; min-height: 1px; padding-right: 0px; padding-left: 5px;">
+        {sign_1}
+    </div>
+    <div class="" style="width: 3%;float: left;position: relative; min-height: 1px; padding-right: 0px; padding-left: 5px;">
+        &nbsp;
+    </div>
+    <div class="" id='sign_admin'  style="width: 20%;float: left;position: relative; min-height: 1px; padding-right: 0px; padding-left: 5px;">
+        {sign_2}
+    </div>
+    <div class="" style="width: 20%;float: left;position: relative; min-height: 1px; padding-right: 0px; padding-left: 5px;">
+        {sign_4}
+
+    </div>
+    <div class="" style="width: 17%;float: left;position: relative; min-height: 1px; padding-right: 0px; padding-left: 5px;">
+        &nbsp;
+</div>
+    <div class="" style="width: 35%;float: left;position: relative; min-height: 1px; padding-right: 0px; padding-left: 5px;">
+        {sign_3}
+    </div>
+</div>
+
+<script>
+//    window.print();
+JsBarcode("#barcodeSPK", "{barcodeSPK}", {
+    format: "CODE128",
+    lineColor: "#000",
+    width:1,
+    height:35,
+    displayValue: false
+});
+$("h4").remove();
+</script>
+</body>
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+
+    <script src="{cdn_suport}QrCodeJs/qrcode.js?v={local_version}"></script>
+
+    <style>
+        .image-container {
+            position: relative;
+        }
+        .image-container .after {
+            position: absolute;
+            top: 0;
+            /*left: 0;*/
+            width: 100%;
+            height: 100%;
+            display: none;
+            color: #FFF;
+            display: block;
+            background: rgba(0, 0, 0, .8);
+        }
+        .image-container .after > span{
+            position: absolute;
+            top: 30%;
+            left: 39%;
+            font-size: 2.5em;
+        }
+    </style>
+
+</head>
+<body >
+<div id="baseURL" class="hidden">{base}</div>
+<div >{content}</div>
+<script type="text/javascript">
+    // alert("888");
+    var changingHash = false;
+
+    function onbarcode(event) {
+        // alert("999");
+        switch (event.type) {
+            case "hashchange": {
+                if (changingHash == true) {
+                    return;
+                }
+                var hash = window.location.hash;
+                if (hash.substr(0, 3) == "#zx") {
+                    hash = window.location.hash.substr(3);
+                    changingHash = true;
+                    window.location.hash = event.oldURL.split("\#")[1] || ""
+                    changingHash = false;
+                    processBarcode(hash);
+                }
+
+                break;
+            }
+            case "storage": {
+                window.focus();
+                if (event.key == "barcode") {
+                    window.removeEventListener("storage", onbarcode, false);
+                    processBarcode(event.newValue);
+                }
+                break;
+            }
+            default: {
+                console.log(event)
+                break;
+            }
+        }
+    }
+
+    window.addEventListener("hashchange", detectEnter2, false);
+
+    function getScan() {
+        var href = window.location.href;
+        var ptr = href.lastIndexOf("#");
+        if (ptr > 0) {
+            href = href.substr(0, ptr);
+        }
+        window.addEventListener("storage", onbarcode, false);
+        setTimeout('window.removeEventListener("storage", onbarcode, false)', 15000);
+        localStorage.removeItem("barcode");
+        //window.open  (href + "#zx" + new Date().toString());
+
+        if (navigator.userAgent.match(/Firefox/i)) {
+            //Used for Firefox. If Chrome uses this, it raises the "hashchanged" event only.
+            window.location.href = ("zxing://scan/?ret=" + encodeURIComponent(href + "#zx{CODE}"));
+        } else {
+            //Used for Chrome. If Firefox uses this, it leaves the scan window open.
+            window.open("zxing://scan/?ret=" + encodeURIComponent(href + "#zx{CODE}"));
+        }
+    }
+
+    function processBarcode(bc) {
+        document.getElementById("scans").innerHTML += "<div>" + bc + "</div>";
+        //put your code in place of the line above.
+    }
+    function detectEnter2() {
+        alert("sukses");
+        var keyCode = event.keyCode ? event.keyCode : event.which ? event.which
+            : event.charCode;
+        if(keyCode==13){
+
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+</script>
+<!--barcode reader-->
+<script>
+
+    {jsBottom}
+
+</script>
+
+</body>
+</html>

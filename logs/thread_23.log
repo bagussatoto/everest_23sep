@@ -1,0 +1,19 @@
+=== WORKER STARTED (Range: 667714 - 696737) ===
+Cursor 667714: Updated 982 rows.
+Cursor 669714: Updated 985 rows.
+Cursor 671714: Updated 989 rows.
+Cursor 673714: Updated 981 rows.
+Cursor 675714: Updated 988 rows.
+Cursor 677714: Updated 983 rows.
+Cursor 679714: Updated 971 rows.
+Cursor 681714: Updated 997 rows.
+Cursor 683714: Updated 998 rows.
+Cursor 685714: Updated 989 rows.
+Cursor 687714: Updated 994 rows.
+Cursor 689714: Updated 995 rows.
+Cursor 691714: Updated 997 rows.
+Cursor 693714: Updated 993 rows.
+Cursor 695714: Updated 106 rows.
+=== WORKER COMPLETED ===
+Updated: 13948 rows
+Time: 1,460.81s

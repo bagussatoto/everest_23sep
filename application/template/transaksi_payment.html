@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{title}</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <!-- Template Name trx_payment.html -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link id="favicon" rel="icon" type='image/x-icon' href="{favicon}">
+
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-3.3.7-dist/css/bootstrap.min.css?v={local_version}">
+    <!-- Font Awesome -->
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css?v={local_version}">-->
+    <link rel="stylesheet" href="{cdn_suport}Font-Awesome-master/css/font-awesome.min.css?v={local_version}">
+    <!-- Ionicons -->
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css?v={local_version}">-->
+    <link rel="stylesheet" href="{cdn_suport}ionicons-master/css/ionicons.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}simple-line-icons-master/css/simple-line-icons.css?v={local_version}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/dist/css/AdminLTE.css?v={local_version}">
+    <link rel="stylesheet"
+          href="{cdn_suport}bootstrap3-dialog-master/dist/css/bootstrap-dialog.min.css?v={local_version}">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/dist/css/skins/_all-skins.min.css?v={local_version}">
+
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-fileinput-master/css/fileinput.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-toggle-master/css/bootstrap-toggle.min.css?v={local_version}">
+
+    <link rel="stylesheet" href="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.css?v={local_version}">
+    <!--<link rel="stylesheet" href="../../assets/suport/SmartCart-master/dist/css/smart_cart.min.css?v={local_version}">-->
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-xlgrid-master/bootstrap-xlgrid.min.css?v={local_version}">
+    <link rel="stylesheet" href="{base}assets/custom/custom.min.css?v={local_version}">
+    <link rel="stylesheet" href="{base}/assets/custom/dialog.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}HoldOn/HoldOn.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}qtip/jquery.qtip.min.css?v={local_version}">
+
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-3.3.7-dist/js/bootstrap.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js?v={local_version}"></script>
+    <!--<script src="{cdn_suport}bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js?v={local_version}"></script>-->
+    <script src="{base}assets/custom/custom.js?v={local_version}"></script>
+    <script src="{cdn_suport}HoldOn/HoldOn.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}qtip/jquery.qtip.min.js?v={local_version}"></script>
+
+
+    <!--{head}-->
+</head>
+<!--membuat sidebar colaps bodynya pakai yg ini-->
+<!--<body class="hold-transition skin-blue sidebar-mini sidebar-collapse">-->
+
+<body onbeforeunload="custom_holdon(close_holdon)" class="hold-transition skin-blue sidebar-mini"
+      onload="getData('{base}_shoppingCart/viewCart/{jenisTr}?ohyes=ohno','shopping_cart');reLoad();">
+<!--tanda loading pas sedang ngeload halaman-->
+<div id="baseURL" class="hidden">{base}</div>
+<!--end---tanda loading pas sedang ngeload halaman-->
+<div class="wrapper">
+
+    <header class="main-header">
+        <a href="{base}" class="logo hidden-xs hidden-sm no-padding">
+            <span class="logo-mini"><span class="glyphicon glyphicon-home"></span></span>
+            <span class="logo-lg"><img src="{base}public/images/profiles/logo_header.png" height="40px"></span>
+        </a>
+        <nav class="navbar navbar-static-top">
+            <div class="no-padding no-border">
+                <div class="hidden-sm hidden-lg col-sm-2 col-xs-1 col-md-2 col-lg-2 no-padding">
+                    <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                        <span class="sr-only">Toggle navigation</span>
+                    </a>
+                </div>
+                <div class="col-sm-8 col-xs-11 col-md-8 col-lg-8 no-padding text-center">
+                <span class="hidden-mdx hidden-lgx hidden-xlx hidden-xxlx">
+                    <span class="navbar-brand text-center no-border" style="padding:8px;">
+                        <a href="{base}">
+                            <a class="btn btn-tool text-white" href="javascript:void(0)"
+                               onclick="location.href='{btn_back}';"><span
+                                    class="glyphicon glyphicon-arrow-left text-yellow"></span></a>
+                            <span class="text-white">{title} <small style="color:#eeeeee;text-transform: lowercase;">{sub_title}</small></span>
+                        </a>
+                    </span>
+                </span>
+                </div>
+            </div>
+        </nav>
+        <nav class="navbar navbar-fixed-bottom navbar-2nd">
+            <!--untuk view desktop-->
+            <div class="no-padding no-border">
+                <div style="padding-right:0;padding-left:0;" class="col-sm-2 col-xs-2 col-md-1 col-lg-1">
+                    <div class="hidden-xs col-sm-6 col-md-6 col-lg-6 no-padding">
+                        <a href="{base}" class="btn btn__trigger-home btn__trigger--views-home"><i
+                                class="glyphicon glyphicon-home"></i></a>
+                    </div>
+                    <div class="hidden-xxxl hidden-xxl hidden-xl hidden-lg hidden-md hidden-sm col-xs-6 no-padding">
+                        <a href="{base}" class="btn btn__trigger-home-mb btn__trigger--views-home-mb"><i
+                                class="glyphicon glyphicon-home"></i></a>
+                    </div>
+                    <div class="hidden-xs col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding">
+                        <div class="text-bold text-center timbul dtime">
+                            <span class="jam"></span>
+                            <span class="blink">:</span>
+                            <span class="menit"></span>
+                        </div>
+                    </div>
+                </div>
+                <div style="padding-right:0;padding-left: 17px;" class="hidden-lg hidden-md hidden-sm col-xs-8">
+                    {info_ucd}
+                </div>
+                <div style="padding-right:0;padding-left:17px;" class="hidden-xs col-sm-7 col-xs-2 col-md-9 col-lg-9">
+
+                    {menu_taskbar}
+
+                    <!--<a href="#" onclick="swal('Phone 1')" data-toggle="tooltip" data-placement="top" title="Phone 1" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-phone"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('Plus 1')" data-toggle="tooltip" data-placement="top" title="Plus 1" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-plus"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('User 1')" data-toggle="tooltip" data-placement="top" title="User 1" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-user"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('Phone 2')" data-toggle="tooltip" data-placement="top" data-original-title="Phone 2" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-phone"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('Plus 2')" data-toggle="tooltip" data-placement="top" data-original-title="Plus 2" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-plus"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('User 2')" data-toggle="tooltip" data-placement="top" data-original-title="User 2" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-user"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('Phone 3')" data-toggle="tooltip" data-placement="top" data-original-title="Phone 3" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-phone"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('Plus 3')" data-toggle="tooltip" data-placement="top" data-original-title="Plus 3" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-plus"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('User 3')" data-toggle="tooltip" data-placement="top" data-original-title="User 3" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-user"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('Phone 4')" data-toggle="tooltip" data-placement="top" data-original-title="Phone 4" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-phone"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('Plus 4')" data-toggle="tooltip" data-placement="top" data-original-title="Plus 4" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-plus"></i>-->
+                    <!--</a>-->
+
+                    <!--<a href="#" onclick="swal('User 4')" data-toggle="tooltip" data-placement="top" data-original-title="User 4" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-user"></i>-->
+                    <!--</a>-->
+
+                </div>
+                <div style="padding-right:0;padding-left:0;" class="col-sm-3 col-xs-2 col-md-2 col-lg-2">
+                    {float_menu_bawah}
+                </div>
+            </div>
+            <div class="hidden-sm hidden-md hidden-lg hidden-xxxl hidden-xxl hidden-xl hidden-xxl col-xs-12 bg-black text-lime text-bold">
+            <span class="col-xs-8 no-padding">
+                <span class="hari"></span>
+                <span class="tanggal"></span>
+            </span>
+                <span class="col-xs-4 no-padding text-right">
+                <span class="jam"></span>
+                <span class="blink">:</span>
+                <span class="menit"></span>
+            </span>
+            </div>
+        </nav>
+        <nav class="hidden-xs navbar navbar-fixed-bottom navbar-3rd">
+            <div class="no-padding no-border">
+            <span class="col-lg-2 no-padding">
+                <span class="hari timbul text-bold"></span>
+                <span class="tanggal timbul text-bold"></span>
+            </span>
+                <span class="col-lg-10 no-padding">
+                {info_bottom}
+            </span>
+            </div>
+        </nav>
+
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+
+            <ul class="sidebar-menu">
+                <!--<li class="header">MAIN NAVIGATION</li>-->
+                {menu_left}
+
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <h1>
+                <!--<i class="fa fa-chevron-left"> </i>-->
+                <a class="btn btn-tool" href="javascript:void(0)" onclick="location.href='{btn_back}';"><span
+                        class="glyphicon glyphicon-arrow-left"></span></a>
+                {title}
+                <small>{sub_title}</small>
+            </h1>
+            <!--<ol class="breadcrumb">-->
+            <!--{mapping}-->
+            <!--&lt;!&ndash;<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>&ndash;&gt;-->
+            <!--&lt;!&ndash;<li class="active">Dashboard</li>&ndash;&gt;-->
+            <!--</ol>-->
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+
+                <div class="col-lg-3">
+                    <!--{content_left}-->
+                    <div class='box-solid text-center input-group'>
+                        <input type="hidden" name="pihakID" id="pihakID">
+                        <input type='text' class='form-control'
+                               name='pihakName' id="pihakName"
+                               value=''
+                               placeholder='{pihak_label}'
+                               onclick="getData('{pihak_caller}?search='+this.value, 'pilihan_outlet')"
+                               onkeyup="getData('{pihak_caller}?search='+this.value, 'pilihan_outlet')"
+                               autocomplete="off">
+                        <span class='input-group-btn'>
+                                <button class='btn btn-danger'
+                                        onclick="document.getElementById('pihakID').value='';document.getElementById('pihakName').value='';document.getElementById('result').src='{pihak_caller_delete}';">X</button>
+                            </span>
+                    </div>
+                    <div id='pilihan_outlet' style="max-height:300px;position:relative;left:0;overflow: auto;"></div>
+
+
+                    <div class='box-solid text-center' sstyle='margin-top: 10px;'>
+                        <form method='post' action='{selector_caller_form}' ttarget='result'>
+                            <input type='text' class='form-control'
+                                   name='text'
+                                   value=''
+                                   placeholder='{selector_label}'
+                                   onclick="getData('{selector_caller}?search='+this.value, 'pilihan_item')"
+                                   onkeyup="getData('{selector_caller}?search='+this.value, 'pilihan_item')"
+                                   autocomplete="off">
+                            <div id='pilihan_item' style="height:300px;position:relative;left:0;overflow: auto;"></div>
+                        </form>
+                    </div>
+
+
+                </div>
+                <div class="col-lg-9 col-xl-9"
+                     onclick="document.getElementById('pilihan_outlet').innerHTML='';document.getElementById('pilihan_item').innerHTML='';">
+                    <!--{content_right}-->
+                    <form action="{action_shopping_cart}" name="myForm" id="myForm" method="post"
+                          accept-charset="utf-8">
+                        <div class="box box-solid border-blue">
+                            <div class="box-header with-border ui-sortable-handle bg-blue" style="cursor: move;">
+                                <h3 class="box-title"><i class="fa fa-shopping-cart"></i> {sub_title} - selected items
+                                </h3>
+                            </div>
+                            <div class="box-body text-center">
+                                <div id="shopping_cart" class="table-responsive no-padding text-center"
+                                     styless="min-height:350px;"></div>
+                            </div>
+                            <div class="box-footer bg-gray">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        {clear_btn}
+                                    </div>
+                                    <div class="col-md-4 text-right">
+                                        {ext_tool}
+                                    </div>
+                                    <div class="col-md-4 text-right">
+                                        <a href="javascript:void(0)" name="btnProcess" id="btnProcess"
+                                           class="btn btn-success pull-right"
+                                           onclick="document.getElementById('result').src='{base}Transaksi/validate/{jenisTr}';">{submit_button}
+                                            <span class='glyphicon glyphicon-chevron-right'></span></a>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="col-md-12">
+
+                    <div class="box box-solid box-danger">
+                        <div class="box-header"><a href="{base}Transaksi/viewIncomplete/{jenisTr}"><span
+                                class="glyphicon glyphicon-flash"></span> incomplete {title}</a></div>
+                        <div class="box-body">{onprogress_content}</div>
+                        <div class="box-footer text-right">{onprogress_footer}</div>
+                    </div>
+
+                    <div class="box box-soliddd box-default">
+                        <div class="box-header"><a href="{base}Transaksi/viewHistory/{jenisTr}"><span
+                                class="glyphicon glyphicon-time"></span> {title} histories</a></div>
+                        <div class="box-body" style="background:#f0f0f0;font-style:italic;">{history_content}</div>
+                        <div class="box-footer text-right" style="background:#f0f0f0;font-style:italic;">
+                            {history_footer}
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <!--modal-->
+    <!--<div class='modal fade' role='dialog'>-->
+    <div id='myModal' class='modal {bg_modal} fade' role='dialog'>
+        <div class='modal-dialog {lebar_modal}'>
+            <div class='modal-content'>
+                {isi_modal}
+                <!-- Content will be loaded here from 'remote.php' file -->
+            </div>
+        </div>
+    </div>
+    <!--</div>-->
+    <!--modal-end-->
+    <footer class="main-footer overflow-h">
+        <div class="clear-fix"></div>
+        {footer}
+        <!--<div class="pull-right hidden-xs">-->
+        <!--<b>Version</b> 2.3.5-->
+        <!--</div>-->
+        <!--<strong>Copyright &copy; 2014-2016 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights
+        -->
+        <!--reserved.-->
+        <!--div class="pull-right">{stop_time}</div-->
+    </footer>
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Create the tabs -->
+        <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+            <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+            <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+        </ul>
+        <!-- Tab panes menu kanan-->
+        <div class="tab-content">
+            <!-- Home tab content -->
+            <div class="tab-pane" id="control-sidebar-home-tab">
+                <h3 class="control-sidebar-heading">Recent Activity</h3>
+                <ul class="control-sidebar-menu">
+                    <li>
+                        <a href="javascript:void(0)">
+                            <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+
+                                <p>Will be 23 on April 24th</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <i class="menu-icon fa fa-user bg-yellow"></i>
+
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
+
+                                <p>New phone +1(800)555-1234</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
+
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
+
+                                <p>nora@example.com</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <i class="menu-icon fa fa-file-code-o bg-green"></i>
+
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
+
+                                <p>Execution time 5 seconds</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <!-- /.control-sidebar-menu -->
+
+                <h3 class="control-sidebar-heading">Tasks Progress</h3>
+                <ul class="control-sidebar-menu">
+                    <li>
+                        <a href="javascript:void(0)">
+                            <h4 class="control-sidebar-subheading">
+                                Custom Template Design
+                                <span class="label label-danger pull-right">70%</span>
+                            </h4>
+
+                            <div class="progress progress-xxs">
+                                <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <h4 class="control-sidebar-subheading">
+                                Update Resume
+                                <span class="label label-success pull-right">95%</span>
+                            </h4>
+
+                            <div class="progress progress-xxs">
+                                <div class="progress-bar progress-bar-success" style="width: 95%"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <h4 class="control-sidebar-subheading">
+                                Laravel Integration
+                                <span class="label label-warning pull-right">50%</span>
+                            </h4>
+
+                            <div class="progress progress-xxs">
+                                <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <h4 class="control-sidebar-subheading">
+                                Back End Framework
+                                <span class="label label-primary pull-right">68%</span>
+                            </h4>
+
+                            <div class="progress progress-xxs">
+                                <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <!-- /.control-sidebar-menu -->
+
+            </div>
+            <!-- /.tab-pane -->
+            <!-- Stats tab content -->
+            <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
+            <!-- /.tab-pane -->
+            <!-- Settings tab content -->
+            <div class="tab-pane" id="control-sidebar-settings-tab">
+                <form method="post">
+                    <h3 class="control-sidebar-heading">General Settings</h3>
+
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Report panel usage
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+
+                        <p>
+                            Some information about this general settings option
+                        </p>
+                    </div>
+                    <!-- /.form-group -->
+
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Allow mail redirect
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+
+                        <p>
+                            Other sets of options are available
+                        </p>
+                    </div>
+                    <!-- /.form-group -->
+
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Expose author name in posts
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+
+                        <p>
+                            Allow the user to show his name in blog posts
+                        </p>
+                    </div>
+                    <!-- /.form-group -->
+
+                    <h3 class="control-sidebar-heading">Chat Settings</h3>
+
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Show me as online
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+                    </div>
+                    <!-- /.form-group -->
+
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Turn off notifications
+                            <input type="checkbox" class="pull-right">
+                        </label>
+                    </div>
+                    <!-- /.form-group -->
+
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Delete chat history
+                            <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
+                        </label>
+                    </div>
+                    <!-- /.form-group -->
+                </form>
+            </div>
+            <!-- /.tab-pane -->
+        </div>
+    </aside>
+    <!-- /.control-sidebar -->
+    <!-- Add the sidebar's background. This div must be placed
+         immediately after the control sidebar -->
+    <div class="control-sidebar-bg"></div>
+</div>
+<div>
+    <iframe id="tray" name="tray" style="display:none;width:100%;height:120px;" src="{base}_tray/index"></iframe>
+    <iframe name="result" id="result" style="resize: both;display: {display_iframe};width: 100%;height:800px;"></iframe>
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 2.2.3 -->
+<!--<script src="../../assets/suport/AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v={local_version}"></script>-->
+<!-- jQuery UI 1.11.4 -->
+<!--<link rel="stylesheet" href="{cdn_suport}jquery-ui-themes-1.11.0/themes/smoothness/jquery-ui.css?v={local_version}"/>-->
+<!--<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js?v={local_version}"></script>-->
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+    /*$.widget.bridge('uibutton', $.ui.button);*/
+</script>
+<!-- Bootstrap 3.3.6 -->
+<!--<script src="../../assets/suport/AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v={local_version}"></script>-->
+<!--<script src="../../assets/suport/bootstrap-3.3.7-dist/js/bootstrap.min.js?v={local_version}"></script>-->
+<!-- Slimscroll -->
+<script src="{cdn_suport}AdminLTE-2.3.11/plugins/slimScroll/jquery.slimscroll.min.js?v={local_version}"></script>
+<!-- FastClick -->
+<!--<script src="../../assets/suport/AdminLTE-2.3.11/plugins/fastclick/fastclick.js?v={local_version}"></script>-->
+<!-- AdminLTE App -->
+<script src="{cdn_suport}AdminLTE-2.3.11/dist/js/app.min.js?v={local_version}"></script>
+<script src="{cdn_suport}multi-step-modal-master/multi-step-modal.js?v={local_version}"></script>
+
+<script src="{cdn_suport}bootstrap-fileinput-master/js/fileinput.min.js?v={local_version}"></script>
+<script src="{cdn_suport}bootstrap-toggle-master/js/bootstrap-toggle.min.js?v={local_version}"></script>
+<!-- datatable-->
+<!--<script src="../../assets/suport/DataTables-1.10.13/media/js/jquery.dataTables.min.js?v={local_version}"></script>-->
+<!--<script src="../../assets/suport/DataTables-1.10.13/extensions/FixedHeader/js/dataTables.fixedHeader.min.js?v={local_version}"></script>-->
+<!--<script src="../../assets/suport/SmartCart-master/dist/js/jquery.smartCart.min.js?v={local_version}"></script>-->
+<script src="{base}assets/custom/hippo_ajax.js?v={local_version}"></script>
+
+<!--barcode reader-->
+<script type="text/javascript">
+    if (window.location.hash.substr(1, 2) == "zx") {
+        var bc = window.location.hash.substr(3);
+        localStorage["barcode"] = decodeURI(window.location.hash.substr(3))
+        window.close();
+        self.close();
+        window.location.href = "about:blank";//In case self.close isn't allowed
+    }
+</script>
+<SCRIPT type="text/javascript">
+    var changingHash = false;
+
+    function onbarcode(event) {
+        switch (event.type) {
+            case "hashchange": {
+                if (changingHash == true) {
+                    return;
+                }
+                var hash = window.location.hash;
+                if (hash.substr(0, 3) == "#zx") {
+                    hash = window.location.hash.substr(3);
+                    changingHash = true;
+                    window.location.hash = event.oldURL.split("\#")[1] || ""
+                    changingHash = false;
+                    processBarcode(hash);
+                }
+
+                break;
+            }
+            case "storage": {
+                window.focus();
+                if (event.key == "barcode") {
+                    window.removeEventListener("storage", onbarcode, false);
+                    processBarcode(event.newValue);
+                }
+                break;
+            }
+            default: {
+                console.log(event)
+                break;
+            }
+        }
+    }
+
+    window.addEventListener("hashchange", onbarcode, false);
+
+    function getScan() {
+        var href = window.location.href;
+        var ptr = href.lastIndexOf("#");
+        if (ptr > 0) {
+            href = href.substr(0, ptr);
+        }
+        window.addEventListener("storage", onbarcode, false);
+        setTimeout('window.removeEventListener("storage", onbarcode, false)', 15000);
+        localStorage.removeItem("barcode");
+        //window.open  (href + "#zx" + new Date().toString());
+
+        if (navigator.userAgent.match(/Firefox/i)) {
+            //Used for Firefox. If Chrome uses this, it raises the "hashchanged" event only.
+            window.location.href = ("zxing://scan/?ret=" + encodeURIComponent(href + "#zx{CODE}"));
+        } else {
+            //Used for Chrome. If Firefox uses this, it leaves the scan window open.
+            window.open("zxing://scan/?ret=" + encodeURIComponent(href + "#zx{CODE}"));
+        }
+    }
+
+    function processBarcode(bc) {
+        document.getElementById("scans").innerHTML += "<div>" + bc + "</div>";
+        //put your code in place of the line above.
+    }
+
+</SCRIPT>
+
+<script>
+
+    $('#myModal').on('hidden.bs.modal', function () {
+        $(this).removeData('bs.modal');
+    });
+
+    $('body').tooltip({selector: '[data-toggle-tip=tooltip]'});
+    //    $('data-toggle-tip').tooltip({title:"Event", trigger:"focus or hover only", delay:{hide:100}});
+
+    checked = false;
+
+    function checkedAll(frm1) {
+        var aa = document.getElementById(frm1);
+        if (checked == false) {
+            checked = true
+        } else {
+            checked = false
+        }
+        for (var i = 0; i < aa.elements.length; i++) {
+            aa.elements[i].checked = checked;
+        }
+    }
+
+    function load() {
+        top.$('#tray').load('{base}_tray/');
+    }
+
+    function reLoad() {
+        setInterval("load()", 30000);
+    }
+
+    var callQtips = function () {
+        setTimeout(function () {
+            $("span[name='qtips']").each(function () {
+                $(this).qtip({
+                    content: {
+                        text: function (event, api) {
+                            $.ajax({
+                                url: api.elements.target.attr('href') // Use href attribute as URL
+                            })
+                                    .then(function (content) {
+                                        // Set the tooltip content upon successful retrieval
+                                        api.set('content.text', content);
+                                    }, function (xhr, status, error) {
+                                        // Upon failure... set the tooltip content to error
+                                        api.set('content.text', status + ': ' + error);
+                                    });
+                            return 'Loading...'; // Set some initial text
+                        }
+                    },
+                    position: {
+                        viewport: $(window)
+                    },
+                    hide: {
+                        fixed: true,
+                        delay: 300
+                    },
+                    style: 'qtip-wiki'
+                });
+            });
+        }, 3500);
+    }
+
+
+</script>
+<!--{script_bottom}-->
+</body>
+</html>

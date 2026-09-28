@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{title}</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="icon" type="image/png" href="{base}/public/images/sys/head_top.ico">
+    <!-- Bootstrap 3.3.6 -->
+    <!--<link rel="stylesheet" href="../../assets/suport/AdminLTE-2.3.11/bootstrap/css/bootstrap.min.css?v={local_version}">-->
+    <!--<link rel="stylesheet" href="{cdn_suport}bootstrap-3.3.7-dist/css/bootstrap.min.css?v={local_version}">-->
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-3.3.7-dist/css/bootstrap.min.css?v={local_version}">
+    <!-- Font Awesome -->
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css?v={local_version}">-->
+    <link rel="stylesheet" href="{cdn_suport}Font-Awesome-master/css/font-awesome.min.css?v={local_version}">
+    <!-- Ionicons -->
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css?v={local_version}">-->
+    <link rel="stylesheet" href="{cdn_suport}ionicons-master/css/ionicons.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}simple-line-icons-master/css/simple-line-icons.css?v={local_version}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/dist/css/AdminLTE.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap3-dialog-master/dist/css/bootstrap-dialog.min.css?v={local_version}">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/dist/css/skins/_all-skins.min.css?v={local_version}">
+    <!-- iCheck -->
+    <!--<link rel="stylesheet" href="../../assets/suport/AdminLTE-2.3.11/plugins/iCheck/flat/blue.css?v={local_version}">-->
+    <!-- Morris chart -->
+    <!--<link rel="stylesheet" href="../../assets/suport/AdminLTE-2.3.11/plugins/morris/morris.css?v={local_version}">-->
+    <!-- jvectormap -->
+    <!--<link rel="stylesheet" href="../../assets/suport/AdminLTE-2.3.11/plugins/jvectormap/jquery-jvectormap-1.2.2.css?v={local_version}">-->
+    <!-- Date Picker -->
+    <!--<link rel="stylesheet" href="../../assets/suport/AdminLTE-2.3.11/plugins/datepicker/datepicker3.css?v={local_version}">-->
+    <!-- Daterange picker -->
+    <!--<link rel="stylesheet" href="../../assets/suport/AdminLTE-2.3.11/plugins/daterangepicker/daterangepicker.css?v={local_version}">-->
+    <!-- bootstrap wysihtml5 - text editor -->
+    <!--<link rel="stylesheet"-->
+    <!--href="../../assets/suport/AdminLTE-2.3.11/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css?v={local_version}">-->
+
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-fileinput-master/css/fileinput.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-toggle-master/css/bootstrap-toggle.min.css?v={local_version}">
+    <!-- data table-->
+    <!--<link rel="stylesheet" href="../../assets/suport/DataTables-1.10.13/media/css/jquery.dataTables.min.css?v={local_version}">-->
+    <!--<link rel="stylesheet"-->
+    <!--href="../../assets/suport/DataTables-1.10.13/extensions/FixedHeader/css/fixedHeader.dataTables.min.css?v={local_version}">-->
+
+    <!--<link rel="stylesheet" href="../../assets/suport/bootstrap-table-develop/dist/bootstrap-table.min.css?v={local_version}">-->
+    <link rel="stylesheet" href="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.css?v={local_version}">
+    <!--<link rel="stylesheet" href="../../assets/suport/SmartCart-master/dist/css/smart_cart.min.css?v={local_version}">-->
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-xlgrid-master/bootstrap-xlgrid.min.css?v={local_version}">
+    <link rel="stylesheet" href="{base}assets/custom/custom.min.css?v={local_version}">
+
+
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-3.3.7-dist/js/bootstrap.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js?v={local_version}"></script>
+    <!--<script src="{cdn_suport}bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js?v={local_version}"></script>-->
+    <script src="{base}assets/custom/custom.js?v={local_version}"></script>
+
+
+
+    <!--{head}-->
+</head>
+<!--membuat sidebar colaps bodynya pakai yg ini-->
+<!--<body class="hold-transition skin-blue sidebar-mini sidebar-collapse">-->
+
+<body class="hold-transition skin-blue sidebar-mini">
+
+<div id="baseURL" class="hidden">{base}</div>
+<!--tanda loading pas sedang ngeload halaman-->
+{content}
+<!--end---tanda loading pas sedang ngeload halaman-->
+
+<!-- ./wrapper -->
+
+<!-- jQuery 2.2.3 -->
+<!--<script src="../../assets/suport/AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v={local_version}"></script>-->
+<!-- jQuery UI 1.11.4 -->
+<!--<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js?v={local_version}"></script>-->
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+    /*$.widget.bridge('uibutton', $.ui.button);*/
+</script>
+<!-- Bootstrap 3.3.6 -->
+<!--<script src="../../assets/suport/AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v={local_version}"></script>-->
+<!--<script src="../../assets/suport/bootstrap-3.3.7-dist/js/bootstrap.min.js?v={local_version}"></script>-->
+<!-- Slimscroll -->
+<script src="{cdn_suport}AdminLTE-2.3.11/plugins/slimScroll/jquery.slimscroll.min.js?v={local_version}"></script>
+<!-- FastClick -->
+<!--<script src="../../assets/suport/AdminLTE-2.3.11/plugins/fastclick/fastclick.js?v={local_version}"></script>-->
+<!-- AdminLTE App -->
+<script src="{cdn_suport}AdminLTE-2.3.11/dist/js/app.min.js?v={local_version}"></script>
+<script src="{cdn_suport}multi-step-modal-master/multi-step-modal.js?v={local_version}"></script>
+
+<script src="{cdn_suport}bootstrap-fileinput-master/js/fileinput.min.js?v={local_version}"></script>
+<script src="{cdn_suport}bootstrap-toggle-master/js/bootstrap-toggle.min.js?v={local_version}"></script>
+<!-- datatable-->
+<!--<script src="../../assets/suport/DataTables-1.10.13/media/js/jquery.dataTables.min.js?v={local_version}"></script>-->
+<!--<script src="../../assets/suport/DataTables-1.10.13/extensions/FixedHeader/js/dataTables.fixedHeader.min.js?v={local_version}"></script>-->
+<!--<script src="../../assets/suport/SmartCart-master/dist/js/jquery.smartCart.min.js?v={local_version}"></script>-->
+<script src="{base}assets/custom/hippo_ajax.js?v={local_version}"></script>
+
+<!--barcode reader-->
+
+
+
+</body>
+</html>

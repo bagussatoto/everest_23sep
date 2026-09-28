@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{title}</title>
+
+    <style>
+        html {
+            zoom: 90%;
+            line-height: 1;
+        }
+        * {
+            line-height: 1;
+            font-family: monospace, monospace;
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+        }
+
+        .pageHeader {
+            position: fixed;
+            /*width: 210mm;*/
+            top: 0mm;
+        }
+
+        .pageBody {
+            /*width: 210mm;*/
+        }
+
+        .pageFooter {
+            position: fixed;
+            /*width: 210mm;*/
+            bottom: 0mm;
+        }
+
+        @page {
+            font-family: monospace, monospace;
+            width: 80mm;
+            margin: 3mm;
+        }
+
+        @media print {
+            html, body {
+                /*zoom: initial;*/
+                width: 80mm;
+                font-family: monospace, monospace;
+                font-size: initial;
+                /*height: 297mm;*/
+            }
+            .newPages { page-break-before: always; }
+            .pageHeader {
+                position: fixed;
+                /*width: 210mm;*/
+                top: 0;
+            }
+            .pageFooter {
+                position: fixed;
+                width: 100%;
+                bottom: 0;
+            }
+        }
+
+        dsh {
+            display: block;
+            unicode-bidi: isolate;
+            margin-block-start: 0.1em;
+            margin-block-end: 0.1em;
+            margin-inline-start: auto;
+            margin-inline-end: auto;
+            overflow: hidden;
+            border-style: dashed;
+            border-width: 1px;
+        }
+
+    </style>
+
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-3.3.7-dist/js/bootstrap.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/slimScroll/jquery.slimscroll.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}AdminLTE-2.3.11/dist/js/app.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}multi-step-modal-master/multi-step-modal"></script>
+    <script src="{cdn_suport}bootstrap-fileinput-master/js/fileinput.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-toggle-master/js/bootstrap-toggle.min.js?v={local_version}"></script>
+    <script src="{base}assets/custom/hippo_ajax.js?v={local_version}"></script>
+    <link rel="stylesheet" href="{base}assets/custom/custom.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-3.3.7-dist/css/bootstrap.min.css?v={local_version}">
+
+</head>
+
+<body>
+
+<div style="margin: 0" class="row">
+    <!--<div style='font-size: 0.7em;' class="text-center col-xs-8 col-sm-8 col-md-8 col-lg-8 no-padding">-->
+        <!--{companyProfile}-->
+    <!--</div>-->
+    <div style="font-size: 24px;" class="col-xs-10 col-sm-10 col-md-10 col-lg-10 text-center no-padding">M8</div>
+    <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 text-center no-padding">
+        <!--<div style="font-size: 24px;" class="text-bold text-center">M8</div>-->
+        <div style="font-size: 14px;" class="text-bold text-center">CV Maju Mapan</div>
+        <div style="font-size: 12px;" class="text-bold text-center">Jl.Matadireja 1,Purwokerto,Banyumas</div>
+        <div style="font-size: 13px;" class="text-bold text-center">Telp:(0281)628371</div>
+        <div style="font-size: 10px;" class="text-center"><i>Email: cvmajumapan88@gmail.com</i></div>
+        <!--<div style="font-size: 13px;" class="text-bold text-center">&nbsp;</div>-->
+    </div>
+    <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 text-center no-padding">
+        <img src="{base}assets/images/logo_full.png" alt="a"  class="img-responsive">
+    </div>
+</div>
+<dsh></dsh>
+
+<div style="margin: 0" class="row">
+    <div class="text-center">{smallPrint}</div>
+</div>
+
+<dsh></dsh>
+
+<div style="margin: 0" class="row">
+    {tableSmallHeader}
+    <dsh></dsh>
+    <dsh></dsh>
+    {content}
+</div>
+
+<dsh></dsh>
+
+<div style="margin: 0" class="row">
+    {bottomRows}
+    <div class=''>&nbsp;</div>
+    <div class='clearfix text-capitalize text-center'>terimakasih atas kunjungan Anda</div>
+    <div class='clearfix text-capitalize text-center'>periksa kembali barang belanjaan anda</div>
+    <div class='clearfix text-capitalize text-center'>barang yang sudah dibeli tidak bisa DITUKAR atau DIKEMBALIKAN.</div>
+    <div class=''>&nbsp;</div>
+    <div style='font-size: 1em;' class='col-xs-12 text-center no-padding'>** Terima Kasih **</div>
+    <dsh></dsh>
+    {nontunaipayment}
+</div>
+<script>
+
+</script>
+
+
+</body>
+</html>

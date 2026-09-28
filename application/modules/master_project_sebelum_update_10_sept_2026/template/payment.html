@@ -1,0 +1,47 @@
+
+<script>
+    getData('{base}{modul}/_shoppingCart/viewCart/{jenisTr}?ohyes=ohno','shopping_cart');
+</script>
+<div class="panel panel-body">
+    <h4 class="text-blue">{title} <span class="text-muted"><span class="glyphicon glyphicon-menu-right"></span> {sub_title}</span></h4>
+
+
+<div class="col-lg-12 no-padding">
+    <div class="box box-solidddd box-default">
+        <div class="box-header">
+            <span class="pull-left"></span>
+        </div>
+        <div class="box-body no-padding table-responsive">{content}</div>
+
+    </div>
+</div>
+
+
+<div class="col-lg-12 no-padding">
+    <div class="box box-solidddd box-default">
+        <div class="box-header">
+            <span class="pull-left"></span>
+
+        </div>
+        <div class="box-body" id="shopping_cart">{elements}</div>
+
+    </div>
+</div>
+
+
+
+<div class="col-lg-12 no-padding">
+    <div class="box box-solidddd box-info">
+        <div class="box-header">
+            <span class="pull-left">{payment_subtitle}</span>
+
+        </div>
+        <div class="box-body">{payment_str}</div>
+        <!--<div class="col-md-4 text-right">-->
+        <!--    <label><input type="checkbox" id="ck" onclick="if(this.checked==true){hiliteDivBack('shopping_cart');setTimeout(function(){document.getElementById('result').src='{base}{modul}/Create/buildValues/{jenisTr}?confirm=1';document.getElementById('btnProcess').disabled=false;},1200);}else{alert('please select at least one item and fill-in amount of payment');document.getElementById('btnProcess').disabled=true;this.checked=false;}"> all numbers are correct</label>-->
+        <!--    &lt;!&ndash;<button href="javascript:void(0)" name="btnProcess" id="btnProcess" class="btn btn-success pull-right" disabled onclick="document.getElementById('result').src='{base}{modul}/Transaksi/validate/{jenisTr}';"><span class='fa fa-check'></span> {submit_button}</button>&ndash;&gt;-->
+        <!--</div>-->
+
+    </div>
+</div>
+</div>

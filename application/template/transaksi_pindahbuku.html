@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html><!-- transaksi_pindahbuku.html -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{title}</title>
+
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link id="favicon" rel="icon" type='image/x-icon' href="{favicon}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-3.3.7-dist/css/bootstrap.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}Font-Awesome-master/css/font-awesome.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}ionicons-master/css/ionicons.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}simple-line-icons-master/css/simple-line-icons.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/dist/css/AdminLTE.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap3-dialog-master/dist/css/bootstrap-dialog.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/dist/css/skins/_all-skins.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-fileinput-master/css/fileinput.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-toggle-master/css/bootstrap-toggle.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-xlgrid-master/bootstrap-xlgrid.min.css?v={local_version}">
+    <link rel="stylesheet" href="{base}assets/custom/custom.min.css?v={local_version}">
+    <link rel="stylesheet" href="{base}assets/custom/dialog.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}HoldOn/HoldOn.css?v={local_version}">
+    <link rel="stylesheet" href="{base}assets/custom/jquery.floatingscroll.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/media/css/dataTables.bootstrap.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/media/css/jquery.dataTables_themeroller.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/yadcf-0.9.3/jquery.dataTables.yadcf.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/extensions/Buttons/css/buttons.dataTables.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}qtip/jquery.qtip.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/extensions/FixedHeader/css/fixedHeader.bootstrap.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/extensions/FixedColumns/css/fixedColumns.bootstrap.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-select-1.13.9/dist/css/bootstrap-select.css?v={local_version}">
+    <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons&v={local_version}">
+    <!--<link rel="stylesheet" href="{cdn_suport}material/1.1.3/material.css?v={local_version}">-->
+    <link rel="stylesheet" href="{cdn_suport}material/1.1.3/material.indigo-pink.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}jquery-ui-1.12.1/jquery-ui.css?v={local_version}">
+
+
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v={local_version}"></script>
+    <!--<script src="//code.jquery.com/jquery-2.2.4.min.js?v={local_version}"></script>-->
+    <script src="{base}assets/custom/custom.js?v={local_version}"></script>
+    <script src="{cdn_suport}HoldOn/HoldOn.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-3.3.7-dist/js/bootstrap.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js?v={local_version}"></script>
+
+    <script src="{base}assets/custom/jquery.floatingscroll.min.js?v={local_version}"></script>
+
+    <script src="{cdn_suport}DataTables-1.10.13/media/js/jquery.dataTables.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/media/js/dataTables.bootstrap.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/media/js/jquery.highlight.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/dataTables.buttons.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.colVis.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.print.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.html5.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.flash.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/yadcf-0.9.3/jquery.dataTables.yadcf.js?v={local_version}"></script>
+    <script src="{cdn_suport}jQuery-Mark-Hightlight/jquery.mark.min.js?v={local_version}"></script>
+
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/FixedHeader/js/dataTables.fixedHeader.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/FixedColumns/js/dataTables.fixedColumns.js?v={local_version}"></script>
+    <script src="{cdn_suport}qtip/jquery.qtip.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-select-1.13.9/dist/js/bootstrap-select.js?v={local_version}"></script>
+    <script src="{cdn_suport}jquery-ui-1.12.1/jquery-ui.js?v={local_version}"></script>
+
+
+    <style>
+        /*@import url("//fonts.googleapis.com/css?family=Roboto:10");*/
+
+        div.coa table tbody tr td input.form-control {
+            padding: 1px;
+            font-size: 12px;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        thead {
+            background: lightgray;
+        }
+
+        .btn-app {
+            font-size: 20px !important;
+        }
+
+        .mark, mark {
+            padding: .2em;
+            background-color: #ffb328;
+        }
+
+        .demo-card-wide.mdl-card {
+            width: 640px;
+            height: 300px;
+        }
+
+        .mdl-card__actions {
+            outline: skyblue solid 5px;
+            z-index: 4;
+        }
+
+        #name {
+            display:flex;
+            margin-top: 10px;
+            justify-content: left;
+        }
+
+        #contact{
+            diplay: flex;
+        }
+
+        .mdl-button {
+        // outline: red solid 5px;
+            margin-left: 10px ;
+        }
+
+        .demo-card-wide {
+            height: 200px;
+        // outline: limegreen 10px solid;
+        }
+
+        .demo-card-wide > .mdl-card__title {
+            color: #fff;
+            height: 64px;
+            background-color:indigo;
+        }
+
+        .mdl-card__title-text {
+            position: relative;
+            top: 6px;
+        }
+
+        .demo-card-wide > .mdl-card__menu {
+            color: #fff;
+        }
+
+        #mycard {
+            height: 600px;
+            width:100%;
+            display:flex;
+            flex-direction: row;
+        // outline: red solid 10px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .mdl-textfield {
+            width: 250px;
+            margin-right: 10px;
+        }
+
+        .mdl-textfield {
+            padding: 16px 0 26px 0 !important;
+        }
+
+    </style>
+</head>
+<!--sidebar-collapse-->
+<body onbeforeunload="custom_holdon(close_holdon)" class="hold-transition {skin_header} sidebar-mini sidebar-collapse" onload="reLoad();">
+<div id="baseURL" class="hidden">{base}</div>
+<div class="wrapper">
+    <header class="main-header">
+        <a href="{base}" class="logo hidden-xs hidden-sm no-padding">
+            <span class="logo-mini"><span class="glyphicon glyphicon-home"></span></span>
+            <!--            <span class="logo-lg"><img src="{base}public/images/profiles/logo_header.png?v={local_version}" height="40px"></span>-->
+            <span class="logo-lg">{logo_header}</span>
+        </a>
+        <nav class="navbar navbar-static-top">
+            <div class="no-padding no-border">
+<!--                <div class="hidden-sm hidden-lgr col-sm-2 col-xs-1 col-md-1 col-lg-1 no-padding">-->
+                    <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                        <span class="sr-only">Toggle navigation</span>
+                    </a>
+                    <a class="sidebar-title"><b class="text-uppercase">{title}</b></a>
+<!--                </div>-->
+<!--                <div class="col-sm-8 col-xs-11 col-md-8 col-lg-8 no-padding text-center">-->
+<!--                <span class="hidden-mdx hidden-lgx hidden-xlx hidden-xxlx">-->
+<!--                    <span class="navbar-brand text-center no-border" style="padding:8px;">-->
+<!--                        <a href="{base}">-->
+<!--                            <a class="btn btn-tool text-white" href="JavaScript:void(0)"-->
+<!--                               onclick="location.href='{btn_back}';"><span-->
+<!--                                    class="glyphicon glyphicon-arrow-left text-green"></span></a>-->
+<!--                            <span class="text-white">{title} <small style="color:#eeeeee;text-transform: lowercase;">{sub_title}</small></span>-->
+<!--                        </a>-->
+<!--                    </span>-->
+<!--                </span>-->
+<!--                </div>-->
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav" id="menu_top">
+                        {menu_top}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <nav class="navbar navbar-fixed-bottom navbar-2nd">
+            <!--untuk view desktop-->
+            <div class="no-padding no-border">
+                <div style="padding-right:0;padding-left:0;" class="col-sm-2 col-xs-2 col-md-1 col-lg-1">
+                    <div class="hidden-xs col-sm-6 col-md-6 col-lg-6 no-padding">
+                        <a href="{base}" class="btn btn__trigger-home btn__trigger--views-home"><i
+                                class="glyphicon glyphicon-home"></i></a>
+                    </div>
+                    <div class="hidden-xl hidden-xxl hidden-lg hidden-md hidden-sm col-xs-6 no-padding">
+                        <a href="{base}" class="btn btn__trigger-home-mb btn__trigger--views-home-mb"><i
+                                class="glyphicon glyphicon-home"></i></a>
+                    </div>
+                    <div class="hidden-xs col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding">
+                        <div class="text-bold text-center timbul dtime">
+                            <span class="jam"></span>
+                            <span class="blink">:</span>
+                            <span class="menit"></span>
+                        </div>
+                    </div>
+                </div>
+                <div style="padding-right:0;padding-left:0;padding-left: 17px;" class="hidden-lg col-xs-8">
+                    {info_ucd}
+                </div>
+                <div style="padding-right:0;padding-left:0;" class="col-sm-10 col-xs-2 col-md-11 col-lg-11">
+                    {float_menu_bawah}
+                </div>
+            </div>
+            <div class="hidden-sm hidden-md hidden-lg hidden-xl hidden-xxl col-xs-12 bg-black text-lime text-bold">
+            <span class="col-xs-8 no-padding">
+                <span class="hari"></span>
+                <span class="tanggal"></span>
+            </span>
+                <span class="col-xs-4 no-padding text-right">
+                <span class="jam"></span>
+                <span class="blink">:</span>
+                <span class="menit"></span>
+            </span>
+            </div>
+        </nav>
+        <nav class="hidden-xs navbar navbar-fixed-bottom navbar-3rd">
+            <div class="no-padding no-border">
+            <span class="col-lg-2 no-padding">
+                <span class="hari timbul text-bold"></span>
+                <span class="tanggal timbul text-bold"></span>
+            </span>
+                <span class="col-lg-10 no-padding">
+                {info_bottom}
+            </span>
+            </div>
+        </nav>
+    </header>
+
+    <!--style="position: fixed;max-height: 100vh!important;min-height: 0!important;overflow:scroll;overflow-x: hidden;"-->
+
+    <aside class="main-sidebar">
+        <section class="sidebar">
+            {searching}
+            <ul class="sidebar-menu">
+                {menu_left}
+            </ul>
+        </section>
+    </aside>
+
+    <div class="content-wrapper ">
+        <div id="search_result"></div>
+<!--        <section class="content-header">-->
+<!--            <h1>{title} <small>{sub_title}</small></h1>-->
+<!--        </section>-->
+        <section class="content">
+
+            <!-- menu main untuk mobile -->
+            <div class="row hidden-xs hidden-md hidden-lg hidden-xl hidden-xxl">
+                <div style="padding:6px;" class="col-md-12 text-center">
+
+                    <div style="zoom:60%" class="btn-group btn-group-justified">
+
+                        <a class="btn btn-app text-white bg-light-blue active" href="{base}Transaksi/index/{jenisTr}" title="{trName} index">
+                            <i class="fa fa-align-justify"></i> <small>index</small>
+                        </a>
+
+<!--                        <a class="btn btn-app text-white bg-maroon" href="{base}Transaksi/viewIncomplete/{jenisTr}" title="on going {trName}">-->
+<!--                            <i class="glyphicon glyphicon-exclamation-sign"></i> <small>tasks</small>-->
+<!--                        </a>-->
+
+<!--                        <a class="btn btn-app text-white bg-orange" href="{base}Transaksi/viewHistory/{jenisTr}" title="{trName} histories">-->
+<!--                            <i class="glyphicon glyphicon-time"></i> <small>histories</small>-->
+<!--                        </a>-->
+
+<!--                        <a class="btn btn-app text-white bg-blue" href="{base}ActivityReport/viewMonthly/{jenisTr}" title="{trName} reports">-->
+<!--                            <i class="fa fa-bar-chart"></i> <small>reports</small>-->
+<!--                        </a>-->
+
+<!--                        <a class="btn btn-app text-white bg-yellow" href="{base}Transaksi/viewMyActs/{jenisTr}" title="my {trName} activities">-->
+<!--                            <i class="fa fa-gg"></i> <small>my act</small>-->
+<!--                        </a>-->
+
+<!--                        <a class="btn btn-app text-white bg-fuchsia" href="{base}ActivityReport/viewMySettlement/{jenisTr}" title="my {trName} settlement">-->
+<!--                            <i class="fa fa-gg"></i> <small>my stlmnt</small>-->
+<!--                        </a>-->
+
+<!--                        <a class="btn btn-app text-white bg-green" style="display:{newTrDisp}" href="{newTrTarget}" title="new {trName}">-->
+<!--                            <i class="fa fa-plus"></i> <small>create</small>-->
+<!--                        </a>-->
+
+                </div>
+
+                    <!--<ul class="pagination">-->
+                        <!--<li>-->
+                            <!--<a class="text-white bg-light-blue active" href="{base}Transaksi/index/{jenisTr}" title="{trName} index">-->
+                                <!--<span class='fa fa-align-justify'></span>-->
+                                <!--<br><small>index</small>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a class="text-white bg-maroon" href="{base}Transaksi/viewIncomplete/{jenisTr}" title="on going {trName}">-->
+                                <!--<span class='glyphicon glyphicon-exclamation-sign'></span>-->
+                                <!--<br><small>tasks</small>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a class="text-white bg-orange" href="{base}Transaksi/viewHistory/{jenisTr}" title="{trName} histories">-->
+                                <!--<span class='glyphicon glyphicon-time'></span>-->
+                                <!--<br><small>histories</small>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a class="text-white bg-blue" href="{base}ActivityReport/viewMonthly/{jenisTr}" title="{trName} reports">-->
+                                <!--<span class='fa fa-bar-chart'></span>-->
+                                <!--<br><small>reports</small>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a class="text-white bg-yellow" href="{base}Transaksi/viewMyActs/{jenisTr}" title="my {trName} activities">-->
+                                <!--<span class='fa fa-gg'></span>-->
+                                <!--<br><small>my act</small>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li>-->
+                            <!--<a class="text-white bg-fuchsia" href="{base}ActivityReport/viewMySettlement/{jenisTr}" title="my {trName} settlement">-->
+                                <!--<span class='fa fa-gg'></span>-->
+                                <!--<br><small>my stlmnt</small>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li style="display:{newTrDisp}">-->
+                            <!--<a class="text-white bg-green" href="{newTrTarget}" title="new {trName}">-->
+                                <!--<span class='fa fa-plus'></span>-->
+                                <!--<br><small>create</small>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+            </div>
+            </div>
+            <!-- menu main untuk desktop -->
+            <div class="row hidden-xs hidden-sm">
+                <div class="col-md-12 pull-right text-right">
+                    <ul class="pagination no-margin">
+                        <li id="index"><a href="{base}Transaksi/index/{jenisTr}" data-toggle="tooltip"
+                                          data-placement="bottom" title="{trName} index"><span
+                                class='fa fa-align-justify'></span> {trName} index</a></li>
+<!--                        <li id="viewIncomplete"><a href="{base}Transaksi/viewIncomplete/{jenisTr}" data-toggle="tooltip"-->
+<!--                                                   data-placement="bottom" title="on going {trName}"><span-->
+<!--                                class='glyphicon glyphicon-exclamation-sign'></span> on going </a></li>-->
+<!--                        <li id="viewHistory"><a href="{base}Transaksi/viewHistory/{jenisTr}" data-toggle="tooltip"-->
+<!--                                                data-placement="bottom" title="{trName} histories"><span-->
+<!--                                class='glyphicon glyphicon-time'></span> histories</a></li>-->
+<!--                        <li id="viewMonthly"><a href="{base}ActivityReport/viewMonthly/{jenisTr}" data-toggle="tooltip"-->
+<!--                                                data-placement="bottom" title="{trName} reports"><span-->
+<!--                                class='fa fa-bar-chart'></span> reports</a></li>-->
+<!--                        <li id="viewMyActs"><a href="{base}Transaksi/viewMyActs/{jenisTr}" data-toggle="tooltip"-->
+<!--                                               data-placement="bottom" title="my {trName} activities"><span-->
+<!--                                class='fa fa-gg'></span> my activities</a></li>-->
+<!--                        <li id="viewMySettlement"><a href="{base}ActivityReport/viewMySettlement/{jenisTr}"-->
+<!--                                                     data-toggle="tooltip" data-placement="bottom"-->
+<!--                                                     title="my {trName} settlement"><span class='fa fa-gg'></span> my-->
+<!--                            settlement</a></li>-->
+<!--                        <li id="{jenisTr}" stylee="display:{newTrDisp}"><a href="{newTrTarget}" data-toggle="tooltip"-->
+<!--                                                                          data-placement="bottom"-->
+<!--                                                                          title="new {trName}"><span-->
+<!--                                class='fa fa-plus'></span> new {trName}</a></li>-->
+                    </ul>
+                </div>
+            </div>
+
+            <!-- table main untuk mobile -->
+            <div class="row hidden-md hidden-lg hidden-xl hidden-xxl">
+                <div style="padding:6px;" class="col-md-12">
+
+<!--                    <div class="box box-danger" style="display:{prop_display}">-->
+<!--                        <div class="box-header with-border">-->
+<!--                            <span class="pull-left text-red text-uppercase">-->
+<!--                                <h4 class="box-title">{onprogress_title}</h4>-->
+<!--                            </span>-->
+<!--                            &lt;!&ndash;<span class="box-tool pull-right">{add_link}</span>&ndash;&gt;-->
+<!--                        </div>-->
+<!--                        <div style="background: linear-gradient(90deg, #ff980024, #4ff15424);" class="box-body table-responsives">{onprogress_content_mobile}</div>-->
+<!--                        &lt;!&ndash;<div class="box-footer text-right">{onprogress_footer}</div>&ndash;&gt;-->
+<!--                    </div>-->
+
+<!--                    <div class="box box-warning" style="display:{prop_display_2}">-->
+<!--                        <div class="box-header with-border">-->
+<!--                            <span class="pull-left text-uppercase"><h4 class="no-margin no-padding">{onprogressView_title}</h4></span>-->
+<!--                            &lt;!&ndash;                            <span class="box-tool pull-right">{add_link}</span>&ndash;&gt;-->
+<!--                        </div>-->
+<!--                        <div class="box-body table-responsive">{onprogressView_content}</div>-->
+<!--                        &lt;!&ndash;                        <div class="box-footer text-right">{onprogress_footer}</div>&ndash;&gt;-->
+<!--                    </div>-->
+
+                    <!--history untuk mobile-->
+<!--                    <div class="box box-info hidden-md hidden-lg hidden-xl hidden-xxl">-->
+<!--                        <div class="box-header with-border">-->
+<!--                            <span class="pull-left text-capitalize"><h4 class="box-title">{history_title}</h4></span>-->
+<!--                            <span class="pull-right"></span>-->
+<!--                        </div>-->
+<!--                        <div class="box-body table-responsive" style="backgroundddd:#f0f0f0;font-style:italic;">{history_content}</div>-->
+<!--                        <div class="box-footer text-right" style="backgrounddd:#f0f0f0;font-style:italic;">-->
+<!--                            &lt;!&ndash;{history_footer}&ndash;&gt;-->
+<!--                        </div>-->
+<!--                    </div>-->
+                    <!--history untuk desktop-->
+<!--                    <div class="box box-info hidden-xs hidden-sm">-->
+<!--                        <div class="box-header with-border">-->
+<!--                            <span class="pull-left text-capitalize"><h4 class="box-title">{history_title}</h4></span>-->
+<!--                            <span class="pull-right"></span>-->
+<!--                        </div>-->
+<!--                        <div class="box-body table-responsive" style="backgroundddd:#f0f0f0;font-style:italic;">{history_content}</div>-->
+<!--                        <div class="box-footer text-right" style="backgrounddd:#f0f0f0;font-style:italic;">-->
+<!--                            {history_footer}-->
+<!--                        </div>-->
+<!--                    </div>-->
+
+<!--                    <div class="box box-success">-->
+<!--                        <div class="box-header with-border">-->
+<!--                            <span class="pull-left text-capitalize"><h4 class="box-title">{recap_title}</h4></span>-->
+<!--                            <span class="pull-right"></span>-->
+<!--                        </div>-->
+<!--                        <div class="box-body table-responsive">{recap_content}</div>-->
+<!--                        <div class="box-footer text-right">{recap_footer}</div>-->
+<!--                    </div>-->
+                </div>
+            </div>
+            <!-- table main untuk desktop -->
+            <div class="row hidden-xs hidden-sm">
+                <div class="col-md-12">
+                    {top_conten}
+                    <div class="box box-soliddd box-danger" style="display:{prop_display}">
+                        <div class="box-header with-border">
+<!--                            <span class="pull-left text-red text-uppercase"><h4-->
+<!--                                    class="box-title">{subtitle}</h4></span>-->
+<!--                            <span class="box-tool pull-right">{add_link}</span>-->
+                        </div>
+                        <div class="box-body">{content}</div>
+<!--                        <div class="box-body table-responsive" id="prog_satu">{onprogress_content}</div>-->
+<!--                        <div class="box-body table-responsive" id="prog_dua">{onprogress_content_2}</div>-->
+<!--                        <div class="box-footer text-right">{onprogress_footer}</div>-->
+                    </div>
+
+
+<!--                    <div class="box box-soliddd box-danger" style="display:{settle_display}">-->
+<!--                        <div class="box-header with-border">-->
+<!--                            <span class="pull-left text-red text-uppercase"><h4-->
+<!--                                    class="box-title">{onprogress_settle_title}</h4></span>-->
+<!--                            <span class="box-tool pull-right">{add_settle_link}</span>-->
+<!--                        </div>-->
+<!--                        <div class="box-body table-responsive">{onprogress_settle_content}</div>-->
+<!--                        <div class="box-footer text-right">{onprogress_settle_footer}</div>-->
+<!--                    </div>-->
+
+
+<!--                    <div class="box box-soliddd box-warning" style="display:{prop_display_2}">-->
+<!--                        <div class="box-header with-border">-->
+<!--                            <span class="pull-left text-uppercase"><h4 class="no-margin no-padding">{onprogressView_title}</h4></span>-->
+<!--                            &lt;!&ndash;                            <span class="box-tool pull-right">{add_link}</span>&ndash;&gt;-->
+<!--                        </div>-->
+<!--                        <div class="box-body table-responsive">{onprogressView_content}</div>-->
+<!--                        &lt;!&ndash;                        <div class="box-footer text-right">{onprogress_footer}</div>&ndash;&gt;-->
+<!--                    </div>-->
+
+<!--                    <div class="box box-info">-->
+<!--                        <div class="box-header with-border">-->
+<!--                            <span class="pull-left text-capitalize"><h4 class="box-title">{history_title}</h4></span>-->
+<!--                            <span class="pull-right"></span>-->
+<!--                        </div>-->
+<!--                        <div class="box-body" style="backgroundddd:#f0f0f0;font-style:italic;">{history_content}</div>-->
+<!--                        <div class="box-footer text-right" style="backgrounddd:#f0f0f0;font-style:italic;">-->
+<!--                            {history_footer}-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="box box-success">-->
+<!--                        <div class="box-header with-border">-->
+<!--                            <span class="pull-left text-capitalize"><h4 class="box-title">{recap_title}</h4></span>-->
+<!--                            <span class="pull-right"></span>-->
+<!--                        </div>-->
+<!--                        <div class="box-body table-responsive">{recap_content}</div>-->
+<!--                        <div class="box-footer text-right">{recap_footer}</div>-->
+<!--                    </div>-->
+                </div>
+            </div>
+
+        </section>
+    </div>
+    <footer class="main-footer overflow-h">
+        <div class="clear-fix"></div>
+        {footer}
+    </footer>
+    <aside class="control-sidebar control-sidebar-dark">
+        <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+            <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+            <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane" id="control-sidebar-home-tab">
+                <h3 class="control-sidebar-heading">Recent Activity</h3>
+                <ul class="control-sidebar-menu">
+                    <li>
+                        <a href="javascript:void(0)">
+                            <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+                                <p>Will be 23 on April 24th</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <i class="menu-icon fa fa-user bg-yellow"></i>
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
+                                <p>New phone +1(800)555-1234</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
+                                <p>nora@example.com</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <i class="menu-icon fa fa-file-code-o bg-green"></i>
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
+                                <p>Execution time 5 seconds</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <h3 class="control-sidebar-heading">Tasks Progress</h3>
+                <ul class="control-sidebar-menu">
+                    <li>
+                        <a href="javascript:void(0)">
+                            <h4 class="control-sidebar-subheading">
+                                Custom Template Design
+                                <span class="label label-danger pull-right">70%</span>
+                            </h4>
+                            <div class="progress progress-xxs">
+                                <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <h4 class="control-sidebar-subheading">
+                                Update Resume
+                                <span class="label label-success pull-right">95%</span>
+                            </h4>
+                            <div class="progress progress-xxs">
+                                <div class="progress-bar progress-bar-success" style="width: 95%"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <h4 class="control-sidebar-subheading">
+                                Laravel Integration
+                                <span class="label label-warning pull-right">50%</span>
+                            </h4>
+                            <div class="progress progress-xxs">
+                                <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <h4 class="control-sidebar-subheading">
+                                Back End Framework
+                                <span class="label label-primary pull-right">68%</span>
+                            </h4>
+                            <div class="progress progress-xxs">
+                                <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
+            <div class="tab-pane" id="control-sidebar-settings-tab">
+                <form method="post">
+                    <h3 class="control-sidebar-heading">General Settings</h3>
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Report panel usage
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+                        <p>
+                            Some information about this general settings option
+                        </p>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Allow mail redirect
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+                        <p>
+                            Other sets of options are available
+                        </p>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Expose author name in posts
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+                        <p>
+                            Allow the user to show his name in blog posts
+                        </p>
+                    </div>
+                    <h3 class="control-sidebar-heading">Chat Settings</h3>
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Show me as online
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Turn off notifications
+                            <input type="checkbox" class="pull-right">
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Delete chat history
+                            <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
+                        </label>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </aside>
+    <div class="control-sidebar-bg"></div>
+</div>
+<div>
+    <iframe id="tray" name="tray" style="display:none;width:100%;height:120px;" src="{base}_tray/index"></iframe>
+    <iframe name="result" id="result" style="resize: both;display: {display_iframe};width: 100%;height:800px;"></iframe>
+</div>
+<div id='myModal' class='modal {bg_modal} fade' role='dialog'>
+    <div class='modal-dialog {lebar_modal}'>
+        <div class='modal-content'>
+            <!--{isi_modal}-->
+            <!-- Content will be loaded here from 'remote.php' file -->
+        </div>
+    </div>
+</div>
+
+<script src="{cdn_suport}AdminLTE-2.3.11/plugins/slimScroll/jquery.slimscroll.min.js?v={local_version}"></script>
+<script src="{cdn_suport}AdminLTE-2.3.11/dist/js/app.min.js?v={local_version}"></script>
+<script src="{cdn_suport}multi-step-modal-master/multi-step-modal.js?v={local_version}"></script>
+<script src="{cdn_suport}bootstrap-fileinput-master/js/fileinput.min.js?v={local_version}"></script>
+<script src="{cdn_suport}bootstrap-toggle-master/js/bootstrap-toggle.min.js?v={local_version}"></script>
+<script src="{base}assets/custom/hippo_ajax.js?v={local_version}"></script>
+<script src="{base}assets/custom/JS.js?v={local_version}"></script>
+
+
+
+
+<script type="text/javascript">
+    if (window.location.hash.substr(1, 2) == "zx") {
+        var bc = window.location.hash.substr(3);
+        localStorage["barcode"] = decodeURI(window.location.hash.substr(3))
+        window.close();
+        self.close();
+        window.location.href = "about:blank";//In case self.close isn't allowed
+    }
+</script>
+<SCRIPT type="text/javascript">
+    var changingHash = false;
+
+    function onbarcode(event) {
+        switch (event.type) {
+            case "hashchange": {
+                if (changingHash == true) {
+                    return;
+                }
+                var hash = window.location.hash;
+                if (hash.substr(0, 3) == "#zx") {
+                    hash = window.location.hash.substr(3);
+                    changingHash = true;
+                    window.location.hash = event.oldURL.split("\#")[1] || ""
+                    changingHash = false;
+                    processBarcode(hash);
+                }
+                break;
+            }
+            case "storage": {
+                window.focus();
+                if (event.key == "barcode") {
+                    window.removeEventListener("storage", onbarcode, false);
+                    processBarcode(event.newValue);
+                }
+                break;
+            }
+            default: {
+                console.log(event)
+                break;
+            }
+        }
+    }
+
+    window.addEventListener("hashchange", onbarcode, false);
+
+    function getScan() {
+        var href = window.location.href;
+        var ptr = href.lastIndexOf("#");
+        if (ptr > 0) {
+            href = href.substr(0, ptr);
+        }
+        window.addEventListener("storage", onbarcode, false);
+        setTimeout('window.removeEventListener("storage", onbarcode, false)', 15000);
+        localStorage.removeItem("barcode");
+
+        if (navigator.userAgent.match(/Firefox/i)) {
+            window.location.href = ("zxing://scan/?ret=" + encodeURIComponent(href + "#zx{CODE}"));
+        } else {
+            window.open("zxing://scan/?ret=" + encodeURIComponent(href + "#zx{CODE}"));
+        }
+    }
+
+    function processBarcode(bc) {
+        document.getElementById("scans").innerHTML += "<div>" + bc + "</div>";
+    }
+
+</SCRIPT>
+
+<script>
+
+    $('#myModal').on('hidden.bs.modal', function () {
+        $(this).removeData('bs.modal');
+    });
+
+    $('body').tooltip({selector: '[data-toggle=tooltip]'});
+
+    checked = false;
+
+    function checkedAll(frm1) {
+        var aa = document.getElementById(frm1);
+        if (checked == false) {
+            checked = true
+        } else {
+            checked = false
+        }
+        for (var i = 0; i < aa.elements.length; i++) {
+            aa.elements[i].checked = checked;
+        }
+    }
+
+    function load() {
+        $('#tray').load('{base}_tray/');
+    }
+
+    function reLoad() {
+        setInterval("load()", 10000);
+    }
+
+    setInterval( function(){
+        var loadShoppingCart = null != localStorage.getItem('loadShoppingCart') ? localStorage.getItem('loadShoppingCart') : "idle";
+        //check to refresh
+        if( "idle" != loadShoppingCart ){
+            //refresh
+            if(parseFloat(loadShoppingCart)<=0){
+                /*console.log('shoppingcart di refresh ('+loadShoppingCart+')');*/
+                if(document.getElementById("overlay")){
+                    document.getElementById("overlay").style.display = "block";
+                }
+                $('#shopping_cart').load('{base}_shoppingCart/viewCart/{jenisTr}?ohyes=ohno');
+                localStorage.setItem('loadShoppingCart', "idle" );
+            }
+            //abaikan #1
+            else{
+                /*console.log('hitung mundur ('+loadShoppingCart+')');*/
+                $('#btn_kalkulasi').removeClass('hidden');
+                $('#kalkulasi').html('('+loadShoppingCart+')');
+                $('#kalkulasi').addClass('text-red');
+                localStorage.setItem('loadShoppingCart', parseFloat(loadShoppingCart)-1 );
+            }
+        }
+        //abaikan #2
+        else{
+            /*console.log('abaikan shoppingcart tidak di refresh');*/
+        }
+    }, 1000);
+    loadQtips();
+</script>
+{scriptBottom}
+</body>
+</html>

@@ -1,0 +1,1456 @@
+<!DOCTYPE html>
+<html>
+<!-- defaul*t.html-->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{title}</title>
+    <!-- Tell the browser to be responsive to screen width -->
+
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link id="favicon" rel="icon" type='image/x-icon' href="{favicon}">
+    <!-- Bootstrap 3.3.6 -->
+    <!--<link rel="stylesheet" href="../../assets/suport/AdminLTE-2.3.11/bootstrap/css/bootstrap.min.css?v={local_version}">-->
+    <!--<link rel="stylesheet" href="{cdn_suport}bootstrap-3.3.7-dist/css/bootstrap.min.css?v={local_version}">-->
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-3.3.7-dist/css/bootstrap.min.css?v={local_version}">
+    <!-- Font Awesome -->
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css?v={local_version}">-->
+    <link rel="stylesheet" href="{cdn_suport}Font-Awesome-master/css/font-awesome.min.css?v={local_version}">
+    <!-- Ionicons -->
+    <!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css?v={local_version}">-->
+    <link rel="stylesheet" href="{cdn_suport}ionicons-master/css/ionicons.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}simple-line-icons-master/css/simple-line-icons.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}qtip/jquery.qtip.min.css?v={local_version}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/dist/css/AdminLTE.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap3-dialog-master/dist/css/bootstrap-dialog.min.css?v={local_version}">
+    <!-- AdminLTE Skins. Choose a skin from the css/skins
+         folder instead of downloading all of them to reduce the load. -->
+    <link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/dist/css/skins/_all-skins.min.css?v={local_version}">
+    <!-- iCheck -->
+    <!--<link rel="stylesheet" href="../../assets/suport/AdminLTE-2.3.11/plugins/iCheck/flat/blue.css?v={local_version}">-->
+    <!-- Morris chart -->
+    <!--<link rel="stylesheet" href="../../assets/suport/AdminLTE-2.3.11/plugins/morris/morris.css?v={local_version}">-->
+    <!-- jvectormap -->
+    <!--<link rel="stylesheet" href="../../assets/suport/AdminLTE-2.3.11/plugins/jvectormap/jquery-jvectormap-1.2.2.css?v={local_version}">-->
+    <!-- Date Picker -->
+    <!--<link rel="stylesheet" href="../../assets/suport/AdminLTE-2.3.11/plugins/datepicker/datepicker3.css?v={local_version}">-->
+    <!-- Daterange picker -->
+    <!--<link rel="stylesheet" href="../../assets/suport/AdminLTE-2.3.11/plugins/daterangepicker/daterangepicker.css?v={local_version}">-->
+    <!-- bootstrap wysihtml5 - text editor -->
+    <!--<link rel="stylesheet"-->
+    <!--href="../../assets/suport/AdminLTE-2.3.11/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css?v={local_version}">-->
+
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-fileinput-master/css/fileinput.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-toggle-master/css/bootstrap-toggle.min.css?v={local_version}">
+    <!-- data table-->
+    <!--<link rel="stylesheet" href="../../assets/suport/DataTables-1.10.13/media/css/jquery.dataTables.min.css?v={local_version}">-->
+    <!--<link rel="stylesheet"-->
+    <!--href="../../assets/suport/DataTables-1.10.13/extensions/FixedHeader/css/fixedHeader.dataTables.min.css?v={local_version}">-->
+
+    <!--<link rel="stylesheet" href="../../assets/suport/bootstrap-table-develop/dist/bootstrap-table.min.css?v={local_version}">-->
+    <link rel="stylesheet" href="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.css?v={local_version}">
+    <!--<link rel="stylesheet" href="../../assets/suport/SmartCart-master/dist/css/smart_cart.min.css?v={local_version}">-->
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-xlgrid-master/bootstrap-xlgrid.min.css?v={local_version}">
+    <link rel="stylesheet" href="{base}assets/custom/custom.min.css?v={local_version}">
+    <link rel="stylesheet" href="{base}/assets/custom/dialog.css?v={local_version}">
+    <link rel="stylesheet" href="{base}assets/custom/jquery.floatingscroll.css?v={local_version}">
+    <!--<link rel="stylesheet" href="{base}/assets/custom/highslide.css?v={local_version}">-->
+    <link rel="stylesheet" href="{cdn_suport}HoldOn/HoldOn.min.css?v={local_version}">
+    <!--<link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/media/css/dataTables.bootstrap.min.css?v={local_version}">-->
+    <link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/media/css/jquery.dataTables_themeroller.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/yadcf-0.9.3/jquery.dataTables.yadcf.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/extensions/Buttons/css/buttons.dataTables.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/extensions/FixedHeader/css/fixedHeader.bootstrap.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}DataTables-1.10.13/extensions/FixedColumns/css/fixedColumns.bootstrap.css?v={local_version}">
+    <!--<script src="{cdn_suport}AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v={local_version}"></script>-->
+    <script src="{cdn_suport}AdminLTE-3.2.0/plugins/jquery/jquery.min.js?v={local_version}"></script>
+    <!--    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>-->
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/raphael/raphael-min.js?v={local_version}"></script>
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/morris/morris.js?v={local_version}"></script>
+    <!--<script src="{cdn_suport}AdminLTE-2.3.11/plugins/morris/morris.min.js?v={local_version}"></script>-->
+
+    <script src="{cdn_suport}bootstrap-3.3.7-dist/js/bootstrap.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js?v={local_version}"></script>
+
+    <script src="{cdn_suport}MomentJs-2.24.0/moment.js?v={local_version}"></script>
+    <!--<script src="{cdn_suport}bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js?v={local_version}"></script>-->
+
+    <script src="{base}assets/custom/custom.js?v={local_version}"></script>
+
+    <!--<script src="{cdn_suport}custom/highslide-with-html.js?v={local_version}"></script>-->
+
+    <script src="{cdn_suport}HoldOn/HoldOn.min.js?v={local_version}"></script>
+    <script src="{base}assets/custom/jquery.floatingscroll.min.js?v={local_version}"></script>
+
+    <!--<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">-->
+    <!--<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>-->
+    <!--<script src="https://cdn.datatables.net/fixedheader/3.4.0/js/dataTables.fixedHeader.min.js"></script>-->
+
+    <script src="{cdn_suport}DataTables-1.10.13/media/js/jquery.dataTables.min.js?v={local_version}"></script>
+
+    <!--<script src="{cdn_suport}DataTables-1.10.13/media/js/dataTables.bootstrap.min.js?v={local_version}"></script>-->
+
+    <script src="{cdn_suport}DataTables-1.10.13/media/js/jquery.highlight.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/dataTables.buttons.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.colVis.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.print.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.html5.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/Buttons/js/buttons.flash.js?v={local_version}"></script>
+
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/FixedHeader/js/dataTables.fixedHeader.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/extensions/FixedColumns/js/dataTables.fixedColumns.js?v={local_version}"></script>
+    <script src="{cdn_suport}DataTables-1.10.13/yadcf-0.9.3/jquery.dataTables.yadcf.js?v={local_version}"></script>
+
+<!--    <script src="{base}assets/qx-assistant.js?v={local_version}"></script>-->
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/export-data.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.20/b-1.6.1/b-colvis-1.6.1/b-flash-1.6.1/b-html5-1.6.1/b-print-1.6.1/datatables.min.css"/>
+
+    <!--<link rel="stylesheet" href="{cdn_suport}AdminLTE-2.3.11/plugins/datatables/extensions/b-html5-1.61/b-print-1.6.1/datatables.min.css?v={local_version}">-->
+    <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>-->
+    <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>-->
+
+    <script type="text/javascript" src="//cdn.datatables.net/v/dt/jszip-2.5.0/dt-1.10.20/b-1.6.1/b-colvis-1.6.1/b-flash-1.6.1/b-html5-1.6.1/b-print-1.6.1/datatables.min.js"></script>
+
+    <!--<script src="{cdn_suport}AdminLTE-2.3.11/plugins/datatables/extensions/b-html5-1.61/b-print-1.6.1/datatables.min.js?v={local_version}"></script>-->
+    <!--{head}-->
+    <script src="{cdn_suport}qtip/jquery.qtip.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}JsBarcode/JsBarcode.all.min.js?v=1.0101.2022.Corp"></script>
+
+    <style>
+
+        table.dataTable.display tbody tr:hover {
+            background-color: #f9ffb5 !important;
+            cursor: pointer;
+        }
+        table.dataTable.display tbody tr:hover td {
+            background-color: #f9ffb5 !important;
+        }
+
+        @media print {
+            a[href]:after {
+                display: none;
+                visibility: hidden;
+            }
+        }
+        @media print
+        {
+            .fl-scrolls,
+            .fl-scrolls.fl-scrolls-hidden,
+            .no-print,
+            .btn,
+            .panel-body.no-padding
+            {
+                display: none !important;
+            }
+
+            table.table {
+                font-family:Verdana, Arial;
+                font-size:10px;
+            }
+        }
+
+        .morris-hover.morris-default-style {
+            border-radius: 10px;
+            padding: 6px;
+            color: #f9f9f9;
+            background: rgb(158, 158, 160);
+            border: solid 2px rgba(113, 112, 117, 0.9);
+            font-weight: 600;
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .mark, mark {
+            padding: .1em !important;
+            background-color: #f5bc67 !important;
+        }
+
+        /*.dataTables_wrapper .dataTables_processing{*/
+        /*    position: fixed !important;*/
+        /*    top: 50% !important;*/
+        /*    left: 50% !important;*/
+        /*    transform: translate(-50%, -50%) !important;*/
+        /*    z-index: 99999 !important;*/
+
+        /*    !* tampilan *!*/
+        /*    padding: 12px 18px;*/
+        /*    background: rgba(255,255,255,0.95);*/
+        /*    border: 1px solid #ddd;*/
+        /*    border-radius: 4px;*/
+        /*    box-shadow: 0 2px 10px rgba(0,0,0,0.15);*/
+        /*}*/
+
+        .dataTables_wrapper .dataTables_processing {
+            /*position: absolute;*/
+            position: fixed !important;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 80px;
+            margin-left: -50%;
+            margin-top: -25px;
+            padding-top: 20px;
+            text-align: center;
+            font-size: 2.2em;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgb(156 255 176 / 90%) 25%, rgb(52 162 231 / 90%) 75%, rgba(255, 255, 255, 0) 100%);
+        }
+
+        .btn-square-xs {
+            width: 40px; /* silakan sesuaikan: 22-26 */
+            height: 24px;
+            padding: 0 !important;
+            line-height: 24px; /* center secara vertikal */
+            text-align: center;
+        }
+
+        /* rapihin icon font-awesome biar ikut center */
+        .btn-square-xs > i.fa {
+            line-height: inherit;
+            vertical-align: middle;
+        }
+
+        /* Visual grouping kolom gudang: warna tipis + pemisah tebal di ujung grup */
+        #myNewTable td.wg-cell,
+        #myNewTable th.wg-cell,
+        #myNewTable tfoot th.wg-cell,
+        .fixedHeader-floating th.wg-cell,
+        .fixedHeader-locked th.wg-cell {
+            border-left: 1px solid #d3dae2 !important;
+        }
+        #myNewTable tbody td.wg-tone-a,
+        #myNewTable tfoot th.wg-tone-a {
+            background-color: rgba(52, 128, 186, 0.06);
+        }
+        #myNewTable tbody td.wg-tone-b,
+        #myNewTable tfoot th.wg-tone-b {
+            background-color: rgba(202, 138, 74, 0.07);
+        }
+        #myNewTable thead th.wg-tone-a,
+        .fixedHeader-floating th.wg-tone-a,
+        .fixedHeader-locked th.wg-tone-a {
+            background-color: #eef6fd !important;
+        }
+        #myNewTable thead th.wg-tone-b,
+        .fixedHeader-floating th.wg-tone-b,
+        .fixedHeader-locked th.wg-tone-b {
+            background-color: #fff4e8 !important;
+        }
+        #myNewTable td.wg-end,
+        #myNewTable th.wg-end,
+        #myNewTable tfoot th.wg-end,
+        .fixedHeader-floating th.wg-end,
+        .fixedHeader-locked th.wg-end {
+            border-right: 3px solid #97a5b4 !important;
+        }
+
+    </style>
+</head>
+<!--membuat sidebar colaps bodynya pakai yg ini-->
+<!--<body class="hold-transition skin-blue sidebar-mini sidebar-collapse">-->
+
+<body onbeforeunload="custom_holdon(close_holdon)" class="hold-transition skin-blue sidebar-mini sidebar-collapse" onload="reLoad();">
+<!--tanda loading pas sedang ngeload halaman-->
+<div id="baseURL" class="hidden">{base}</div>
+<!--end---tanda loading pas sedang ngeload halaman-->
+<div class="wrapper">
+<header class="main-header">
+    <a href="{base}" class="logo hidden-xs hidden-sm no-padding">
+        <span class="logo-mini"><span class="glyphicon glyphicon-home"></span></span>
+        <span id="logo-lg" class="logo-lg"><img src="{base}public/images/profiles/logo_header.png" height="40px"></span>
+    </a>
+    <nav class="navbar navbar-static-top">
+        <div class="no-padding no-border">
+            <!--<div class="hidden-smr hidden-lgr col-sm-2 col-xs-1 col-md-1 col-lg-1 no-padding">-->
+                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+                <a class="sidebar-title"><b class="text-uppercase">{title}</b></a>
+            <!--</div>-->
+            <!--            <div class="col-sm-8 col-xs-11 col-md-8 col-lg-8 no-padding text-center">-->
+            <!--                <span class="hidden-mdx hidden-lgx hidden-xlx hidden-xxlx">-->
+            <!--                    <span class="navbar-brand text-center no-border" style="padding:8px;">-->
+            <!--&lt;!&ndash;                        <a href="{base}">&ndash;&gt;-->
+            <!--&lt;!&ndash;                            <a class="btn btn-tool text-white" href="javascript:void(0)" onclick="location.href='{btn_back}';"><span class="glyphicon glyphicon-arrow-left text-yellow"></span></a>&ndash;&gt;-->
+            <!--&lt;!&ndash;                            <span class="text-white">{title} <small style="color:#eeeeee;text-transform: lowercase;">{sub_title}</small></span>&ndash;&gt;-->
+            <!--&lt;!&ndash;                        </a>&ndash;&gt;-->
+            <!--                    </span>-->
+            <!--                </span>-->
+            <!--            </div>-->
+
+            <div class="navbar-custom-menu">
+                <ul class="nav navbar-nav" id="menu_top">
+                    {menu_top}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <nav class="navbar navbar-fixed-bottom navbar-2nd">
+        <!--untuk view desktop-->
+        <div class="no-padding no-border">
+
+            <div style="padding-right:0;padding-left:0;" class="col-sm-2 col-xs-2 col-md-1 col-lg-1">
+                <div class="hidden-xs col-sm-6 col-md-6 col-lg-6 no-padding">
+                    <a href="{base}" class="btn btn__trigger-home btn__trigger--views-home"><i class="glyphicon glyphicon-home"></i></a>
+                </div>
+                <div class="hidden-xxxl hidden-xxl hidden-xl hidden-lg hidden-md hidden-sm col-xs-6 no-padding">
+                    <a href="{base}" class="btn btn__trigger-home-mb btn__trigger--views-home-mb"><i class="glyphicon glyphicon-home"></i></a>
+                </div>
+                <div class="hidden-xs col-sm-6 col-xs-6 col-md-6 col-lg-6 no-padding">
+                    <div class="text-bold text-center timbul dtime">
+                        <span class="jam"></span>
+                        <span class="blink">:</span>
+                        <span class="menit"></span>
+                    </div>
+                </div>
+            </div>
+            <div style="padding-right:0;padding-left:0;padding-left: 17px;" class="hidden-lg hidden-md hidden-sm col-xs-8">
+                {info_ucd}
+            </div>
+            <div style="padding-right:0;padding-left:17px;" class="hidden-xs col-sm-7 col-xs-2 col-md-9 col-lg-9">
+
+                {menu_taskbar}
+
+                <!--<a href="#" onclick="swal('Phone 1')" data-toggle="tooltip" data-placement="top" title="Phone 1" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-phone"></i>-->
+                <!--</a>-->
+
+                <!--<a href="#" onclick="swal('Plus 1')" data-toggle="tooltip" data-placement="top" title="Plus 1" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-plus"></i>-->
+                <!--</a>-->
+
+                <!--<a href="#" onclick="swal('User 1')" data-toggle="tooltip" data-placement="top" title="User 1" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-user"></i>-->
+                <!--</a>-->
+
+                <!--<a href="#" onclick="swal('Phone 2')" data-toggle="tooltip" data-placement="top" title="Phone 2" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-phone"></i>-->
+                <!--</a>-->
+
+                <!--<a href="#" onclick="swal('Plus 2')" data-toggle="tooltip" data-placement="top" title="Plus 2" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-plus"></i>-->
+                <!--</a>-->
+
+                <!--<a href="#" onclick="swal('User 2')" data-toggle="tooltip" data-placement="top" title="User 2" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-user"></i>-->
+                <!--</a>-->
+
+                <!--<a href="#" onclick="swal('Phone 3')" data-toggle="tooltip" data-placement="top" title="Phone 3" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-phone"></i>-->
+                <!--</a>-->
+
+                <!--<a href="#" onclick="swal('Plus 3')" data-toggle="tooltip" data-placement="top" title="Plus 3" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-plus"></i>-->
+                <!--</a>-->
+
+                <!--<a href="#" onclick="swal('User 3')" data-toggle="tooltip" data-placement="top" title="User 3" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-user"></i>-->
+                <!--</a>-->
+
+                <!--<a href="#" onclick="swal('Phone 4')" data-toggle="tooltip" data-placement="top" title="Phone 4" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-phone"></i>-->
+                <!--</a>-->
+
+                <!--<a href="#" onclick="swal('Plus 4')" data-toggle="tooltip" data-placement="top" title="Plus 4" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-plus"></i>-->
+                <!--</a>-->
+
+                <!--<a href="#" onclick="swal('User 4')" data-toggle="tooltip" data-placement="top" title="User 4" class="hidden-xs btn btn__trigger-last-bawah-ds btn__trigger-last-views-bawah-ds">-->
+                    <!--<i class="fa fa-user"></i>-->
+                <!--</a>-->
+
+            </div>
+            <div style="padding-right:0;padding-left:0;" class="col-sm-3 col-xs-2 col-md-2 col-lg-2">
+                {float_menu_bawah}
+            </div>
+        </div>
+        <div class="hidden-sm hidden-md hidden-lg hidden-xl hidden-xxxl hidden-xxl col-xs-12 bg-black text-lime text-bold">
+            <span class="col-xs-8 no-padding">
+                <span class="hari"></span>
+                <span class="tanggal"></span>
+            </span>
+            <span class="col-xs-4 no-padding text-right">
+                <span class="jam"></span>
+                <span class="blink">:</span>
+                <span class="menit"></span>
+            </span>
+        </div>
+    </nav>
+    <nav class="hidden-xs navbar navbar-fixed-bottom navbar-3rd">
+        <div class="no-padding no-border">
+            <span class="col-lg-2 no-padding">
+                <span class="hari timbul text-bold"></span>
+                <span class="tanggal timbul text-bold"></span>
+            </span>
+            <span class="col-lg-10 no-padding">
+                {info_bottom}
+            </span>
+        </div>
+    </nav>
+
+</header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+        <!-- sidebar: style can be found in sidebar.less -->
+        <section class="sidebar">
+
+            <ul class="sidebar-menu">
+                <!--<li class="header">MAIN NAVIGATION</li>-->
+                {menu_left}
+
+            </ul>
+        </section>
+        <!-- /.sidebar -->
+    </aside>
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!--<section class="content-header">-->
+        <!--    <h1>{title} <small>{sub_title}</small></h1>-->
+        <!--</section>-->
+
+        <!-- Main content -->
+        <section class="content">
+            <!--<div class="row info-bottom">                <div class="col-lg-12 col-xs-12 text-centerrr">{info_bottom}</div>            </div>-->
+
+
+<!--            <div class="col-md-12">-->
+<!--                <h2>-->
+<!--                    <a class="btn btn-tool" href="javascript:void(0)" onclick="location.href='{btn_back}';"><span class="glyphicon glyphicon-arrow-left"></span></a>-->
+<!--                    {title}-->
+<!--                    <small>{sub_title}</small>-->
+<!--                </h2>-->
+<!--            </div>-->
+
+            <div class="row">
+
+
+                <div class="col-md-12">
+
+                    <div class="box box-info">
+                        <div class="box-header with-border">
+                            <h3 style="display: block!important;" class="box-title text-uppercase">{sub_title}</h3>
+                        </div>
+                        <div class="box-body table-responsive">{content}</div>
+                        <!--<div class="panel-body pull-right" style="background:#f0f0f0;">-->
+                        <!--</div>-->
+                    </div>
+                </div>
+            </div>
+
+
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+    <!--modal-->
+    <!--<div class='modal fade' role='dialog'>-->
+    <div id='myModal' class='modal {bg_modal} fade' role='dialog'>
+        <div class='modal-dialog {lebar_modal}'>
+            <div class='modal-content'>
+                {isi_modal}
+                <!-- Content will be loaded here from 'remote.php' file -->
+            </div>
+        </div>
+    </div>
+    <!--</div>-->
+    <!--modal-end-->
+    <footer class="main-footer overflow-h">
+        <div class="clear-fix"></div>
+        {footer}
+        <!--<div class="pull-right hidden-xs">-->
+        <!--<b>Version</b> 2.3.5-->
+        <!--</div>-->
+        <!--<strong>Copyright &copy; 2014-2016 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights
+        -->
+        <!--reserved.-->
+        <!--div class="pull-right">{stop_time}</div-->
+    </footer>
+<!--{float_menu_bawah}-->
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Create the tabs -->
+        <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+            <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+            <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+        </ul>
+        <!-- Tab panes menu kanan-->
+        <div class="tab-content">
+            <!-- Home tab content -->
+            <div class="tab-pane" id="control-sidebar-home-tab">
+                <h3 class="control-sidebar-heading">Recent Activity</h3>
+                <ul class="control-sidebar-menu">
+                    <li>
+                        <a href="javascript:void(0)">
+                            <i class="menu-icon fa fa-birthday-cake bg-red"></i>
+
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+
+                                <p>Will be 23 on April 24th</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <i class="menu-icon fa fa-user bg-yellow"></i>
+
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
+
+                                <p>New phone +1(800)555-1234</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
+
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
+
+                                <p>nora@example.com</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <i class="menu-icon fa fa-file-code-o bg-green"></i>
+
+                            <div class="menu-info">
+                                <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
+
+                                <p>Execution time 5 seconds</p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <!-- /.control-sidebar-menu -->
+
+                <h3 class="control-sidebar-heading">Tasks Progress</h3>
+                <ul class="control-sidebar-menu">
+                    <li>
+                        <a href="javascript:void(0)">
+                            <h4 class="control-sidebar-subheading">
+                                Custom Template Design
+                                <span class="label label-danger pull-right">70%</span>
+                            </h4>
+
+                            <div class="progress progress-xxs">
+                                <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <h4 class="control-sidebar-subheading">
+                                Update Resume
+                                <span class="label label-success pull-right">95%</span>
+                            </h4>
+
+                            <div class="progress progress-xxs">
+                                <div class="progress-bar progress-bar-success" style="width: 95%"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <h4 class="control-sidebar-subheading">
+                                Laravel Integration
+                                <span class="label label-warning pull-right">50%</span>
+                            </h4>
+
+                            <div class="progress progress-xxs">
+                                <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
+                            </div>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="javascript:void(0)">
+                            <h4 class="control-sidebar-subheading">
+                                Back End Framework
+                                <span class="label label-primary pull-right">68%</span>
+                            </h4>
+
+                            <div class="progress progress-xxs">
+                                <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+                <!-- /.control-sidebar-menu -->
+
+            </div>
+            <!-- /.tab-pane -->
+            <!-- Stats tab content -->
+            <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
+            <!-- /.tab-pane -->
+            <!-- Settings tab content -->
+            <div class="tab-pane" id="control-sidebar-settings-tab">
+                <form method="post">
+                    <h3 class="control-sidebar-heading">General Settings</h3>
+
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Report panel usage
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+
+                        <p>
+                            Some information about this general settings option
+                        </p>
+                    </div>
+                    <!-- /.form-group -->
+
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Allow mail redirect
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+
+                        <p>
+                            Other sets of options are available
+                        </p>
+                    </div>
+                    <!-- /.form-group -->
+
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Expose author name in posts
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+
+                        <p>
+                            Allow the user to show his name in blog posts
+                        </p>
+                    </div>
+                    <!-- /.form-group -->
+
+                    <h3 class="control-sidebar-heading">Chat Settings</h3>
+
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Show me as online
+                            <input type="checkbox" class="pull-right" checked>
+                        </label>
+                    </div>
+                    <!-- /.form-group -->
+
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Turn off notifications
+                            <input type="checkbox" class="pull-right">
+                        </label>
+                    </div>
+                    <!-- /.form-group -->
+
+                    <div class="form-group">
+                        <label class="control-sidebar-subheading">
+                            Delete chat history
+                            <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
+                        </label>
+                    </div>
+                    <!-- /.form-group -->
+                </form>
+            </div>
+            <!-- /.tab-pane -->
+        </div>
+    </aside>
+    <!-- /.control-sidebar -->
+    <!-- Add the sidebar's background. This div must be placed
+         immediately after the control sidebar -->
+    <div class="control-sidebar-bg"></div>
+</div>
+<div id="result_div">
+<!--    <iframe id="tray" name="tray" style="display:none;width:100%;height:120px;" src="{base}_tray/index"></iframe>-->
+    <iframe name="result" id="result" style="resize: both;display: {display_iframe};width: 100%;height:800px;"></iframe>
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery 2.2.3 -->
+<!--<script src="../../assets/suport/AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v={local_version}"></script>-->
+<!-- jQuery UI 1.11.4 -->
+<!--<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js?v={local_version}"></script>-->
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+    /*$.widget.bridge('uibutton', $.ui.button);*/
+</script>
+<!-- Bootstrap 3.3.6 -->
+<!--<script src="../../assets/suport/AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v={local_version}"></script>-->
+<!--<script src="../../assets/suport/bootstrap-3.3.7-dist/js/bootstrap.min.js?v={local_version}"></script>-->
+<!-- Slimscroll -->
+<script src="{cdn_suport}AdminLTE-2.3.11/plugins/slimScroll/jquery.slimscroll.min.js?v={local_version}"></script>
+<!-- FastClick -->
+<!--<script src="../../assets/suport/AdminLTE-2.3.11/plugins/fastclick/fastclick.js?v={local_version}"></script>-->
+<!-- AdminLTE App -->
+<script src="{cdn_suport}AdminLTE-2.3.11/dist/js/app.min.js?v={local_version}"></script>
+<script src="{cdn_suport}multi-step-modal-master/multi-step-modal.js?v={local_version}"></script>
+
+<script src="{cdn_suport}bootstrap-fileinput-master/js/fileinput.min.js?v={local_version}"></script>
+<script src="{cdn_suport}bootstrap-toggle-master/js/bootstrap-toggle.min.js?v={local_version}"></script>
+
+<!--<script src="../../assets/suport/DataTables-1.10.13/extensions/FixedHeader/js/dataTables.fixedHeader.min.js?v={local_version}"></script>-->
+<!--<script src="../../assets/suport/SmartCart-master/dist/js/jquery.smartCart.min.js?v={local_version}"></script>-->
+<script src="{base}assets/custom/hippo_ajax.js?v={local_version}"></script>
+<script src="{base}assets/custom/JS.js?v={local_version}"></script>
+<!--barcode reader-->
+<script type="text/javascript">
+    if (window.location.hash.substr(1, 2) == "zx") {
+        var bc = window.location.hash.substr(3);
+        localStorage["barcode"] = decodeURI(window.location.hash.substr(3))
+        window.close();
+        self.close();
+        window.location.href = "about:blank";//In case self.close isn't allowed
+    }
+</script>
+<SCRIPT type="text/javascript">
+    var changingHash = false;
+    function onbarcode(event) {
+        switch (event.type) {
+            case "hashchange": {
+                if (changingHash == true) {
+                    return;
+                }
+                var hash = window.location.hash;
+                if (hash.substr(0, 3) == "#zx") {
+                    hash = window.location.hash.substr(3);
+                    changingHash = true;
+                    window.location.hash = event.oldURL.split("\#")[1] || ""
+                    changingHash = false;
+                    processBarcode(hash);
+                }
+
+                break;
+            }
+            case "storage": {
+                window.focus();
+                if (event.key == "barcode") {
+                    window.removeEventListener("storage", onbarcode, false);
+                    processBarcode(event.newValue);
+                }
+                break;
+            }
+            default: {
+                console.log(event)
+                break;
+            }
+        }
+    }
+    window.addEventListener("hashchange", onbarcode, false);
+
+    function getScan() {
+        var href = window.location.href;
+        var ptr = href.lastIndexOf("#");
+        if (ptr > 0) {
+            href = href.substr(0, ptr);
+        }
+        window.addEventListener("storage", onbarcode, false);
+        setTimeout('window.removeEventListener("storage", onbarcode, false)', 15000);
+        localStorage.removeItem("barcode");
+        //window.open  (href + "#zx" + new Date().toString());
+
+        if (navigator.userAgent.match(/Firefox/i)) {
+            //Used for Firefox. If Chrome uses this, it raises the "hashchanged" event only.
+            window.location.href = ("zxing://scan/?ret=" + encodeURIComponent(href + "#zx{CODE}"));
+        } else {
+            //Used for Chrome. If Firefox uses this, it leaves the scan window open.
+            window.open("zxing://scan/?ret=" + encodeURIComponent(href + "#zx{CODE}"));
+        }
+    }
+
+    function processBarcode(bc) {
+        document.getElementById("scans").innerHTML += "<div>" + bc + "</div>";
+        //put your code in place of the line above.
+    }
+
+</SCRIPT>
+
+
+<script>
+
+    $('#myModal').on('hidden.bs.modal', function () {
+        $(this).removeData('bs.modal');
+    });
+
+    $('body').tooltip({selector: '[data-toggle=tooltip]'});
+
+    checked = false;
+    function checkedAll(frm1) {
+        var aa = document.getElementById(frm1);
+        if (checked == false) {
+            checked = true
+        }
+        else {
+            checked = false
+        }
+        for (var i = 0; i < aa.elements.length; i++) {
+            aa.elements[i].checked = checked;
+        }
+    }
+
+    function load() {
+        // top.$('#tray').load('{base}_tray/');
+    }
+    function reLoad() {
+        setInterval("load()", 30000);
+    }
+
+    function detectEnter() {
+        var keyCode = event.keyCode ? event.keyCode : event.which ? event.which
+            : event.charCode;
+        if(keyCode==13){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    function detectESC() {
+        var keyCode = event.keyCode ? event.keyCode : event.which ? event.which
+            : event.charCode;
+        if(keyCode==27){
+
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    function createPrintVersion(url){
+        var oldUrl=url;
+        var tmpUrl=url.replace("mode=view","&&");
+        tmpUrl=tmpUrl.replace("#content","");
+        tmpUrl=tmpUrl.replace("#printBtn","");
+        if(tmpUrl.indexOf('?')>-1){
+            var newUrl=tmpUrl+'&mode=print';
+        }else{
+            var newUrl=tmpUrl+'?mode=print';
+        }
+        window.open(newUrl);
+    }
+</script>
+<script>
+    function openModalDef(labeling,url){
+        top.BootstrapDialog.closeAll();
+        top.BootstrapDialog.show({
+            title: labeling,
+            message: $('<div></div>').load(url),
+            size: BootstrapDialog.SIZE_WIDE,
+            draggable:true,
+            closable:true,
+        });
+    }
+
+    var openBootstrap = function(title,link){
+        top.BootstrapDialog.closeAll();
+        top.BootstrapDialog.show({
+            title: title,
+            message: top.$('<div></div>').load(link),
+            size: BootstrapDialog.SIZE_WIDE,
+            animation: false,
+            draggable:true,
+            closable:true,
+        });
+    }
+
+    var $wrap = $('.table-responsive.myNewTable');
+    function syncFixedHeaderX(){
+        var sl = $wrap.scrollLeft();
+        $('.fixedHeader-floating, .fixedHeader-locked').css('left', -sl + 'px');
+    }
+
+    $(document).ready( function(){
+        var serverside = 1;
+        var serverjson = 1;
+        var url_serverside = '{url_serverside}';
+        var headerFieldsOri = {headerFields};
+        var headerFields = Object.keys(headerFieldsOri);
+
+        function normalizeWarehouseLabel(rawLabel){
+            var label = rawLabel;
+            if (label !== null && typeof label === "object" && label.hasOwnProperty("label")) {
+                label = label.label;
+            }
+            if (label === null || label === undefined) return "";
+
+            label = String(label);
+            label = label.replace(/<br\s*\/?>/ig, " ");
+            label = label.replace(/\((QTY|IDR|RP)\)/ig, "");
+            label = label.replace(/\s+/g, " ").trim();
+            return label.toUpperCase();
+        }
+
+        function isWarehouseField(fieldName, labelNormalized){
+            if (!fieldName) return false;
+            if (fieldName === "qty_debet" || fieldName === "debet") return true;
+            if (fieldName === "ng_qty_debet" || fieldName === "ng_debet") return true;
+            if (fieldName.indexOf("gd_qty_") === 0 || fieldName.indexOf("gd_debet_") === 0) return true;
+            if (fieldName.indexOf("qty_debet_project_") === 0 || fieldName.indexOf("debet_project_") === 0) return true;
+            return labelNormalized.indexOf("GUDANG") === 0;
+        }
+
+        function buildWarehouseClassMap(fields, fieldLabels){
+            var fieldClassMap = {};
+            var groupKeyByIndex = {};
+            var groupOrderMap = {};
+            var groupCounter = 0;
+
+            for (var idx = 0; idx < fields.length; idx++) {
+                var fieldName = fields[idx];
+                var rawLabel = fieldLabels[fieldName];
+                var normalizedLabel = normalizeWarehouseLabel(rawLabel);
+
+                if (!isWarehouseField(fieldName, normalizedLabel) || normalizedLabel === "") {
+                    continue;
+                }
+
+                if (!groupOrderMap.hasOwnProperty(normalizedLabel)) {
+                    groupOrderMap[normalizedLabel] = groupCounter;
+                    groupCounter++;
+                }
+
+                var toneClass = (groupOrderMap[normalizedLabel] % 2 === 0) ? "wg-tone-a" : "wg-tone-b";
+                fieldClassMap[fieldName] = "wg-cell " + toneClass;
+                groupKeyByIndex[idx] = normalizedLabel;
+            }
+
+            for (var i = 0; i < fields.length; i++) {
+                if (!groupKeyByIndex.hasOwnProperty(i)) continue;
+
+                var currGroup = groupKeyByIndex[i];
+                var nextGroup = groupKeyByIndex.hasOwnProperty(i + 1) ? groupKeyByIndex[i + 1] : "";
+                if (currGroup !== nextGroup) {
+                    var endField = fields[i];
+                    fieldClassMap[endField] = (fieldClassMap[endField] + " wg-end").replace(/\s+/g, " ").trim();
+                }
+            }
+
+            return fieldClassMap;
+        }
+
+        var warehouseClassMap = buildWarehouseClassMap(headerFields, headerFieldsOri);
+
+        function appendWarehouseClass(baseClassName, fieldName){
+            var extraClass = warehouseClassMap.hasOwnProperty(fieldName) ? warehouseClassMap[fieldName] : "";
+            return (baseClassName + " " + extraClass).replace(/\s+/g, " ").trim();
+        }
+
+        function applyWarehouseHeaderFooterClasses(){
+            var applyClassByIndex = function($headers){
+                $headers.each(function(colIdx){
+                    var fieldName = headerFields[colIdx];
+                    if (!fieldName || !warehouseClassMap.hasOwnProperty(fieldName)) return;
+                    $(this).addClass(warehouseClassMap[fieldName]);
+                });
+            };
+
+            applyClassByIndex($("#myNewTable thead th"));
+            applyClassByIndex($("#myNewTable tfoot th"));
+            applyClassByIndex($("table.fixedHeader-floating thead th"));
+            applyClassByIndex($("table.fixedHeader-locked thead th"));
+        }
+
+        var arrColumn = headerFields.map(field => {
+            let isNumberColumn = field.includes("qty") || field.includes("debet") || field.includes("kredit") || field.includes("balance") || field.includes("deposit_transit") || field.includes("effective_balance");
+            if (field === 'extern_nama') {
+                return {
+                    "mData": field,
+                    "render": function (data, type, row, meta) {
+
+                        var extTitle = ''
+                        if( row.hasOwnProperty("status") && row.status == 0 ){
+                            extTitle += '<r>item telah dinonaktifkan</r><br>'
+                        }
+                        var showHtml = '';
+                        if(window.paired_result.hasOwnProperty(row.pId)){
+                            // if( window.paired_result[row.pId].hasOwnProperty('link_history') ){
+                            if( window.paired_result[row.pId].hasOwnProperty('link_bootstrap') ){
+                                var link            = window.paired_result[row.pId]['link_bootstrap']['link'];
+                                var link_history    = window.paired_result[row.pId]['link_bootstrap']['link_history'];
+                                var linkMain        = window.paired_result[row.pId]['link_bootstrap']['link_main'];
+                                var title           = window.paired_result[row.pId]['link_bootstrap']['title'];
+                                var extern_nama     = window.paired_result[row.pId]['link_bootstrap']['link_main']['extern_nama'];
+                                var max             = 42;
+                                var txtView         = data.length > max ? extTitle + '' + data.substring(0, max) + '...' : extTitle + '' + data;
+
+                                if(extern_nama != null){
+                                    //console.log('extern_nama != null  || extern_nama: ', extern_nama);
+                                    showHtml += "<div style='display: flex;align-items: center;white-space: nowrap;'>" +
+                                        "<span title='"+data+"' style='cursor: pointer;' onclick=\"top.window.open('"+linkMain['extern_nama']+"','_blank')\" class='text-info'>"+txtView+"</span>" +
+                                        "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
+                                        "<button onclick=\"top.window.open('"+linkMain['extern_nama']+"','_blank')\" style='border-radius: 25px;margin-left: auto;' class='btn btn-xs btn-info pull-right' title='lihat history perubahan'>" +
+                                        "<i class='fa fa-clock-o'></i>" +
+                                        "</button>" +
+                                        "</div>"
+                                }
+                                else if(link_history != null){
+                                    //console.log('link_history != null  || link_history: ', link_history);
+                                    showHtml += "<div style='display: flex;align-items: center;white-space: nowrap;'>" +
+                                        "<span title='"+data+"' style='cursor: pointer;' onclick=\"top.window.open('"+link+"','_blank')\" class='text-info'>"+txtView+"</span>" +
+                                        "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
+                                        "<button onclick=\"openBootstrap('"+title+"','"+link_history+"')\" style='border-radius: 25px;margin-left: auto;' class='btn btn-xs btn-info pull-right' title='lihat history perubahan'>" +
+                                        "<i class='fa fa-clock-o'></i>" +
+                                        "</button>" +
+                                        "</div>"
+                                }
+                                else{
+                                    showHtml += "<div style='display: flex;align-items: center;white-space: nowrap;'>" +
+                                        "<span title='"+data+"' style='cursor: pointer;' onclick=\"top.window.open('"+link+"','_blank')\" class='text-info'>"+txtView+"</span>" +
+                                        "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" +
+                                        "<button onclick=\"top.window.open('"+link+"','_blank')\" style='border-radius: 25px;margin-left: auto;' class='btn btn-xs btn-info pull-right' title='lihat history perubahan'>" +
+                                        "<i class='fa fa-clock-o'></i>" +
+                                        "</button>" +
+                                        "</div>"
+                                }
+                            }
+                        }
+                        else{
+                            if ($.isNumeric(data)) {
+                                showHtml = "<div><span>"+addCommas(data)+"</span></div>" ;
+                            } else {
+                                showHtml = extTitle + '' + String(data);
+                            }
+                        }
+                        return showHtml;
+                    },
+                    "className": appendWarehouseClass("text-left", field)
+                };
+            }
+            if (field === 'qty_debet') {
+                return {
+                    "mData": field,
+                    "render": function (data, type, row, meta) {
+                        //console.log('row.tipe_produk: ', row.tipe_produk);
+                        var showHtml = ''
+                        if(window.serialJson.hasOwnProperty(row.pId)){
+
+                            if( row.tipe_produk == 'serial' && window.serialJson[row.pId].hasOwnProperty('qty_debet') ){
+                                bb = window.serialJson[row.pId]['qty_debet']
+                                showHtml += "<button style='margin-right:3px;' class='btn btn-square-xs text-bold btn-danger btn-flat' title='jml serial in-transit'>"+ bb['jml_serial_transit'] +"</button>"
+                                showHtml += "<button style='margin-right:0px;' class='btn btn-square-xs text-bold btn-success btn-flat' title='jml serial avail'>"+ bb['jml_serial'] +"</button>"
+                                showHtml += "<button style='margin-right:3px;' class='btn btn-square-xs text-bold btn-success btn-flat' title='lihat "+ bb['link_serial_label']+"' onclick=\"openModalDef('"+bb['link_serial_label']+"', '"+bb['link_serial']+"')\"><i class='fa fa-list'></i></button>"
+                                showHtml += "<button style='margin-right:3px;' class='btn btn-square-xs text-bold btn-warning btn-flat' title='cetak serial barcode' onclick=\"top.popBig('"+bb['link_barcode']+"')\"><i class='fa fa-barcode'></i></button>"
+                                showHtml += "<button style='margin-right:3px;' class='btn btn-square-xs text-bold btn-danger btn-flat' title='cetak serial qrcode' onclick=\"top.popBig('"+bb['link_qr']+"')\"><i class='fa fa-qrcode'></i></button>"
+                                showHtml += "<button style='margin-right:3px;' class='btn btn-square-xs text-bold btn-default btn-flat text-bold' title='saldo jumlah'>"+data+"</button>"
+                            }
+                            else{
+                                showHtml = "<div><span>"+addCommas(data)+"</span></div>" ;
+                            }
+
+                        }
+                        else{
+                            if ($.isNumeric(data)) {
+                                showHtml = "<div><span>"+addCommas(data)+"</span></div>" ;
+                            } else {
+                                showHtml = String(data);
+                            }
+                        }
+                        return showHtml;
+                    },
+                    "className": appendWarehouseClass("text-center", field)
+                };
+            }
+            if (field === 'ng_qty_debet') {
+                return {
+                    "mData": field,
+                    "render": function (data, type, row, meta) {
+                        var showHtml = ''
+                        if(window.serialJson.hasOwnProperty(row.pId)){
+                            if( row.tipe_produk == 'serial' &&  window.serialJson[row.pId].hasOwnProperty('ng_qty_debet')  ){
+                                bb = window.serialJson[row.pId]['ng_qty_debet']
+                                showHtml += "<button style='margin-right:3px;' class='btn btn-square-xs text-bold btn-danger btn-flat' title='jml serial in-transit'>"+ bb['jml_serial_transit'] +"</button>"
+                                showHtml += "<button style='margin-right:0px;' class='btn btn-square-xs text-bold btn-success btn-flat' title='jml serial avail'>"+ bb['jml_serial'] +"</button>"
+                                showHtml += "<button style='margin-right:3px;' class='btn btn-square-xs text-bold btn-success btn-flat' title='lihat "+ bb['link_serial_label']+"' onclick=\"openModalDef('"+bb['link_serial_label']+"', '"+bb['link_serial']+"')\"><i class='fa fa-list'></i></button>"
+                                showHtml += "<button style='margin-right:3px;' class='btn btn-square-xs text-bold btn-warning btn-flat' title='cetak serial barcode' onclick=\"top.popBig('"+bb['link_barcode']+"')\"><i class='fa fa-barcode'></i></button>"
+                                showHtml += "<button style='margin-right:3px;' class='btn btn-square-xs text-bold btn-danger btn-flat' title='cetak serial qrcode' onclick=\"top.popBig('"+bb['link_qr']+"')\"><i class='fa fa-qrcode'></i></button>"
+                                showHtml += "<button style='margin-right:3px;' class='btn btn-square-xs text-bold btn-info btn-flat text-bold' disabled title='total saldo'>"+data+"</button>"
+                            }
+                            else{
+                                showHtml = "<div><span>"+addCommas(data)+"</span></div>" ;
+                            }
+                        }
+                        else{
+                            if ($.isNumeric(data)) {
+                                showHtml = "<div><span>"+addCommas(data)+"</span></div>" ;
+                            }
+                            else {
+                                showHtml = String(data);
+                            }
+                        }
+                        if(window.pairedGudang_add.hasOwnProperty(row.pId)){
+                            var gud_history = window.pairedGudang_add[row.pId]['link_history'];
+                            var qty = window.gudangWo[row.pId]['ng_qty_debet'];
+                            showHtml += "<button style='margin-right:3px;' class='btn btn-xs btn-primary' title='lihat stok gudang' onclick=\"openModalDef('"+qty+"', '"+gud_history+"')\">"+qty+"&nbsp;&nbsp;<i class='fa fa-home'></i></button>"
+                        }
+                        return showHtml;
+                    },
+                    "className": appendWarehouseClass("text-center", field)
+                };
+            }
+            if (field === 'ng_debet') {
+                return {
+                    "mData": field,
+                    "render": function (data, type, row, meta) {
+                        var showHtml = ''
+                        var ng_debet = data;
+                        if ($.isNumeric(data)) {
+                            if(data*1>0){
+                                showHtml = "<div><span>"+addCommas( $.fn.dataTable.render.number(',', '.', 0, '').display( ng_debet ) )+"</span></div>" ;
+                            }
+                        }
+                        else {
+                            showHtml = String(data);
+                        }
+                        if(window.pairedGudang_add.hasOwnProperty(row.pId)){
+                            ng_debet = window.gudangWo[row.pId]['ng_debet'];
+                            showHtml += "<div>"+addCommas( $.fn.dataTable.render.number(',', '.', 0, '').display( ng_debet ) )+"</div>"
+                        }
+                        return showHtml;
+                    },
+                    "className": appendWarehouseClass("text-center", field)
+                };
+            }
+            if (field.indexOf('gd_qty_') === 0) {
+                return {
+                    "mData": field,
+                    "render": function (data, type, row, meta) {
+                        var n = $.isNumeric(data) ? (data * 1) : 0;
+                        if (type === 'sort' || type === 'type') {
+                            return n;
+                        }
+
+                        if (window.serialJson.hasOwnProperty(row.pId)) {
+                            if (row.tipe_produk == 'serial' && n > 0 && window.serialJson[row.pId].hasOwnProperty(field)) {
+                                var bb = window.serialJson[row.pId][field];
+                                var showHtml = "";
+                                showHtml += "<button style='margin-right:3px;' class='btn btn-square-xs text-bold btn-danger btn-flat' title='jml serial in-transit'>" + bb['jml_serial_transit'] + "</button>";
+                                showHtml += "<button style='margin-right:0px;' class='btn btn-square-xs text-bold btn-success btn-flat' title='jml serial avail'>" + bb['jml_serial'] + "</button>";
+                                showHtml += "<button style='margin-right:3px;' class='btn btn-square-xs text-bold btn-success btn-flat' title='lihat " + bb['link_serial_label'] + "' onclick=\"openModalDef('" + bb['link_serial_label'] + "', '" + bb['link_serial'] + "')\"><i class='fa fa-list'></i></button>";
+                                showHtml += "<button style='margin-right:3px;' class='btn btn-square-xs text-bold btn-warning btn-flat' title='cetak serial barcode' onclick=\"top.popBig('" + bb['link_barcode'] + "')\"><i class='fa fa-barcode'></i></button>";
+                                showHtml += "<button style='margin-right:3px;' class='btn btn-square-xs text-bold btn-danger btn-flat' title='cetak serial qrcode' onclick=\"top.popBig('" + bb['link_qr'] + "')\"><i class='fa fa-qrcode'></i></button>";
+                                showHtml += "<button style='margin-right:3px;' class='btn btn-square-xs text-bold btn-default btn-flat text-bold' title='saldo jumlah'>" + addCommas(n) + "</button>";
+                                return showHtml;
+                            }
+                        }
+
+                        // rule sama seperti gudang reguler: non-serial atau stok 0 => angka polos
+                        return addCommas(n);
+                    },
+                    "className": appendWarehouseClass("text-center", field)
+                };
+            }
+            if (field.indexOf('gd_debet_') === 0) {
+                return {
+                    "mData": field,
+                    "render": function (data, type, row, meta) {
+                        if ($.isNumeric(data)) {
+                            return "<div><span>" + addCommas($.fn.dataTable.render.number(',', '.', 0, '').display(data * 1)) + "</span></div>";
+                        }
+                        return String(data);
+                    },
+                    "className": appendWarehouseClass("text-center", field)
+                };
+            }
+            return {
+                "mData": field,
+                "render": function(data, type, row, meta){
+                    if (data === null || data === undefined) return '';
+                    if (isNumberColumn) {
+
+                        // untuk sorting & type detection (WAJIB angka asli)
+                        if (type === 'sort' || type === 'type') {
+                            var n = (typeof data === 'string') ? data.replace(/,/g, '') : data;
+                            n = parseFloat(n);
+                            return isNaN(n) ? 0 : n;
+                        }
+
+                        // untuk display
+                        var n2 = (typeof data === 'string') ? data.replace(/,/g, '') : data;
+                        n2 = parseFloat(n2);
+                        if (isNaN(n2)) return 0;
+
+                        var formatted = $.fn.dataTable
+                            .render
+                            .number(',', '.', 0, '')
+                            .display(Math.abs(n2));
+
+                        if (n2 < 0) {
+                            return '<span class="text-danger">(' + formatted + ')</span>';
+                        }
+
+                        return formatted;
+                    }
+
+                    var s = String(data);
+                    var max = 42;
+                    var txtView = s.length > max ? s.substring(0, max) + '...' : s;
+                    return "<div title='" + s.replace(/'/g, "&#39;") + "'>" + txtView + "</div>";
+                },
+                "className": appendWarehouseClass(isNumberColumn ? "text-right" : "text-center", field)
+            };
+        });
+
+        function isSumField(field){
+            // sesuaikan rule kamu di sini
+            return field.includes("qty")
+                || field.includes("debet")
+                || field.includes("kredit")
+                || field.includes("balance")
+                || field.includes("deposit_transit")
+                || field.includes("effective_balance");
+        }
+
+// daftar field yang akan di-total
+        var sumFields = headerFields.filter(isSumField);
+
+        function toNumber(v){
+            if (v === null || v === undefined) return 0;
+            if (typeof v === 'number') return isNaN(v) ? 0 : v;
+
+            // buang tag html & non-numeric, aman untuk "1,234" / "Rp 1.234" dll
+            var s = String(v).replace(/<[^>]*>/g, '');
+            s = s.replace(/[^0-9.-]/g, '');
+            var n = parseFloat(s);
+            return isNaN(n) ? 0 : n;
+        }
+
+        applyWarehouseHeaderFooterClasses();
+
+        var table = $('#myNewTable').DataTable({
+            dom: 'lBfrtip',
+            fixedHeader: true,
+            lengthMenu: [ [10, 15, 25, 50, 100, 120, -1], [10, 15, 25, 50, 100, 120, 'All'] ],
+            pageLength: 100,
+            ordering: true,
+            searchDelay: 1000,
+            columns: arrColumn,
+            buttons: [
+                'copy',
+                'csv',
+                {
+                    extend: 'excelHtml5',
+                    text: 'excel',
+                    exportOptions: {
+                        stripHtml: true,
+                        format: {
+                            body: function(data, row, column, node) {
+                                var nodeName = $(node).attr('title');
+                                var result = ''
+                                console.log(nodeName);
+                                switch(nodeName){
+                                    case undefined:
+                                        break;
+                                    case "ng_qty_debet":
+                                        html = data.replace('"',"`");
+                                        var btn = $("button", $(data));
+                                        var arrBtn = []
+                                        jQuery.each(btn, function(a, b){
+                                            arrBtn[a] = removeCommas($(b).text())*1
+                                        })
+                                        sTable =  ""
+                                        if(typeof arrBtn[5] != "undefined"){
+                                            sTable += "Stock: "+arrBtn[5]+""
+                                            if(typeof arrBtn[0] != "undefined"){
+                                                sTable += " / Serial: "+arrBtn[1]+""
+                                            }
+                                        }
+                                        else{
+                                            if(typeof arrBtn[1] != "undefined"){
+                                                sTable += "Stock: "+arrBtn[1]+""
+                                                if(typeof arrBtn[0] != "undefined"){
+                                                    sTable += " / Serial: "+arrBtn[0]+""
+                                                }
+                                            }
+                                            else{
+                                                sTable += "Stock: "+ $(data).text()+""
+                                            }
+                                        }
+                                        sTable += ""
+                                        result = sTable;
+                                        break;
+                                    case "qty_debet":
+                                        html = data.replace('"',"`");
+                                        var btn = $("button", $(data));
+                                        var arrBtn = []
+                                        jQuery.each(btn, function(a, b){
+                                            arrBtn[a] = removeCommas($(b).text())*1
+                                        })
+                                        sTable =  ""
+                                        if(typeof arrBtn[5] != "undefined"){
+                                            sTable += "Stock: "+arrBtn[5]+""
+                                            if(typeof arrBtn[1] != "undefined"){
+                                                sTable += " / Serial: "+arrBtn[1]+""
+                                            }
+                                        }
+                                        else{
+                                            if(typeof arrBtn[1] != "undefined"){
+                                                sTable += "Stock: "+arrBtn[1]+""
+                                                if(typeof arrBtn[0] != "undefined"){
+                                                    sTable += " / Serial: "+arrBtn[0]+""
+                                                }
+                                            }
+                                            else{
+                                                sTable += "Stock: "+ $(data).text()+""
+                                            }
+                                        }
+                                        sTable += ""
+                                        result = sTable;
+                                        break;
+                                    case "extern_nama":
+                                        html = data.replace('"',"`")
+                                        html2 = $(html).text();
+                                        html3 = html2.split('  ').join(''); // replace double space jadi tanpa space
+                                        html4 = html3.replace(/\r?\n|\r/g, "BR"); // breakline jadi BR
+                                        html5 = html4.split('BRBR').join(''); // hapus dual BR
+                                        result = html5
+                                        break;
+                                    default:
+                                        html = data.replace('"',"`")
+                                        result = $(html).text()
+                                        break;
+                                }
+                                return result;
+                            }
+                        }
+                    }
+                },
+                'pdf',
+                'print',
+            ],
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: url_serverside,
+                type: "POST",
+                dataSrc: function(json) {
+                    window.footerSummaryPage = json.footerSummaryPage;
+                    window.footerSummary = json.footerSummary;
+                    window.serialJson = json.serial;
+                    window.paired_result = json.paired_result;
+                    window.pairedGudang_add = json.pairedGudang_add;
+                    window.gudangWo = json.gudangWo;
+                    return json.data;
+                }
+            },
+            language: {
+                processing: "<div class='my-spinner'></div> <span>Mohon tunggu, data sedang ditampilkan...</span>"
+            },
+            drawCallback: function() {
+                applyWarehouseHeaderFooterClasses();
+            },
+            // initComplete: function() {
+            //     var api = this.api();
+            //     var columnCount = api.columns().count()-1;
+            //     var currentFooter = '<th colspan="2" class="text-right text-uppercase">Current Page:</th>';
+            //     var allFooter = '<th colspan="2" class="text-right text-uppercase">All Data:</th>';
+            //     for (var i = 1; i < columnCount; i++) {
+            //         currentFooter += '<th id="current-page-total-' + i + '" class="text-right"></th>';
+            //         allFooter += '<th id="all-data-total-' + i + '" class="text-right"></th>';
+            //     }
+            //     $('#current-page-footer').html(currentFooter);
+            //     $('#all-data-footer').html(allFooter);
+            // },
+            footerCallback: function(row, data, start, end, display) {
+                var api = this.api();
+                var columnData = api.columns().dataSrc();
+
+                $(api.table().footer()).find('th').html('');
+
+                setTimeout(function(){
+                    applyWarehouseHeaderFooterClasses();
+                    for (var i = 0; i < sumFields.length; i++) {
+                        var fieldName = sumFields[i];
+
+                        // cari index kolom dari fieldName
+                        var colIdx = headerFields.indexOf(fieldName);
+                        if (colIdx < 0) continue;
+
+                        var total = 0;
+                        for (var r = 0; r < data.length; r++) {
+                            total += toNumber(data[r][fieldName]);
+                        }
+
+                        var formatted = $.fn.dataTable
+                            .render
+                            .number(',', '.', 0, '')
+                            .display(Math.abs(total));
+
+                        if (total < 0) {
+                            $(api.column(colIdx).footer()).html(
+                                '<span class="text-danger">(' + formatted + ')</span>'
+                            );
+                        } else {
+                            $(api.column(colIdx).footer()).html(formatted);
+                        }
+                    }
+
+
+                    // api.columns().every(function(tmpIndex) {
+                    //     index = tmpIndex-1;
+                    //     var columnName = columnData[index];
+                    //
+                    //     if (window.footerSummaryPage.hasOwnProperty(columnName) && window.footerSummary.hasOwnProperty(columnName)) {
+                    //         var currentPageTotal = window.footerSummaryPage[columnName] || "-";
+                    //         var allDataTotal = window.footerSummary[columnName] || "-";
+                    //         if($('#current-page-total-' + index).length){
+                    //             if(currentPageTotal!=="-"){
+                    //                 $('#current-page-total-' + index).html(addCommas(currentPageTotal.toFixed(0)));
+                    //             }
+                    //             else{
+                    //                 $('#current-page-total-' + index).html(currentPageTotal);
+                    //             }
+                    //             if(allDataTotal!=="-"){
+                    //                 $('#all-data-total-' + index).html(addCommas(allDataTotal.toFixed(0)));
+                    //             }
+                    //             else{
+                    //                 $('#all-data-total-' + index).html(allDataTotal);
+                    //             }
+                    //         }
+                    //     }
+                    // });
+
+                    top.$('.table-responsive.myNewTable').floatingScroll();
+
+                    $('.table-responsive.myNewTable').on('scroll', delay_v2(function() {
+                        if ($.fn.dataTable.isDataTable('#myNewTable')) {
+                            if (table.fixedHeader) table.fixedHeader.adjust();
+                            //syncFixedHeaderX();
+                        }
+                    }, 50));
+
+                }, 50)
+            }
+        });
+        var hideZero = false;
+        function toggleZeroRows(dt) {
+                hideZero = !hideZero;
+
+                dt.rows().every(function () {
+                    var data = this.data();
+
+                    // kolom ke-4 index = 3
+                    var nilai = parseFloat(removeCommas($(data[5]).text()) || removeCommas(data[5])) || 0;
+
+                    // if (nilai === 0) {
+                    if (nilai <= 1000) {
+                        if (hideZero) {
+                            $(this.node()).hide();
+                        } else {
+                            $(this.node()).show();
+                        }
+                    }
+                });
+            }
+
+    });
+
+
+</script>
+
+</body>
+</html>

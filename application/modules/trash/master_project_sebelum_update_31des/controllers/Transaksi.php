@@ -1,0 +1,9107 @@
+<?php
+defined('BASEPATH') OR exit('No direct script access allowed');
+require_once "Modul_Controller.php";
+
+class Transaksi extends Modul_Controller
+{
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->helper("he_stepping");
+        $this->load->helper("he_access_right");
+        $this->load->library("MobileDetect");
+        $this->load->helper("he_session_replacer");
+        $this->load->model("Mdls/MdlCurrency");
+        $this->load->model("Mdls/MdlProjectKomposisi");
+        $this->load->model("MdlTransaksi");
+        $this->load->helper('he_angka');
+        $tmpJenis = $this->jenisTr;
+        $this->allSteps = isset($this->configUi[$tmpJenis]['steps']) ? $this->configUi[$tmpJenis]['steps'] : array();
+        /* ----------------------------------------------------------------------------------
+          * loader cunstruk yg wajib ada
+          * variabel-variabel bisa langsung dipangil, apa saja yang ada bisa dilihat didalamnya
+          * ----------------------------------------------------------------------------------*/
+        // require_once "_construct_file.php";
+
+    }
+
+    public function index_OLD()
+    {
+        // arrPrint($_SESSION);
+        $cCode = $this->cCode;
+        // cekKuning($cCode);
+        if (isset($_SESSION[$cCode])) {
+            // cekKuning("shopping-cart (creator)");
+            arrprint($_SESSION[$cCode]);
+        }
+        else {
+            die("the gate index you want to debug has not been formed yet!");
+        }
+    }
+
+    public function validate()
+    {
+        $fieldOpnameEntryValidatorRules = isset($this->configUi[$this->jenisTr]["shoppingCartFieldOpnameEntryValidators"]) ? $this->configUi[$this->jenisTr]["shoppingCartFieldOpnameEntryValidators"] : array();
+        $fieldOpnameValidatorRules = isset($this->configUi[$this->jenisTr]["shoppingCartFieldOpnameValidators"]) ? $this->configUi[$this->jenisTr]["shoppingCartFieldOpnameValidators"] : array();
+
+        $fieldValidatorRules = isset($this->configUi[$this->jenisTr]["shoppingCartFieldValidators"]) ? $this->configUi[$this->jenisTr]["shoppingCartFieldValidators"] : array();
+        $rowValidatorRules = isset($this->configUi[$this->jenisTr]["shoppingCartRowValidators"]) ? $this->configUi[$this->jenisTr]["shoppingCartRowValidators"] : array();
+        $rowNumValidatorRules = isset($this->configUi[$this->jenisTr]["shoppingCartRowNumValidators"]) ? $this->configUi[$this->jenisTr]["shoppingCartRowNumValidators"] : array();
+        $rowOptValidatorRules = isset($this->configUi[$this->jenisTr]["shoppingCartRowOptionalValidators"]) ? $this->configUi[$this->jenisTr]["shoppingCartRowOptionalValidators"] : array();
+        $validateReceiveElement = isset($this->configUi[$this->jenisTr]["validateReceiveElement"][1]) ? $this->configUi[$this->jenisTr]["validateReceiveElement"][1] : array();
+        $appletConfigs = isset($this->configUi[$this->jenisTr]['applets']) ? $this->configUi[$this->jenisTr]['applets'] : array();
+        $elementConfigs = isset($this->configUi[$this->jenisTr]['receiptElements']) ? $this->configUi[$this->jenisTr]['receiptElements'] : array();
+        $relElementConfigs = isset($this->configUi[$this->jenisTr]['relativeElements']) ? $this->configUi[$this->jenisTr]['relativeElements'] : array();
+        $availPayments = isset($this->configUi[$this->jenisTr]['availPayments']) ? $this->configUi[$this->jenisTr]['availPayments'] : array();
+        $validateAdditional = isset($this->configUi[$this->jenisTr]['shopingCartAddValidator']['additional']) ? $this->configUi[$this->jenisTr]['shopingCartAddValidator']['additional'] : array();
+        $fieldValidatorsComparison = isset($this->configUi[$this->jenisTr]['shoppingCartFieldValidatorsComparison']) ? $this->configUi[$this->jenisTr]['shoppingCartFieldValidatorsComparison'] : array();
+
+        $fieldValidatorPairedItem = isset($this->configUi[$this->jenisTr]["shoppingCartValidatorsPairedItem"]) ? $this->configUi[$this->jenisTr]["shoppingCartValidatorsPairedItem"] : array();
+        $unionValidateComparison = isset($this->configUi[$this->jenisTr]["shopingCartUnionComparison"]) ? $this->configUi[$this->jenisTr]["shopingCartUnionComparison"] : array();
+        $unionValidate = isset($this->configUi[$this->jenisTr]["shoppingCartUnionValidators"]) ? $this->configUi[$this->jenisTr]["shoppingCartUnionValidators"] : array();
+        $balanceValidate = isset($this->configUi[$this->jenisTr]["shoppingCartBalanceValidate"]) ? $this->configUi[$this->jenisTr]["shoppingCartBalanceValidate"] : array();
+        $previewCtr = isset($this->configUi[$this->jenisTr]["previewCtr"]) ? $this->configUi[$this->jenisTr]["previewCtr"] : matiHere('controller preview belum diset');
+
+
+        $cCode = $this->cCode;
+
+        $rawPrevURL = isset($_GET['rawPrev']) ? $_GET['rawPrev'] : "";
+        // mati_disini(__CLASS__ . " $cCode");
+        //==iterasi untuk memasukkan element relatif
+        if (isset($_SESSION[$cCode]['main_elements']) && sizeof($_SESSION[$cCode]['main_elements']) > 0) {
+            //            //cekBiru("hendak memeriksa relative impacts");
+            foreach ($_SESSION[$cCode]['main_elements'] as $eName => $eSpec) {
+                //                //cekBiru("memeriksa $eName:");
+                if (array_key_exists($eName, $relElementConfigs)) {
+                    //                    //cekHijau("$eName memiliki relative impacts");
+                    $currentValue = "";
+                    switch ($eSpec['elementType']) {
+                        case "dataModel":
+                            $currentValue = $eSpec['key'];
+                            break;
+                        case "dataField":
+                            $currentValue = $eSpec['value'];
+                            break;
+                    }
+                    if (array_key_exists($currentValue, $relElementConfigs[$eName])) {
+                        //                        //cekHijau("memenuhi syarat");
+                        //===daftarkan ke elementConfig
+                        if (sizeof($relElementConfigs[$eName][$currentValue]) > 0) {
+                            //                            //cekMerah("memeriksa $eName, $currentValue");
+                            //                            $rcCtr = 0;
+                            foreach ($relElementConfigs[$eName][$currentValue] as $rcID => $rcSpec) {
+                                //                                $elKey = $eName . "_" . $currentValue . "_" . $rcID;
+                                $elKey = $rcID;
+                                $elementConfigs[$elKey] = $relElementConfigs[$eName][$currentValue][$rcID];
+                                //                                $rcCtr++;
+                            }
+                        }
+
+                    }
+                    else {
+                        //                        //cekMerah("TIDAK memenuhi syarat");
+                    }
+                }
+            }
+        }
+        $arrySegment = $this->uri->segment_array();
+        if (isset($_SESSION[$cCode]['mode']['edit']) && sizeof($_SESSION[$cCode]['mode']['edit']) > 0) {
+            $prevAction = $previewCtr . "/editPreview";
+            $main_id = "/" . $_SESSION[$cCode]['mode']['edit'];
+        }
+        else {
+            if (isset($_SESSION[$cCode]['mode']['cancel']) && sizeof($_SESSION[$cCode]['mode']['cancel']) > 0) {
+                $prevAction = "$previewCtr/preCancelPackingPreview";
+                $main_id = "/" . $_SESSION[$cCode]['mode']['cancel'];
+            }
+            else {
+                $prevAction = $previewCtr . "/preview";
+                $main_id = "";
+            }
+        }
+
+        $errMsgs = array();
+        $errLines = array();
+        $errFields = array();
+        $errRows = array();
+        $errErrorException = array();
+        if (sizeof($rowValidatorRules) > 0) {
+
+            foreach ($rowValidatorRules as $field => $label) {
+                if (!isset($_SESSION[$cCode]['main'][$field])) {
+                    $errMsgs[] = "$label wajib diisi";
+
+                    $errRows[] = $field;
+                }
+
+            }
+
+        }
+        if (sizeof($rowNumValidatorRules) > 0) {
+
+            foreach ($rowNumValidatorRules as $field => $label) {
+                if (!isset($_SESSION[$cCode]['main'][$field])) {
+                    $errMsgs[] = "$label wajib dilengkapi";
+
+                    $errRows[] = $field;
+                }
+                else {
+                    if (0 + ($_SESSION[$cCode]['main'][$field]) < 0.1) {
+                        $errMsgs[] = "$label should be a number";
+
+                        $errRows[] = $field;
+                    }
+                }
+
+            }
+
+        }
+        if (sizeof($rowOptValidatorRules) > 0) {
+            foreach ($rowOptValidatorRules as $srcName => $srcSpec) {
+                foreach ($srcSpec as $value => $pair) {
+                    if (isset($_SESSION[$cCode]['main'][$srcName]) && $_SESSION[$cCode]['main'][$srcName] == $value) {
+                        foreach ($pair as $k => $v) {
+                            if (!isset($_SESSION[$cCode]['main'][$k])) {
+                                $errMsgs[] = "$k is required";
+
+                                $errRows[] = $k;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (sizeof($fieldValidatorRules) > 0) {
+
+            if (isset($_SESSION[$cCode]['items']) && sizeof($_SESSION[$cCode]['items']) > 0) {
+                foreach ($_SESSION[$cCode]['items'] as $xid => $iSpec) {
+                    $id = $iSpec['id'];
+                    $nama = htmlspecialchars($iSpec['name']);
+                    if ((isset($iSpec['disabled']) && $iSpec['disabled'] == "0") || !isset($iSpec['disabled'])) {
+                        if (!isset($errFields[$id])) {
+                            $errFields[$id] = array();
+                        }
+                        foreach ($fieldValidatorRules as $field => $label) {
+                            if (!isset($iSpec[$field])) {
+                                $errMsgs[] = "$label wajib diisi";
+                                $errLines[] = $id;
+                                $errFields[$id][] = $field;
+                            }
+                            if (!is_numeric($iSpec[$field])) {
+                                $errMsgs[] = "$label must be a valid number";
+                                $errLines[] = $id;
+                                $errFields[$id][] = $field;
+                            }
+                            if ((int)$iSpec[$field] < 0.5) {
+                                $errMsgs[] = "$label must be > 0";
+                                $errLines[] = $id;
+                                $errFields[$id][] = $field;
+                            }
+                        }
+                    }
+
+                }
+            }
+
+        }
+        if (sizeof($elementConfigs) > 0) {
+            foreach ($elementConfigs as $eName => $aSpec) {
+                if (!isset($_SESSION[$cCode]['main_elements'][$eName])) {
+                    if ((isset($aSpec['noValidate'])) && ($aSpec['noValidate'] == true)) {
+                    }
+                    else {
+                        $errMsgs[] = ($aSpec['label'] . " wajib dipilih!");
+                        echo "<script>";
+                        echo "if(top.document.getElementById('elTitle_$eName')){top.document.getElementById('elTitle_$eName').className='box-headers text-red text-left'};";
+                        echo "</script>\n";
+                    }
+                }
+                else {
+                    switch ($aSpec['elementType']) {
+                        case "dataModel":
+                            if (isset($validateReceiveElement[$eName]) && sizeof($validateReceiveElement[$eName])) {
+                                $valid = 0;
+                                $check = array();
+                                foreach ($validateReceiveElement[$eName] as $tLabel => $textWarning) {
+                                    if (strlen($_SESSION[$cCode]['main'][$eName . '__' . $tLabel]) > 10) {
+                                    }
+                                    else {
+                                        $check[] = $tLabel;
+                                    }
+                                }
+                                if (sizeof($check) > 1) {
+                                    $errMsgs[] = ("Harap lengkapi salah satu NPWP/KTP diBillingDetails customer");
+                                    foreach ($check as $nLabel) {
+                                        $errMsgs[] = ("lengkapi $nLabel!");
+                                    }
+                                }
+                            }
+
+                            if (strlen($_SESSION[$cCode]['main_elements'][$eName]['key']) < 0.5) {
+                                $errMsgs[] = ("element " . $aSpec['label'] . " must be filled with one entry!");
+                                echo "<script>";
+                                echo "if(top.document.getElementById('elTitle_$eName')){top.document.getElementById('elTitle_$eName').className='box-headers text-red text-left'};";
+                                echo "</script>\n";
+                            }
+                            else {
+                                echo "<script>";
+                                echo "if(top.document.getElementById('elTitle_$eName')){top.document.getElementById('elTitle_$eName').className='box-headers bg-grey text-left'};";
+                                echo "</script>\n";
+                            }
+                            break;
+                        case "dataField":
+                            if (strlen($_SESSION[$cCode]['main_elements'][$eName]['value']) < 0.5) {
+                                if ((isset($aSpec['noValidate'])) && ($aSpec['noValidate'] == true)) {
+                                }
+                                else {
+                                    $errMsgs[] = ($aSpec['label'] . " must be filled with one entry!***");
+                                    echo "<script>";
+                                    echo "if(top.document.getElementById('elTitle_$eName')){top.document.getElementById('elTitle_$eName').className='box-headers text-red text-left'};";
+                                    echo "</script>\n";
+                                }
+
+                            }
+                            else {
+                                echo "<script>";
+                                echo "if(top.document.getElementById('elTitle_$eName')){top.document.getElementById('elTitle_$eName').className='box-headers bg-grey text-left'};";
+                                echo "</script>\n";
+                            }
+                            break;
+                    }
+
+                }
+            }
+        }
+        if (sizeof($fieldValidatorsComparison) > 0) {
+            $result = array();
+            $labels = array();
+            foreach ($fieldValidatorsComparison as $field => $label) {
+                $labels[$label] = $field;
+                $result[$label] = isset($_SESSION[$cCode]['main'][$field]) ? $_SESSION[$cCode]['main'][$field] : 0;
+            }
+
+            if (round($result["sumber"], 2) != round($result["target"], 2)) {
+                $labelSrc = isset($labels["sumber"]) ? $labels["sumber"] : "";
+                $labelTarget = isset($labels["target"]) ? $labels["target"] : "";
+                $errMsgs[] = "Nilai total tidak sama dari nilai akumulasi nota yang dipilih.";
+                $errRows[] = "test";
+            }
+
+
+        }
+        if (sizeof($unionValidateComparison) > 0) {
+            $result = array();
+            $labels = array();
+            $validate = 0;
+            $val = array();
+            $valsValidate = array();
+
+            foreach ($unionValidateComparison as $fieldData) {
+
+                if (isset($_SESSION[$cCode]['main']["nilai_entry"])) {
+                    if ($_SESSION[$cCode]['main']["nilai_entry"] > 0) {
+
+                    }
+                    else {
+                        if ($_SESSION[$cCode]['main']["nilai_entry"] == 0) {
+                            unset($_SESSION[$cCode]['main']["nilai_entry"]);
+                        }
+                        else {
+
+                            if (sizeof($unionValidate) > 0) {
+
+                                foreach ($unionValidate as $fieldUnion) {
+                                    $validateUnion = 0;
+                                    foreach ($fieldUnion as $field => $fieldLabel) {
+                                        if (isset($_SESSION[$cCode]['main'][$field]) && $_SESSION[$cCode]['main'][$field] > 0) {
+
+                                        }
+                                        else {
+                                            $validateUnion++;
+
+                                        }
+                                    }
+                                    if (sizeof($fieldUnion) == $validateUnion) {
+                                        $errMsgs[] = $fieldData["nilai_entry"];
+                                    }
+                                }
+                            }
+                            else {
+                                $errMsgs[] = $fieldData["nilai_entry"];
+                            }
+                        }
+
+                    }
+                }
+                else {
+                    if (sizeof($unionValidate) > 0) {
+
+                        foreach ($unionValidate as $fieldUnion) {
+                            $validateUnion = 0;
+                            $err = array();
+                            foreach ($fieldUnion as $field => $fieldLabel) {
+                                if (isset($_SESSION[$cCode]['main'][$field]) && $_SESSION[$cCode]['main'][$field] > 0) {
+
+                                }
+                                else {
+                                    $validateUnion++;
+                                    $err[] = $fieldLabel;
+
+                                }
+                            }
+                            if (sizeof($err) == sizeof($fieldUnion)) {
+                                $errMsgs[] = "metode pembayaran tidak ada yang dipilih, silahkan periksa kembali";
+                            }
+                        }
+                    }
+                    else {
+                        $errMsgs[] = $fieldData["nilai_entry"];
+                    }
+                }
+
+                foreach ($fieldData as $field => $label) {
+
+                    //                    if (isset($_SESSION[$cCode]['main'][$field]) && ($_SESSION[$cCode]['main'][$field] > 0)) {
+                    if (isset($_SESSION[$cCode]['main'][$field])) {
+                        //cekHere("ada $field dan nilai $field tidak sama dengan nol ");
+                        $validate++;
+                        $val["source"] = $field;
+                        $valsValidate["source"][] = $field;
+                    }
+                    else {
+                        //cekHere("TIDAK ada $field  ");
+                        $val["target"] = $field;
+                        $valsValidate["target"][] = $field;
+                    }
+                }
+
+            }
+            //arrPrint($unionValidateComparison);
+            //arrPrint($valsValidate);
+
+
+            if (array_key_exists("source", $val)) {
+                $cekval = $val["target"];
+                if (!isset($_SESSION[$cCode]['main'][$cekval])) {
+                    foreach ($unionValidateComparison as $data) {
+                        //                        //cekHere(":: sampai sini $cekval :: " . $data[$cekval]);
+                        if (isset($data[$cekval])) {
+                            $errMsgs[] = $data[$cekval];
+                            $errErrorException[] = $data[$cekval];
+                        }
+                    }
+                }
+                //arrPrint($errMsgs);
+            }
+            // arrPrint($valsValidate);
+            if (!isset($valsValidate["source"]) || (sizeof($valsValidate["source"]) == 0)) {
+                // mati_disini("tidak memilih cash account, credit note, uang muka");
+                //  $errMsgs[] = "cash account, credit note, uang muka tidak ada yang dipilih.";
+            }
+
+        }
+        if (sizeof($fieldValidatorPairedItem) > 0) {
+            $label = $this->configUi[$this->jenisTr]["label"];
+            $source = isset($_SESSION[$cCode][$fieldValidatorPairedItem['sumber']]) ? $_SESSION[$cCode][$fieldValidatorPairedItem['sumber']] : "";
+            $target = isset($_SESSION[$cCode][$fieldValidatorPairedItem['target']]) ? $_SESSION[$cCode][$fieldValidatorPairedItem['target']] : "";
+            if (sizeof($source) > 0) {
+                foreach ($source as $pID => $pSpec) {
+                    $pTarget = isset($target[$pID]) ? $target[$pID] : array();
+
+                    if (!array_key_exists($pID, $target)) {
+                        $errMsgs[] = "$label " . $pSpec['name'] . " is required.";
+                    }
+                    if (isset($pTarget['jml']) && isset($pSpec['jml'])) {
+                        if ($pTarget['jml'] < $pSpec['jml']) {
+                            $errMsgs[] = "konversi " . $pSpec['name'] . " salah. silahkan cek ulang jumlah konversinya.";
+                        }
+                        $jml_satuan = $pTarget['jml'] / $pSpec['jml'];
+                        $jml_satuan_ex = explode(".", $jml_satuan);
+                        if (sizeof($jml_satuan_ex) > 1) {
+                            $errMsgs[] = "konversi " . $pSpec['name'] . " salah. silahkan cek ulang jumlah konversinya.";
+                        }
+                    }
+                }
+            }
+        }
+        if (sizeof($fieldOpnameValidatorRules) > 0) {
+            if (isset($_SESSION[$cCode]['items']) && sizeof($_SESSION[$cCode]['items']) > 0) {
+                foreach ($_SESSION[$cCode]['items'] as $xid => $iSpec) {
+                    $id = $iSpec['id'];
+                    $name = htmlspecialchars($iSpec['nama']);
+                    if ((isset($iSpec['disabled']) && $iSpec['disabled'] == "0") || !isset($iSpec['disabled'])) {
+                        foreach ($fieldOpnameValidatorRules as $field => $label) {
+                            if (isset($iSpec['qty_selisih']) && ($iSpec['qty_selisih'] > 0)) {
+                                if ((int)$iSpec[$field] <= 0) {
+                                    $errMsgs[] = "$label $name must be > 0";
+                                    $errLines[] = $id;
+                                    $errFields[$id][] = $field;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (sizeof($fieldOpnameEntryValidatorRules) > 0) {
+            if (isset($_SESSION[$cCode]['items']) && sizeof($_SESSION[$cCode]['items']) > 0) {
+                $no = 0;
+                foreach ($_SESSION[$cCode]['items'] as $xid => $iSpec) {
+                    $no++;
+                    $id = $iSpec['id'];
+                    $kode = $iSpec['produk_kode'];
+                    $label = $iSpec['label'];
+
+                    $name = htmlspecialchars($iSpec['nama']);
+                    if ((isset($iSpec['disabled']) && $iSpec['disabled'] == "0") || !isset($iSpec['disabled'])) {
+                        foreach ($fieldOpnameEntryValidatorRules as $field => $label) {
+                            if (!isset($iSpec[$field]) && ($iSpec['stok'] > 0)) {
+                                $errMsgs[] = "$label $name harus diketik ulang, baris nomer $no.";
+                                $errLines[] = $id;
+                                $errFields[$id][] = $field;
+
+                            }
+                        }
+                    }
+
+                    $stokBuku = isset($iSpec->stok) ? $iSpec->stok : 0;
+                    $stokOpname = $iSpec->qty_opname;
+                    $selisih = $stokOpname - $stokBuku;
+                    $stokBukuHitung = $iSpec->qty_opname - $iSpec->qty_debet + $iSpec->qty_kredit;
+                    if ($selisih < 0) {
+                        if ($selisih != $iSpec->qty_kredit) {
+                            $msg = "Produk $label $kode SALAH. Silahkan diperiksa baris nomer $no.";
+                            $errMsgs[] = $msg;
+                        }
+                    }
+                    elseif ($selisih > 0) {
+                        if ($selisih != $iSpec->qty_debet) {
+                            $msg = "Produk $label $kode SALAH. Silahkan diperiksa baris nomer $no.";
+                            $errMsgs[] = $msg;
+                        }
+                    }
+                    elseif ($stokBukuHitung != $stokBuku) {
+                        $msg = "Produk $label $kode SALAH. Silahkan diperiksa baris nomer $no.";
+                        $errMsgs[] = $msg;
+                    }
+                    //                    else{
+                    //                        mati_disini("Produk $label $kode SALAH. Silahkan diperiksa baris nomer $no.");
+                    //                    }
+                }
+            }
+        }
+
+        //region validate additional
+        if (sizeof($validateAdditional) > 0) {
+            $selectedAdd = $_SESSION[$cCode]["main"]["additional"];
+            if (isset($validateAdditional[$selectedAdd])) {
+                $valKey = $validateAdditional[$selectedAdd];
+                if ($_SESSION[$cCode]["main"][$valKey] == 0) {
+                    $errMsgs[] = "additional kurs must be filled or select none on additional for additional kurs 0 ";
+                }
+            }
+
+        }
+        //        matiHEre();
+
+        //endregion
+
+        if (sizeof($balanceValidate) > 0) {
+            foreach ($balanceValidate as $kk => $kSpec) {
+                if ($kk == "key") {
+                    $debet = $kSpec[0];
+                    $kredit = $kSpec[1];
+                    $debetNilai = isset($_SESSION[$cCode]['main'][$debet]) ? $_SESSION[$cCode]['main'][$debet] : 0;
+                    $kreditNilai = isset($_SESSION[$cCode]['main'][$kredit]) ? $_SESSION[$cCode]['main'][$kredit] : 0;
+                    if ($debetNilai != $kreditNilai) {
+                        $errMsgs[] = $balanceValidate['label'];
+                    }
+                }
+            }
+        }
+        // arrPrintBlue($_SESSION[$cCode]['tableIn_detail']);
+        // mati_disini(__LINE__);
+        // always validation active
+        $gateNameDetail = "tableIn_detail";
+        if (!isset($_SESSION[$cCode][$gateNameDetail]) || sizeof($_SESSION[$cCode][$gateNameDetail]) == 0) {
+
+            $msg = "Transaksi gagal dilanjutkan karena rincian transaksi kosong.<br>Silahkan merubah qty/unit price dahulu dan masukkan data yang benar supaya transaksi bisa dilanjutkan. @" . __LINE__ . __METHOD__;
+            mati_disini($msg);
+        }
+        else {
+            foreach ($_SESSION[$cCode][$gateNameDetail] as $spec) {
+                if (!isset($spec['valid_qty'])) {
+                    $hidden_msg = "<br><span style='color:#ffffff;'>gerbang valid_qty tidak ada</span>";
+                    $msg = "Transaksi gagal dilanjutkan karena rincian transaksi kosong.<br>Silahkan merubah qty/unit price dahulu dan masukkan data yang benar supaya transaksi bisa dilanjutkan. $hidden_msg";
+                    mati_disini($msg);
+                }
+                else {
+                    if ($spec['valid_qty'] == 0) {
+                        $hidden_msg = "<br><span style='color:#ffffff;'>gerbang valid_qty bernilai 0</span>";
+                        $msg = "Transaksi gagal dilanjutkan karena rincian transaksi kosong.<br>Silahkan merubah qty/unit price dahulu dan masukkan data yang benar supaya transaksi bisa dilanjutkan. $hidden_msg";
+                        mati_disini($msg);
+                    }
+                }
+            }
+        }
+
+
+        /* ------------------------------
+         * validasi stok saat mau produksi
+         * ------------------------------*/
+        $mains = $_SESSION[$cCode];
+
+        $items2_sum = isset($mains['items2_sum']) ? $mains['items2_sum'] : "";
+        switch ($this->jenisTr) {
+            case "776":
+
+                $kurangStoks = array();
+                $hasil = "";
+                $no = 0;
+                foreach ($items2_sum as $pId => $item) {
+
+                    $nama = $item['nama'];
+                    $sisa = $item['stok'] - $item['jml'];
+
+                    if ($sisa < 0) {
+                        $no++;
+                        $kurangStoks[$pId] = $sisa;
+                        //
+                        $sisa_f = $sisa * -1;
+                        $nama_f = htmlspecialchars($nama);
+                        $var = "<span class='font-size-0-7'>$no. $nama_f: <span class='text-bold'>$sisa_f</span></span>";
+                        if ($hasil == "") {
+                            $hasil = "$var";
+                        }
+                        else {
+                            $hasil = "$hasil<br>$var";
+                        }
+                    }
+                }
+
+
+                if (sizeof($kurangStoks) > 0) {
+                    // //cekhitam(sizeof($kurangStoks));
+                    $alerts = array("type" => "warning",
+                        "title" => "Persediaan tidak cukup",
+                        "html" => $hasil,
+                    );
+                    echo swalAlert($alerts);
+                    die();
+                }
+
+                break;
+            case "1982":
+                break;
+            case "961":
+            case "967":
+                $items = $mains['items'];
+                $kurangStoks = array();
+                $hasil = "";
+                $no = 0;
+                foreach ($items as $pId => $item) {
+                    if (isset($item['stok'])) {
+                        $nama = $item['nama'];
+                        $sisa = $item['stok'] - $item['jml'];
+
+                        if ($sisa < 0) {
+                            $no++;
+                            $kurangStoks[$pId] = $sisa;
+
+                            $sisa_f = $sisa * -1;
+                            $stok_f = $item['stok'];
+                            $jml_f = $item['jml'];
+                            $nama_f = htmlspecialchars($nama);
+                            $var = "<span class='font-size-0-7'>$no. <span style='font-weight:bold;'>$nama_f</span>, stok tersedia $stok_f, jumlah input <span style='font-weight:bold;'>$jml_f</span> melebihi stok yang tersedia. Silahkan dikoreksi lagi.</span>";
+                            if ($hasil == "") {
+                                $hasil = "$var";
+                            }
+                            else {
+                                $hasil = "$hasil<br>$var";
+                            }
+                        }
+                    }
+                }
+                if (sizeof($kurangStoks) > 0) {
+
+                    $alerts = array("type" => "warning",
+                        "title" => "Insufficient stock",
+                        "html" => $hasil,
+                    );
+                    echo swalAlert($alerts);
+                    die();
+                }
+
+                break;
+            case "749":
+                if ($_SESSION[$cCode]['main']['lebih_bayar'] <= 0) {
+                    //                    matiHEre("iki opoo ".$_SESSION[$cCode]['main']['lebih_bayar']);
+                    $_SESSION[$cCode]['main']['nilai_cash'] = $_SESSION[$cCode]['main']['nilai_entry'];
+                    //arrPrint($errErrorException);
+                    if (sizeof($errErrorException) > 0) {
+                        foreach ($errErrorException as $errKey => $errVal) {
+                            if (array_key_exists($errKey, $errMsgs)) {
+                                unset($errMsgs[$errKey]);
+                            }
+                        }
+                    }
+
+                }
+
+                break;
+        }
+
+        /* ------------------------------
+         * === TERMIN, GARANSI, DP PROJECT
+         * GESER KE harga_jual_project sebelumnya dari harga_nppn
+         * ------------------------------*/
+        $harga_jual_project = $_SESSION[$cCode]['main']['harga_jual_project'] * 1;
+        $harga_jual_project_ppn = $_SESSION[$cCode]['main']['harga_jual_project_ppn'] * 1;
+        $total_project = $harga_jual_project+$harga_jual_project_ppn;
+
+        $show_warning_termin = "";
+        $show_error_termin = "";
+
+        $items3 = isset($mains['items3']) ? $mains['items3'] : array(); //TERMIN
+        $items4 = isset($mains['items4']) ? $mains['items4'] : array(); //DP
+        $items5 = isset($mains['items5']) ? $mains['items5'] : array(); //GARANSI
+        $items7 = isset($mains['items7']) ? $mains['items7'] : array(); //INFORMASI KONTRAK PROJECT PIHAK-3
+
+        //TERMIN
+        $allow_empty_termin = isset($_SESSION[$cCode]['main']['allow_empty_termin']) ? $_SESSION[$cCode]['main']['allow_empty_termin'] : 0;
+        $allow_inchoate_termin = isset($_SESSION[$cCode]['main']['allow_inchoate_termin']) ? $_SESSION[$cCode]['main']['allow_inchoate_termin'] : 0; // 1 = untuk memperbolehkan lewat jika termin belum lengkap
+        $total_harga_termin = $_SESSION[$cCode]['main']['total_harga_termin'] * 1;
+        $pengaturan_termin = $_SESSION[$cCode]['main']['pengaturan_termin'] * 1;
+
+        if (empty($items3) && !$allow_empty_termin) {
+            $alerts = array("type" => "warning",
+                "title" => "Empty Termin",
+                "html" => "($allow_empty_termin) Termin belum di setting, apakah anda akan melewatkan setingan ini..??",
+            );
+            echo swalAlert($alerts);
+            die();
+        }
+        else {
+            //ada isinya tapi mungkin belum lengkap..??
+            if (
+                $pengaturan_termin
+                && round(abs($total_harga_termin)) !== round(abs($total_project))
+                && !$allow_inchoate_termin
+            ) {
+                // Debug Information
+                $debug  = "<div class='meta bg-yellow'>pengaturan_termin: {$pengaturan_termin}</div>";
+                $debug .= "<div class='meta bg-yellow'>Perbandingan total (floor): "
+                    . floor($total_harga_termin) . " != " . floor($total_project) . "</div>";
+                $debug .= "<div class='meta bg-yellow'>Perbandingan total (actual): "
+                    . $total_harga_termin . " != " . $total_project . "</div>";
+                $debug .= "<div class='meta bg-yellow'>abs nilai: "
+                    . abs($total_harga_termin) . " vs " . abs($total_project) . "</div>";
+                $debug .= "<div class='meta bg-yellow'>abs nilai (round): "
+                    . round(abs($total_harga_termin)) . " vs " . round(abs($total_project)) . "</div>";
+                $debug .= "<div class='meta bg-yellow'>allow_inchoate_termin: "
+                    . ($allow_inchoate_termin ? "1 (allowed)" : "0 (blocked)") . "</div>";
+
+                $dtime = "<div class='meta'>" . date("d,M-Y H:i") . "</div>";
+                $alerts = array("type" => "warning",
+                    "title" => "Termin Belum Lengkap",
+                    "html"  => "Termin belum lengkap, apakah Anda ingin melewatkan setelan ini?<br>"
+                        . $debug . $dtime,
+                );
+                echo swalAlert($alerts);
+                die();
+            }
+        }
+
+
+        if (sizeof($errMsgs) > 0) {
+            $_SESSION['errMsg'] = implode("<br>", $errMsgs);
+
+            if (sizeof($errLines) > 0) {
+                $_SESSION['errLines'] = $errLines;
+            }
+
+            if (sizeof($errFields) > 0) {
+                $_SESSION['errFields'] = $errFields;
+            }
+
+
+            echo lgShowAlert($_SESSION['errMsg']);
+            die();
+        }
+        else {
+
+            // mati_disini("LOLOS, tidak kena VALIDATE :: $prevAction");
+            // $shoppingCart =  base_url() . $this->modul . "/" . $prevAction . "/" . $this->jenisTr . "?rawPrev=$rawPrevURL";
+
+            $actionTarget = "top.BootstrapDialog.show({
+                                title:'preview',
+                                message: " . 'top.$' . "('<div></div>').load('" . base_url() . $this->modul . "/" . $prevAction . "/" . $this->jenisTr . "?rawPrev=$rawPrevURL'),
+                                draggable:false,
+                                size:top.BootstrapDialog.SIZE_WIDE,
+                                type:top.BootstrapDialog.TYPE_DEFAULT,
+                                closable:true,
+                                }
+                             );";
+
+            echo "<script>top.close_holdon();$actionTarget</script>";
+
+        }
+    }
+
+    public function viewUndoneItems()
+    {
+        session_write_close();
+        $jenisTr = $this->jenisTr;
+        $cCode = $this->cCode;
+
+        $historyFields = $this->configUi[$jenisTr]['shortHistoryFields'];
+        $pairRegistries = isset($this->configUi[$jenisTr]['pairRegistries']) ? $this->configUi[$jenisTr]['pairRegistries'] : array();
+        $dueDateAllow = isset($this->configUi[$jenisTr]['updateDueDate']) ? $this->configUi[$jenisTr]['updateDueDate'] : array();
+        $mb = New MobileDetect();
+        $isMob = $mb->isMobile();
+        if ($isMob) {
+            $historyFields = isset($this->configUi[$jenisTr]['compactHistoryFields']) ? $this->configUi[$jenisTr]['compactHistoryFields'] : array();
+        }
+        $arrExtHistoryFields2 = isset($this->configUi[$jenisTr]["extHistoryFields2"]) ? $this->configUi[$jenisTr]["extHistoryFields2"] : array();
+        $glanceHistoryFields = isset($this->configUi[$jenisTr]['glanceHistoryFields']) ? $this->configUi[$jenisTr]['glanceHistoryFields'] : array("nomer" => "receipt no");
+        $glanceHistoryFields2 = array("nomer" => "receipt no"); //init;
+        $selectorProcessor = base_url() . $this->configUi[$jenisTr]['selectorProcessor'] . "/$jenisTr";
+        $mems = isset($this->session->login['membership']) ? $this->session->login['membership'] : array();
+        //region lookup on-going transactions
+        $arrayOnprogress = array();
+        $progressFields = $historyFields;
+        $progressFields['seller_nama'] = "create by";
+        $progressFields['state'] = "status";
+        $progressFields['rencana'] = "rencana<br>anggaran";
+        $progressFields['action'] = "action";
+
+        $steps = $this->configUi[$jenisTr]['steps'];
+
+        $this->load->model("MdlTransaksi");
+        $tr = new MdlTransaksi();
+
+        if (count($steps) > 1) {
+            $stepCodes = array();
+            $jmlStep = count($steps);
+            if (isset($this->accessList[$jenisTr]) && sizeof($this->accessList) > 0) {
+                $arrFilters = array();
+                $indsteps = "(";
+                foreach ($this->accessList[$jenisTr] as $stepNumber => $stepSpec) {
+                    if ($stepNumber <= $jmlStep) {
+                        foreach ($stepSpec as $targetCode => $filters) {
+                            $indsteps .= "'$targetCode',";
+                            $stepCodes[] = $targetCode;
+                            if ($filters['allowFollowUp'] == "true") {
+                                $arrFilters["allowFollowUp"][] = $targetCode;
+                            }
+
+                        }
+                    }
+                }
+                $indsteps = rtrim($indsteps, ",");
+                $indsteps .= ")";
+                if (sizeof($arrFilters) > 0) {
+                    $tr->addFilter("transaksi.next_step_code in $indsteps");
+                }
+                else {
+                    $tr->addFilter("transaksi.oleh_id='" . $this->session->login['id'] . "'");
+                }
+            }
+            else {
+                foreach ($steps as $stepNumber => $stepSpec) {
+                    if ($stepNumber < $jmlStep) {
+                        $stepCodes[] = $stepSpec['target'];
+                    }
+                }
+            }
+        }
+
+        $tr->addFilter("transaksi.jenis_master='$jenisTr'");
+        $tr->addFilter("transaksi.div_id='" . $this->session->login['div_id'] . "'");
+        $tr->addFilter("transaksi_data.next_substep_code<>''");
+        $tr->addFilter("transaksi_data.sub_step_number>0");
+        $tr->addFilter("transaksi_data.trash=0");
+        $tr->addFilter("transaksi_data.valid_qty>0");
+
+        if (isset($this->accessList[$jenisTr]) && sizeof($this->accessList) > 0) {
+
+        }
+        else {
+
+            if (!in_array("c_holding", $mems) && !in_array("c_owner", $mems)) {
+                if (sizeof($mems) > 0) {
+                    $this->db->group_start();
+                    $mCtr = 0;
+                    foreach ($mems as $gID) {
+                        if ($mCtr == 0) {
+                            $this->db->where(array("transaksi_data.next_subgroup_code" => $gID));
+                        }
+                        else {
+                            $this->db->or_where(array("transaksi_data.next_subgroup_code" => $gID));
+                        }
+                        $mCtr++;
+                    }
+                    $this->db->group_end();
+                }
+            }
+
+        }
+
+        $tmpHist = $tr->lookupUndoneEntries_joined(replaceSession())->result();
+
+        //region due date
+        $tr->setFilters(array());
+        $listedDue = $tr->lookupAllDueDate()->result();
+        $arrDue = array();
+        $overDue = array();
+        foreach ($listedDue as $dueData) {
+            $due_date = strtotime($dueData->due_date);
+            $date_now = strtotime(date("Y-m-d"));
+            if ($due_date < $date_now) {
+                $arrDue[$dueData->transaksi_id] = array(
+                    "due_date" => $dueData->due_date,
+                    "aging" => umurDay($dueData->due_date),
+                );
+            }
+        }
+
+        //endregion
+        $arrOver_due = array();
+
+        //ACTIVE PROJECT
+        $this->load->model('Mdls/MdlProdukProject');
+        $prj = new MdlProdukProject();
+        $viewFieldsPrj = $prj->getListedFields();
+        $tmpPrj = $prj->fectDataProject()->result();
+
+        $activeProject = array();
+        if (!empty($tmpPrj)) {
+            foreach ($tmpPrj as $pk => $rowPrj) {
+                if ($rowPrj->project_start_nomer != null || $rowPrj->project_start_nomer != "") {
+                    $activeProject[$rowPrj->project_start_nomer] = $rowPrj;
+                }
+                else {
+                    if ($rowPrj->quot_nomer != null || $rowPrj->quot_nomer != "") {
+                        $activeProject[$rowPrj->quot_nomer] = $rowPrj;
+                    }
+                    else {
+                        if ($rowPrj->t1_closing_status != 0) {
+                            $activeProject[$rowPrj->t1_closing_transaksi_nomer] = $rowPrj;
+                        }
+                        else {
+                            $activeProject[$rowPrj->transaksi_no] = $rowPrj;
+                        }
+                    }
+                }
+            }
+        }
+
+        if (sizeof($tmpHist) > 0) {
+            $arrTransID = array();
+            $arrProjectID = array();
+            $arrTransTopID = array();
+            $arrIdsHist = array();
+            $arrTransHist = array();
+            foreach ($tmpHist as $row) {
+                $arrProjectID[$row->id] = $row->project_id;
+                $arrTransID[] = $row->transaksi_id;
+                $arrTransTopID[] = $row->id_top;
+                if ($row->ids_his != "") {
+                    $hist = blobDecode($row->ids_his);
+                    foreach ($hist as $hisSpec) {
+                        $arrIdsHist[$row->id][$hisSpec['step']] = array(
+                            "step" => $hisSpec['step'],
+                            "trID" => $hisSpec['trID'],
+                            "nomer" => $hisSpec['nomer'],
+                        );
+                        $arrTransHist[] = $hisSpec['trID'];
+                    }
+                }
+            }
+            $tmpReg_result = array();
+            $selectKolom = implode(",", $pairRegistries) . ", transaksi_id";
+            $trReg = new MdlTransaksi();
+            $trReg->setFilters(array());
+            $trReg->setJointSelectFields($selectKolom);
+            $trReg->addFilter("transaksi_id in ('" . implode("','", $arrTransID) . "')");
+            $tmpReg = $trReg->lookupDataRegistries()->result();
+            if (sizeof($tmpReg) > 0) {
+                foreach ($tmpReg as $regRow) {
+                    foreach ($regRow as $key_reg => $val_reg) {
+                        if ($key_reg != "transaksi_id") {
+                            $tmpReg_result[$regRow->transaksi_id][$key_reg] = blobDecode($val_reg);
+                        }
+                    }
+                }
+            }
+            if (sizeof($arrIdsHist) > 0) {
+                $tr = new MdlTransaksi();
+                $tr->setFilters(array());
+                $tr->addFilter("id in ('" . implode("','", $arrTransHist) . "')");
+                $tmpTransHist = $tr->lookupAll()->result();
+
+                if (sizeof($tmpTransHist) > 0) {
+                    foreach ($tmpTransHist as $histSpec) {
+                        $tmpTransHist_result[$histSpec->id] = array(
+                            "oleh_id" => $histSpec->oleh_id,
+                            "oleh_nama" => $histSpec->oleh_nama,
+                        );
+                    }
+                }
+
+                foreach ($arrIdsHist as $trID => $histSpec) {
+                    foreach ($histSpec as $step => $detailSpec) {
+                        if (array_key_exists($detailSpec['trID'], $tmpTransHist_result)) {
+                            $detailSpec['main'] = $tmpTransHist_result[$detailSpec['trID']];
+                        }
+                        $arrTransMainHist[$trID][$step] = $detailSpec;
+                    }
+                }
+            }
+
+            $numb = 0;
+            foreach ($tmpHist as $row) {
+
+                $step_current = $row->step_current;
+                $currentStepCode = ($row->jenis);
+                $extHistoryFields2 = isset($arrExtHistoryFields2[$row->step_number]) ? $arrExtHistoryFields2[$row->step_number] : array();
+
+                if (sizeof($pairRegistries) > 0) {
+                    if ((sizeof($tmpReg_result) > 0) && (isset($tmpReg_result[$row->transaksi_id]))) {
+                        foreach ($tmpReg_result[$row->transaksi_id] as $param => $eReg) {
+                            switch ($param) {
+                                case "main":
+                                    foreach ($eReg as $k => $v) {
+                                        if (($k != NULL) && !isset($row->$k)) {
+                                            $row->$k = $v;
+                                        }
+                                    }
+                                    break;
+                                case "items":
+                                    if (sizeof($extHistoryFields2) > 0) {
+                                        foreach ($extHistoryFields2 as $k1 => $v1) {
+                                            if (is_array($v1)) {
+                                                $kolom = $v1['kolom'];
+                                                $format = $v1['format'];
+                                                //                                                cekHitam(":: $kolom :: $format ::");
+                                                if (($k1 != NULL) && !isset($row->$k1)) {
+                                                    $tmpDetail = "";
+                                                    foreach ($eReg as $eeReg) {
+                                                        $valDetail = formatField_he_format($format, $eeReg[$kolom]);
+                                                        $tmpDetail .= "<span>$valDetail</span><br>";
+                                                    }
+                                                    $row->$k1 = $tmpDetail;
+                                                }
+                                            }
+                                            else {
+                                                if (($k1 != NULL) && !isset($row->$k1)) {
+                                                    $tmpDetail = "";
+                                                    foreach ($eReg as $eeReg) {
+                                                        $valDetail = formatField_he_format("nomer", $eeReg[$v1]);
+                                                        $tmpDetail .= "<span>$valDetail</span><br>";
+                                                    }
+                                                    $row->$k1 = $tmpDetail;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    break;
+                            }
+                        }
+                    }
+                }
+
+                $tmp = array();
+                $numb++;
+
+                foreach ($progressFields as $fName => $fLabel) {
+                    if (isset($row->$fName)) {
+                        if (is_numeric($row->$fName)) {
+                            if (!isset($sumFooter[$fName])) {
+                                $sumFooter[$fName] = 0;
+                            }
+                            $sumFooter[$fName] += $row->$fName;
+                        }
+                    }
+                    if (is_array($fLabel)) {
+                        $hisStep = $fLabel['step'];
+                        $hisKey = $fLabel['key'];
+                        //                                $tNomer = $id_hist[$hisStep][$hisKey];
+
+                        if (isset($row->ids_his)) {
+                            $returnVal = showHistoriGlobalNumbers($row->ids_his, $hisStep, true);
+                            if ($returnVal == "") {
+                                $tmp[$fName] = "-";
+                            }
+                            else {
+                                $tmp[$fName] = $returnVal;
+                            }
+                        }
+                        else {
+                            $tmp[$fName] = "-";
+                        }
+                    }
+                    else {
+                        $tmp[$fName] = isset($row->$fName) ? formatField_he_format($fName, $row->$fName) : formatField_he_format($fName, 0);
+                    }
+                    if ($fName == "no") {
+                        $tmp[$fName] = formatField_he_format($fName, $numb);
+                    }
+                }
+
+                if ($row->sub_step_number > 0) {
+                    $tmp['state'] = createStateHorizontal($row->sub_step_number, $row->step_avail, $jenisTr);
+                }
+                else {
+                    $tmp['state'] = "<span style='color:#777777'>canceled</span>";
+                }
+
+                $tmp['action'] = "";
+                $tmp['rencana'] = "";
+                $nextStepNum = ($row->next_substep_num);
+                $currentStepNum = ($row->sub_step_number);
+                $nextStepCode = ($row->next_step_code);
+                $allowJoin = isset($this->configUi[$jenisTr]["steps"][$nextStepNum]['allowJoin']) && $this->configUi[$jenisTr]["steps"][$nextStepNum]['allowJoin'] == true ? $this->configUi[$jenisTr]["steps"][$nextStepNum]['allowJoin'] : false;
+
+                $allowFollowup = false;
+                if ($row->sub_step_number > 0) {
+                    $allowFollowup = true;
+                    $actionLabel = "review " . $this->configUi[$jenisTr]['steps'][$currentStepNum]['label'];
+                }
+
+                if (isset($this->configUi[$jenisTr]['steps'][$nextStepNum])) {
+                    if (isset($this->accessList[$jenisTr])) {
+                        if (isset($this->accessList[$jenisTr][$nextStepNum][$nextStepCode]["allowFollowUp"])) {
+                            $allowFollowup = $this->accessList[$jenisTr][$nextStepNum][$nextStepCode]["allowFollowUp"];
+                            $actionLabel = isset($this->configUi[$jenisTr]['steps'][$nextStepNum]['preActionLabel']) ? $this->configUi[$jenisTr]['steps'][$nextStepNum]['preActionLabel'] : $this->configUi[$jenisTr]['steps'][$nextStepNum]['actionLabel'];
+                        }
+                    }
+                    else {
+                        if (placeCanFollowupTrans_he_menu($this->session->login['membership'], $this->session->login['cabang_id'], $this->session->login['gudang_id'], $this->jenisTr, $nextStepNum, "", $this->configUiJenis)) {
+                            $allowFollowup = true;
+                            $actionLabel = isset($this->configUi[$jenisTr]['steps'][$nextStepNum]['preActionLabel']) ? $this->configUi[$jenisTr]['steps'][$nextStepNum]['preActionLabel'] : $this->configUi[$jenisTr]['steps'][$nextStepNum]['actionLabel'];
+                        }
+                    }
+                }
+
+//                $linkRencana = MODUL_PATH . "FollowUp/showRincian/$jenisTr/" . $row->id_master . "/$nextStepNum/" . $row->sub_step_number . "/$currentStepCode/?mode=show";
+//                $linkRencana = MODUL_PATH . "Printing/viewReceiptReg/$jenisTr/".$row->nomer;
+                $linkRencana = MODUL_PATH . "Printing/viewReceiptRegBom/$jenisTr/" . $row->nomer . "?pr=simple";
+                $linkRencanaDetail = MODUL_PATH . "Printing/viewReceiptRegBom/$jenisTr/" . $row->nomer . "?pr=detail";;
+
+                if ($activeProject[$row->nomer]->project_start == 1) {
+                    $link = MODUL_PATH . "MasterData/index/";
+                    $newLink = $link . $activeProject[$row->nomer]->id;
+                    $tmp['rencana'] = "<div class='input-group'>";
+                    $tmp['rencana'] .= "<a class='btn btn-sm btn-warning' title='' nomer='" . $row->nomer . "' data-toggle='tooltip' href='javascript:void(0);' onclick =\"window.open('$newLink');\"><i class='fa fa-send'></i> Show Progress</a>";
+                    $tmp['rencana'] .= "</div>";
+                }
+                else {
+                    if ($activeProject[$row->nomer]->lock == 1 && $activeProject[$row->nomer]->quot_status == 0) {
+                        $tmp['rencana'] = "";
+                    }
+                    else {
+                        if ($activeProject[$row->nomer]->lock == 1 && $activeProject[$row->nomer]->quot_status == 1) {
+                            $tmp['rencana'] = "<div class='btn-group btn-group-sm'>";
+                            $tmp['rencana'] .= "<button class='btn bg-olive' title='' data-toggle='tooltip' onclick =\"top.popBig('$linkRencana')\"><i class='fa fa-print'></i> Simple Quotation</button>";
+                            $tmp['rencana'] .= "<button class='btn bg-yellow' title='' data-toggle='tooltip' onclick =\"top.popBig('$linkRencanaDetail')\"><i class='fa fa-print'></i> Detail Quotation</button>";
+                            $tmp['rencana'] .= "</div>";
+                        }
+                        else {
+                            $tmp['rencana'] = "";
+                        }
+                    }
+                }
+
+                if ($allowFollowup) {
+                    $stepLabel = $this->configUi[$jenisTr]['steps'][$nextStepNum]['label'];
+                    $isCancelPacking = isset($this->configUi[$jenisTr]['steps'][$nextStepNum]['isCancelPacking']) ? $this->configUi[$jenisTr]['steps'][$nextStepNum]['isCancelPacking'] : false;
+                    $allowCancel = isset($this->configUi[$jenisTr]['steps'][$nextStepNum]['allowCancel']) ? $this->configUi[$jenisTr]['steps'][$nextStepNum]['allowCancel'] : false;
+                    $followupMulti = isset($this->configUi[$jenisTr]['steps'][$nextStepNum]['followupMulti']) ? $this->configUi[$jenisTr]['steps'][$nextStepNum]['followupMulti'] : false;
+
+                    if (($nextStepNum == sizeof($this->configUi[$jenisTr]["steps"])) && ($followupMulti == true)) {
+                        $targetFollowupLink = "followupMultiPrePreview";
+                        $followupLink = "top.$('#result').load('" . MODUL_PATH . "FollowUp/$targetFollowupLink/$jenisTr/" . $row->id_master . "/$nextStepNum/" . $row->sub_step_number . "/$currentStepCode" . "');";
+                    }
+                    else {
+                        $targetFollowupLink = $isCancelPacking == true ? "followupCancelPackingPrePreview" : "followupPrePreview";
+                        $followupLink = "top.$('#result').load('" . MODUL_PATH . "FollowUp/$targetFollowupLink/$jenisTr/" . $row->transaksi_id . "/$nextStepNum/" . $row->sub_step_number . "');";
+                    }
+
+                    if ($activeProject[$row->nomer]->project_start == 1) {
+                        $tmp['action'] = "<div class='btn-group-sm btn-group-vertical'>";
+                        if ($activeProject[$row->nomer]->persen_progress >= 99) {
+                            //progress > 99% atau = 99%
+                            //belum tahap 1
+                            $tmp['action'] .= "<button 
+                                                id='prj_id_" . $activeProject[$row->nomer]->id . "' 
+                                                type='button' 
+                                                class='btn btn-sm btn-success' 
+                                                title='Project Bisa Dilanjutkan untuk closing tahap 1' 
+                                                data-toggle='tooltip'>
+                                                <i class='fa fa-check-square'></i> SPK PROGRESS 100% 
+                                                </button>";
+                            // klo kondisi masih mode edit
+                            if($activeProject[$row->nomer]->edit){
+                                $tmp['action'] .= "<button line='" . __LINE__ . "' 
+                                                    id='prj_id_" . $activeProject[$row->nomer]->id . "' 
+                                                    type='button' 
+                                                    class='btn btn-sm btn-danger btn-block' 
+                                                    title='Project masih proses EDIT RAB' 
+                                                    data-toggle='tooltip'>
+                                                    <i class='fa fa-hourglass'></i> PROSES EDIT 
+                                                    </button>";
+                            }
+                            else{
+                                $tmp['action'] .= "<button line='" . __LINE__ . "' 
+                                                    type='button' 
+                                                    class='btn btn-sm btn-info' 
+                                                    title='turn this entry into $stepLabel' 
+                                                    data-toggle='tooltip' 
+                                                    onclick =\"top.open_holdon();$followupLink\">
+                                                    <i class='glyphicon glyphicon-check'></i> <b>(TAHAP 1) SERAH TERIMA SEMENTARA ($nextStepNum)</b>
+                                                    </button>";
+                            }
+                        }
+                        else {
+                            //progress di bawah 99%
+                            $persentase = 0 + $activeProject[$row->nomer]->persen_progress * 1;
+                            $tmp['action'] .= "<button line='" . __LINE__ . "' id='prj_id_" . $activeProject[$row->nomer]->id . "' type='button' class='btn btn-sm btn-danger' title='Project Bisa Dilanjutkan setelah Progress 100%...' data-toggle='tooltip'><i class='fa fa-gear fa-spin'></i> On Progress " . number_format($activeProject[$row->nomer]->persen_progress * 1) . "% </button>";
+                            if ($persentase * 1 > 0) {
+                                $tmp['action'] .= "
+                                    <script>
+                                        var p =  $persentase || 1, g = Math.round(255*(p/100)), r = 255-g;
+                                        $('#prj_id_" . $activeProject[$row->nomer]->id . "').css('background',\"rgb(\"+r+\",\"+g+\",0)\");
+                                    </script>
+                                ";
+                            }
+                            if ($allowCancel) {
+                                $tmp['action'] .= "<div class='input-group'>";
+                                $tmp['action'] .= "<a line='" . __LINE__ . "' 
+                                                        class='btn btn-primary btn-block' 
+                                                        title='turn this entry into $stepLabel' 
+                                                        href='javascript:void(0)' 
+                                                        onClick =\"top.open_holdon();$followupLink\">" . $actionLabel . " (" . __LINE__ . ")
+                                                        </a>";
+                                if ($allowJoin) {
+                                    $tmp['action'] .= "<span class='input-group-addon'>";
+                                    $tmp['action'] .= "<a line='" . __LINE__ . "' 
+                                                            title='process many items at once' 
+                                                            href='" . base_url() . "Transaksi/viewIncomplete/" . $this->jenisTr . "/$currentStepNum'>
+                                                            <span class='fa fa-dedent'></span>
+                                                            </a>";
+                                    $tmp['action'] .= "</span class='input-group-addon'>";
+                                }
+                                $tmp['action'] .= "</div class='input-group'>";
+                            }
+
+                        }
+                        if ($allowJoin) {
+                            $tmp['action'] .= "<span class='input-group-addon'>";
+                            $tmp['action'] .= "<a line='" . __LINE__ . "' 
+                                                    title='process many items at once' 
+                                                    href='" . MODUL_PATH . "Transaksi/viewIncomplete/" . $this->jenisTr . "/$currentStepNum'>
+                                                    <i class='fa fa-dedent'></i>
+                                                    </a>";
+                            $tmp['action'] .= "</span>";
+                        }
+                        $tmp['action'] .= "</div>";
+                    }
+                    else {
+                        if ($activeProject[$row->nomer]->lock == 1 && $activeProject[$row->nomer]->quot_status == 0) {
+                            $tmp['action'] = "<div class='btn-group-sm btn-group-vertical'>";
+                            $tmp['action'] .= "<button line='" . __LINE__ . "' type='button' class='btn btn-sm btn-primary' title='turn this entry into $stepLabel' data-toggle='tooltip' onclick =\"top.open_holdon();$followupLink\"><i class='fa fa-check'></i> " . $actionLabel . " (" . __LINE__ . ")</button>";
+                            $editBomLink = "" . MODUL_PATH . "MasterData/editBom/" . $activeProject[$row->nomer]->id;
+                            $tmp['action'] .= "<button line='" . __LINE__ . "' type='button' class='btn btn-sm btn-warning' title='cancel $stepLabel' data-toggle='tooltip' onclick =\"if(confirm('mengaktifkan mode BOM, akan mengunci transaksi ini hingga BOM selesai di Edit dan disimpan kembali. Yakin untuk melakukan ini...??')){window.location.href='$editBomLink'}\"><i class='fa fa-pencil'></i> Edit BOM (" . __LINE__ . ")</button>";
+                            if ($allowJoin) {
+                                $tmp['action'] .= "<span class='input-group-addon'>";
+                                $tmp['action'] .= "<a line='" . __LINE__ . "' 
+                                                        title='process many items at once' 
+                                                        href='" . MODUL_PATH . "Transaksi/viewIncomplete/" . $this->jenisTr . "/$currentStepNum'>
+                                                        <i class='fa fa-dedent'></i>
+                                                        </a>";
+                                $tmp['action'] .= "</span>";
+                            }
+                            $tmp['action'] .= "</div>";
+                        }
+                        else {
+                            if ($activeProject[$row->nomer]->lock == 1 && $activeProject[$row->nomer]->quot_status == 1) {
+                                $tmp['action'] = "<div class='btn-group-sm btn-group-vertical'>";
+                                $tmp['action'] .= "<button line='" . __LINE__ . "' type='button' class='btn btn-sm btn-info' title='turn this entry into $stepLabel' data-toggle='tooltip' onclick =\"top.open_holdon();$followupLink\"><i class='fa fa-check'></i> APPROVE & START PROJECT</button>";
+                                if ($allowJoin) {
+                                    $tmp['action'] .= "<span class='input-group-addon'>";
+                                    $tmp['action'] .= "<a line='" . __LINE__ . "' 
+                                                            title='process many items at once' 
+                                                            href='" . MODUL_PATH . "Transaksi/viewIncomplete/" . $this->jenisTr . "/$currentStepNum'>
+                                                            <i class='fa fa-dedent'></i>
+                                                            </a>";
+                                    $tmp['action'] .= "</span>";
+                                }
+                                $tmp['action'] .= "</div>";
+                            }
+                            else {
+                                if ($nextStepNum == 3) {
+                                    $link = MODUL_PATH . "MasterData/index/";
+                                    $newLink = $link . $activeProject[$row->nomer]->id;
+                                    $tmp['action'] = "<div class='btn-group-sm btn-group-vertical'>";
+                                    $tmp['action'] .= "<button line='" . __LINE__ . "' type='button' class='btn btn-sm btn-primary' title='turn this entry into $stepLabel' data-toggle='tooltip' onclick =\"top.open_holdon();$followupLink\"><i class='fa fa-check'></i> " . $actionLabel . " (" . __LINE__ . ")</button>";
+                                    $tmp['action'] .= "<span class='input-group-addon'>";
+                                    $tmp['action'] .= "<a line='" . __LINE__ . "' 
+                                                            class='btnx btn-smx btn-infox btn-blockx' 
+                                                            title='Buat BOM' 
+                                                            data-toggle='tooltip' 
+                                                            href='javascript:void(0);' 
+                                                            onclick =\"top.open_holdon();window.location.href='$newLink'\">
+                                                            <i class='fa fa-hourglass'></i> CREATE BOM  (" . __LINE__ . ")
+                                                            </a>";
+                                    $tmp['action'] .= "</span>";
+                                    $tmp['action'] .= "</div>";
+                                }
+                                else {
+                                    if ($nextStepNum == 5) {
+                                        //akan ke tahap 2 (FINAL)
+                                        $tmp['action'] = "<div class='btn-group-sm btn-group-vertical'>";
+                                        $tmp['action'] .= "<button id='prj_id_" . $activeProject[$row->nomer]->id . "' type='button' class='btn btn-sm btn-info' title='Project Bisa Dilanjutkan untuk closing tahap akhir (final)' data-toggle='tooltip'><i class='fa fa-check-square'></i> PROGRESS FINAL </button>";
+                                        $tmp['action'] .= "<button line='" . __LINE__ . "' type='button' class='btn btn-sm btn-danger' title='turn this entry into $stepLabel' data-toggle='tooltip' onclick =\"top.open_holdon();$followupLink\"><i class='glyphicon glyphicon-check'></i> <b>(FINAL) SERAH TERIMA AKHIR PEKERJAAN</b></button>";
+                                        $tmp['action'] .= "</div>";
+                                    }
+                                    else {
+                                        $tmp['action'] = "<div class='input-group'>";
+                                        $tmp['action'] .= "<button line='" . __LINE__ . "' type='button' class='btn btn-sm btn-primary' title='turn this entry into $stepLabel' data-toggle='tooltip' onclick =\"top.open_holdon();$followupLink\"><i class='fa fa-check'></i> " . $actionLabel . " (" . __LINE__ . ")</button>";
+                                        $tmp['action'] .= "</div>";
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                $arrayOnprogress[] = $tmp;
+            }
+        }
+        //endregion
+
+        $sumFooterResult = array();
+        if (isset($sumFooter) && sizeof($sumFooter) > 0) {
+            foreach ($sumFooter as $key => $val) {
+                $sumFooterResult[$key] = formatField_he_format($key, $val);
+            }
+        }
+
+        $data = array(
+            "mode" => "viewUndoneItems",
+            "isMobile" => $isMob,
+            "arrayProgressLabels" => $progressFields,
+            "arrayProgress2Labels" => $glanceHistoryFields2,
+            "arrayOnProgress" => $arrayOnprogress,
+            "arrayOnProgress2" => isset($arrayOnprogress2) ? $arrayOnprogress2 : array(),
+            "needToClear" => isset($needToClear) ? $needToClear : "",
+            "reqFormTarget" => isset($reqFormTarget) ? $reqFormTarget : "",
+            "allowMultiSelect" => isset($allowMultiSelect) ? $allowMultiSelect : "",
+            "overDue" => $arrOver_due,
+            "clearCartTarget" => MODUL_PATH . "/_shoppingCart/reset/" . $this->jenisTr,
+            "sumFooter" => $sumFooterResult,
+            "jenisTr" => $jenisTr,
+        );
+
+        $this->load->view("transaksi", $data);
+
+    }
+
+    public function viewUndoneItemsIndex()
+    {
+        session_write_close();
+        $starttime = microtime(true);
+        if (!isset($this->session->login['id'])) {
+            redirect(base_url() . "Login");
+        }
+        $scriptBottom = "";
+        $sesionReplacer = replaceSession();
+        $jenisTr = $this->jenisTr;
+        $cCode = "_TR_" . $this->jenisTr;
+
+        switch ($jenisTr) {
+            case "5882":
+                $sesionReplacer = array(
+                    "cabang_id" => my_cabang_id(),
+//                    "gudang_id" => "-690",
+                );
+                break;
+        }
+
+
+        $paymentConfig = isset($this->configUi[$jenisTr]['paymentConfig']) ? $this->configUi[$jenisTr]['paymentConfig'] : false;
+        $myPaymentConfig = isset($this->configUi[$jenisTr]['myPaymentConfig']) ? $this->configUi[$jenisTr]['myPaymentConfig'] : false;
+        $historyFields = isset($this->configUi[$jenisTr]['shortHistoryFields']) ? $this->configUi[$jenisTr]['shortHistoryFields'] : array();
+        $pairRegistries = isset($this->configUi[$jenisTr]['pairRegistries']) ? $this->configUi[$jenisTr]['pairRegistries'] : array();
+        $connectTo = isset($this->configUi[$jenisTr]['connectTo']) ? $this->configUi[$jenisTr]['connectTo'] : "";
+        $stepHistoryFields = isset($this->configUi[$jenisTr]['shortStepHistoryFields']) ? $this->configUi[$jenisTr]['shortStepHistoryFields'] : array();
+        $arrExtHistoryFields2 = isset($this->configUi[$jenisTr]["extHistoryFields2"]) ? $this->configUi[$jenisTr]["extHistoryFields2"] : array();
+
+        $mb = New MobileDetect();
+        $isMob = $mb->isMobile();
+        if ($isMob) {
+            $historyFields = isset($this->configUi[$jenisTr]['compactHistoryFields']) ? $this->configUi[$jenisTr]['compactHistoryFields'] : array();
+        }
+        $prePreFields = $historyFields;
+        $prePreFields['state'] = "status";
+        $prePreFields['action'] = "action";
+        $swapJenisTr = isset($this->configUi[$jenisTr]['requestCode']['masterCode']) ? $this->configUi[$jenisTr]['requestCode']['masterCode'] : array();
+        $arrayOnprePre = array();
+        $arrayOnprePreGroup = array();
+        if (sizeof($swapJenisTr) > 0) {
+            $steps = $this->configUi[$swapJenisTr]['steps'];
+            $arrFilters = array();
+            if (sizeof($steps) > 1) {
+                $this->load->model("MdlTransaksi");
+                $tr = new MdlTransaksi();
+                $stepCodes = array();
+                $jmlStep = count($steps);
+                if (isset($this->accessList[$swapJenisTr]) && sizeof($this->accessList) > 0) {
+                    $indsteps = "(";
+                    foreach ($this->accessList[$swapJenisTr] as $stepNumber => $stepSpec) {
+                        if ($stepNumber <= $jmlStep) {
+                            foreach ($stepSpec as $targetCode => $filters) {
+                                $indsteps .= "'$targetCode',";
+                                $stepCodes[] = $targetCode;
+                                if ($filters['allowFollowUp'] == "true") {
+                                    $arrFilters["allowFollowUp"][] = $targetCode;
+                                }
+                            }
+                        }
+                    }
+                    $indsteps = rtrim($indsteps, ",");
+                    $indsteps .= ")";
+                    if (sizeof($arrFilters) > 0) {
+                        $tr->addFilter("next_step_code in $indsteps");
+                    }
+                    else {
+                        $tr->addFilter("transaksi.oleh_id='" . $this->session->login['id'] . "'");
+                    }
+                }
+                else {
+
+                }
+                $tr->addFilter("div_id='" . $this->session->login['div_id'] . "'");
+                $tr->addFilter("jenis_top='" . $steps[1]['target'] . "'");
+                $tr->addFilter("next_substep_code<>''");
+                $tr->addFilter("sub_step_number>0");
+                $tr->addFilter("valid_qty>0");
+                $tmpHist = $tr->lookupRecentUndoneEntries_joined($sesionReplacer)->result();
+                if (sizeof($tmpHist) > 0) {
+                    $arrTransID = array();
+                    $arrTransTopID = array();
+                    $arrIdsHist = array();
+                    $arrTransHist = array();
+                    foreach ($tmpHist as $row) {
+                        $arrTransID[] = $row->id;
+                        $arrTransTopID[] = $row->id_top;
+
+                        if ($row->ids_his != "") {
+                            $hist = blobDecode($row->ids_his);
+                            foreach ($hist as $hisSpec) {
+                                $arrIdsHist[$row->id][$hisSpec['step']] = array(
+                                    "step" => $hisSpec['step'],
+                                    "trID" => $hisSpec['trID'],
+                                    "nomer" => $hisSpec['nomer'],
+                                );
+                                $arrTransHist[] = $hisSpec['trID'];
+                            }
+                        }
+                    }
+                    $tmpReg_result = array();
+                    $trReg = new MdlTransaksi();
+                    $trReg->setFilters(array());
+                    $selectKolom = implode(",", $pairRegistries) . ",transaksi_id";
+                    // matiHEre(__LINE__);
+                    $trReg->setJointSelectFields($selectKolom);
+                    $trReg->addFilter("transaksi_id in ('" . implode("','", $arrTransID) . "')");
+                    $tmpReg = $trReg->lookupDataRegistries()->result();
+
+                    if (sizeof($tmpReg) > 0) {
+                        foreach ($tmpReg as $regRow) {
+                            $param = $regRow->param;
+                            $tmpReg_result[$regRow->transaksi_id][$param] = blobDecode($regRow->values);
+                        }
+                    }
+
+                    foreach ($tmpHist as $row) {
+                        if (sizeof($pairRegistries) > 0) {
+                            //                            $trReg = new MdlTransaksi();
+                            //                            $trReg->setFilters(array());
+                            //                            $trReg->addFilter("param in ('" . implode("','", $pairRegistries) . "')");
+                            //                            $trReg->addFilter("transaksi_id='" . $row->transaksi_id . "'");
+                            //                            $tmpReg = $trReg->lookupRegistries()->result();
+                            //                            if (sizeof($tmpReg) > 0) {
+                            //                                foreach ($tmpReg as $regRow) {
+                            //                                    $param = $regRow->param;
+                            //                                    $$param = blobDecode($regRow->values);
+                            //                                }
+                            //                                foreach ($pairRegistries as $eReg) {
+                            //                                    foreach ($$eReg as $k => $v) {
+                            //                                        if (!isset($row->$k)) {
+                            //                                            $row->$k = $v;
+                            //                                        }
+                            //                                    }
+                            //                                }
+                            //                            }
+                            if ((sizeof($tmpReg_result) > 0) && (isset($tmpReg_result[$row->id]))) {
+                                foreach ($tmpReg_result[$row->id] as $param => $eReg) {
+                                    foreach ($eReg as $k => $v) {
+                                        if (!isset($row->$k)) {
+                                            $row->$k = $v;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        $tmp = array();
+                        foreach ($historyFields as $fName => $fLabel) {
+                            $tmp[$fName] = isset($row->$fName) ? formatField($fName, $row->$fName) : formatField($fName, 0);
+                        }
+
+                        //                        cekHijau('$swapJenisTr: ' . $swapJenisTr);
+
+                        $showPoStatus = isset($this->configUi[$swapJenisTr]['showPoStatus']) ? $this->configUi[$swapJenisTr]['showPoStatus'] : array();
+                        $cekStateLocation = ($this->session->login['cabang_id'] > 0) ? "cabang" : "pusat";
+
+                        if ($row->sub_step_number > 0) {
+
+                            $tmp['state'] = "<div class='panel panel-warning' style='padding: 3px;margin-bottom: 5px;' ><span style='color:" . $this->configUi[$swapJenisTr]['steps'][$row->sub_step_number]['stateColor'] . "'>" . $this->configUi[$swapJenisTr]['steps'][$row->sub_step_number]['stateLabel'] . "</span>";
+                            $tmp['state'] .= "<br>" . createStateSign($row->sub_step_number, $row->step_avail, $swapJenisTr) . "</div>";
+
+                            // cek PO
+                            $arrTransactionSource = array();
+                            $id_master = $row->id_master;
+                            $id_top1 = $row->id_top;
+                            $this->load->model("MdlTransaksi");
+                            $l = new MdlTransaksi();
+                            $l->setFilters(array());
+                            $l->addFilter("transaksi_data.valid_qty>0");
+                            $l->addFilter("id_master='" . $id_master . "'");
+                            $l->addFilter("jenis_master='" . $swapJenisTr . "'");
+                            $l->addFilter("link_id=0");
+                            $tmpTS = $l->lookupJoined()->result();
+
+                            $arrsub_step_number = array();
+                            $arrstep_avail = array();
+                            $arrext_blob = array();
+                            $arrjenis_master = array();
+                            $arrtransaksi_no = array();
+                            $arrketerangan = array();
+
+                            if (sizeof($tmpTS) > 0) {
+                                foreach ($tmpTS as $kk => $arVL) {
+                                    $id = $arVL->id;
+                                    $id_master = $arVL->id_master;
+                                    $id_top2 = $arVL->id_top;
+                                    $produk_id = $arVL->produk_id;
+                                    $arrTransactionSource[$id_top1] = $produk_id;
+                                    $arrsub_step_number[$id_top1] = $arVL->sub_step_number;
+                                    $arrstep_avail[$id_top1] = $arVL->step_avail;
+                                    $arrext_blob[$id_top1][$kk] = isset($arVL->ext_blob) ? ($arVL->ext_blob != "" ? blobDecode($arVL->ext_blob) : "") : "";
+                                }
+
+                                if (sizeof($arrext_blob[$id_top1]) > 0) {
+                                    foreach ($arrext_blob[$id_top1] as $ky => $aVal) {
+                                        if ($aVal != "") {
+                                            foreach ($arrext_blob[$id_top1][$ky]['static'] as $numb => $numData) {
+                                                $arrtransaksi_no[$id_top1][$numb] = formatField("nomer", $numb);
+                                                $arrjenis_master[$id_top1][$numb] = $numData['jenis'];
+                                                $arrketerangan[$id_top1][$numb] = $numData['keterangan'];
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            if ($arrext_blob[$id_top1][$ky] != "") {
+                                $tmp['state'] .= "<div class='panel panel-danger bg-green' style='padding: 3px;margin-bottom: 5px;'>";
+                                if ($cekStateLocation == "cabang") {
+                                    $tmp['state'] .= "<div><b>diproses oleh PUSAT</b></div>";
+                                }
+                                if (sizeof($arrtransaksi_no[$id_top1]) > 0) {
+                                    foreach ($arrtransaksi_no[$id_top1] as $numb_) {
+                                        $tmp['state'] .= "<div><span class='fa fa-check-circle text-warning'></span> " . $numb_ . "</div>";
+                                    }
+                                }
+                                $tmp['state'] .= "</div>";
+                            }
+
+                        }
+                        else {
+                            $tmp['state'] = "<span style='color:#777777'>canceled</span>";
+                        }
+
+                        $tmp['action'] = "";
+                        $nextStepNum = ($row->next_substep_num);
+                        $currentStepNum = ($row->sub_step_number);
+                        $currentStepCode = ($row->jenis);
+                        $nextStepCode = ($row->next_step_code);
+
+                        if ($row->sub_step_number > 0) {
+                            $allowFollowup = true;
+                            $actionLabel = "review " . $this->configUi[$swapJenisTr]['steps'][$currentStepNum]['label'];
+                        }
+
+                        if (isset($this->configUi[$swapJenisTr]['steps'][$nextStepNum])) {
+                            if (isset($this->accessList[$jenisTr])) {
+                                if (isset($this->accessList[$swapJenisTr][$nextStepNum][$nextStepCode]["allowFollowUp"])) {
+                                    $allowFollowup = $this->accessList[$swapJenisTr][$nextStepNum][$nextStepCode]["allowFollowUp"];
+                                    $actionLabel = $this->configUi[$swapJenisTr]['steps'][$nextStepNum]['actionLabel'];
+                                }
+                            }
+                            else {
+                                if (in_array($this->configUi[$swapJenisTr]['steps'][$nextStepNum]['userGroup'], $this->session->login['membership'])) {
+                                    $allowFollowup = true;
+                                    $actionLabel = $this->configUi[$swapJenisTr]['steps'][$nextStepNum]['actionLabel'];
+                                }
+                                else {
+                                    $allowFollowup = true;
+                                    $actionLabel = "review " . $this->configUi[$swapJenisTr]['steps'][$currentStepNum]['label'];
+                                }
+                            }
+                        }
+
+                        if ($allowFollowup) {
+                            $allowJoin = isset($this->configUi[$swapJenisTr]["steps"][$nextStepNum]['allowJoin']) && $this->configUi[$swapJenisTr]["steps"][$nextStepNum]['allowJoin'] == true ? $this->configUi[$jenisTr]["steps"][$nextStepNum]['allowJoin'] : false;
+                            $stepLabel = isset($this->configUi[$swapJenisTr]['steps'][$nextStepNum]['label']) ? $this->configUi[$swapJenisTr]['steps'][$nextStepNum]['label'] : "";
+                            $isCancelPacking = isset($this->configUi[$swapJenisTr]['steps'][$nextStepNum]['isCancelPacking']) ? $this->configUi[$swapJenisTr]['steps'][$nextStepNum]['isCancelPacking'] : false;
+                            $allowCancel = isset($this->configUi[$swapJenisTr]['steps'][$nextStepNum]['allowCancel']) ? $this->configUi[$swapJenisTr]['steps'][$nextStepNum]['allowCancel'] : false;
+
+                            $targetFollowupLink = $isCancelPacking == true ? "followupCancelPackingPrePreview" : "followupPrePreview";
+                            $followupLink = "top.$('#result').load('" . base_url() . "Transaksi/$targetFollowupLink/" . $row->transaksi_id . "/$nextStepNum/" . $row->sub_step_number . "');";
+
+                            $tmp['action'] = "<div class='input-group'>";
+                            $tmp['action'] .= "<a class='btn btn-primary btn-block' title='turn this entry into $stepLabel' href='javascript:void(0)' onClick =\"top.open_holdon();$followupLink\">" . $actionLabel . "</a>";
+                            if ($allowJoin) {
+                                $tmp['action'] .= "<span class='input-group-addon'>";
+                                $tmp['action'] .= "<a title='process many items at once' href='" . base_url() . "Transaksi/viewIncomplete/" . $this->jenisTr . "/$currentStepNum'><span class='fa fa-dedent'></span></a>";
+                                $tmp['action'] .= "</span class='input-group-addon'>";
+                            }
+                            $tmp['action'] .= "</div class='input-group'>";
+
+                            if ($allowCancel) {
+                                $tmp['action'] .= "<div class='input-group'>";
+                                $tmp['action'] .= "<a class='btn btn-primary btn-block' title='turn this entry into $stepLabel' href='javascript:void(0)' onClick =\"top.open_holdon();$followupLink\">" . $actionLabel . "</a>";
+                                if ($allowJoin) {
+                                    $tmp['action'] .= "<span class='input-group-addon'>";
+                                    $tmp['action'] .= "<a title='process many items at once' href='" . base_url() . "Transaksi/viewIncomplete/" . $this->jenisTr . "/$currentStepNum'><span class='fa fa-dedent'></span></a>";
+                                    $tmp['action'] .= "</span class='input-group-addon'>";
+                                }
+                                $tmp['action'] .= "</div class='input-group'>";
+                            }
+                        }
+                        else {
+
+                        }
+                        $arrayOnprePre[] = $tmp;
+                        $arrayOnprePreGroup[$currentStepNum][] = $tmp;
+                    }
+                }
+            }
+            else {
+                $arrayOnprePre = array();
+            }
+        }
+        else {
+            $arrayOnprePre = array();
+        }
+        //endregion prePre
+
+
+        //region lookup on-going transactions
+        $progressFields = $historyFields;
+        $progressFields['state'] = "status";
+        $progressFields['action'] = "action";
+        $steps = $this->configUi[$jenisTr]['steps'];
+
+        $arrFilters = array();
+
+        $this->load->model("MdlTransaksi");
+        $tr = new MdlTransaksi();
+        $stepCodes = array();
+        $jmlStep = count($steps);
+
+        if (isset($this->accessList[$jenisTr]) && sizeof($this->accessList) > 0) {
+            $indsteps = "(";
+            foreach ($this->accessList[$jenisTr] as $stepNumber => $stepSpec) {
+                if ($stepNumber <= $jmlStep) {
+                    foreach ($stepSpec as $targetCode => $filters) {
+                        $indsteps .= "'$targetCode',";
+                        $stepCodes[] = $targetCode;
+                        if ($filters['allowFollowUp'] == "true") {
+                            $arrFilters["allowFollowUp"][] = $targetCode;
+                        }
+
+                    }
+                }
+            }
+            $indsteps = rtrim($indsteps, ",");
+            $indsteps .= ")";
+            if (sizeof($arrFilters) > 0) {
+                $tr->addFilter("next_step_code in $indsteps");
+            }
+            else {
+                $tr->addFilter("transaksi.oleh_id='" . $this->session->login['id'] . "'");
+                $tr->addFilter("next_step_code!=''");
+            }
+        }
+        else {
+
+        }
+
+        $tr->addFilter("div_id='" . $this->session->login['div_id'] . "'");
+        $tr->addFilter("jenis_top='" . $steps[1]['target'] . "'");
+        $tr->addFilter("next_substep_code<>''");
+        $tr->addFilter("sub_step_number>0");
+        $tr->addFilter("valid_qty>0");
+        if ($this->session->login['employee_type'] == "employee_freelance") {
+            $tr->addFilter("seller_id='" . $this->session->login['id'] . "'");
+        }
+
+        $tmpHist = $tr->lookupRecentUndoneEntries_joined($sesionReplacer)->result();
+        cekBiru($this->db->last_query());
+        $arrayOnprogress = array();
+        $arrayOnprogressGroup = array();
+        $arrayOnprogressPartialMark = array();
+        $arrayOnprogressGroupPartialMark = array();
+
+        $extData = "";
+        $extact = "";
+        $selectProcessor = "";
+
+        if (sizeof($tmpHist) > 0) {
+            $arrTransID = array();
+            $arrTransTopID = array();
+            $arrIdsHist = array();
+            $arrTransHist = array();
+            $arrNextAction = array();
+            foreach ($tmpHist as $row) {
+                $arrTransID[] = $row->transaksi_id;
+                $arrTransTopID[] = $row->id_top;
+                $arrNextAction[$row->transaksi_id] = array(
+                    "next_step_num" => $row->next_substep_num,
+                    "next_step_code" => $row->next_substep_code,
+                );
+                if ($row->ids_his != "") {
+                    $hist = blobDecode($row->ids_his);
+                    foreach ($hist as $hisSpec) {
+                        $arrIdsHist[$row->id][$hisSpec['step']] = array(
+                            "step" => $hisSpec['step'],
+                            "trID" => $hisSpec['trID'],
+                            "nomer" => $hisSpec['nomer'],
+                        );
+                        $arrTransHist[] = $hisSpec['trID'];
+                    }
+                }
+                //                    arrPrint($row);
+            }
+
+            $tmpReg_result = array();
+            if (sizeof($pairRegistries) > 0) {
+                $selectKolom = implode(",", $pairRegistries) . ", transaksi_id";
+                $trReg = new MdlTransaksi();
+                $trReg->setFilters(array());
+                //            $trReg->addFilter("param='main'");
+                $trReg->setJointSelectFields($selectKolom);
+                $trReg->addFilter("transaksi_id in ('" . implode("','", $arrTransID) . "')");
+                $tmpReg = $trReg->lookupDataRegistries()->result();
+                if (sizeof($tmpReg) > 0) {
+                    foreach ($tmpReg as $regRow) {
+                        //                    arrPrintWebs($regRow);
+                        foreach ($regRow as $key_reg => $val_reg) {
+                            if ($key_reg != "transaksi_id") {
+                                $tmpReg_result[$regRow->transaksi_id][$key_reg] = blobDecode($val_reg);
+                            }
+                        }
+
+                    }
+                }
+            }
+
+
+            $arrNextPIC = callNextPIC($arrNextAction);
+
+            if (sizeof($arrIdsHist) > 0) {
+                $tr = new MdlTransaksi();
+                $tr->setFilters(array());
+                $tr->addFilter("id in ('" . implode("','", $arrTransHist) . "')");
+                $tmpTransHist = $tr->lookupAll()->result();
+
+
+                if (sizeof($tmpTransHist) > 0) {
+                    foreach ($tmpTransHist as $histSpec) {
+                        $tmpTransHist_result[$histSpec->id] = array(
+                            "oleh_id" => $histSpec->oleh_id,
+                            "oleh_nama" => $histSpec->oleh_nama,
+                        );
+                    }
+                }
+
+                foreach ($arrIdsHist as $trID => $histSpec) {
+                    foreach ($histSpec as $step => $detailSpec) {
+                        if (array_key_exists($detailSpec['trID'], $tmpTransHist_result)) {
+                            $detailSpec['main'] = $tmpTransHist_result[$detailSpec['trID']];
+                        }
+                        $arrTransMainHist[$trID][$step] = $detailSpec;
+                    }
+                }
+            }
+
+            $numb = 0;
+            foreach ($tmpHist as $row) {
+                // arrPrint($row);
+                $extHistoryFields2 = isset($arrExtHistoryFields2[$row->step_number]) ? $arrExtHistoryFields2[$row->step_number] : array();
+
+                if (sizeof($pairRegistries) > 0) {
+                    if ((sizeof($tmpReg_result) > 0) && (isset($tmpReg_result[$row->transaksi_id]))) {
+                        foreach ($tmpReg_result[$row->transaksi_id] as $param => $eReg) {
+                            switch ($param) {
+                                case "main":
+                                    foreach ($eReg as $k => $v) {
+                                        if (!isset($row->$k)) {
+                                            $row->$k = $v;
+                                        }
+                                    }
+                                    break;
+                                case "items":
+                                    if (sizeof($extHistoryFields2) > 0) {
+                                        foreach ($extHistoryFields2 as $k1 => $v1) {
+                                            if (is_array($v1)) {
+                                                $kolom = $v1['kolom'];
+                                                $format = $v1['format'];
+                                                //                                                cekHitam(":: $kolom :: $format ::");
+                                                if (!isset($row->$k1)) {
+                                                    $tmpDetail = "";
+                                                    foreach ($eReg as $eeReg) {
+                                                        $valDetail = formatField_he_format($format, $eeReg[$kolom]);
+                                                        $tmpDetail .= "<span>$valDetail</span><br>";
+                                                    }
+                                                    $row->$k1 = $tmpDetail;
+                                                }
+                                            }
+                                            else {
+                                                if (!isset($row->$k1)) {
+                                                    $tmpDetail = "";
+                                                    foreach ($eReg as $eeReg) {
+                                                        $valDetail = formatField_he_format("nomer", $eeReg[$v1]);
+                                                        $tmpDetail .= "<span>$valDetail</span><br>";
+                                                    }
+                                                    $row->$k1 = $tmpDetail;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    break;
+                            }
+                        }
+                    }
+                }
+                //arrPrint($row);
+
+
+                $numb++;
+
+                $tmp = array();
+                foreach ($historyFields as $fName => $fLabel) {
+                    if (isset($row->$fName)) {
+                        if (is_numeric($row->$fName)) {
+                            if (!isset($sumFooter[$fName])) {
+                                $sumFooter[$fName] = 0;
+                            }
+                            $sumFooter[$fName] += $row->$fName;
+                        }
+                    }
+
+                    if (is_array($fLabel)) {
+                        $hisStep = $fLabel['step'];
+                        $hisKey = $fLabel['key'];
+
+                        if (isset($row->ids_his)) {
+                            if ($hisKey == "nomer") {
+                                $returnVal = showHistoriGlobalNumbers($row->ids_his, $hisStep, true);
+                                if ($returnVal == "") {
+                                    $tmp[$fName] = "-";
+                                }
+                                else {
+                                    $tmp[$fName] = $returnVal;
+                                }
+                            }
+                            else {
+                                $ids_his_decode = blobDecode($row->ids_his);
+                                if (isset($ids_his_decode[$hisStep][$hisKey])) {
+                                    $tmp[$fName] = $ids_his_decode[$hisStep][$hisKey];
+                                }
+                                else {
+                                    $tmp[$fName] = "-";
+                                }
+                            }
+                        }
+                        else {
+                            $tmp[$fName] = "-";
+                        }
+                    }
+                    else {
+                        $tmp[$fName] = isset($row->$fName) ? formatField_he_format($fName, $row->$fName) : formatField_he_format($fName, 0);
+                    }
+
+                    if ($fName == "no") {
+                        $tmp[$fName] = formatField_he_format($fName, $numb);
+                    }
+
+                }
+
+                if (sizeof($row->cancel_packing_source_id) > 0) {
+                    arrPrint($row->cancel_packing_source_id);
+                    $trx = new MdlTransaksi();
+                    $trx->addFilter("id='" . $row->cancel_packing_source_id . "'");
+                    $tmpTrx = $trx->lookupAll()->result();
+
+                    //                        $tmp['nomer_top'] = $tmpTrx[0]->nomer;
+                    $tmp['nomer_top'] = formatField_he_format("nomer_top", $tmpTrx[0]->nomer);
+                    //                        arrPrint($tmpTrx[0]->nomer);
+                }
+
+
+                if ($row->sub_step_number > 0) {
+                    $tmp['state'] = "<span style='color:" . $this->configUi[$jenisTr]['steps'][$row->sub_step_number]['stateColor'] . "'>" . $this->configUi[$jenisTr]['steps'][$row->sub_step_number]['stateLabel'] . "</span>";
+                    $tmp['state'] .= "<br>" . createStateSign($row->sub_step_number, $row->step_avail, $jenisTr);
+                }
+                else {
+                    $tmp['state'] = "<span style='color:#777777'>canceled</span>";
+                }
+
+
+                $tmp['next_pic'] = "-";
+                if (sizeof($arrNextPIC) > 0) {
+                    if (isset($arrNextPIC[$row->next_substep_code][$row->next_substep_num])) {
+                        $next_pic = "";
+                        $nob = 1;
+                        foreach ($arrNextPIC[$row->next_substep_code][$row->next_substep_num] as $spec) {
+                            if ($row->cabang_id == $spec['cabang_id']) {
+
+                                if ($next_pic == "") {
+                                    $next_pic = "$nob. " . $spec['nama'];
+                                }
+                                else {
+                                    $nob++;
+                                    $next_pic = $next_pic . "<br>" . "$nob. " . $spec['nama'];
+                                }
+
+                            }
+
+                        }
+                        $tmp['next_pic'] = $next_pic;
+                        //                            cekHitam($next_pic);
+                    }
+                }
+
+
+                $tmp['action'] = "";
+                $nextStepNum = ($row->next_substep_num);
+                $currentStepNum = ($row->sub_step_number);
+                $currentStepCode = ($row->jenis);
+                $nextStepCode = ($row->next_step_code);
+
+
+                if ($row->sub_step_number > 0) {
+                    //                        cekHere("koq");
+                    $allowFollowup = true;
+                    $actionLabel = "review " . $this->configUi[$jenisTr]['steps'][$currentStepNum]['label'];
+                }
+
+                if (isset($this->configUi[$jenisTr]['steps'][$nextStepNum])) {
+                    if (isset($this->accessList[$jenisTr])) {
+                        if (isset($this->accessList[$jenisTr][$nextStepNum][$nextStepCode]["allowFollowUp"])) {
+                            $allowFollowup = $this->accessList[$jenisTr][$nextStepNum][$nextStepCode]["allowFollowUp"];
+                            $actionLabel = $this->configUi[$jenisTr]['steps'][$nextStepNum]['actionLabel'];
+                        }
+
+
+                    }
+                    else {
+                        if (in_array($this->configUi[$jenisTr]['steps'][$nextStepNum]['userGroup'], $this->session->login['membership'])) {
+                            $allowFollowup = true;
+                            $actionLabel = $this->configUi[$jenisTr]['steps'][$nextStepNum]['actionLabel'];
+                        }
+                        else {
+                            $allowFollowup = true;
+                            $actionLabel = "review " . $this->configUi[$jenisTr]['steps'][$currentStepNum]['label'];
+                        }
+                    }
+                }
+                $req_cancel_qty = $row->req_cancel_qty != '' ? $row->req_cancel_qty : 0;
+                $valid_qty = $row->valid_qty != '' ? $row->valid_qty : 0;
+
+
+                if ($allowFollowup) {
+                    $allowJoin = isset($this->configUi[$jenisTr]["steps"][$nextStepNum]['allowJoin']) && $this->configUi[$jenisTr]["steps"][$nextStepNum]['allowJoin'] == true ? $this->configUi[$jenisTr]["steps"][$nextStepNum]['allowJoin'] : false;
+                    $stepLabel = isset($this->configUi[$jenisTr]['steps'][$nextStepNum]['label']) ? $this->configUi[$jenisTr]['steps'][$nextStepNum]['label'] : "";
+                    $isCancelPacking = isset($this->configUi[$jenisTr]['steps'][$nextStepNum]['isCancelPacking']) ? $this->configUi[$jenisTr]['steps'][$nextStepNum]['isCancelPacking'] : false;
+                    $allowCancel = isset($this->configUi[$jenisTr]['steps'][$nextStepNum]['allowCancel']) ? $this->configUi[$jenisTr]['steps'][$nextStepNum]['allowCancel'] : false;
+                    $followupMulti = isset($this->configUi[$jenisTr]['steps'][$nextStepNum]['followupMulti']) ? $this->configUi[$jenisTr]['steps'][$nextStepNum]['followupMulti'] : false;
+
+
+                    // ceklIme($nextStepNum);
+                    //logic untuk closing next step num == sizeof step
+                    if (($nextStepNum == sizeof($this->configUi[$jenisTr]["steps"]) && ($followupMulti == true))) {
+                        $targetFollowupLink = "followupMultiPrePreview";
+                        $followupLink = "top.$('#result').load('" . MODUL_PATH . "FollowUp/$targetFollowupLink/$jenisTr/" . $row->id_master . "/$nextStepNum/" . $row->sub_step_number . "/$currentStepCode" . "');";
+                    }
+                    else {
+                        $targetFollowupLink = $isCancelPacking == true ? "followupCancelPackingPrePreview" : "followupPrePreview";
+                        $followupLink = "top.$('#result').load('" . MODUL_PATH . "FollowUp/$targetFollowupLink/$jenisTr/" . $row->transaksi_id . "/$nextStepNum/" . $row->sub_step_number . "');";
+                    }
+
+
+                    $tmp['action'] = "<div class='input-group'>";
+                    $tmp['action'] .= "<a class='btn btn-primary btn-block' title='turn this entry into $stepLabel' href='javascript:void(0)' 
+                                onClick =\"top.open_holdon();$followupLink\">" . $actionLabel . "</a>";
+                    $tmp['action'] .= "</div class='input-group'>";
+                    if ($req_cancel_qty > 0 && $valid_qty == 0) {
+                        $tmp['action'] = "<div class='btn-group' role='group' aria-label='cancel packing on progress'>";
+                        $tmp['action'] .= "<button type='button' disabled class='btn btn-warning' title='sedang dalam process cancel packing' href='javascript:void(0)'>menuggu approve cancel</button>";
+                        //                            $tmp['action'] .= "<button type='button' class='btn btn-warning' title='sedang dalam process cancel packing' href='javascript:void(0)'>x</button>";
+                        $tmp['action'] .= "</div>";
+                    }
+
+
+                }
+                else {
+
+                }
+
+                $tmpMark = array();
+                $tmp['keterangan'] = "-";
+                if ($row->partial == 1) {
+                    $tmpMark['style'] = "background-color:yellow;";
+                    $tmp['keterangan'] = "<span style='color:red;'>transaksi diproses sebagian</span>";
+                }
+
+
+                $arrayOnprogress[] = $tmp;
+                $arrayOnprogressGroup[$currentStepNum][] = $tmp;
+
+                $arrayOnprogressPartialMark[] = $tmpMark;
+                $arrayOnprogressGroupPartialMark[$currentStepNum][] = $tmpMark;
+
+                //                    break;
+            }
+        }
+
+
+        //endregion
+
+
+        //region link to add new transaction
+        if (placeCanMakeTrans_he_menu($this->session->login['membership'], $this->session->login['cabang_id'], $this->session->login['gudang_id'], $this->jenisTr, $this->configUiJenis)) {
+            $createIndexes = (null != $this->config->item("transaksi_createIndex")) ? $this->config->item("transaksi_createIndex") : array();
+            $isDisableMakeTrans = isset($this->configUi[$this->jenisTr]['isDisableMakeTrans']) ? $this->configUi[$this->jenisTr]['isDisableMakeTrans'] : false;
+            if (array_key_exists($this->jenisTr, $createIndexes)) {
+                $targetUrl = MODUL_PATH . $createIndexes[$this->jenisTr] . "/" . $this->jenisTr;
+            }
+            else {
+                $targetUrl = MODUL_PATH . "Create/index/" . $this->jenisTr;
+            }
+
+            if ($isDisableMakeTrans) {
+                $addLink = null;
+            }
+            else {
+                $addLink = array(
+                    "link" => $targetUrl,
+                    "label" => "<span class='glyphicon glyphicon-plus'></span> create new " . $this->configUi[$jenisTr]["steps"][1]['label'],
+                );
+            }
+
+        }
+        else {
+            $addLink = null;
+        }
+        //endregion
+
+        $jenisTrsub = isset($_GET['step']) ? $_GET['step'] : 1;
+        $historyFieldsDt = isset($this->configUi[$jenisTr]['historyFields'][$jenisTrsub]) ? $this->configUi[$jenisTr]['historyFields'][$jenisTrsub] : $this->configUi[$jenisTr]['shortHistoryFields'];
+        $availDbTable = $tr->getAvailTable($historyFieldsDt);
+
+        //-----------------------------------------------------
+        $arrJenisTrCek = array("587", "687", "1587", "1687");
+        if (in_array($jenisTr, $arrJenisTrCek)) {
+            $transaksiName = isset($this->configUi[$jenisTr]['label']) ? $this->configUi[$jenisTr]['label'] : NULL;
+            $subplace = isset($this->configUi[$jenisTr]['steps'][1]['subplace']) ? $this->configUi[$jenisTr]['steps'][1]['subplace'] : NULL;
+            if ($subplace != NULL) {
+                if (($subplace == "warehouse") && ($this->session->login['gudang_id'] < 0)) {
+                    //                    cekPink("SESUAI");
+                    $msg = NULL;
+                }
+                elseif (($subplace == "warehouse_ng") && ($this->session->login['gudang_id'] > 0)) {
+                    //                    cekPink("SESUAI NOT GOOD");
+                    $msg = NULL;
+                }
+                else {
+                    $msg = "Anda tidak memiliki kewenangan untuk membuat request $transaksiName";
+                    $addLink = array();
+                }
+            }
+        }
+
+        //-----------------------------------------------------
+        $endtime = microtime(true); // Bottom of page
+        $val = $endtime - $starttime;
+        //        cekMerah("Grabing data " . $val . " Seconds");
+
+        //region prepare params to viewer
+
+        $data = array(
+            "mode" => isset($this->configUi[$jenisTr]["mode"]) ? $this->configUi[$jenisTr]["mode"] : $this->uri->segment(3),
+            "isMobile" => $isMob,
+            "errMsg" => $this->session->errMsg,
+            "template" => $this->configUi[$jenisTr]["template"],
+            "title" => $this->configUi[$jenisTr]["label"],
+            "subTitle" => $this->configUi[$jenisTr]["steps"][1]['label'],
+            "jenisTr" => $jenisTr,
+            "trName" => $this->configUi[$jenisTr]["label"],
+            'addLink' => $addLink,
+            "allSteps" => $this->allSteps,
+            "historyTitle" => "<span class='glyphicon glyphicon-time'></span> recent " . $this->configUi[$jenisTr]["label"] . " histories",
+            "arrayHistoryLabels" => array("dtime" => "time") + $historyFields,
+            "arrayHistoryLabelsDt" => $historyFieldsDt,
+            "availDbTable" => $availDbTable,
+            "arrayHistory" => isset($arrayHistory) ? $arrayHistory : array(),
+            "onprogressTitle" => "<span class='glyphicon glyphicon-alert'></span> TRANSAKSI YANG PERLU ACTION ",
+            "arrayProgressLabels" => $progressFields,
+            "arrayOnProgressToPay" => $paymentConfig,
+            "itemLabels" => isset($itemLabels) ? $itemLabels : "",
+            "srcLabel" => isset($srcLabel) ? $srcLabel : "",
+            //            "arrayOnProgress" => array_merge($arrayOnprogress, $arrayOnprePre, $arrayOnpreDistribution),
+            "steps" => $steps,
+            "arrayOnProgress" => (isset($arrayOnprogress) && sizeof($arrayOnprogress) > 0) ? $arrayOnprogress : array(),
+            "arrayOnprogressGroup" => (isset($arrayOnprogressGroup) && (sizeof($arrayOnprogressGroup) > 0)) ? $arrayOnprogressGroup : array(),
+
+            "arrayOnprePre" => $arrayOnprePre,
+            "arrayOnprePreGroup" => $arrayOnprePreGroup,
+
+            "arrayOnpreDistribution" => isset($arrayOnpreDistribution) ? $arrayOnpreDistribution : array(),
+            "arrayOnpreDistributionGroup" => isset($arrayOnpreDistributionGroup) ? $arrayOnpreDistributionGroup : array(),
+
+            "entities" => isset($entities) ? $entities : array(),
+            "recapTitle" => "<span class='fa fa-newspaper-o'></span> today " . $this->configUi[$jenisTr]["label"] . " reports",
+            "arrayRecapLabels" => isset($recapLabels) ? $recapLabels : array(),
+            "arrayRecap" => isset($arrayRecap) ? $arrayRecap : array(),
+
+            "onprogressViewTitle" => "<span class='fa fa-eye'></span> show incomplete step " . $this->configUi[$jenisTr]["label"],
+            "onprogressViewSubTitle" => "<span class='text-black'>(daftar transaksi yang masih stanby di cabang tujuan)</span>",
+            "arrayOnProgressView" => isset($arrayOnProgressView) ? $arrayOnProgressView : array(),
+            "stepHistoryFields" => isset($stepHistoryFields) ? $stepHistoryFields : array(),
+
+            "selectProcessor" => $selectProcessor,
+            "sumFooter" => (isset($sumFooterResult) && sizeof($sumFooterResult) > 0) ? $sumFooter : array(),
+            "scriptBottom" => $scriptBottom,
+            "btnLabel" => $extData,
+            "actionTarget" => $extact,
+            "sumFooter" => isset($sumFooter) ? $sumFooter : "",
+
+            "arrayOnprogressPartialMark" => (isset($arrayOnprogressPartialMark) && sizeof($arrayOnprogressPartialMark) > 0) ? $arrayOnprogressPartialMark : array(),
+            "arrayOnprogressGroupPartialMark" => (isset($arrayOnprogressGroupPartialMark) && sizeof($arrayOnprogressGroupPartialMark) > 0) ? $arrayOnprogressGroupPartialMark : array(),
+
+            "defaultItemTrgEditable" => isset($defaultItemTrgEditable) ? $defaultItemTrgEditable : array(),
+            "editItemTrg" => MODUL_PATH . "_followupLiveEdit/editEfaktur/" . $this->jenisTr . "/",
+        );
+        //endregion
+        $this->load->view("transaksi", $data);
+    }
+
+    public function viewRequestItems()
+    {
+        session_write_close();
+        $origJenisTr = $this->uri->segment(4);
+        $jenisTr = isset($this->configUi[$origJenisTr]['aliasMainTrans']) ? $this->configUi[$origJenisTr]['aliasMainTrans'] : $origJenisTr;
+
+        $this->jenisTr = $jenisTr;
+        // $cCode = $this->cCode;
+        $cCode = "_TR_" . $this->jenisTr;
+        $cCodeOrig = "_TR_" . $origJenisTr;
+
+        $historyFields = isset($this->configUi[$jenisTr]['shortHistoryFields']) ? $this->configUi[$jenisTr]['shortHistoryFields'] : array();
+        $tabHistoryFields = isset($this->configUi[$jenisTr]['tabHistoryFields']) ? $this->configUi[$jenisTr]['tabHistoryFields'] : array();
+        $tabFieldsItems = isset($this->configUi[$jenisTr]['tabFieldsItems']) ? $this->configUi[$jenisTr]['tabFieldsItems'] : array();
+        $pairRegistries = isset($this->configUi[$jenisTr]['pairRegistries']) ? $this->configUi[$jenisTr]['pairRegistries'] : array();
+        $dueDateAllow = isset($this->configUi[$jenisTr]['updateDueDate']) ? $this->configUi[$jenisTr]['updateDueDate'] : array();
+
+
+        $mb = New MobileDetect();
+        $isMob = $mb->isMobile();
+
+        if ($isMob) {
+            $historyFields = isset($this->configUi[$jenisTr]['compactHistoryFields']) ? $this->configUi[$jenisTr]['compactHistoryFields'] : array();
+        }
+        $glanceHistoryFields = isset($this->configUi[$jenisTr]['glanceHistoryFields']) ? $this->configUi[$jenisTr]['glanceHistoryFields'] : array("nomer" => "receipt no");
+        $glanceHistoryFields2 = array("nomer" => "receipt no"); //init;
+
+        //region lookup on-going transactions
+        $arrayOnprogress = array();
+        $arrOver_due = array();
+        $progressFields = $historyFields;
+
+
+        //region lookup on-going from connected requests
+        if (!isset($_SESSION['undoneQty'])) {
+            $_SESSION['undoneQty'] = array();
+        }
+        if (!isset($_SESSION['undoneQty'][$this->jenisTr])) {
+            $_SESSION['undoneQty'][$this->jenisTr] = 0;
+        }
+
+        $progress2Fields = array();
+        $arrayOnprogress2 = array();
+        $tmpTabData = array();
+        $reqFormTarget = "";
+        $allowMultiSelect = false;
+        $needToClear = false;
+        $allowMultiSelect = isset($this->configUi[$origJenisTr]['tabRequestCode']['allowMultiSelect']) ? $this->configUi[$origJenisTr]['tabRequestCode']['allowMultiSelect'] : false;
+
+
+        if (isset($this->configUi[$this->uri->segment(4)]['tabRequestCode'])) {
+            $masterRefCode = $this->configUi[$this->uri->segment(4)]['tabRequestCode']['masterCode'];
+            $stateRefCode = $this->configUi[$this->uri->segment(4)]['tabRequestCode']['stateCode'];
+            $stateRefNum = $this->configUi[$this->uri->segment(4)]['tabRequestCode']['stepNumber'];
+            cekHere("$masterRefCode :: $stateRefCode :: $stateRefNum");
+            $progress2Fields = isset($this->configUi[$masterRefCode]['shortHistoryFields']) ? $this->configUi[$masterRefCode]['shortHistoryFields'] : "";
+            $glanceHistoryFields2 = isset($this->configUi[$masterRefCode]['glanceHistoryFields']) ? $this->configUi[$masterRefCode]['glanceHistoryFields'] : array("nomer" => "receipt no");
+
+            $reqFormTarget = MODUL_PATH . get_class($this) . "/swapFrom/" . $this->uri->segment(4);
+
+            $this->load->model("MdlTransaksi");
+            $tr = new MdlTransaksi();
+            $tr->addFilter("transaksi.cabang_id='" . $this->session->login['cabang_id'] . "'");
+            $tr->addFilter("transaksi.jenis_master='" . $masterRefCode . "'");
+            $tr->addFilter("transaksi.jenis='" . $stateRefCode . "'");
+            $tr->addFilter("transaksi.step_current='" . $stateRefNum . "'");
+            if (isset($_GET['test']) && ($_GET['test'] == 1)) {
+                //                $tmpByReq = $tr->lookupRecentHistories()->result();
+
+                $tr->addFilterJoin("transaksi_data.next_substep_code='" . $masterRefCode . "'");
+                $tr->addFilterJoin("transaksi_data.produk_jenis='supplies'");
+                $tr->addFilterJoin("transaksi_data.valid_qty>0");
+                $tmpByReq = $tr->lookupJoined();
+            }
+            else {
+                $tmpByReq = array();
+            }
+            //            cekHijau(__LINE__ . "<br>" . $this->db->last_query());
+            //           matiHere(sizeof($tmpByReq));
+
+            $needToClear = false;
+            if (isset($_SESSION[$cCode]['items']) && sizeof($_SESSION[$cCode]['items']) > 0) {
+                $needToClear = true;
+            }
+
+            $_SESSION['undoneQty'][$this->jenisTr] = sizeof($tmpByReq);
+
+            //arrPrint($tmpByReq);
+            if (sizeof($tmpByReq) > 0) {
+                $arrIds = array();
+                foreach ($tmpByReq as $row) {
+                    $arrIds[] = $row->id;
+                }
+
+                //                $tr->setFilters(array());
+                //                $tr->addFilterJoin("transaksi_data.transaksi_id IN ('" . implode("','", $arrIds) . "')");
+                //                $tr->addFilterJoin("transaksi_data.next_substep_code='" . $masterRefCode . "'");
+                //                $tr->addFilter("transaksi.link_id=0");
+                //                $tr->addFilterJoin("transaksi_data.produk_jenis='supplies'");
+                //                $tr->addFilterJoin("transaksi_data.valid_qty>0");
+                //                $trTr = $tr->lookupJoined();
+                //                cekMerah(__LINE__ . " -/- " . $this->db->last_query());
+                //arrPrint($trTr);
+                $trTr = $tmpByReq;
+                $arrayTabHistory = array();
+                if (sizeof($trTr) > 0) {
+                    $tmpItems = array();
+                    $sumValidQty = array();
+                    $sumPrdOrdJml = array();
+                    $listTrxByProd = array();
+                    $reqCtr = 0;
+                    foreach ($trTr as $ky => $rows) {
+                        $reqCtr++;
+                        $totalSumPrdOrdJmlTR = 0;
+                        if (!isset($sumValidQtyID[$rows->produk_id])) {
+                            $sumValidQtyID[$rows->produk_id] = 0;
+                        }
+                        if (!isset($sumPrdOrdJmlID[$rows->produk_id])) {
+                            $sumPrdOrdJmlID[$rows->produk_id] = 0;
+                        }
+                        if (!isset($sumValidQtyTR[$rows->transaksi_id][$rows->produk_id])) {
+                            $sumValidQtyTR[$rows->transaksi_id][$rows->produk_id] = 0;
+                        }
+                        if (!isset($sumPrdOrdJmlTR[$rows->transaksi_id][$rows->produk_id])) {
+                            $sumPrdOrdJmlTR[$rows->transaksi_id][$rows->produk_id] = 0;
+                        }
+                        $sumValidQtyID[$rows->produk_id] += $rows->valid_qty;
+                        $sumValidQtyTR[$rows->transaksi_id][$rows->produk_id] += $rows->valid_qty;
+                        $listTrxByProd[$rows->produk_id][] = $rows->nomer_top;
+                        $sumPrdOrdJmlID[$rows->produk_id] += $rows->valid_qty;
+                        $sumPrdOrdJmlTR[$rows->transaksi_id][$rows->produk_id] += $rows->valid_qty;
+                        $arrProduk[$rows->transaksi_id][$rows->produk_id] = "<div>" . $rows->produk_nama . "</div>";
+                        $needToClear = false;
+                        if (isset($_SESSION[$cCode]['items']) && sizeof($_SESSION[$cCode]['items']) > 0) {
+                            $needToClear = true;
+                        }
+
+                        foreach ($tabHistoryFields as $key => $row) {
+                            //cekHere($key);
+                            switch ($key) {
+                                case "vendor_id":
+                                    break;
+                                case "transaksi_id":
+                                    $totalSumPrdOrdJmlTR = 0;
+                                    $inputType = $allowMultiSelect == true ? "checkbox" : "radio";
+                                    foreach ($sumPrdOrdJmlTR[$rows->transaksi_id] as $pid => $val) {
+                                        $totalSumPrdOrdJmlTR += $val;
+                                    };
+                                    $produk_btn = "<span href='" . base_url() . "Addons/ViewDetails/index/" . $rows->transaksi_id . "' name='qtips' class='btn btn-sm'> berisi " . sizeof($sumPrdOrdJmlTR[$rows->transaksi_id]) . " item, Total " . $totalSumPrdOrdJmlTR . " unit  </span>";
+                                    $clickEvent = "";
+                                    if ($inputType == "radio" && !$needToClear) {
+                                        $clickEvent = "onclick=\"document.getElementById('$key').submit()\"";
+                                    }
+
+                                    $transaksi_id = array(
+                                        "select" => "<input type=$inputType name='trID[]' value='" . $rows->transaksi_id . "' id='select_" . $key . "_" . $reqCtr . "' $clickEvent>",
+                                        "nomer" => formatField_he_format('nomer', $rows->nomer),
+                                        "nomer_top" => formatField_he_format('nomer_top', $rows->nomer_top),
+                                        "produk_id" => $rows->transaksi_id,
+                                        "dtime" => formatField_he_format('dtime', $rows->dtime) . "<br><span class='meta'>" . timeSince(strtotime($rows->dtime)) . "</span>",
+                                        "oleh_nama" => $rows->oleh_nama,
+                                        "cabang2_nama" => $rows->cabang2_nama,
+                                        "purchased" => 0,
+                                        "arrProduk" => $produk_btn,
+                                        "produk_nama" => $rows->produk_nama,
+                                        "valid_qty" => $sumValidQtyTR[$rows->transaksi_id][$rows->produk_id],
+                                        "produk_ord_jml" => $sumPrdOrdJmlTR[$rows->transaksi_id][$rows->produk_id],
+                                    );
+                                    $nextStepNum = $rows->next_step_num;
+                                    $followupLink = "top.$('#result').load('" . MODUL_PATH . "FollowUp/followupPrePreview/" . $this->jenisTr . "/" . $rows->transaksi_id . "/$nextStepNum/" . $rows->sub_step_number . "');";
+
+                                    $actionLabel = "reject";
+                                    $tmp = "<div class='input-group'>";
+                                    $tmp .= "<a class='btn btn-danger btn-block' title='' href='javascript:void(0)' 
+                                        onClick =\"$followupLink\">" . $actionLabel . "</a>";
+
+                                    $tmp .= "</div class='input-group'>";
+                                    $transaksi_id['action'] = $tmp;
+
+                                    $tmpTabData[$key][$rows->transaksi_id] = $transaksi_id;
+                                    break;
+                                case "produk_id":
+                                    $inputType = $allowMultiSelect == true ? "checkbox" : "radio";
+                                    $arrTrxId = $listTrxByProd[$rows->produk_id];
+                                    $listingTrx = array();
+                                    foreach ($arrTrxId as $pid => $nomer) {
+                                        $listingTrx[] = formatField_he_format('nomer_top', $nomer);
+                                    }
+                                    $clickEvent = "";
+                                    if ($inputType == "radio" && !$needToClear) {
+                                        $clickEvent = "onclick=\"document.getElementById('$key').submit()\"";
+                                    }
+
+                                    $produk_id = array(
+                                        "select" => "<input type=$inputType name='prdID[]' value='" . $rows->produk_id . "' id='select_" . $key . "_" . $reqCtr . "' $clickEvent>",
+                                        "produk_id" => $rows->produk_id,
+                                        "dtime" => formatField_he_format('dtime', $rows->dtime) . "<br><span class='meta'>" . timeSince(strtotime($rows->dtime)) . "</span>",
+                                        "produk_nama" => $rows->produk_nama,
+                                        "nomer_top" => implode("<br>", $listingTrx),
+                                        "produk_ord_jml" => $sumPrdOrdJmlID[$rows->produk_id],
+                                    );
+
+                                    $tmpTabData[$key][$rows->produk_id] = $produk_id;
+                                    break;
+                            }
+
+                        }
+
+                    }
+
+                    $arrayOnprogress2 = $tmpTabData;
+                }
+            }
+            if (isset($_SESSION[$cCode]['items']) && sizeof($_SESSION[$cCode]['items']) > 0) {
+                $needToClear = true;
+            }
+        }
+        //endregion
+        cekHitam(":: cetak onProgress2 ::");
+        arrPrintWebs($arrayOnprogress2);
+
+
+        $data = array(
+            "mode" => $this->uri->segment(3),
+            "isMobile" => $isMob,
+            "arrayProgressLabels" => $progressFields,
+            "arrayProgress2Labels" => $glanceHistoryFields2,
+            "arrayOnProgress" => $arrayOnprogress,
+            "arrayOnProgress2" => $arrayOnprogress2,
+            "needToClear" => $needToClear,
+            "reqFormTarget" => $reqFormTarget,
+            "allowMultiSelect" => $allowMultiSelect,
+            "overDue" => $arrOver_due,
+            "tabFieldsItems" => $tabFieldsItems,
+            "tabHistoryFields" => $tabHistoryFields,
+            "clearCartTarget" => MODUL_PATH . "_shoppingCart/reset/" . $this->jenisTr,
+            "scriptBottom" => "",
+        );
+
+        $this->load->view("transaksi", $data);
+
+    }
+
+    //done update modul
+    public function viewResume()
+    {
+        // arrPrint($this->uri->segment_array());
+        $globalVars = array();
+        $no = $this->uri->segment(5);
+        // $this->jenisTr = explode(".", $no)[0];
+        $cCode = $this->cCode;
+        $this->load->config("heAccounting");
+        $accountChildsLinks = $this->config->item("accountChildsLinks");
+
+        $this->load->model("MdlTransaksi");
+        // $this->load->model("Mdls/MdlMongoMother");
+        $tr = new MdlTransaksi();
+        $tr->addFilter("nomer='$no'");
+        $tmp1 = $tr->lookupAll()->result();
+        if (sizeof($tmp1[0]) > 0) {
+            foreach ($tmp1[0] as $tmpKey => $tmpVal) {
+                $rkey_field = $tmpKey;
+                if ($rkey_field == "nomer") {
+                    $rkey_field = "nomer_nolink";
+                }
+//                $globalDatas[$rkey] = formatField_he_format($rkey_field, $rval, "", "");
+                $globalVars[$tmpKey] = formatField_he_format($rkey_field, $tmpVal, "", "");
+            }
+        }
+        $jenisMasterID = $tmp1[0]->id_master;
+        $jenisMasterTrans = $tmp1[0]->jenis_master;
+        $transaksiID = $tmp1[0]->id;
+        $transaksiTopID = $tmp1[0]->id_top;
+        $step_number = $tmp1[0]->step_number < 1 ? 1 : $tmp1[0]->step_number;
+        $configUiJenis = loadConfigModulJenis_he_misc($jenisMasterTrans, "coTransaksiUi");
+        $globalVars['transaksi_nama'] = $configUiJenis['label'];
+        $globalVars["transaksi_nama_" . $step_number] = $configUiJenis['steps'][$step_number]["label"];
+        $globalVars["transaksi_actionLabel"] = $configUiJenis['steps'][$step_number]["actionLabel"];
+        $pairRegistry = isset($configUiJenis["pairRegistries"]) ? $configUiJenis["pairRegistries"] : array("main", "items", "main_elements");
+        $configNotes = isset($configUiJenis["canceledLabel"][$step_number]) ? $configUiJenis["canceledLabel"][$step_number] : NULL;
+//cekHere("[$transaksiID]");
+        // membaca status edit di TOPID
+        $tr = new MdlTransaksi();
+        $tr->addFilter("id='$transaksiTopID'");
+        $tmpTop = $tr->lookupAll()->result();
+        $arrTopEdit = array();
+        if (sizeof($tmpTop) > 0) {
+            if ((isset($tmpTop[0]->status_edit)) && ($tmpTop[0]->status_edit == 1)) {
+                $arrTopEdit[$transaksiTopID] = array(
+                    "status_edit" => $tmpTop[0]->status_edit,
+                    "edit_dtime" => $tmpTop[0]->edit_dtime,
+                    "edit_id" => $tmpTop[0]->edit_id,
+                    "edit_name" => $tmpTop[0]->edit_name,
+                );
+            }
+        }
+
+//        cekHere("[$transaksiID]");
+        //region swap from registry
+        $pairAddRegistry = array("main_elements");
+        foreach ($pairAddRegistry as $regkey) {
+            $pairRegistry[] = $regkey;
+        }
+//        arrPrint($pairRegistry);
+        $tr = new MdlTransaksi();
+        $tr->setFilters(array());
+        $tr->setJointSelectFields($pairRegistry);//select fields jika ada, atau biarkana array untuk reset
+        $tr->addFilter("transaksi_id='$transaksiID'");
+        $tmpReg = $tr->lookupDataRegistries()->result();
+        showlast_query("hitam");
+        if (sizeof($tmpReg) > 0) {
+            if (sizeof($tmpReg) > 0) {
+                foreach ($tmpReg as $eParams) {
+                    foreach ($pairRegistry as $param) {
+
+                        if ($eParams->$param == null) {
+                            $eParams->$param = blobEncode(array());
+                        }
+                        $$param = blobDecode($eParams->$param);
+                    }
+                }
+            }
+        }
+        //endregion
+        // arrPrint($main_elements);
+        $deliveryDetail = array();
+//        $deliveryDetail = blobDecode($main_elements["deliveryDetails"]["contents"]);
+        // arrPrint($main_elements["deliveryDetails"]["contents"]);
+//        arrPrint($deliveryDetail);
+
+        //region signatures
+        $signNumbers = array();
+        $signValues = array();
+        $signExtValues = array();
+        $trs = new MdlTransaksi();
+        $trs->setFilters(array());
+        $masterID = isset($tmp1[0]->id_master) ? $tmp1[0]->id_master : 0;
+        $tmpSign = $trs->lookupSignaturesByMasterID($masterID)->result();
+        //         cekLime($this->db->last_query());
+        // arrPrint($tmpSign);
+        $arrCounters = blobDecode($tmp1[0]->counters);
+        $urutCounters = NULL;
+        if (sizeof($arrCounters) > 0) {
+            $key2 = $tmp1[0]->jenis . "|" . $tmp1[0]->cabang_id;
+            $urutCounters = digit_5($arrCounters["stepCode|placeID"][$key2]);
+        }
+        if ($urutCounters != NULL) {
+            $urutCounters = "-$urutCounters";
+        }
+
+        if (isset($this->configUi[$tmp1[0]->jenis_master]['resumeFieldNames'])) {
+            $resumeFields = $this->configUi[$tmp1[0]->jenis_master]['resumeFieldNames']['selectFields'];
+            $resumeTitle = $this->configUi[$tmp1[0]->jenis_master]['resumeFieldNames']['title'];
+            $resumeName = isset($tmp1[0]->$resumeFields) ? $tmp1[0]->$resumeFields : "";
+        }
+        else {
+            $resumeTitle = "";
+            $resumeName = "";
+        }
+
+        $arrSignName = array();
+        if (sizeof($tmpSign) > 0) {
+            foreach ($tmpSign as $ii => $row) {
+                $signValues['sign_' . $row->id . '_' . $row->step_number] = array(
+                    "title" => isset($this->configUi[$tmp1[0]->jenis_master]['steps'][$row->step_number]['label']) ? $this->configUi[$tmp1[0]->jenis_master]['steps'][$row->step_number]['label'] : "",
+                    "label" => isset($this->configUi[$tmp1[0]->jenis_master]['steps'][$row->step_number]['stateCaption']) ? $this->configUi[$tmp1[0]->jenis_master]['steps'][$row->step_number]['stateCaption'] : "",
+                    "dtime" => $row->dtime,
+
+                    "nomer" => formatField_he_format("nomer_nolink", $row->nomer),
+                    "nomer_orig" => $row->nomer,
+
+                    "oleh" => isset($row->oleh_nama) ? $row->oleh_nama : "",
+                    "caption_department" => isset($this->config->item("userGroup")[$row->group_code]) ? $this->config->item("userGroup")[$row->group_code] : "",
+                    "prev_id" => isset($row->prev_id) ? $row->prev_id : 0,
+                    "link_id" => isset($row->transaksi_id) ? $row->transaksi_id : 0,
+                );
+                $arrSignName[$ii] = array(
+                    "nama" => $row->oleh_nama,
+                    "dtime" => $row->dtime,
+                );
+            }
+        }
+        $signStr = "";
+        //endregion
+
+        //entry points
+        $trep = new MdlTransaksi();
+        //        $tmpEP = $trep->lookupEntryPoints_joined($masterID)->result();
+        $tmpEP = $trep->lookupEntryPoints($masterID)->result();
+        // showLast_query("biru");
+
+        $epValues = array();
+        if (sizeof($tmpEP) > 0) {
+            foreach ($tmpEP as $ii => $row) {
+                $jenisEx = explode("_", $row->jenis);
+                $jenis = $jenisEx[0];
+                $counterDecode = blobDecode($row->counters);
+                $counterjenis = $jenis . "|" . $row->cabang_id;
+                $counterjenismasterID = $jenis . "|" . $row->id_master;
+                $counterGlobal = $counterDecode['stepCode|placeID'][$counterjenis];
+                $counterMasterIDGlobal = isset($counterDecode['stepCode|masterID'][$counterjenismasterID]) ? $counterDecode['stepCode|masterID'][$counterjenismasterID] : 0;
+                $cGlobals = digit_5($counterGlobal);
+                $cMasterIDGlobals = $counterMasterIDGlobal > 0 ? digit_5($counterMasterIDGlobal) : 0;
+
+
+                //                $epValues['sign_' . $row->transaksi_id . '_' . $row->step_number] = array(
+                $epValues['sign_' . $row->id . '_' . $row->step_number] = array(
+                    "title" => isset($this->configUi[$row->jenis_master]['steps'][$row->step_number]['label']) ? $this->configUi[$row->jenis_master]['steps'][$row->step_number]['label'] : "",
+                    "cabang_nama" => $row->cabang_nama,
+                    "label" => $row->jenis_label,
+                    "dtime" => $row->dtime,
+                    //                    "dtime" => isset($arrSignName[$ii]['dtime']) ? $arrSignName[$ii]['dtime'] : $row->dtime,
+                    "nomer" => formatField_he_format("nomer_nolink", $row->nomer),
+                    "nomer_orig" => $row->nomer,
+                    "oleh" => $row->oleh_nama,
+                    //                    "oleh" => isset($arrSignName[$ii]['nama']) ? $arrSignName[$ii]['nama'] : $row->oleh_nama,
+                    "caption_department" => "text",
+                    "deskripsi" => $row->deskripsi,
+                    "link_id" => $row->link_id,
+                    "global_counter" => $cGlobals,
+                    "master_id_global_counter" => $cMasterIDGlobals,
+                    "jenis" => $jenis,
+                );
+            }
+        }
+
+
+        $signArray = sizeof($epValues) > 0 ? $epValues : $signValues;
+        //arrPrint($signArray);
+
+        if (sizeof($signArray) > 0) {
+            $signStr .= "<div class='panel table-responsive'>";
+            $signStr .= "<h4 class='text-blue'><span class='fa fa-sign-in'></span> entry points </h4>";
+
+            $signStr .= "<h5 class='text-blue'><span class='fa fa-tasks'></span> $resumeTitle  $resumeName</h5>";
+            $signStr .= "<table class='table table-condensed'>";
+            $signStr .= "<tr bgcolor='#f0f0f0'>";
+            $signStr .= "<td class='text-muted'>date</td>";
+            $signStr .= "<td class='text-muted'>title</td>";
+            $signStr .= "<td class='text-muted'>branch</td>";
+            $signStr .= "<td class='text-muted'>transaction number</td>";
+            $signStr .= "<td class='text-muted'>person</td>";
+            $signStr .= "<td class='text-muted'>tool</td>";
+            foreach ($signArray as $k => $sSpec) {
+//                arrPrintPink($sSpec);
+                $jenis = $sSpec['jenis'];
+                $signDeskripsi = isset($sSpec['deskripsi']) ? " (" . $sSpec['deskripsi'] . ")" : "";
+                $nomerOrig = $sSpec['nomer_orig'];
+                $nomerOrigEx = explode("_", $nomerOrig);
+                $nomerOrigNota = $nomerOrigEx[0];
+                $nomerView = $nomerOrigNota . "-" . $sSpec['global_counter'];
+                $nomerViewEdit = $nomerOrigNota . "-" . $sSpec['master_id_global_counter'];
+                $nomerViewFinal = $jenis == "582spoe" ? $nomerViewEdit : $nomerView;
+
+                $oleh_nama = isset($arrSignName[$k]) ? $arrSignName[$k] : $sSpec['oleh'];
+
+
+                $edit_description = "";
+                if (isset($arrTopEdit[$sSpec['link_id']])) {
+                    $edit_dtime = formatField_he_format("date_time", $arrTopEdit[$sSpec['link_id']]['edit_dtime']);
+                    $edit_nama = $arrTopEdit[$sSpec['link_id']]['edit_name'];
+                    $edit_description = "<span style='color:red;'>Edited by $edit_nama, $edit_dtime</span>";
+                }
+
+
+                $signStr .= "<tr>";
+                $signStr .= "<td>" . formatField_he_format("date_time", $sSpec['dtime']);
+                $signStr .= "</td>";
+                $signStr .= "<td>" . ($sSpec['label']);
+                $signStr .= "</td>";
+                $signStr .= "<td>" . (isset($sSpec['cabang_nama']) ? $sSpec['cabang_nama'] : "-");
+                $signStr .= "</td>";
+                $signStr .= "<td>" . (formatField_he_format("nomer_nolink", $nomerViewFinal)) . $signDeskripsi . "<br>$edit_description";
+                $signStr .= "</td>";
+                $signStr .= "<td>";
+                $signStr .= "<span class='fa fa-user'></span> " . $oleh_nama . "";
+                $signStr .= "</td>";
+
+                $signStr .= "<td>";
+                // $signStr .= formatField_he_format("print_label", $nomerOrigNota);
+                $signStr .= formatField_he_format("print_label", $nomerOrigNota, $this->jenisTr, MODUL_PATH);
+                $signStr .= "</td>";
+
+                $signStr .= "</tr>";
+            }
+            $signStr .= "</table class='table table-condensed'>";
+
+            $signStr .= "</div class='panel'>";
+        }
+
+        $mems = isset($this->session->login['membership']) ? $this->session->login['membership'] : array();
+        $allowedView = $this->config->item('userGroup_jurnal') != null ? $this->config->item('userGroup_jurnal') : array();
+        $rekeningAlias = $this->config->item('accountAlias') != null ? $this->config->item('accountAlias') : array();
+
+        $lItems = array();
+        $headers = array();
+        $arrCabang = array();
+        if (array_intersect($allowedView, $mems)) {
+            $this->load->model("Coms/ComJurnal");
+            $this->load->model("Mdls/MdlCabang");
+
+            $cb = New MdlCabang();
+            $tmpCb = $cb->lookupAll()->result();
+            $arrCabang = array();
+            if (sizeof($tmpCb) > 0) {
+                foreach ($tmpCb as $spec) {
+                    $arrCabang[$spec->id] = $spec->nama;
+                }
+            }
+
+            $j = new ComJurnal();
+            $j->addFilter("transaksi_no='$no'");
+            if ($this->session->login['cabang_id'] == CB_ID_PUSAT) {
+
+            }
+            else {
+                // dimatikan dulu untuk checking jurnal lengkapnya...........
+                //                $j->addFilter("cabang_id='" . $this->session->login['cabang_id'] . "'");
+            }
+            //            $j->setSortBy(array("kolom" => "urut", "mode" => "ASC"));
+            $tmp = $j->lookupAll()->result();
+            $headers = array(
+                "dtime" => "date",
+                "rekening" => "account",
+                "debet" => "debet",
+                "kredit" => "kredit",
+            );
+            $lItems = array();
+            if (sizeof($tmp) > 0) {
+                /* ---------------------------------------
+                 * array link untuk mengarahkan ke halaman mutasi yg dikendaki
+                 * -----------------------------------*/
+
+                //region Description
+                $mutasiLinks = array();
+                foreach ($accountChildsLinks as $rekNama => $rekLink) {
+                    $mutasiLinks[$rekNama] = $rekLink . "/" . $main['pihakID'] . "?o=" . $main['cabangID'] . "&trID=$transaksiID";
+                }
+                //endregion
+
+                foreach ($tmp as $row) {
+                    $d_start = backCustomDate("30", $row->dtime);
+                    $d_stop = $row->dtime;
+                    if ($row->j_jenis == "items") {
+                        $blob_ext = blobEncode($row->rekening);
+                        //                        Ledger/viewMoveDetails/RekeningPembantuProduk/persediaan%20produk/1076?o=-1&ext2_id=&main_ext2_id=
+                        $defLink = "Ledger/viewMoveDetails/RekeningPembantuProduk/" . $row->rekening_main . "/" . $row->extern_id . "?o=" . $row->cabang_id . "&trID=$transaksiID&date1=$d_start&date2=$d_stop&blob_ext=$blob_ext";
+                    }
+                    else {
+                        $defLink = "Ledger/viewMoveDetails_1/Rekening/" . $row->rekening . "?o=" . $row->cabang_id . "&trID=$transaksiID&date1=$d_start&date2=$d_stop";
+                        //                    $defLink = "Ledger/viewMoves_l1/Rekening/" . $row->rekening . "?o=" . $row->cabang_id . "&trID=$transaksiID&date1=$d_start&date2=$d_stop";
+                    }
+
+                    //                    $rekening_alias = isset($rekeningAlias[$row->rekening]) ? $rekeningAlias[$row->rekening] : $row->rekening;
+                    $rekening_alias = isset(fetchAccountStructureAlias()[$row->rekening]) ? fetchAccountStructureAlias()[$row->rekening] : $row->rekening;
+                    if ($row->debet > 0 || $row->kredit > 0) {
+                        //$strLink = key_exists($row->rekening, $mutasiLinks) ? $mutasiLinks[$row->rekening] : $defLink;
+                        $strLink = $defLink;
+                        $lItems[$row->cabang_id][$row->urut][] = array(
+                            "dtime" => $row->dtime,
+                            "rekening" => $row->debet > 0 ? $rekening_alias : "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" . $rekening_alias,
+                            "debet" => $row->debet > 0 ? $row->debet : "",
+                            "kredit" => $row->kredit > 0 ? $row->kredit : "",
+                            "link" => base_url() . $strLink,
+                        );
+                    }
+                }
+                //                arrPrint($lItems);
+                ksort($lItems);
+            }
+
+
+        }
+
+
+        $mb = New MobileDetect();
+        $isMob = $mb->isMobile();
+        $mobMode = $isMob == true ? "1" : "0";
+
+
+        $printSettings = isset($this->configLayout[$jenisMasterTrans]['allowPrint']['1']) ? $this->configLayout[$jenisMasterTrans]['allowPrint']['1'] : array();
+        $printLocation = isset($this->configLayout[$jenisMasterTrans]['printLocation']) ? $this->configLayout[$jenisMasterTrans]['printLocation'] : "Transaksi/viewReceipt/";
+
+        $valasType = (isset($main['currencyDetails__label'])) ? "&type=" . blobEncode($main['currencyDetails__label']) : "";
+        $valasFKali = "&f=" . blobEncode(1);
+
+        if (sizeof($tmpSign) > 0) {
+            if (isset($printSettings['size'])) {
+                switch ($printSettings['size']) {
+                    case "normal":
+                        $receiptLink = "top.popBig('" . MODUL_PATH . $printLocation . $this->jenisTr . "/" . "$no?mobMode=$mobMode&st=1$valasType$valasFKali');";
+                        break;
+                    case "small":
+                        $receiptLink = "top.popSmall('" . MODUL_PATH . $printLocation . $this->jenisTr . "/" . "$no?mobMode=$mobMode&st=2');";
+                        break;
+                    default:
+                        //                                cekkuning("size: UNKNOWN");
+                        break;
+                }
+            }
+            else {
+                $receiptLink = "top.popBig('" . MODUL_PATH . $printLocation . $this->jenisTr . "/" . "$no?mobMode=$mobMode&st=3$valasType$valasFKali');";
+            }
+        }
+        else {
+            $receiptLink = "top.popBig('" . MODUL_PATH . $printLocation . $this->jenisTr . "/" . "$no?st=4');";
+        }
+
+
+        // ============== TAMBAHAN ============== ============== ==============
+        $itemLabels = isset($this->configUi[$jenisMasterTrans]['shoppingCartFields'][1]) ? $this->configUi[$jenisMasterTrans]['shoppingCartFields'][1] : array();
+        $itemLabels2 = isset($this->configUi[$jenisMasterTrans]['shoppingCartFields2'][1]) ? $this->configUi[$jenisMasterTrans]['shoppingCartFields2'][1] : array();
+        $itemLabels3 = isset($this->configUi[$jenisMasterTrans]['shoppingCartFields3'][1]) ? $this->configUi[$jenisMasterTrans]['shoppingCartFields3'][1] : array();
+        $itemNumLabels = isset($this->configUi[$jenisMasterTrans]['shoppingCartNumFields'][1]) ? $this->configUi[$jenisMasterTrans]['shoppingCartNumFields'][1] : array();
+        $itemNumLabels2 = isset($this->configUi[$jenisMasterTrans]['shoppingCartNumFields2'][1]) ? $this->configUi[$jenisMasterTrans]['shoppingCartNumFields2'][1] : array();
+        $itemNumLabels3 = isset($this->configUi[$jenisMasterTrans]['shoppingCartNumFields3'][1]) ? $this->configUi[$jenisMasterTrans]['shoppingCartNumFields3'][1] : array();
+        $sumRows = isset($this->configUi[$jenisMasterTrans]['shoppingCartSumFields'][1]) ? $this->configUi[$jenisMasterTrans]['shoppingCartSumFields'][1] : $this->configLayout[$jenisMasterTrans]['receiptSumFields'][1];
+        $noteEnabled = isset($this->configUi[$this->jenisTr]['shoppingCartNoteEnabled']) && $this->configUi[$this->jenisTr]['shoppingCartNoteEnabled'] == true ? true : false;
+
+        $showScheme = isset($this->configUi[$this->jenisTr]['shoppingCartShowScheme']) ? $this->configUi[$this->jenisTr]['shoppingCartShowScheme'] : false;
+
+
+        $arrCons = array();
+        $headerScheme = array();
+
+        if ($showScheme) {
+
+            $awal_pinjaman = isset($main['awal_pinjaman']) ? $main['awal_pinjaman'] : date('Y-m-d');
+            $jatuh_tempo = isset($main['jatuh_tempo']) ? $main['jatuh_tempo'] : date('Y-m-d');
+            $nilai_pinjaman = isset($main['harga']) ? $main['harga'] : 0;
+            $rate_bunga = isset($main['persen_bunga']) ? $main['persen_bunga'] : 0;
+
+            $npwp = "";
+            $pph_nilai = strlen($npwp) > 10 && $pph_nilai == 15 ? 15 : 15; //dipaksa 15% untuk pemegang saham
+            $valid_bunga = ($nilai_pinjaman / 12);
+            $nilai_bunga = ($valid_bunga * $rate_bunga) / 100;
+            $nilai_pph23 = ($nilai_bunga * $pph_nilai) / 100;
+
+            $period = new DatePeriod(
+                new DateTime($awal_pinjaman),
+                new DateInterval('P1D'),
+                new DateTime($jatuh_tempo)
+            );
+
+            $periodNow = new DatePeriod(
+                new DateTime($awal_pinjaman),
+                new DateInterval('P1D'),
+                new DateTime(date('Y-m-d'))
+            );
+
+            $arrBulan = array();
+            $arrBulanNow = array();
+            $arrHarian = array();
+            $arrWaktu = array();
+
+            foreach ($period as $key => $value) {
+                if (!isset($arrBulan[$value->format('Y-m')])) {
+                    $arrBulan[$value->format('Y-m')] = array();
+                }
+                $arrBulan[$value->format('Y-m')][] = $value->format('Y-m-d');
+            }
+
+            foreach ($periodNow as $key => $value) {
+                if (!isset($arrBulanNow[$value->format('Y-m')])) {
+                    $arrBulanNow[$value->format('Y-m')] = array();
+                }
+                $arrBulanNow[$value->format('Y-m')][] = $value->format('Y-m-d');
+            }
+
+            $hariPadaBulanJatuhTempo = isset($arrBulan[date('Y-m', strtotime($jatuh_tempo))]) ? count($arrBulan[date('Y-m', strtotime($jatuh_tempo))]) : 0;
+            $arrBulan[date('Y-m', strtotime($jatuh_tempo))][$hariPadaBulanJatuhTempo] = date('Y-m-d', strtotime($jatuh_tempo));
+
+
+            $total_hari = 0;
+            $total_bulan = 0;
+            foreach ($arrBulan as $thnbln => $thblntgl) {
+                $tmp = array(
+                    "thnbln" => $thnbln,
+                    "jml_hari_dbln" => count($arrBulan[$thnbln]),
+                    "nilai_pinjaman" => $nilai_pinjaman,
+                    "rate_bunga" => $rate_bunga,
+                    "valid_bunga" => $valid_bunga * (count($arrBulan[$thnbln]) / 30),
+                    "nilai_bunga" => $nilai_bunga * (count($arrBulan[$thnbln]) / 30),
+                    "nilai_pph23" => $nilai_pph23 * (count($arrBulan[$thnbln]) / 30),
+                    "nett_bunga" => $nilai_bunga * (count($arrBulan[$thnbln]) / 30) - ($nilai_pph23 * (count($arrBulan[$thnbln]) / 30)),
+                    "silangan" => isset($arrBulanNow[$thnbln]) ? ($thnbln != date('Y-m') ? "hijau" : "berjalan") : "merah",
+                );
+                if (!isset($arrCons[$thnbln])) {
+                    $arrCons[$thnbln] = array();
+                }
+                $arrCons[$thnbln] = $tmp;
+                $total_bulan++;
+                $total_hari += count($arrBulan[$thnbln]);
+            }
+
+            $nmPemengangSaham = "belum memilih kreditur";
+            foreach ($items as $ids => $data) {
+                $nmPemengangSaham = isset($data['nama']) ? $data['nama'] : "<span class='text-bol text-red'>belum ditentunkan</span>";
+            }
+
+            $headerScheme = array(
+                "nama" => "$nmPemengangSaham",
+                "jml_pinjaman" => "$nilai_pinjaman",
+                "bunga_tahunan" => "$rate_bunga",
+                "awal_meminjam" => date('d F Y', strtotime($awal_pinjaman)),
+                "pelunasan_pinjaman" => date('d F Y', strtotime($jatuh_tempo)),
+                "lama_pinjaman" => "$total_hari hari ($total_bulan bln)",
+            );
+
+        }
+
+        $itemLabelsTop = $itemLabels + $itemNumLabels + array("subtotal" => "sub-amount");
+        $item2LabelsTop = $itemLabels2 + $itemNumLabels2 + array("subtotal" => "sub-amount");
+        $item3LabelsTop = $itemLabels3 + $itemNumLabels3 + array("subtotal" => "sub-amount");
+        $itemLabelBlacklist = array(
+            "stok_center",
+            "stok",
+        );
+
+        foreach ($itemLabelsTop as $key => $val) {
+            if (in_array($key, $itemLabelBlacklist)) {
+                unset($itemLabelsTop[$key]);
+            }
+        }
+        if (isset($this->configUi[$jenisMasterTrans]['shoppingCartHideSubamount']) && $this->configUi[$jenisMasterTrans]['shoppingCartHideSubamount'][1] == true) {
+            unset($itemLabelsTop['subtotal']);
+            unset($item2LabelsTop['subtotal']);
+            unset($item3LabelsTop['subtotal']);
+        }
+        $blacklistView = $this->config->item('userGroup_blacklist') != null ? $this->config->item('userGroup_blacklist') : array();
+        $addFildRowFields = array();
+
+
+        $allowedViewTop = false;
+        foreach ($mems as $memsVal) {
+            if (!in_array($memsVal, $blacklistView)) {
+                $allowedViewTop = true;
+            }
+        }
+
+        if ($allowedViewTop == true) {
+
+
+            $m = new MdlTransaksi();
+            $m->setFilters(array());
+            $tmpReg = $m->lookupDataRegistriesByMasterID($transaksiTopID)->result();
+            $regfields = $m->getFields()["dataRegistry"];
+            $addRow = isset($this->configUi[$jenisMasterTrans]['additionalRows']['dummyElement']['yes']) ? $this->configUi[$jenisMasterTrans]['additionalRows']['dummyElement']['yes'] : array();
+            $itemNotApprove = isset($this->configUi[$jenisMasterTrans]['closedRequest'][1]) ? $this->configUi[$jenisMasterTrans]['closedRequest'][1] : true;
+            $detailCore = isset($this->configCore[$jenisMasterTrans]['valueGates']['detail']) ? $this->configCore[$jenisMasterTrans]['valueGates']['detail'] : array();
+
+            if (sizeof($tmpReg) > 0) {
+                foreach ($tmpReg as $row) {
+                    foreach ($regfields as $params) {
+                        //                        cekHitam($params);
+                        if (isset($row->$params) && ($params != "transaksi_id")) {
+
+                            $var = $params . "_reg";
+                            $$var = unserialize(base64_decode($row->$params));
+                        }
+
+                    }
+                    // $$var = unserialize(base64_decode($row->values));
+                }
+                if (sizeof($addRow) > 0) {
+                    foreach ($addRow as $gateKey => $mpFields) {
+
+                        if (isset($mpFields['hideRow']) && $mpFields['hideRow'] == true) {
+
+                        }
+                        else {
+                            $addFildRowFields[$gateKey] = $mpFields['label'];
+                        }
+                    }
+                }
+
+                //----------------------------------
+                if ($itemNotApprove == true) {
+//                    $dTmp = $m->lookupDetailTransaksi($transaksiTopID)->result();
+                    $dTmp = $m->lookupDetailTransaksi($transaksiTopID);
+
+                    $notApprove = array();
+                    foreach ($dTmp as $spec) {
+                        if ((isset($spec->valid_qty_no_approve)) && ($spec->valid_qty_no_approve > 0)) {
+                            $notApprove[$spec->produk_id] = $spec->valid_qty_no_approve;
+                        }
+                    }
+                    $mainNotApprove = array();
+                    $itemsNotApprove = array();
+                    if (sizeof($notApprove) > 0) {
+                        $itemsNotApprove = $items_reg;
+                        foreach ($notApprove as $pid => $pqty_not_approve) {
+                            $itemsNotApprove[$pid]['qty'] = $pqty_not_approve;
+                            $itemsNotApprove[$pid]['jml'] = $pqty_not_approve;
+                            $itemsNotApprove[$pid]['subtotal'] = $pqty_not_approve * $itemsNotApprove[$pid]['harga'];
+                            if (sizeof($detailCore) > 0) {
+                                foreach ($detailCore as $key_c => $val_c) {
+                                    $itemsNotApprove[$pid]['sub_' . $key_c] = $pqty_not_approve * $itemsNotApprove[$pid][$key_c];
+                                    if (!isset($mainNotApprove[$key_c])) {
+                                        $mainNotApprove[$key_c] = 0;
+                                    }
+                                    $mainNotApprove[$key_c] += ($pqty_not_approve * $itemsNotApprove[$pid][$key_c]);
+                                }
+                            }
+                            if (!isset($mainNotApprove['harga'])) {
+                                $mainNotApprove['harga'] = 0;
+                            }
+                            $mainNotApprove['harga'] += ($pqty_not_approve * $itemsNotApprove[$pid]['harga']);
+                        }
+                    }
+                }
+            }
+
+            //tambahan jika ada result item
+            // arrPrint($main_reg);
+            if (sizeof($rsltItems_reg) > 0) {
+                //region reference detil
+                $m->setFilters(array());
+                $tmpRegRef = $m->lookupDataRegistriesByMasterID($main_reg['referenceID']);
+                foreach ($tmpRegRef as $refRow) {
+                    foreach ($regfields as $params) {
+                        if (isset($refRow->$params)) {
+                            $varR = $params . "_ref";
+                            $$varR = unserialize(base64_decode($refRow->$params));
+                        }
+                    }
+                }
+
+                $tmpRowRslts_ref = array();
+                $totalNilaiRef = 0;
+                if (sizeof($rsltItems_ref) > 0) {
+                    foreach ($rsltItems_ref as $rowRefID => $rowref_data) {
+                        // $hpp = number_format($rowref_data['hpp'],0);
+                        $hpp = $rowref_data['hpp'];
+                        if (!isset($tmpRowRslts_ref[$rowref_data['id']][$main_reg['pihakExternID']][$hpp]['qty'])) {
+                            $tmpRowRslts_ref[$rowref_data['id']][$main_reg['pihakExternID']][$hpp]['qty'] = 0;
+
+                        }
+                        if (!isset($tmpRowRslts_ref[$rowref_data['id']][$main_reg['pihakExternID']][$hpp]['subtotal'])) {
+                            $tmpRowRslts_ref[$rowref_data['id']][$main_reg['pihakExternID']][$hpp]['subtotal'] = 0;
+                        }
+
+                        $tmpRowRslts_ref[$rowref_data['id']][$main_reg['pihakExternID']][$hpp]['qty'] += $rowref_data['qty'];
+                        $tmpRowRslts_ref[$rowref_data['id']][$main_reg['pihakExternID']][$hpp]['subtotal'] += $rowref_data['sub_hpp'];
+                        $tmpRowRslts_ref[$rowref_data['id']][$main_reg['pihakExternID']][$hpp]['harga'] = $rowref_data['hpp'];
+                        $totalNilaiRef += $rowref_data['sub_hpp'];
+                    }
+                    $rowDetilRslt_label[$main_reg['pihakExternID']] = array(
+                        "harga" => "harga",
+                        "qty" => "qty",
+                        "subtotal" => "subtotal",
+                    );
+                }
+                //endregion
+
+                //region current detil
+                $tmpRowRslts = array();
+                $tmpRowRsltsnilai = 0;
+                foreach ($rsltItems_reg as $rowFifo => $fifoData) {
+                    // $hpp_0 = number_format($fifoData['hpp'],0);
+                    $hpp_0 = $fifoData['hpp'];
+                    if (!isset($tmpRowRslts_ref[$fifoData['id']][$main_reg['jenisTr']][$hpp_0]['qty'])) {
+                        $tmpRowRslts_ref[$fifoData['id']][$main_reg['jenisTr']][$hpp_0]['qty'] = 0;
+                    }
+                    if (!isset($tmpRowRslts_ref[$fifoData['id']][$main_reg['jenisTr']][$hpp_0]['subtotal'])) {
+                        $tmpRowRslts_ref[$fifoData['id']][$main_reg['jenisTr']][$hpp_0]['subtotal'] = 0;
+                    }
+                    $tmpRowRslts_ref[$fifoData['id']][$main_reg['jenisTr']][$hpp_0]['qty'] += $fifoData['qty'];
+                    $tmpRowRslts_ref[$fifoData['id']][$main_reg['jenisTr']][$hpp_0]['subtotal'] += $fifoData['sub_hpp'];
+                    $tmpRowRslts_ref[$fifoData['id']][$main_reg['jenisTr']][$hpp_0]['harga'] = $fifoData['hpp'];
+                    $tmpRowRsltsnilai += $fifoData['sub_hpp'];
+                }
+                $tmpRowRslts_label = array(
+                    "nama" => "produk",
+                    "qty" => "qty",
+                    $main_reg['pihakExternID'] => $main_reg['pihakExternName'],
+                    $main_reg['jenisTr'] => $main_reg['jenisTrName'],
+                );
+                $rowDetilRslt_label[$main_reg['jenisTr']] = array(
+                    "harga" => "harga",
+                    "qty" => "qty",
+                    "subtotal" => "subtotal",
+                );
+
+                //endregion
+            }
+        }
+
+        $transaksiJenisTopLabel = isset($main_reg['jenisTrName']) ? $main_reg['jenisTrName'] : "";
+        //-------------------------------------
+        if (($configNotes != NULL) && ($globalVars['trash_4'] == 1)) {
+            foreach ($globalVars as $key => $val) {
+                if (!is_array($val)) {
+                    $configNotes = str_replace("{" . $key . "}", $val, $configNotes);
+                }
+            }
+            $notes_final = $configNotes;
+        }
+        else {
+            $notes_final = NULL;
+        }
+        //-------------------------------------
+        $shoppingCartSubDetailFields = isset($this->configUi[$jenisMasterTrans]['shoppingCartSubDetailFields'][3]) ? $this->configUi[$jenisMasterTrans]['shoppingCartSubDetailFields'][3] : array();
+        if (sizeof($shoppingCartSubDetailFields) > 0) {
+//            cekHere(":: $jenisMasterID ::");
+            $tr = new MdlTransaksi();
+            $tr->addFilter("id_master='$jenisMasterID'");
+            $tr->addFilter("jenis='5822pkd'");
+            $tr->addFilter("trash_4='0'");
+            $tmp0 = $tr->lookupAll()->result();
+            $trid_pkd = $tmp0[0]->id;
+            $tr->setFilters(array());
+            $tr->setJointSelectFields($pairRegistry);//select fields jika ada, atau biarkana array untuk reset
+            $tr->addFilter("transaksi_id='$trid_pkd'");
+            $tmpReg = $tr->lookupDataRegistries()->result();
+            showLast_query("biru");
+            if (sizeof($tmpReg) > 0) {
+                if (sizeof($tmpReg) > 0) {
+                    foreach ($tmpReg as $eParams) {
+                        foreach ($pairRegistry as $param) {
+                            if ($eParams->$param == null) {
+                                $eParams->$param = blobEncode(array());
+                            }
+                            $$param = blobDecode($eParams->$param);
+                        }
+                    }
+                }
+            }
+
+
+            $arrSubDetailDataKolom = array();
+            foreach ($shoppingCartSubDetailFields as $kolom => $kolomSpec) {
+//arrPrint($kolomSpec);
+                $gerbang = $kolomSpec["gate"];
+                $source = $kolomSpec["source"];
+                $source_new = $$source;
+//arrPrintWebs($source_new);
+                $arrHasil = array();
+                $hasil = "";
+                foreach ($source_new as $sdata) {
+                    $key_data_id = $sdata["id"];
+                    $key_data = $key_data_number = $sdata["produk_sku_part_nama"];
+                    if (in_array($key_data, $itemsRegistries[$key_data_id])) {
+                        $anu_flip = array_flip($itemsRegistries[$key_data_id]);
+                        $key_data_arr = explode("_", $anu_flip[$key_data]);
+                        $key_data = $key_data_arr[0] . "($key_data_number)";
+                    }
+                    $data = $sdata[$gerbang];
+                    if ($arrHasil[$sdata["id"]][$key_data] == "") {
+                        $arrHasil[$sdata["id"]][$key_data] = $data;
+                    }
+                    else {
+                        $arrHasil[$sdata["id"]][$key_data] .= ", $data";
+                    }
+
+                }
+
+                $arrSubDetailDataKolom[$kolom] = $arrHasil;
+            }
+        }
+        else {
+//            cekMerah("::: KOSONG :::");
+        }
+//        arrPrintHijau($arrSubDetailDataKolom);
+        //-------------------------------------
+//        cekKuning("$notes_final");
+        $imagesReference = getTransaksiImageReference($jenisMasterID)[$jenisMasterID];
+
+        // arrPrintHijau($main);
+
+        $data = array(
+//            "mode" => $this->uri->segment(3),
+            "mode" => count($imagesReference) > 0 ? "viewResumeImages" : $this->uri->segment(3),
+            "title" => $no,
+            "showScheme" => $arrCons,
+            "headerScheme" => $headerScheme,
+            "headers" => $headers,
+            "main" => isset($main) ? $main : array(),
+            "items" => $lItems,
+            "receiptLink" => $receiptLink,
+            "signStr" => $signStr,
+            "cabangData" => $arrCabang,
+
+            "urutCounter" => $urutCounters,
+            "underMaintenance" => underConstruction(),
+
+            // ===== ======
+            "detail_title" => "Pengajuan $transaksiJenisTopLabel",
+
+            "itemLabels" => isset($itemLabelsTop) ? $itemLabelsTop : array(),
+            "item2Labels" => isset($item2LabelsTop) ? $item2LabelsTop : array(),
+            "item3Labels" => isset($item3LabelsTop) ? $item3LabelsTop : array(),
+
+            "detail_main" => isset($main_reg) ? $main_reg : array(),
+            "detail_items" => isset($items_reg) ? $items_reg : array(),
+            "detil_item_rslt" => isset($tmpRowRslts_ref) ? $tmpRowRslts_ref : array(),
+            // "detil_item_rslt_ref" => isset($tmpRowRslts_ref) ? $tmpRowRslts_ref : array(),
+            "detil_item_rslt_label" => isset($tmpRowRslts_label) ? $tmpRowRslts_label : array(),
+            "detil_item_rslt_label2" => isset($rowDetilRslt_label) ? $rowDetilRslt_label : array(),
+            "detail2_items" => isset($items2_sum_reg) ? $items2_sum_reg : array(),
+            "detail3_items" => isset($items3_sum_reg) ? $items3_sum_reg : array(),
+
+            "detail_sumRows" => $sumRows,
+            "detail2_sumRows" => isset($sumRows2) ? $sumRows2 : array(),
+            "detail3_sumRows" => isset($sumRows3) ? $sumRows3 : array(),
+            "noteEnabled" => $noteEnabled,
+            "addRows" => $addFildRowFields,
+            //--------------------
+            "mainNotApprove" => isset($mainNotApprove) ? $mainNotApprove : array(),
+            "itemsNotApprove" => isset($itemsNotApprove) ? $itemsNotApprove : array(),
+            "detail_not_approve_title" => "Pengajuan $transaksiJenisTopLabel (tidak diapprove)",
+            //--------------------
+            "notes_final" => $notes_final,
+            "arrSubDetailDataKolom" => isset($arrSubDetailDataKolom) ? $arrSubDetailDataKolom : "",
+            "referenceImages" => $imagesReference,
+            "elementStr" => isset($elementStr) ? $elementStr : "",
+            "deliveryDetail" => isset($deliveryDetail) ? $deliveryDetail : array(),
+        );
+        $this->load->view("transaksi", $data);
+    }
+
+    public function viewMyActs()
+    {
+
+        if (!isset($this->session->login['id'])) {
+            redirect(base_url() . "Login");
+        }
+
+        $uID = isset($_GET['u']) && $_GET['u'] > 0 ? $_GET['u'] : $this->session->login['id'];
+        $mems = isset($this->session->login['membership']) ? $this->session->login['membership'] : array();
+
+        $limit = 18;
+        $maxPageNum = 20;
+        $jenisTr = $this->jenisTr;
+        $cCode = $this->cCode;
+        //        $historyFields = $this->configUi[$jenisTr]['shortHistoryFields'];
+        $historyFields = isset($this->config->item("heTransaksi_report")[$jenisTr]['longHistoryFields']) ? $this->config->item("heTransaksi_report")[$jenisTr]['longHistoryFields'] : array(
+            "produk_nama" => "item name",
+            "produk_ord_jml" => "qty",
+            "produk_ord_hrg" => "@price",
+
+            "nomer_top+nomer" => "receipt number",
+            "oleh_nama+dtime" => "person",
+        );
+        $mb = New MobileDetect();
+        $isMob = $mb->isMobile();
+        if ($isMob) {
+            $historyFields = isset($this->configUi[$jenisTr]['compactHistoryFields']) ? $this->configUi[$jenisTr]['compactHistoryFields'] : array();
+        }
+
+        //        arrprint($historyFields);
+        //
+        //region preparing ERP step labels for top link
+        $steps = $this->configUi[$jenisTr]['steps'];
+        $stepLabels = array(//            "0" => "all"
+        );
+        $stepLinks = array(//            "0" => base_url() . $this->uri->segment(1) . "/" . $this->uri->segment(2) . "/" . $this->uri->segment(3)
+        );
+        if (sizeof($steps) > 1) {
+            $subCodes = array();
+            $stepCodes = array();
+            $jmlStep = count($steps);
+
+            foreach ($steps as $stepNumber => $stepSpec) {
+                if ($stepNumber <= $jmlStep) {
+                    $subCodes[$stepSpec['target']] = $stepSpec['label'];
+                    $stepCodes[] = $stepSpec['target'];
+                    //                    $stepLabels[$stepNumber] = $stepSpec['stateLabel'];
+                    $stepLabels[$stepNumber] = $stepSpec['label'];
+                    $stepLinks[$stepNumber] = MODUL_PATH . $this->uri->segment(2) . "/" . $this->uri->segment(3) . "/" . $this->jenisTr . "/" . $stepSpec['target'];
+                }
+
+            }
+
+
+            //            $currentState = strlen($this->uri->segment(4)) > 0 ? $this->uri->segment(4) : $this->jenisTr;
+            $currentState = strlen($this->uri->segment(5)) > 0 ? $this->uri->segment(5) : $this->configUi[$jenisTr]['steps'][1]['target'];
+        }
+        //endregion
+
+        //
+        //region lookup histories
+
+
+        $this->load->model("MdlTransaksi");
+        $tr = new MdlTransaksi();
+
+        $identifiers = $tr->fetchIdentifiers();
+        $recaps = array();
+        $names = array();
+
+        $tr->addFilter("transaksi.cabang_id='" . $this->session->login['cabang_id'] . "'");
+        $tr->addFilter("gudang_id='" . $this->session->login['gudang_id'] . "'");
+        $tr->addFilter("jenis_master='" . $this->jenisTr . "'");
+        $tr->addFilter("transaksi.oleh_id='" . $uID . "'");//dimatiin buat test
+
+        //region date filter
+        $date1 = isset($_GET['date1']) ? $_GET['date1'] : date("Y-m-d");
+        $date2 = isset($_GET['date2']) ? $_GET['date2'] : date("Y-m-d");
+        $this->db->where("fulldate>='" . $date1 . "'");
+        $this->db->where("fulldate<='" . $date2 . "'");
+        //endregion
+
+        if (isset($currentState)) {
+            $tr->addFilter("jenis='" . $currentState . "'");
+        }
+
+        //        $tr->addFilter("next_substep_code=''");
+
+
+        $addParams = array();
+        if (isset($_GET['addParams'])) {
+            $addParams = unserialize(base64_decode($_GET['addParams']));
+        }
+        if ($addParams != null && sizeof($addParams) > 0) {
+            //            arrprint($addParams);
+            foreach ($addParams as $f) {
+                $tr->addFilter($f);
+            }
+        }
+
+        $action = array(
+            // "viewDetails" => MODUL_PATH . get_class($this) . "/viewDetails",
+            "viewDetails" => MODUL_PATH . "/views/viewDetails",
+        );
+
+
+        //region date filter
+        $date1 = isset($_GET['date1']) ? $_GET['date1'] : date("Y-m-d");
+        $date2 = isset($_GET['date2']) ? $_GET['date2'] : date("Y-m-d");
+        $this->db->where("fulldate>='" . $date1 . "'");
+        $this->db->where("fulldate<='" . $date2 . "'");
+        //endregion
+
+
+        $arrayHistory = array();
+        $arrayHistory_ids = array();
+
+        //region ngumpulin ID transaksi
+        $trIDs = array();
+        $tr0 = $tr;
+        //        $tmpHist0 = $tr0->lookupHistories_joined_all($jmlData, $limit, $page)->result();
+        $tmpHist0 = $tr0->lookupAll()->result();
+        // cekLime($this->db->last_query());
+        // arrPrint($tmpHist0);
+        // matiHEre(__LINE__);
+        if (sizeof($tmpHist0) > 0) {
+            foreach ($tmpHist0 as $row) {
+                if (!in_array($row->id, $trIDs)) {
+                    $trIDs[] = $row->id;
+                }
+            }
+        }
+        //endregion
+
+
+        //pairingan dari elements
+        //region pairing dari elements
+        if (isset($this->config->item("heTransaksi_elementPairs")[$this->jenisTr])) {
+            // matiHEre(__LINE__);
+            $pairConfig = $this->config->item("heTransaksi_elementPairs")[$this->jenisTr];
+
+        }
+        if (sizeof($trIDs) > 0) {
+            // matiHEre(__LINE__);
+            $trReg = new MdlTransaksi();
+            $trReg->setFilters(array());
+            // $trReg->addFilter("param='main_elements'");
+            $trReg->setJointSelectFields("main_elements,transaksi_id");//string
+            $trReg->addFilter("transaksi_id in (" . implode(",", $trIDs) . ")");
+            $tmpReg = $trReg->lookupDataRegistries()->result();
+            // cekkuning($this->db->last_query());
+            // arrPrint($tmpReg);
+            // matiHere();
+            if (sizeof($tmpReg) > 0) {
+                foreach ($tmpReg as $row) {
+                    // arrPrint($row);
+                    //     matiHEre();
+                    $els = blobDecode($row->main_elements);
+
+                    $trID = $row->transaksi_id;
+                    if (!isset($identPairs[$trID])) {
+                        $identPairs[$trID] = array();
+                        $namePairs[$trID] = array();
+                        $fieldPairs[$trID] = array();
+                    }
+                    if (sizeof($els) > 0) {
+                        foreach ($els as $elName => $elSpec) {
+                            if (isset($pairConfig[$elName])) {
+
+                                //                            arrprint($elSpec);
+                                $elPairs = hePairFromElement($this->jenisTr, $elName, $elSpec);
+                                //                            arrprint($elPairs['content']);
+                                $identifiers = $identifiers + $elPairs['identifiers'];
+                                $identPairs[$trID] = $identPairs[$trID] + $elPairs['identifiers'];
+                                $names[$elName . "_id"][$elPairs['content'][$elName . "_id"]] = $elName . "_" . $elPairs['content'][$elName . "_nama"];
+                                //                                $namePairs[$trID][$elName."_id"][$elPairs['content'][$elName."_id"]]=$elPairs['content'][$elName."_nama"];
+                                $namePairs[$trID][$elName . "_id"]["id"] = $elPairs['content'][$elName . "_id"];
+                                $namePairs[$trID][$elName . "_id"]["name"] = $elPairs['content'][$elName . "_nama"];
+                                if (!isset($fieldPairs[$trID][$elName . "_id"])) {
+                                    $fieldPairs[$trID][$elName . "_id"] = "";
+                                    $fieldPairs[$trID][$elName . "_nama"] = "";
+                                }
+                                $fieldPairs[$trID][$elName . "_id"] = $elPairs['content'][$elName . "_id"];
+                                $fieldPairs[$trID][$elName . "_nama"] = $elPairs['content'][$elName . "_nama"];
+                                //                                cekhijau("pairResult");
+                                //                                arrprint($elPairs);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        //endregion
+        // matiHEre("hoop".__LINE__);
+        //region date filter
+        $date1 = isset($_GET['date1']) ? $_GET['date1'] : date("Y-m-d");
+        $date2 = isset($_GET['date2']) ? $_GET['date2'] : date("Y-m-d");
+        $this->db->where("fulldate>='" . $date1 . "'");
+        $this->db->where("fulldate<='" . $date2 . "'");
+        //endregion
+        $tmpHist = $tr->lookupHistories_joined_all()->result();
+        //        cekbiru($this->db->last_query());
+
+        //        cekMerah($this->db->last_query());
+
+
+        if (sizeof($tmpHist) > 0) {
+            foreach ($tmpHist as $row) {
+                $trID = $row->transaksi_id;
+                $tmp = array();
+                $tmp1 = array();
+                foreach ($historyFields as $fName => $fLabel) {
+                    if (strpos($fName, '+') !== false) {//==mengandung penggabungan (+)
+                        $chars = explode("+", $fName);
+                        $colValue = "";
+                        foreach ($chars as $key) {
+                            $colValue .= isset($row->$key) ? formatField_he_format($key, $row->$key) . "<br>" : "";
+                        }
+                        $colValue = rtrim($colValue, "<br>");
+                    }
+                    else {
+                        $colValue = isset($row->$fName) ? formatField_he_format($fName, $row->$fName) : "";
+                    }
+
+                    //                    $tmp[$fName] = formatField_he_format($fName, $row->$fName);
+                    $tmp[$fName] = $colValue;
+                    $tmp1["id"] = $row->id;
+                    //                    $arrayHistory[$row->transaksi_id][$fName] = $colValue;
+                }
+                if (isset($fieldPairs[$trID]) && sizeof($fieldPairs[$trID]) > 0) {
+                    foreach ($fieldPairs[$trID] as $k => $v) {
+                        $tmp[$k] = $v;
+                    }
+                }
+                $arrayHistory[] = $tmp;
+                $arrayHistory_ids[] = $tmp1;
+
+                $jenis = $row->jenis;
+                foreach ($identifiers as $iID => $iName) {
+                    //                    cekbiru("checking $iID");
+                    if ((isset($row->$iID) > 0 && strlen($row->$iID) > 0 && isset($row->$iName) > 0 && strlen($row->$iName) > 0) || (isset($namePairs[$trID][$iID]["id"]) && strlen($namePairs[$trID][$iID]["id"]) > 0)) {
+                        //                            cekkuning("$iID/$iName");
+
+                        //                        cekmerah("$iID being processed");
+                        if (!isset($names[$iID])) {
+                            $names[$iID] = array();
+                        }
+                        //                        $srcName = "";
+                        if (isset($identPairs[$trID]) && array_key_exists($iID, $identPairs[$trID])) {
+                            $srcID = $namePairs[$trID][$iID]["id"];
+                            $srcName = $namePairs[$trID][$iID]["name"];
+                            //                            cekbiru("$trID $srcID reading from element value: $srcID/$srcName");
+
+                        }
+                        else {
+                            $srcID = $row->$iID;
+                            $srcName = $row->$iName;
+                            //                            cekbiru("$trID $srcID reading from table row: $srcID/$srcName");
+                        }
+                        //                        cekkuning("$iID/$iName/$srcID");
+                        $names[$iID][$srcID] = $srcName;
+                        if (!isset($recaps[$jenis][$iID][$srcID])) {
+                            $recaps[$jenis][$iID][$srcID] = array(
+                                "qty" => 0,
+                                "value" => 0,
+                            );
+                        }
+
+                        $recaps[$jenis][$iID][$srcID]['qty'] += $row->produk_ord_jml;
+                        $recaps[$jenis][$iID][$srcID]['value'] += ($row->produk_ord_jml * $row->produk_ord_hrg);
+                    }
+                    else {
+                        //                        cekmerah("$iID NOT being processed");
+                    }
+                }
+
+            }
+        }
+        //endregion
+
+        //region link to add new transaction
+        if (placeCanMakeTrans($this->session->login['membership'], $this->session->login['cabang_id'], $this->session->login['gudang_id'], $this->jenisTr)) {
+            //        if (in_array($this->configUi[$jenisTr]["steps"][1]['userGroup'], $this->session->login['membership'])) {
+            $createIndexes = (null != $this->config->item("transaksi_createIndex")) ? $this->config->item("transaksi_createIndex") : array();
+            if (array_key_exists($this->jenisTr, $createIndexes)) {
+                $targetUrl = MODUL_PATH . $createIndexes[$this->jenisTr] . "/" . $this->jenisTr;
+            }
+            else {
+                $targetUrl = MODUL_PATH . "Create/index/" . $this->jenisTr;
+            }
+            $addLink = array(
+                "link" => $targetUrl,
+                "label" => "<span class='glyphicon glyphicon-plus'></span> create new " . $this->configUi[$jenisTr]["steps"][1]['label'],
+            );
+        }
+        else {
+            $addLink = null;
+        }
+        //endregion
+
+        //
+        //region prepare params for viewer
+        $subTitle = lgTranslateTime($date1) . " to " . lgTranslateTime($date2);
+        if ($date1 == $date2) {
+            $subTitle = lgTranslateTime($date1);
+        }
+
+        $availFilters = array();
+        if (sizeof($mems) > 0) {
+            foreach ($mems as $gID) {
+                if (isset($this->config->item("heTransaksi_identifierGroups")[$gID]) && sizeof($this->config->item("heTransaksi_identifierGroups")[$gID]) > 0) {
+                    foreach ($this->config->item("heTransaksi_identifierGroups")[$gID] as $fID => $fLabel) {
+                        if (!array_key_exists($fID, $availFilters)) {
+                            $availFilters[$fID] = $fLabel;
+                        }
+                    }
+
+                }
+            }
+        }
+
+        //        arrprint($availFilters);die();
+
+
+        //arrprint($names);die();
+
+        //arrprint($arrayHistory);
+        $thisTr = strlen($this->uri->segment(5)) > 0 ? $this->uri->segment(5) : $this->jenisTr;
+        $thisTrName = isset($row->jenis_label) ? $row->jenis_label : $this->configUi[$jenisTr]["label"];
+        $data = array(
+            "mode" => $this->uri->segment(3),
+            "isMobile" => $isMob,
+            "jenisTr" => $jenisTr,
+            //            "trName"               => $this->configUi[$jenisTr]["label"],
+            "trName" => $thisTrName,
+            "errMsg" => $this->session->errMsg,
+            "title" => (isset($subCodes) && isset($currentState) ? $subCodes[$currentState] : $this->jenisTrName) . " (" . $this->session->login['nama'] . ")",
+            "subTitle" => $subTitle,
+            //            "pageCount"            => $numPages,
+            //            "page"                 => $page,
+            //            "pages"                => $pages,
+            "arrayHistoryLabels" => $historyFields,
+            "arrayHistory" => $arrayHistory,
+            "arrayHistoryId" => $arrayHistory_ids,
+            "action" => $action,
+            "steps" => $steps,
+            "stepLabels" => $stepLabels,
+            "stepLinks" => $stepLinks,
+            "addParams" => isset($_GET['addParams']) ? $_GET['addParams'] : null,
+            "currentState" => isset($currentState) ? $currentState : "all states",
+            "alternateLink" => MODUL_PATH . $this->uri->segment(2) . "/viewIncomplete/" . $this->uri->segment(3) . "/" . $this->jenisTr,
+            "alternateLinkCaption" => "incomplete " . $this->configUi[$jenisTr]["label"] . " <span class='glyphicon glyphicon-arrow-right'></span>",
+            "addLink" => $addLink,
+            "filters" => array(
+                "dates" => $this->dates,
+                "date1" => $date1,
+                "date2" => $date2,
+            ),
+            "thisPage" => MODUL_PATH . $this->uri->segment(2) . "/" . $this->uri->segment(3) . "/" . $this->jenisTr,
+            //
+            //            "availFilters"=>isset($this->config->item("heTransaksi_report")[$jenisTr]["availFilters"])?$this->config->item("heTransaksi_report")[$jenisTr]["availFilters"]:array(),"availFilters"=>isset($this->config->item("heTransaksi_report")[$jenisTr]["availFilters"])?$this->config->item("heTransaksi_report")[$jenisTr]["availFilters"]:array(),
+            "availFilters" => isset($availFilters) ? $availFilters : array("oleh_id" => "person"),
+
+            "names" => $names,
+            "recaps" => isset($recaps[$thisTr]) ? $recaps[$thisTr] : array(),
+
+        );
+        //endregion
+
+
+        $this->load->view("history", $data);
+    }
+
+    public function viewOutstanding()
+    {
+        session_write_close();
+        if (!isset($this->session->login['id'])) {
+            gotoLogin();
+            // redirect(base_url() . "Login");
+        }
+        arrPrint($this->uri->segment_array());
+
+        $limit = 1000;
+        //        $limit = 18;
+        $maxPageNum = 20;
+        $jenisTr = $this->jenisTr;
+        $jenisTrsub = $this->uri->segment(6);
+        $cCode = "_TR_" . $this->jenisTr;
+        $currentState = strlen($this->uri->segment(5)) > 0 ? $this->uri->segment(5) : "transaksi";
+        $selecetedCode = isset($this->configUi[$jenisTr]['steps']['2']['target']) ? $this->configUi[$jenisTr]['steps']['2']['target'] : "";
+        $historyFields = isset($this->configLayout[$jenisTr]['fixedFieldHold']) ? $this->configLayout[$jenisTr]['fixedFieldHold'] : array();
+        $detailsFields = isset($this->configLayout[$jenisTr]['fixedFieldHold'][$currentState]['loop']) ? $this->configLayout[$jenisTr]['fixedFieldHold'][$currentState]['loop'] : array();
+        $arrayValid = isset($this->configLayout[$jenisTr]['fixedFieldHold'][$currentState]['array_flip']) ? $this->configLayout[$jenisTr]['fixedFieldHold'][$currentState]['array_flip'] : array();
+        $lockerStock = isset($this->configLayout[$jenisTr]['lockerStock']) ? $this->configLayout[$jenisTr]['lockerStock'] : "MdlLockerStock";
+
+        $menuLabel = isset($this->configUi[$jenisTr]['label']) ? $this->configUi[$jenisTr]['label'] : "";
+
+        if (isset($_SESSION[$cCode])) {
+            $_SESSION[$cCode] = null;
+            unset($_SESSION[$cCode]);
+        }
+
+
+        //            $stepNumber = isset($_SESSION[$cCode]['tableIn_master']['step_number']) ? $_SESSION[$cCode]['tableIn_master']['step_number'] : 1;
+        //region session init
+        if (!isset($_SESSION[$cCode])) {
+            $_SESSION[$cCode] = array(
+                "items" => array(),
+                "main" => array(),
+            );
+        }
+        if (!isset($_SESSION[$cCode]['main'])) {
+            $_SESSION[$cCode]['main'] = array();
+        }
+        if (!isset($_SESSION[$cCode]['items'])) {
+            $_SESSION[$cCode]['items'] = array();
+        }
+        //endregion
+
+        //       arrPrint($arrayFlip);
+        $mb = New MobileDetect();
+        $this->load->model("Mdls/$lockerStock");
+        $st = new $lockerStock();
+        //        $st->addFilter("jenis='produk'");
+        //        $st->addFilter("jenis_locker='stock'");
+        $st->addFilter("state='active'");
+
+        $tmpStock = $st->lookupAll()->result();
+
+        $cabangID = (isset($_GET['o']) && $_GET['o'] <> 0) ? $_GET['o'] : $this->session->login['cabang_id'];
+        $gudangID = (isset($_GET['o']) && $_GET['o'] <> 0) ? $_GET['o'] : $this->session->login['gudang_id'];
+
+        $marking_style = array();
+        if (isset($_GET['trID']) && ($_GET['trID'] > 0)) {
+            $marking_style[$_GET['trID']] = "background-color:yellow;font-size:20px;";
+        }
+
+
+        //        arrPrint($tmpStock);
+
+        $isMob = $mb->isMobile();
+        if ($isMob) {
+            $historyFields = isset($this->configUi[$jenisTr]['compactHistoryFields']) ? $this->configUi[$jenisTr]['compactHistoryFields'] : array();
+        }
+
+        $backdate_f = formatTanggal(backDate(30), 'Y-m-d');
+
+        $date1 = isset($_GET['date1']) ? $_GET['date1'] : $backdate_f;
+        $date2 = isset($_GET['date2']) ? $_GET['date2'] : date("Y-m-d");
+
+        //region prepare ERP
+        $stepLabels = array(//            "0" => "all"
+        );
+        $stepLinks = array(//            "0" => base_url() . $this->uri->segment(1) . "/" . $this->uri->segment(2) . "/" . $this->uri->segment(3)
+        );
+        if (sizeof($historyFields) > 1) {
+            $subCodes = array();
+            $stepCodes = array();
+            $jmlStep = count($historyFields);
+
+            foreach ($historyFields as $stepNumber => $stepSpec) {
+                $subCodes[$stepNumber] = $stepNumber;
+                $stepCodes[] = $stepNumber;
+                $stepLabels[$stepNumber] = $stepSpec['label'];
+                $stepLinks[$stepNumber] = MODUL_PATH . $this->uri->segment(2) . "/" . $this->uri->segment(3) . "/" . $this->jenisTr . "/" . $stepNumber . "/" . "?date1=$date1&date2=$date2";
+            }
+        }
+        //endregion
+
+
+        //region prepare data outstanding
+        $this->load->model("MdlTransaksi");
+        $tr = new MdlTransaksi();
+        $tr1 = new MdlTransaksi();
+
+        $tr->addFilter("jenis_master='" . $this->jenisTr . "'");
+        $tr->addFilter("div_id='" . $this->session->login['div_id'] . "'");
+        $tr->addFilter("jenis='$selecetedCode'");
+        $tr->addFilter("transaksi.cabang_id='$cabangID'");
+
+        //        $tr->addFilter("id_master='14005'");
+        $searchStr = isset($_GET['search']) ? $_GET['search'] : "";
+
+        //region date filter
+        //         $this->db->where("fulldate>='" . $date1 . "'");
+        //         $this->db->where("fulldate<='" . $date2 . "'");
+        //endregion
+
+
+        $addParams = array();
+        if (isset($_GET['addParams'])) {
+            $addParams = unserialize(base64_decode($_GET['addParams']));
+        }
+        if ($addParams != null && sizeof($addParams) > 0) {
+            //            arrprint($addParams);
+            foreach ($addParams as $f) {
+                $tr->addFilter($f);
+            }
+        }
+
+        if (isset($_GET['search'])) {
+            $tr->setKeyWord($searchStr);
+        }
+        else {
+        }
+        $jmlData = $tr->lookupDataCount();
+        //        $limit=10;
+        $page = (isset($_GET['page']) && $_GET['page'] > 0) ? ($_GET['page']) : 1;
+        $offset = ($limit * ($page - 1));
+
+        $addParams = array();
+        if (isset($_GET['addParams'])) {
+            $addParams = unserialize(base64_decode($_GET['addParams']));
+        }
+        if ($addParams != null && sizeof($addParams) > 0) {
+            //            arrprint($addParams);
+            foreach ($addParams as $f) {
+                $tr->addFilter($f);
+            }
+        }
+
+
+        if (isset($_GET['search'])) {
+            $tr->setKeyWord($searchStr);
+        }
+        else {
+        }
+
+        // $tr->addFilter("sub_step_number>0");
+        // $tr->addFilter("valid_qty>0");
+        $tr->addFilterJoin("sub_step_number>0");
+        $tr->addFilterJoin("valid_qty>0");
+
+        $tmpTr = $tr->lookupJoined();
+        //        endregion
+
+        $extractedItems = array();//==untuk urusan update transaksi referer
+        $validItems = array();
+        $validItemSends = array();
+        $mainData = array();
+        $itemsVal = array();
+        $itemData = array();
+        $mainDataOutstandingItems = array();
+
+        $kolom_2s = array(
+            "cabang_id",
+            "produk_id",
+            "jumlah",
+            "gudang_id",
+        );
+
+        $stocks = array();
+        foreach ($tmpStock as $temps) {
+            $tempDatas = array();
+            foreach ($kolom_2s as $kolom) {
+                $$kolom = $temps->$kolom;
+                $tempDatas[$kolom] = $temps->$kolom;
+            }
+            $stocks[$cabang_id][$produk_id] = $tempDatas;
+        }
+
+        $summary = array();
+        $arrayAction = array();
+        $arrayItemsMasterToID = array();
+        $arrayItemsReg = array();
+        $arrayItemsRegPair = array();
+        $arrayItemsOutstandingPair = array();
+        // arrPrint($tmpTr);
+        if (sizeof($tmpTr) > 0) {
+            //            arrprint($historyFields[$currentState]);
+            if (isset($historyFields[$currentState]['items'])) {
+                $listTrID = array();
+                foreach ($tmpTr as $row) {
+                    $listTrID[] = $row->id;
+                    $ind_reg = $row->indexing_registry != NULL ? blobDecode($row->indexing_registry) : array();
+                    $arrayItemsReg[$row->id_master] = isset($ind_reg['items']) ? $ind_reg['items'] : 0;
+                    $arrayItemsMasterToID[$row->id_master] = $row->transaksi_id;
+                }
+                //                arrPrint($arrayItemsReg);
+                // membaca registry items
+                $tr->setFilters(array());
+                // $tr->addFilter("id in ('" . implode("','", $arrayItemsReg) . "')");
+                $tr->setJointSelectFields("items,transaksi_id");
+                $tr->addFilter("transaksi_id in ('" . implode("','", $listTrID) . "')");
+                $tmpReg = $tr->lookupDataRegistries()->result();
+                // cekLime($this->db->last_query());
+                // matiHEre();
+                foreach ($tmpReg as $rSpec) {
+                    $arrayItemsRegPair[$rSpec->transaksi_id] = blobDecode($rSpec->items);
+                }
+                foreach ($arrayItemsRegPair as $trID => $tmp) {
+                    foreach ($tmp as $pID => $etmp) {
+                        if (isset($historyFields[$currentState]['items']['outstanding_items'])) {
+                            foreach ($historyFields[$currentState]['items']['outstanding_items'] as $val) {
+                                $arrayItemsOutstandingPair[$trID][$pID] = $etmp[$val];
+                            }
+                        }
+                    }
+                }
+            }
+            //            arrPrint($arrayItemsMasterToID);
+            //            arrPrint($arrayItemsOutstandingPair);
+            foreach ($tmpTr as $row) {
+                if (!isset($validItems[$row->produk_id])) {
+                    $validItems[$row->id_master][$row->produk_id] = 0;
+                }
+                if (!isset($validItemSends[$row->produk_id])) {
+                    $validItemSends[$row->id_master][$row->produk_id] = 0;
+                }
+
+                $validItems[$row->id_master][$row->produk_id] += $row->valid_qty;
+                $validItemSends[$row->id_master][$row->produk_id] += $row->produk_ord_jml - $row->valid_qty;
+
+                if (!isset($extractedItems[$row->produk_id])) {
+                    $extractedItems[$row->id_master][$row->produk_id] = array();
+                }
+
+                $no = 0;
+                $srcKey = isset($historyFields[$currentState]['srcKey']) ? $historyFields[$currentState]['srcKey'] : array();
+
+                if (isset($historyFields[$currentState]['fields'])) {
+                    foreach ($historyFields[$currentState]['fields'] as $srcKey_0 => $srcAlias) {
+                        $no++;
+                        $val_main = isset($row->$srcKey_0) ? makeValue($srcKey_0, json_decode(json_encode($row), true), json_decode(json_encode($row), true)) : "";
+                        //                        $mainData[$row->$srcKey][$srcKey_0] = formatField_he_format($srcKey_0, $val_main);
+
+                        if (is_array($srcAlias)) {
+                            $hisStep = $srcAlias['step'];
+                            $hisKey = $srcAlias['key'];
+                            if (isset($row->ids_his)) {
+                                if ($hisKey == "nomer") {
+                                    $returnVal = showHistoriGlobalNumbers($row->ids_his, $hisStep, true);
+                                    if ($returnVal == "") {
+                                        $mainData[$row->$srcKey][$srcKey_0] = "-";
+                                    }
+                                    else {
+                                        $mainData[$row->$srcKey][$srcKey_0] = $returnVal;
+                                    }
+                                }
+                                else {
+                                    $ids_his_decode = blobDecode($row->ids_his);
+                                    if (isset($ids_his_decode[$hisStep][$hisKey])) {
+                                        $mainData[$row->$srcKey][$srcKey_0] = $ids_his_decode[$hisStep][$hisKey];
+                                    }
+                                    else {
+                                        $mainData[$row->$srcKey][$srcKey_0] = "-";
+                                    }
+                                }
+                            }
+                            else {
+                                $mainData[$row->$srcKey][$srcKey_0] = "-";
+                            }
+                        }
+                        else {
+                            $mainData[$row->$srcKey][$srcKey_0] = formatField_he_format($srcKey_0, $val_main);
+                        }
+                    }
+
+                    // mereplace manual aoutstanding items...
+                    $mainDataOutstandingItems[$row->$srcKey][] = array(
+                        "valid_qty" => $row->valid_qty,
+                        "label" => $row->produk_label,
+                        "kode" => $row->produk_kode,
+                        "produk_id" => $row->produk_id,
+                    );
+
+                }
+
+                $arrAsem[$row->produk_id][] = $row->produk_kode;
+
+                if (sizeof($detailsFields) > 0) {
+                    foreach ($detailsFields as $fieldKey => $key) {
+                        $val = makeValue($key, json_decode(json_encode($row), true), json_decode(json_encode($row), true));
+                        $itemData[$row->$srcKey][$fieldKey][] = formatField_he_format($fieldKey, $val);
+                        //                        foreach ($tmpStock as $temps) {
+                        //                            if($row->produk_id==$temps->produk_id && $temps->cabang_id==$cabangID){
+                        //                                $stocks[$cabangID][$row->produk_id] = $temps->jumlah;
+                        //                            }
+                        //                        }
+                        //                        $itemData[$row->$srcKey]['stok'][] = $row->produk_id;
+                        $itemData[$row->$srcKey]['stok'][] = isset($stocks[$cabangID][$row->produk_id]['jumlah']) ? $stocks[$cabangID][$row->produk_id]['jumlah'] : 0;
+                    }
+                }
+
+            }
+            //            arrPrintWebs($arrayItemsOutstandingPair);
+            // ======================================================================
+            // memairingkan qty outstanding dengan masterID masing-masing.
+            if (sizeof($mainData) > 0) {
+                if (sizeof($mainDataOutstandingItems) > 0) {
+                    foreach ($mainDataOutstandingItems as $masterID => $spec) {
+                        if (array_key_exists($masterID, $mainData)) {
+
+                            $hasil = "";
+                            $sub_tmpOutstandingPair = 0;
+                            foreach ($spec as $dSpec) {
+                                $addSpec = "";
+                                if (isset($arrayItemsMasterToID[$masterID])) {
+                                    $pairTrID = $arrayItemsMasterToID[$masterID];
+                                    $tmpOutstandingPair = isset($arrayItemsOutstandingPair[$pairTrID][$dSpec['produk_id']]) ? $arrayItemsOutstandingPair[$pairTrID][$dSpec['produk_id']] : "0";
+                                    $sub_tmpOutstandingPair += ($tmpOutstandingPair * $dSpec['valid_qty']);
+
+                                    $price = number_format($tmpOutstandingPair);
+                                    $sum_price = number_format($tmpOutstandingPair * $dSpec['valid_qty']);
+                                    $addSpec = "<span style='width:200px;' class='pull-right text-right'>@ $price  |  $sum_price</span>";
+                                }
+
+                                if ($hasil == "") {
+                                    $hasil = $dSpec['valid_qty'] . "x " . $dSpec['label'] . " " . $dSpec['kode'] . $addSpec;
+                                }
+                                else {
+                                    $hasil .= "<br>" . $dSpec['valid_qty'] . "x " . $dSpec['label'] . " " . $dSpec['kode'] . $addSpec;
+                                }
+                            }
+                            //                            cekHere($hasil);
+                            $mainData[$masterID]['outstanding_items'] = $hasil;
+                            $mainData[$masterID]['sub_outstanding_items'] = formatField_he_format("debet", $sub_tmpOutstandingPair);
+                            if (!isset($summary['sub_outstanding_items'])) {
+                                $summary['sub_outstanding_items'] = 0;
+                            }
+                            $summary['sub_outstanding_items'] += $sub_tmpOutstandingPair;
+                        }
+                    }
+                }
+            }
+        }
+        else {
+            cekmerah("TIDAK ada yang mau diekstrak");
+        }
+        //endregion
+
+
+        //region header label
+        $headerFieldLabel = array();
+        if (isset($historyFields[$currentState]['fields'])) {
+            foreach ($historyFields[$currentState]['fields'] as $srcKey => $alias) {
+                if (is_array($alias)) {
+                    $headerFieldLabel[$srcKey] = isset($alias['label']) ? $alias['label'] : "-";
+                }
+                else {
+                    $headerFieldLabel[$srcKey] = $alias;
+                }
+            }
+        }
+
+        //endregion
+        $addLink = null;
+        $data = array(
+            "mode" => $this->uri->segment(3),
+            "isMobile" => $isMob,
+            "jenisTr" => $jenisTr,
+            "trName" => $this->configUi[$jenisTr]["label"],
+            "errMsg" => $this->session->errMsg,
+            "title" => isset($subCodes) && isset($currentState) ? $subCodes[$currentState] : $this->jenisTrName,
+            //            "subTitle" => "<b> Out Standing $menuLabel <r>( periode " . (isset($date1) && isset($date2) ? date("d-M-Y", strtotime($date1)) . " s/d " . date("d-M-Y", strtotime($date2)) : "HINGGA HARI INI") . " )</r></b> ",
+            "subTitle" => "<b> Out Standing $menuLabel",
+            "arrayHistoryLabels" => $headerFieldLabel,
+            "arrayHistory" => $mainData,
+            "arrayAction" => $arrayAction,
+            "arrayHistorySumField" => array(),
+            "detailsFields" => $itemData,
+            "arrayHistoryId" => array(),
+            "action" => array(),
+            "steps" => $historyFields,
+            "arrayValid" => $arrayValid,
+            "stepLabels" => $stepLabels,
+            "stepLinks" => $stepLinks,
+            "addParams" => isset($_GET['addParams']) ? $_GET['addParams'] : null,
+            "currentState" => isset($currentState) ? $currentState : "all states",
+            "alternateLink" => MODUL_PATH . $this->uri->segment(2) . $this->uri->segment(3) . "/" . $this->jenisTr . "/viewIncomplete/",
+            "alternateLinkCaption" => "incomplete " . $this->configUi[$jenisTr]["label"] . " <span class='glyphicon glyphicon-arrow-right'></span>",
+            "addLink" => $addLink,
+            "filters" => array(
+                "dates" => $this->dates,
+                "date1" => $date1,
+                "date2" => $date2,
+            ),
+            "thisPage" => MODUL_PATH . "/" . $this->uri->segment(2) . "/" . $this->uri->segment(3) . "/" . $this->jenisTr . "/" . $this->uri->segment(5),
+            "marking_style" => $marking_style,
+            "summary" => $summary,
+        );
+
+        $this->load->view("history", $data);
+    }
+
+    public function viewStatus()
+    {
+        if (!isset($this->session->login['id'])) {
+            redirect(base_url() . "Login");
+        }
+        $limit = 20;
+        $maxPageNum = 20;
+        $jenisTr = $this->jenisTr;
+        $cCode = $this->cCode;
+        $historyFields = isset($this->configUi[$jenisTr]['shortStatusFields']) ? $this->configUi[$jenisTr]['shortStatusFields'] : array();
+        $pairRegistries = isset($this->configUi[$jenisTr]['pairRegistries']) ? $this->configUi[$jenisTr]['pairRegistries'] : array();
+        $pairStepCode = isset($this->configUi[$jenisTr]['steps']) ? $this->configUi[$jenisTr]['steps'] : array();
+        $addMainStep = isset($this->configUi[$jenisTr]['addMainStep']) ? $this->configUi[$jenisTr]['addMainStep'] : array();
+        $regulerRoutesConfig = $this->config->item("heTransaksi_regulerRoutes") != NULL ? $this->config->item("heTransaksi_regulerRoutes") : array();
+        $sourceInternalConnectConfig = $this->config->item("heTransaksi_source_internal_connect") != NULL ? $this->config->item("heTransaksi_source_internal_connect") : array();
+        $sourceCenterConnectConfig = $this->config->item("heTransaksi_center_connect") != NULL ? $this->config->item("heTransaksi_center_connect") : array();
+
+
+        $jenisTrConnect = heGetOriginConnectTCode($jenisTr);
+        $jenisTrOriginConnect = heGetOriginTCode($jenisTr);
+        $arrJenisTrMain = array($jenisTr);
+        // ini mencari target koneknya
+        if ($jenisTrConnect != NULL) {
+            $arrJenisTrMain[] = $jenisTrConnect;
+        }
+        // ini mencari sumber koneknya
+        if ($jenisTrOriginConnect != NULL) {
+            if (!in_array($jenisTrOriginConnect, $sourceInternalConnectConfig)) {
+                $arrJenisTrMain[] = $jenisTrOriginConnect;
+            }
+        }
+
+
+        $mb = New MobileDetect();
+        $isMob = $mb->isMobile();
+        if ($isMob) {
+            $historyFields = isset($this->configUi[$jenisTr]['shortStatusFields']) ? $this->configUi[$jenisTr]['compactHistoryFields'] : array();
+        }
+
+
+        $backdate_f = formatTanggal(backDate(30), 'Y-m-d');
+        $date1 = isset($_GET['date1']) ? $_GET['date1'] : $backdate_f;
+        $date2 = isset($_GET['date2']) ? $_GET['date2'] : date("Y-m-d");
+        $tmpCode = array();
+        if (sizeof($pairStepCode) > 0) {
+            foreach ($pairStepCode as $t => $tSpec) {
+                $tmpCode[$t] = $tSpec['target'];
+            }
+        }
+        if (sizeof($addMainStep) > 0) {
+            foreach ($addMainStep as $t => $tSpec) {
+                $tmpCode[$t] = $tSpec['target'];
+            }
+        }
+
+        $this->load->model("MdlTransaksi");
+        $this->load->model("Coms/ComJurnal_activityMain");
+
+
+        //region lookup histories
+        $tr = new MdlTransaksi();
+        $searchStr = isset($_GET['search']) ? $_GET['search'] : "";
+
+
+        // kolom yang diambil dari tabel transaksi...
+        $arrKolomTr = array(
+            "id",
+            "dtime",
+            "nomer_top",
+            "nomer",
+            "jenis",
+            "jenis_master",
+            "jenis_top",
+            "jenis_label",
+            "oleh_id",
+            "oleh_nama",
+            "customers_id",
+            "customers_nama",
+            "suppliers_id",
+            "suppliers_nama",
+            "cabang_id",
+            "cabang_nama",
+            "cabang2_id",
+            "cabang2_nama",
+        );
+        $arrJurnalStep = array();
+        if (sizeof($regulerRoutesConfig) > 0) {
+            foreach ($regulerRoutesConfig as $jenisMaster => $jSpec) {
+                foreach ($jSpec as $step => $sSpec) {
+                    $arrJurnalStep[$jenisMaster][$step] = $sSpec["debet"];
+                }
+            }
+        }
+
+
+        $cj = New ComJurnal_activityMain();
+        $cj->setFilters(array());
+        if ($this->session->login['cabang_id'] == CB_ID_PUSAT) {
+        }
+        else {
+            $cabang_id = $this->session->login['cabang_id'];
+            $cabang_pusat = CB_ID_PUSAT;
+            //            cekPink("origin konek $jenisTrOriginConnect");
+            //            arrPrint($sourceCenterConnectConfig);
+            if (in_array($jenisTrOriginConnect, $sourceCenterConnectConfig)) {
+                //                cekPink("transaksi yang ada koneksi dengan PUSAT");
+                $where = "((cabang_id='$cabang_id' AND cabang2_id='$cabang_pusat') OR (cabang_id='$cabang_pusat' AND cabang2_id='$cabang_id'))";
+            }
+            elseif (in_array($jenisTr, $sourceCenterConnectConfig)) {
+                //                cekPink("transaksi yang ada koneksi dengan PUSAT");
+                $where = "((cabang_id='$cabang_id' AND cabang2_id='$cabang_pusat') OR (cabang_id='$cabang_pusat' AND cabang2_id='$cabang_id'))";
+            }
+            else {
+                //                cekPink("transaksi yang TIDAK ada koneksi dengan PUSAT");
+                $where = "((cabang_id='$cabang_id' AND cabang2_id='$cabang_id') OR (cabang_id='$cabang_id' AND cabang2_id='$cabang_id'))";
+            }
+
+            $this->db->where($where);
+        }
+
+        if (!isset($_GET['date1']) && !isset($_GET['date2'])) {
+
+            $subTitle_date = "";
+            $subSubTitle_date = "";
+        }
+        else {
+            $date1 = isset($_GET['date1']) ? $_GET['date1'] : date("Y-m-01");
+            $date2 = isset($_GET['date2']) ? $_GET['date2'] : date("Y-m-d");
+
+            $this->db->where("fulldate>='" . $date1 . "'");
+            $this->db->where("fulldate<='" . $date2 . "'");
+
+            $subTitle_date = lgTranslateTime($date1) . " - " . lgTranslateTime($date2);
+            $subSubTitle_date = "";
+        }
+
+        //        arrprint($arrJenisTrMain);
+        $cj->addFilter("jenis_master in ('" . implode("','", $arrJenisTrMain) . "')");
+        $tmp = $cj->lookupAll()->result();
+        //        showLast_query("biru");
+        //        cekHitam(sizeof($tmp));
+
+        $tmpHistory = array();
+        $tmpHistory_0 = array();
+        $tmpHistory_waiting = array();
+        $tmpHistory_activity = array();
+        $tmpHistory_activityData = array();
+        $trIDs = array();
+        if (sizeof($tmp) > 0) {
+            foreach ($tmp as $tmpSpec) {
+
+
+                $tmpHistory_0[$tmpSpec->master_id][] = $tmpSpec;
+                $tmpHistory_activity[$tmpSpec->master_id][] = $tmpSpec->activity;
+                $tmpHistory_activityData[$tmpSpec->master_id][$tmpSpec->activity] = array(
+                    "activity" => $tmpSpec->activity,
+                    "master_id" => $tmpSpec->master_id,
+                    "transaksi_no" => isset($tmpSpec->transaksi_no) ? $tmpSpec->transaksi_no : "",
+                    "dtime" => $tmpSpec->dtime,
+                    "fulldate" => $tmpSpec->fulldate,
+                    "oleh_nama" => isset($tmpSpec->oleh_nama) ? $tmpSpec->oleh_nama : "",
+                );
+
+                $trIDs[$tmpSpec->master_id] = $tmpSpec->master_id;
+                if ($tmpSpec->kredit > 0) {
+                    if ($tmpSpec->activity != "request") {
+
+                        $tmpHistory_waiting[$tmpSpec->master_id][] = $tmpSpec->activity;
+                    }
+                }
+            }
+
+
+            // pair dengan transaksi
+            $tr = New MdlTransaksi();
+            $tr->addFilter("id in ('" . implode("','", $trIDs) . "')");
+            $tmpTr = $tr->lookupAll()->result();
+            //            showLast_query("kuning");
+            foreach ($tmpTr as $trSpec) {
+                foreach ($arrKolomTr as $key) {
+                    $subTr[$key] = isset($trSpec->$key) ? $trSpec->$key : "";
+                }
+                $tmpHistory[$trSpec->id] = (object)$subTr;
+            }
+
+            // pair dengan registry main
+            $treg = New MdlTransaksi();
+            $treg->setFilters(array());
+            $treg->addFilter("transaksi_id in ('" . implode("','", $trIDs) . "')");
+            // $treg->addFilter("param='main'");
+            $treg->setJointSelectFields("main,transaksi_id");
+            $tmpReg = $treg->lookupDataRegistries()->result();
+            $pairRegistriesResult = array();
+            if (sizeof($tmpReg) > 0) {
+                foreach ($tmpReg as $regRow) {
+                    $pairRegistriesResult[$regRow->transaksi_id] = blobDecode($regRow->main);
+                }
+            }
+        }
+
+
+        $tmpHist = $tmpHistory;
+        $arrayHistory = array();
+        $arrayHistory_ids = array();
+        $arrayHistory_topID = array();
+        $arrayHistoryCanceled = array();
+        $arrayHistoryDone = array();
+        $arrayHistoryStatus = array();
+        if (sizeof($tmpHist) > 0) {
+            krsort($tmpHist);
+            foreach ($tmpHist as $row) {
+                if (isset($pairRegistriesResult[$row->id])) {
+                    foreach ($pairRegistriesResult[$row->id] as $k => $v) {
+                        if (!isset($row->$k)) {
+                            $row->$k = $v;
+                        }
+                    }
+                }
+
+                $tmp = array();
+                foreach ($historyFields as $fName => $fLabel) {
+                    if (strpos($fName, '+') !== false) {
+                        //==mengandung penggabungan (+)
+                        $chars = explode("+", $fName);
+                        $colValue = "";
+                        foreach ($chars as $key) {
+                            $colValue .= isset($row->$key) ? formatField_he_format($key, $row->$key) . "<br>" : "";
+                        }
+                        $colValue = rtrim($colValue, "<br>");
+                    }
+                    else {
+                        $colValue = isset($row->$fName) ? formatField_he_format($fName, $row->$fName) : "";
+                    }
+                    $tmp[$fName] = $colValue;
+                    //                    $tmp1["id"] = $row->id;
+                }
+
+                $disabled = "";
+                $arrActivity = array();
+                $arrWaiting = array();
+
+                if (isset($tmpHistory_activity[$row->id])) {
+                    $arrActivity = $tmpHistory_activity[$row->id];
+                }
+                if (isset($tmpHistory_waiting[$row->id])) {
+                    $arrWaiting = $tmpHistory_waiting[$row->id];
+                }
+
+
+                $status_next = "";
+                if (isset($arrJurnalStep[$row->jenis_master])) {
+                    foreach ($arrJurnalStep[$row->jenis_master] as $number => $value) {
+                        $value_add = "";
+                        $onclick = "";
+
+                        if (in_array($value, $arrActivity)) {
+                            if (in_array($value, $arrWaiting)) {
+                                $disabled = "";
+                                $class = "btn-warning";
+                            }
+                            else {
+
+                                $dtime = $tmpHistory_activityData[$row->id][$value]['dtime'];
+                                $oleh_nama = $tmpHistory_activityData[$row->id][$value]['oleh_nama'];
+                                $transaksi_no = $tmpHistory_activityData[$row->id][$value]['transaksi_no'];
+                                $transaksi_no_f = formatNota("nomer", $transaksi_no);
+
+                                $disabled = "";
+                                $class = "btn-success";
+                                $value_add = " (by $oleh_nama, $transaksi_no_f, $dtime)";
+                                $onclick = "onclick=\"showModal('" . base_url() . "Transaksi/viewResume/$transaksi_no','view resume for $transaksi_no_f')\"";
+                            }
+                        }
+                        else {
+                            $disabled = "";
+                            $class = "btn-default";
+                        }
+
+                        $value_add = "";
+                        if ($status_next == "") {
+                            $status_next = "<input type='button' class='btn btn-sm $class' $disabled value='$value $value_add'
+                                    $onclick
+                                    >";
+                            $status_next .= "<br>";
+                        }
+                        else {
+                            $status_next = $status_next;
+                            $status_next .= "<input type='button' class='btn btn-sm $class' $disabled value='$value $value_add'
+                                    $onclick
+                                    >";
+                            $status_next .= "<br>";
+                        }
+                    }
+                }
+                $tmp['status_next'] = $status_next;
+
+
+                $arrayHistory[$row->id] = $tmp;
+                $arrayHistoryStatus[$row->id] = str_replace("<br>", "&nbsp;", $status_next);
+
+
+            }
+
+        }
+        //endregion
+
+
+        //region prepare params for viewer
+        $trName = isset($this->configUi[$jenisTr]["label"]) ? $this->configUi[$jenisTr]["label"] : "";
+        $data = array(
+            "mode" => $this->uri->segment(3),
+            "isMobile" => $isMob,
+            "jenisTr" => $jenisTr,
+            "trName" => $this->configUi[$jenisTr]["label"],
+            "errMsg" => $this->session->errMsg,
+            "title" => isset($subCodes) && isset($currentState) ? $subCodes[$currentState] : $this->jenisTrName,
+            "subTitle" => "transaction status ",
+            "arrayHistoryLabels" => $historyFields,
+            "arrayHistory" => $arrayHistory,
+            "arrayHistoryId" => $arrayHistory_ids,
+            "arrayHistoryCanceled" => $arrayHistoryCanceled,
+            "action" => isset($action) && sizeof($action) > 0 ? $action : array(),
+            "steps" => isset($steps) && sizeof($steps) > 0 ? $steps : array(),
+            "stepLabels" => isset($stepLabels) && sizeof($stepLabels) > 0 ? $stepLabels : array(),
+            "stepLinks" => isset($stepLinks) && sizeof($stepLinks) > 0 ? $stepLinks : array(),
+            "addParams" => isset($_GET['addParams']) ? $_GET['addParams'] : null,
+            "currentState" => isset($currentState) ? $currentState : "all states",
+            "alternateLink" => MODUL_PATH . $this->uri->segment(2) . "/viewIncomplete/" . $this->uri->segment(3) . "/" . $this->jenisTr,
+            "alternateLinkCaption" => "incomplete " . $this->configUi[$jenisTr]["label"] . " <span class='glyphicon glyphicon-arrow-right'></span>",
+            "addLink" => isset($addLink) ? $addLink : "",
+            "filters" => array(
+                "dates" => $this->dates,
+                "date1" => $date1,
+                "date2" => $date2,
+            ),
+            "thisPage" => MODUL_PATH . $this->uri->segment(2) . "/" . $this->uri->segment(3) . "/" . $this->uri->segment(4) . "/" . $this->uri->segment(5),
+            "arrayHistoryStatus" => $arrayHistoryStatus,
+            "customStatusLayout" => true,
+            //            "customStatusLayout" => false,
+        );
+        //endregion
+
+
+        $this->load->view("history", $data);
+    }
+
+    public function index()
+    {
+        $starttime = microtime(true);
+        if (!isset($this->session->login['id'])) {
+            redirect(base_url() . "Login");
+        }
+        $mems = isset($this->session->login['membership']) ? $this->session->login['membership'] : array();
+        $sesionReplacer = replaceSession();
+        $jenisTr = $this->jenisTr;
+        $cCode = "_TR_" . $this->jenisTr;
+        $paymentConfig = isset($this->configUi[$jenisTr]['paymentConfig']) ? $this->configUi[$jenisTr]['paymentConfig'] : false;
+        $historyFields = isset($this->configUi[$jenisTr]['shortHistoryFields']) ? $this->configUi[$jenisTr]['shortHistoryFields'] : array();
+        $kepoinFields = isset($this->configUi[$jenisTr]['shortKepoinFields']) ? $this->configUi[$jenisTr]['shortKepoinFields'] : array();
+        $pairRegistries = isset($this->configUi[$jenisTr]['pairRegistries']) ? $this->configUi[$jenisTr]['pairRegistries'] : array();
+        $shoppingCartPerTransaksi = isset($this->configUi[$jenisTr]['shoppingCartPerTransaksi']) ? $this->configUi[$jenisTr]['shoppingCartPerTransaksi'] : 0;
+        $shoppingCartPerTransaksiBtn = isset($this->configUi[$jenisTr]['shoppingCartPerTransaksiBtn']) ? $this->configUi[$jenisTr]['shoppingCartPerTransaksiBtn'] : 0;
+        $connectTo = isset($this->configUi[$jenisTr]['connectTo']) ? $this->configUi[$jenisTr]['connectTo'] : "";
+        $steps = $this->configUi[$jenisTr]['steps'];
+        //region link to add new transaction
+
+        //tambahin hak akses custom
+
+        if (placeCanMakeTrans_he_menu($this->session->login['membership'], $this->session->login['cabang_id'], $this->session->login['gudang_id'], $this->jenisTr, $this->configUiJenis)) {
+            //        if (in_array($this->configUi[$jenisTr]["steps"][1]['userGroup'], $this->session->login['membership'])) {
+            $createIndexes = (null != $this->config->item("transaksi_createIndex")) ? $this->config->item("transaksi_createIndex") : array();
+            $isDisableMakeTrans = isset($this->configUi[$this->jenisTr]['isDisableMakeTrans']) ? $this->configUi[$this->jenisTr]['isDisableMakeTrans'] : false;
+            if (array_key_exists($this->jenisTr, $createIndexes)) {
+                $targetUrl = MODUL_PATH . $createIndexes[$this->jenisTr] . "/" . $this->jenisTr;
+            }
+            else {
+                $targetUrl = MODUL_PATH . "Create/index/" . $this->jenisTr;
+            }
+
+            if ($isDisableMakeTrans) {
+                $addLink = null;
+                //                $_SESSION['errMsg'] = "test error dari 1982";
+                //                arrPrint( $this->session->errMsg );
+            }
+            else {
+                $addLink = array(
+                    "link" => $targetUrl,
+                    "label" => "<span class='glyphicon glyphicon-plus'></span> create new " . $this->configUi[$jenisTr]["steps"][1]['label'],
+                );
+            }
+
+        }
+        else {
+            $addLink = null;
+        }
+        //endregion
+
+        $getStep = isset($_GET['step']) ? $_GET['step'] : 1;
+        $baseUrl = base_url();
+
+        if ($paymentConfig == true) {
+            $link_undoneList = MODUL_PATH . "Transaksi/selectPaymentExternSrc/$jenisTr/?gr=cGVtYmVsaWFu&ohyes=ohno&step=$getStep";
+            $link_historyList = MODUL_PATH . "History/showData/$jenisTr/?limit=10";
+
+            $scriptBottom = "";
+            $scriptBottom .= "<script>
+             var viewundoneList = function () {
+                         top.$('#undoneList').html(\"<div class='row' style='margin-top: 14px; padding-bottom: 14px;'> <span class='col-lg-12 text-center'><img width='5%' src='$baseUrl/assets/images/loading_16_p.gif'></span> </div>\");
+                     setTimeout(function () {
+                                      if (top.$('#undoneList').find('img').length > 0) {
+                                          top.$('#undoneList').load('$link_undoneList', function(){viewundoneList})
+                                          }
+                                      },1000);
+                     }\n
+                    viewundoneList();\n\n
+
+                    var viewhistoryList = function () {
+                        top.$('#historyList').html(\"<div class='row' style='margin-top: 14px; padding-bottom: 14px;'> <span class='col-lg-12 text-center'><img width='5%' src='$baseUrl/assets/images/loading_16_p.gif'></span> </div>\");
+                        setTimeout(function () {
+                              if (top.$('#historyList').find('img').length > 0) {
+                                  top.$('#historyList').load('$link_historyList', function(){viewhistoryList})
+                         }
+                        },1000);
+                     }\n
+                    viewhistoryList();\n
+         </script>
+        ";
+
+        }
+        else {
+
+            // $link_undoneList = MODUL_PATH . "Transaksi/viewUndoneItemsIndex/$jenisTr/?gr=cGVtYmVsaWFu&ohyes=ohno&step=$getStep";
+            $link_undoneListApprove = MODUL_PATH . "Transaksi/viewUndoneItems/$jenisTr/?gr=cGVtYmVsaWFu&ohyes=ohno&step=$getStep";
+            $link_undoneList = MODUL_PATH . "Transaksi/viewactiveProject/$jenisTr/?gr=cGVtYmVsaWFu&ohyes=ohno&step=$getStep";
+            $link_undoneTambahanProject = MODUL_PATH . "Transaksi/viewRequestTambahanProject/$jenisTr/";
+            $link_qcProject = MODUL_PATH . "MasterData/tasklist/qc?debuger=0";
+            $link_historyList = MODUL_PATH . "History/showData/$jenisTr/?limit=10";
+            $link_dasboard = MODUL_PATH . "Transaksi/viewDasbord/$jenisTr/?gr=cGVtYmVsaWFu&ohyes=ohno&step=$getStep";
+
+            //siapkan loader untuk vie data prject sebagai index
+
+            $scriptBottom = "";
+            $scriptBottom .= "<script>
+             var viewundoneList = function () {
+                         top.$('#undoneList').html(\"<div class='row' style='margin-top: 14px; padding-bottom: 14px;'> <span class='col-lg-12 text-center'><img width='5%' src='$baseUrl/assets/images/loading_16_p.gif'></span> </div>\");
+                     setTimeout(function () {
+                                      if (top.$('#undoneList').find('img').length > 0) {
+                                          top.$('#undoneList').load('$link_undoneList', function(){viewundoneList})
+                                          }
+                                      },1000);
+                     }\n
+                    viewundoneList();\n\n
+
+             var undoneTambahanProject = function () {
+                         top.$('#undoneTambahanProject').html(\"<div class='row' style='margin-top: 14px; padding-bottom: 14px;'> <span class='col-lg-12 text-center'><img width='5%' src='$baseUrl/assets/images/loading_16_p.gif'></span></div>\");
+                     setTimeout(function () {
+                                      if (top.$('#undoneTambahanProject').find('img').length > 0) {
+                                          top.$('#undoneTambahanProject').load('$link_undoneTambahanProject', function(){undoneTambahanProject})
+                                          }
+                                      },1000);
+                     }\n
+                    undoneTambahanProject();\n\n
+                    
+            var viewhistoryList = function () {
+                top.$('#historyList').html(\"<div class='row' style='margin-top: 14px; padding-bottom: 14px;'> <span class='col-lg-12 text-center'><img width='5%' src='$baseUrl/assets/images/loading_16_p.gif'></span> </div>\");
+                setTimeout(function () {
+                      if (top.$('#historyList').find('img').length > 0) {
+                          top.$('#historyList').load('$link_historyList', function(){viewhistoryList})
+                 }
+                },1000);
+             }\n
+                    viewhistoryList();\n\n
+             
+            var viewdasboardList = function () {
+                top.$('#undoneList').html(\"<div class='row' style='margin-top:14px;padding-bottom:14px;'><span class='col-lg-12 text-center'><img width='5%' src='$baseUrl/assets/images/loading_16_p.gif'></span></div>\");
+                setTimeout(function () {
+                    if (top.$('#dasboardList').find('img').length > 0) {
+                        top.$('#dasboardList').load('$link_dasboard', function(){viewdasboardList})
+                    }
+                },1000);
+            }\n
+                    viewdasboardList();\n\n
+            
+             var viewundoneListApprove = function () {
+             top.$('#undoneListApprove').html(\" <div class='row' style = 'margin-top: 14px; padding-bottom: 14px;'> <span class='col-lg-12 text-center' ><img width = '5%' src = '$baseUrl/assets/images/loading_16_p.gif' ></span > </div >\");
+             setTimeout(function () {
+                              if (top.$('#undoneListApprove').find('img').length > 0) {
+                                top.$('#undoneListApprove').load('$link_undoneListApprove', function(){ viewundoneListApprove })
+                                  }
+                              },1000);
+             }\n
+                    viewundoneListApprove();\n\n
+         </script>
+        ";
+
+
+            $scriptBottom .= "<script>
+
+             var qcProject = function () {
+                top.$('#qcProject').html(\"<div class='row' style='margin-top: 14px; padding-bottom: 14px;'> <span class='col-lg-12 text-center'><img width='5%' src='$baseUrl/assets/images/loading_16_p.gif'></span></div>\");
+                setTimeout(function () {
+                    if (top.$('#qcProject').find('img').length > 0) {
+                        top.$('#qcProject').load('$link_qcProject', function(){qcProject})
+                    }
+                },1000);
+             }\n
+            qcProject();\n\n
+
+            </script>";
+
+        }
+
+        $this->load->model('Mdls/MdlProdukProject');
+        $pr = new MdlProdukProject();
+
+        $this->load->model('Mdls/MdlTasklistProject');
+        $tmpTasklist = new MdlTasklistProject();
+        $tmpTasklist->setFilters(array());
+        $tmpTasklist->addFilter("employee_id=" . $this->session->login['id']);
+        $this->db->where("cabang_id", $this->session->login['cabang_id']);
+        $arrTask = $tmpTasklist->lookupAll()->result();
+
+        showlast_query("ungu");
+        cekMerah(count($arrTask));
+
+        if (!in_array("o_project_spv", $mems) && !in_array("c_holding", $mems) && !in_array("c_owner", $mems) && !in_array("o_project_mgr", $mems)) {
+            $vTask = array();
+            foreach ($arrTask as $kk => $dts) {
+                if ($dts->status == 1) {
+                    $vTask[$dts->produk_id] = $dts->produk_id;
+                }
+            }
+            if (!empty($vTask)) {
+                $this->db->where_in("id", $vTask);
+            }
+            else {
+                $this->db->where("id", "-99999");
+            }
+            $this->db->where("closing_status", 0);
+        }
+        else {
+            $this->db->where("closing_status", 0);
+            $this->db->where("cabang_id", $this->session->login['cabang_id']);
+        }
+
+//        $this->db->limit(10);
+        $tmpDataProject = $pr->fectDataProject()->result();
+
+
+        //region prepare params to viewer
+        $data = array(
+            "mode" => "index",
+            "project_data" => $tmpDataProject,
+            "tasklist_data" => $arrTask,
+            // "isMobile"                       => $isMob,
+            "errMsg" => $this->session->errMsg,
+            "template" => $this->configUi[$jenisTr]["template"],
+            "title" => $this->configUi[$jenisTr]["label"],
+            "subTitle" => $this->configUi[$jenisTr]["steps"][1]['label'],
+            "jenisTr" => $jenisTr,
+            "trName" => $this->configUi[$jenisTr]["label"],
+            'addLink' => $addLink,
+
+            "scriptBotto" => isset($scriptBottom) ? $scriptBottom : "",
+            "steps" => $steps,
+            "allSteps" => $this->allSteps,
+        );
+        //endregion
+
+        $this->load->view("transaksi", $data);
+    }
+
+    public function selectPaymentExternSrc()
+    {
+        $targetJenis = $this->uri->segment(4);
+
+        heInitCart($targetJenis);
+
+
+        //==dapatkan srcJenis
+        $paymentSources = null != ($this->config->item("payment_source")) ? $this->config->item("payment_source") : array();
+        $readerDueDate = isset($this->configUi[$targetJenis]['dueDateReader']) ? $this->configUi[$targetJenis]['dueDateReader'] : false;
+
+        if (sizeof($paymentSources) > 0) {
+            foreach ($paymentSources as $src => $mainSpecs) {
+                //                cekHere("$src");;
+                if (sizeof($mainSpecs) > 0) {
+
+                    foreach ($mainSpecs as $step => $sSpecTemp) {
+                        //                        cekHere("$step");
+                        //                        arrprint($sSpecTemp);
+                        $sCtr = 0;
+                        foreach ($sSpecTemp as $sSpec) {
+
+                            //                            arrPrint($sSpec);
+                            //                            cekHitam($src);
+                            if (isset($sSpec['jenisTarget']) && $sSpec['jenisTarget'] == $targetJenis) {
+                                $srcJenis = $sSpec['jenisSrc'];
+                                $rawSrcJenis = $src;
+                                $srcIndex = $sCtr;
+                                $srcStep = $step;
+                                //                            cekhijau($srcJenis . " memenuhi syarat");
+                            }
+                            else {
+                                $srcJenis = isset($sSpec['jenisSrc']) ? $sSpec['jenisSrc'] : "";
+                                $rawSrcJenis = "";
+                                $step = "";
+                                $srcIndex = "";
+                                $srcStep = "";
+                                //                            cekmerah($srcJenis . " TIDAK memenuhi syarat");
+                            }
+                        }
+                        $sCtr++;
+
+                    }
+                }
+            }
+        }
+
+        //        arrPrint($paymentSources[$rawSrcJenis][$srcStep][$srcIndex]);
+        //cekHitam("$rawSrcJenis |$srcStep| $srcIndex");
+        //        die();
+        $defItemLabels = array(
+            "extern_nama" => isset($paymentSources[$rawSrcJenis][$srcStep][$srcIndex]['externSrc']['extLabel']) ? $paymentSources[$rawSrcJenis][$srcStep][$srcIndex]['externSrc']['extLabel'] : "",
+            //                "nomer"=>"receipt number",
+            //                "fulldate"=>"date",
+            "tagihan" => "due amount",
+            "terbayar" => "paid",
+            "diskon" => "discount",
+            "sisa" => "due remain",
+            "tagihan_valas" => "due amount",
+            "terbayar_valas" => "paid",
+            "diskon_valas" => "discount",
+            "sisa_valas" => "due remain",
+        );
+        $itemLabels = (isset($this->configUi[$targetJenis]["shoppingCartReferenceExternFields"])) ? $this->configUi[$targetJenis]["shoppingCartReferenceExternFields"] : $defItemLabels;
+//        $itemLabels["due_date"] = "due date";
+//        $itemLabels["aging"] = "aging(days)";
+//        $itemLabels["over_due"] = "over due";
+
+        //		die();
+        //==dapatkan daftar kolom dari srcJenis
+        //        $historyFields = $this->configUi[$srcJenis]['shortHistoryFields'];
+
+        $tr = new MdlTransaksi();
+        $tr->setFilters(array());
+        $tr->addFilter("transaksi_payment_source.cabang_id='" . $this->session->login['cabang_id'] . "'");
+        $tr->addFilter("sisa>0");
+        $tmpSrc = $tr->lookupPaymentSrcByJenis($targetJenis)->result();
+//                cekHere($this->db->last_query());
+        $tmpSrcDue = array();
+        $dueEmployee = array();
+        if ($readerDueDate) {
+            $tr->setFilters(array());
+            $tr->addFilter("status='1'");
+            $tmpSrcDue = $tr->lookupAllDueDate()->result();
+            $tempDataDues = array();
+            $validDate = array();
+            foreach ($tmpSrcDue as $tmpSrcDue_tmp) {
+                $tempDataDues[$tmpSrcDue_tmp->customers_id][] = array(
+                    "due_date" => $tmpSrcDue_tmp->due_date,
+                    "aging_dtime" => $tmpSrcDue_tmp->dtime,
+                );
+
+            }
+            //            arrPrint($tempDataDues);
+            $dtime_now = strtotime(date("Y-m-d"));
+            foreach ($tempDataDues as $cus_id => $tempDataDues_0) {
+                $dueVal = array();
+                $dtimeVal = array();
+                foreach ($tempDataDues_0 as $dtime_val) {
+
+                    $keyIndex = strtotime($dtime_val['due_date']);
+                    $dueVal[] = $keyIndex;
+                    $dtimeVal[$keyIndex] = array(
+                        "due_date" => $dtime_val['due_date'],
+                        "aging" => $dtime_val['aging_dtime'],
+                    );
+
+                }
+                asort($dueVal);
+                $key_index = $dueVal['0'];
+                $date_due = $dtimeVal[$key_index]['due_date'];
+                $aging = $dtimeVal[$key_index]['aging'];
+
+                //cekHere("$date_due || $aging");
+                if ($dtime_now > $key_index) {
+                    $dueEmployee[$cus_id] = array(
+                        "due_date" => formatField_he_format("dtime", $date_due),
+                        "over_due" => umurDay($date_due) > 0 ? umurDay($date_due) : "0",
+                        "aging" => umurDay($aging) > 0 ? umurDay($aging) : "0",
+                    );
+                }
+            }
+
+
+        }
+        //matiHere();
+        // cekHere($targetJenis);
+        //        arrPrint($dueEmployee);
+        $items = array();
+        $externs = array();
+        $tagihans = array();
+        $terbayars = array();
+        $sisas = array();
+        $diskons = array();
+        $tagihans_valas = array();
+        $terbayars_valas = array();
+        $sisas_valas = array();
+        $diskons_valas = array();
+        $srcLabel = "";
+        if (sizeof($tmpSrc) > 0) {
+            foreach ($tmpSrc as $row) {
+                $tmp = array();
+                //                foreach($historyFields as $fName=>$label){
+                //                    $tmp[$fName]=$row->$fName;
+                //                }
+                $classMarking = "";
+                if (isset($dueEmployee[$row->extern_id])) {
+                    $classMarking = "bg-danger";
+                    //                    cekHere($row->extern_nama);
+                }
+
+                if (!in_array($row->extern_id, $externs)) {
+                    if (!isset($tagihans[$row->extern_id])) {
+                        $tagihans[$row->extern_id] = 0;
+                        $terbayars[$row->extern_id] = 0;
+                        $diskons[$row->extern_id] = 0;
+                        $sisas[$row->extern_id] = 0;
+                        $tagihans_valas[$row->extern_id] = 0;
+                        $terbayars_valas[$row->extern_id] = 0;
+                        $sisas_valas[$row->extern_id] = 0;
+                        $diskons_valas[$row->extern_id] = 0;
+
+                    }
+
+                    $tmp = (array)$row;
+                    $tmp["link"] = MODUL_PATH . get_class($this) . "/selectPaymentSrc/$targetJenis/" . $row->extern_id;
+                    $tmp["due_date"] = isset($dueEmployee[$row->extern_id]['due_date']) ? formatField_he_format("dtime", $dueEmployee[$row->extern_id]['due_date']) : "-";
+                    $tmp["aging"] = isset($dueEmployee[$row->extern_id]['aging']) ? $dueEmployee[$row->extern_id]['aging'] : "-";
+                    $tmp["over_due"] = isset($dueEmployee[$row->extern_id]['over_due']) ? $dueEmployee[$row->extern_id]['over_due'] : "-";
+                    $tmp["class_marking"] = $classMarking;
+                    //                    $tmp["class_marking"] = "bg-danger";
+                    //                    $tmp["tagihan"] = $tagihans[$row->extern_id];
+                    $items[$row->extern_id] = $tmp;
+                    $externs[] = $row->extern_id;
+                    $externName = $row->extern_nama;
+                }
+                $tagihans[$row->extern_id] += isset($row->tagihan) ? $row->tagihan : 0;
+                $terbayars[$row->extern_id] += isset($row->terbayar) ? $row->terbayar : 0;
+                $sisas[$row->extern_id] += isset($row->sisa) ? $row->sisa : 0;
+                $diskons[$row->extern_id] += isset($row->diskon) ? $row->diskon : 0;
+                $tagihans_valas[$row->extern_id] += isset($row->tagihan_valas) ? $row->tagihan_valas : 0;
+                $terbayars_valas[$row->extern_id] += isset($row->terbayar_valas) ? $row->terbayar_valas : 0;
+                $sisas_valas[$row->extern_id] += isset($row->sisa_valas) ? $row->sisa_valas : 0;
+                $diskons_valas[$row->extern_id] += isset($row->diskon_valas) ? $row->diskon_valas : 0;
+                $srcLabel = $row->label;
+            }
+            //            arrPrint($items);
+            foreach ($items as $externID => $iSpec) {
+                $items[$externID]['tagihan'] = $tagihans[$externID];
+                $items[$externID]['terbayar'] = $terbayars[$externID];
+                $items[$externID]['diskon'] = $diskons[$externID];
+                $items[$externID]['sisa'] = $sisas[$externID];
+                $items[$externID]['tagihan_valas'] = $tagihans_valas[$externID];
+                $items[$externID]['terbayar_valas'] = $terbayars_valas[$externID];
+                $items[$externID]['diskon_valas'] = $diskons_valas[$externID];
+                $items[$externID]['sisa_valas'] = $sisas_valas[$externID];
+            }
+        }
+//arrPrintPink($items);
+        //        cekHitam("$srcStep||$srcIndex");
+        //		cekkuning("rawSrcJenis: ".$rawSrcJenis);
+        //        arrPrint($this->uri->segment_array());
+        $data = array(
+            "mode" => $this->uri->segment(3),
+            //            "template" => $this->configUi[$jenisTr]["template"],
+            "title" => $this->configUi[$targetJenis]["label"],
+            "subTitle" => isset($paymentSources[$rawSrcJenis][$srcStep][$srcIndex]['externSrc']['extLabel']) ? "select " . $paymentSources[$rawSrcJenis][$srcStep][$srcIndex]['externSrc']['extLabel'] . "(s) listed below" : "",
+            "items" => $items,
+            "srcLabel" => $srcLabel,
+            "itemLabels" => $itemLabels,
+            "jenisTr" => $this->jenisTr,
+            //            "dueDate"    =>$dueEmployee,
+        );
+        //        arrprint($data);
+
+        if (!isset($_GET['json'])) {
+            $this->load->view("transaksi", $data);
+        }
+        else {
+            //            echo json_encode($data);
+
+//            arrPrint($data);
+        }
+
+
+        //        die("selecting payment src...");
+    }
+
+    public function selectPaymentSrc()
+    {
+        if (!isset($this->session->login['id'])) {
+            gotoLogin();
+        }
+        $externID = $this->uri->segment(5);
+        $selectedTrID = $this->uri->segment(6);
+
+        $this->load->model("MdlTransaksi");
+
+        // arrPrintPink($this->uri->segment_array());
+        $scriptBottom = "";
+        $scriptTrigger = "";
+        // if(isset($selectedTrID)){
+        $scriptTrigger .= "$('.chRadio').trigger('click')";
+        // }
+
+        $jenisTr = $targetJenis = $this->jenisTr;
+        $cCode = $this->jenisTr;
+
+        // cekHere("cCode:: $cCode " . __METHOD__ . " line " . __LINE__);
+        heInitCart($targetJenis);
+        $this->load->helper("he_versi_history_old");
+
+        $detailResetList = array(
+            "items",
+            //            "out_detail",
+            //            "out_detail2",
+            "tableIn_detail",
+            "tableIn_detail2",
+            "tableIn_detail_values",
+            "tableIn_detail2_sum",
+            "tableIn_detail_values2_sum",
+        );
+        foreach ($detailResetList as $sSName) {
+            $_SESSION[$cCode][$sSName] = null;
+            unset($_SESSION[$cCode][$sSName]);
+        }
+
+
+        if (!isset($_SESSION[$cCode])) {
+            $_SESSION[$cCode] = array(
+                "items" => array(),
+                "main" => array(),
+
+            );
+        }
+        if (!isset($_SESSION[$cCode]['main'])) {
+            $_SESSION[$cCode]['main'] = array();
+        }
+        if (!isset($_SESSION[$cCode]['items'])) {
+            $_SESSION[$cCode]['items'] = array();
+        }
+
+
+        //==dapatkan srcJenis
+        $stepCode = $this->configUi[$targetJenis]['steps'][1]['target'];
+        $steps = $this->configUi[$targetJenis]['steps'];
+        $tagihanSrc = isset($this->configUi[$targetJenis]['tagihanSrc']) ? $this->configUi[$targetJenis]['tagihanSrc'] : "sisa";
+        $paymentSources = null != ($this->config->item("payment_source")) ? $this->config->item("payment_source") : array();
+        $returnRoutes = null != ($this->config->item("transaksi_returnRoutes")) ? $this->config->item("transaksi_returnRoutes") : array();
+        $readerDueDate = isset($this->configUi[$targetJenis]['dueDateReader']) ? $this->configUi[$targetJenis]['dueDateReader'] : false;
+        $rawPrevURL = isset($_GET['rawPrev']) ? $_GET['rawPrev'] : "";
+        $prePrint = isset($steps[1]['prePrint']) ? $steps[1]['prePrint'] : "";
+
+        $ppnDisabledConfig = isset($this->configUi[$targetJenis]['ppnDisabled']) ? $this->configUi[$targetJenis]['ppnDisabled'] : array();
+
+        $jenisSrc = null;
+
+        //		arrprint($paymentSources);die();
+        if (sizeof($paymentSources) > 0) {
+            foreach ($paymentSources as $src => $sSpec) {
+                $payConfigs = $paymentSources[$src];
+                if (sizeof($payConfigs) > 0) {
+                    //                    $sCtr = 0;
+                    foreach ($payConfigs as $paymentSrcConfigTmp) {
+                        $sCtr = 0;
+                        foreach ($paymentSrcConfigTmp as $paymentSrcConfig) {
+                            if (isset($paymentSrcConfig['jenisTarget']) && $paymentSrcConfig['jenisTarget'] == $targetJenis) {
+                                $srcJenis = $paymentSrcConfig['jenisSrc'];
+                                $rawSrcJenis = $src;
+                                $srcIndex = $sCtr;
+                                $jenisSrc = $srcJenis;
+                            }
+                            $sCtr++;
+                        }
+
+                    }
+                }
+            }
+        }
+
+        $references = array();
+        if ($jenisSrc != null) {
+            if (isset($returnRoutes[$jenisSrc])) {
+                //                $retCode = $returnRoutes[$jenisSrc];
+                //
+                //
+                //                $trr = new MdlTransaksi();
+                //                $trr->setFilters(array());
+                //                $trr->addFilter("param='main'");
+                //                $trr->addFilter("jenis='$retCode'");
+                //                $tmpR = $trr->lookupRegistries_joined()->result();
+                //                //cekHere($this->db->last_query());
+                //
+                //                if (sizeof($tmpR) > 0) {
+                //                    foreach ($tmpR as $row) {
+                //                        $main = blobDecode($row->values);
+                //                        //                        arrprint($main);
+                //                        $references[$main['referenceID']] = array(
+                //                            "id" => $row->transaksi_id,
+                //                            "nomer" => $row->nomer,
+                //                            "refID" => $main['referenceID'],
+                //                            "refJenis" => $main['referenceJenis'],
+                //                            "refNum" => $main['referenceNomer'],
+                //                            "harga" => isset($main['harga']) ? $main['harga'] : 0,
+                //                            "nett" => isset($main['nett']) ? $main['nett'] : 0,
+                //
+                //
+                //                        );
+                //                    }
+                //                }
+            }
+        }
+
+        //        arrprint($references);
+        $elementConfigs = isset($this->configUi[$this->jenisTr]['receiptElements']) ? $this->configUi[$this->jenisTr]['receiptElements'] : array();
+
+
+        //==dapatkan daftar kolom dari srcJenis
+        //        $historyFields = $this->configUi[$srcJenis]['shortHistoryFields'];
+
+        $tr = new MdlTransaksi();
+        $tr->setFilters(array());
+        $tr->addFilter("transaksi_payment_source.cabang_id='" . $this->session->login['cabang_id'] . "'");
+        $tr->addFilter("extern_id='$externID'");
+        $tr->addFilter("sisa>0");
+
+        if ($selectedTrID > 0) {
+            $tr->addFilter("transaksi_id='$selectedTrID'");
+        }
+        $tmpSrc = $tr->lookupPaymentSrcByJenis_joined($targetJenis)->result();
+        //        $tmpSrc = $tr->lookupPaymentSrcByJenis($targetJenis)->result();
+        // cekKuning(__LINE__. " | " .$this->db->last_query());
+        //        arrPrint($tmpSrc);
+        if ($readerDueDate) {
+            $tr->setFilters(array());
+            $tmpSrcDue = $tr->lookupAllDueDate()->result();
+            //        arrPrint($tmpSrcDue);
+            if (sizeof($tmpSrcDue) > 0) {
+                foreach ($tmpSrcDue as $tmpSrccDue_0) {
+                    $mainDueDate[$tmpSrccDue_0->transaksi_id] = $tmpSrccDue_0->due_date;
+                }
+            }
+        }
+
+        $externName = "";
+        $items = array();
+        $tempDueDate = array();
+        $ppnDisabled = array();
+        if (sizeof($tmpSrc) > 0) {
+            foreach ($tmpSrc as $row) {
+                $tmp = array();
+                //                foreach($historyFields as $fName=>$label){
+                //                    $tmp[$fName]=$row->$fName;
+                //                }
+                $jenis = $row->jenis;
+                $transaksi_id = $row->id;
+                if ($readerDueDate) {
+                    $tempDueDate = blobDecode($row->ids_prev);
+                    $dueTime = array();
+                    if (sizeof($tempDueDate) > 0) {
+                        $time_due = array();
+                        foreach ($tempDueDate as $k => $spdID) {
+                            $time_due[] = strtotime($mainDueDate[$spdID]);
+                            $dueTime[strtotime($mainDueDate[$spdID])] = $mainDueDate[$spdID];
+                        }
+                        asort($time_due);
+                        $key_due = $time_due[0];
+                    }
+                    if ($key_due > 0) {
+                        $date_now = strtotime(date("Y-m-d"));
+                        $dateValid = strtotime($dueTime[$key_due]);
+                        //                        cekHijau("$dateValid >$date_now");
+                        if ($dateValid < $date_now) {
+                            //                            cekHere("$dateValid >$date_now");
+                            $tmp['class_bg'] = "bg-danger";
+                        }
+                        else {
+                            $tmp['class_bg'] = "";
+                        }
+                    }
+                    else {
+                        $tmp['class_bg'] = "";
+                    }
+
+                    $tmp['due_date'] = isset($dueTime[$key_due]) ? formatField_he_format("dtime", $dueTime[$key_due]) : "-";
+                    $tmp['aging'] = isset($dueTime[$key_due]) && umurDay($dueTime[$key_due]) > 0 ? umurDay($dueTime[$key_due]) : "0";
+                }
+                else {
+                    $tmp['class_bg'] = "";
+                }
+
+
+                $tmp['refID'] = array_key_exists($row->transaksi_id, $references) ? $references[$row->transaksi_id]['refID'] : "";
+                $tmp['refNum'] = array_key_exists($row->transaksi_id, $references) ? $references[$row->transaksi_id]['refNum'] : "";
+                $tmp['refValue'] = array_key_exists($row->transaksi_id, $references) ? $references[$row->transaksi_id]['nett'] : "";
+
+                if (strlen($prePrint) > 10) {
+                    $linkPrint = base_url() . "$prePrint/$jenis/$transaksi_id";
+                    $tmp['prePrint'] = "<button type='button' class='btn btn-link' onclick=\"window.open('$linkPrint')\"><i class='fa fa-print'></i></button>";
+                }
+
+                if (isset($ppnDisabledConfig['enabled']) && $ppnDisabledConfig['enabled'] == true) {
+                    //                    if (($row->ppn_sisa > 0) && ($row->ppn_status == 1)) {
+                    if (($row->ppn_status == 1)) {
+                        $ppnDisabled[] = $row->transaksi_id;
+                        $tmp['notes'] = isset($ppnDisabledConfig['notes']) ? "<span style='color:red;font-size:10px;'>" . $ppnDisabledConfig['notes'] . "</span>" : "-";
+                    }
+                }
+
+                $items[] = (array)$row + $tmp;
+                $externName = $row->extern_nama;
+            }
+        }
+//        arrPrint($items);
+        $cCode = "_TR_" . $targetJenis;
+        //arrPrint($ppnDisabled);
+        $defaultItemLabels = array(
+            "extern_label2" => "jenis",
+            "nomer" => "receipt number",
+            "nomer_top" => "receipt ref.",
+            "refNum" => "return ref.",
+            "fulldate" => "date",
+            "tagihan" => "due amount",
+            "refValue" => "returned",
+            "terbayar" => "paid",
+            "diskon" => "discount",
+            "sisa" => "due remain",
+        );
+
+        $jQueryCustom = isset($this->configUi[$this->jenisTr]['jQueryCustom']) ? $this->configUi[$this->jenisTr]['jQueryCustom'] : "";
+
+        if (sizeof($jQueryCustom) > 0) {
+            $scriptBottom .= $jQueryCustom;
+        }
+
+//arrPrintPink($this->configUi[$targetJenis]["shoppingCartReferenceFields"]);
+        $defSisa = isset($_SESSION[$cCode]['main']['sisa']) ? $_SESSION[$cCode]['main']['sisa'] : 0;
+        $data = array(
+            "mode" => $this->uri->segment(3),
+            "title" => $this->configUi[$targetJenis]["label"],
+            "subTitle" => $externName,
+            "jenisTr" => $targetJenis,
+            "items" => $items,
+            "prePrint" => $prePrint,
+            "itemLabels" => isset($this->configUi[$targetJenis]["shoppingCartReferenceFields"]) ? $this->configUi[$targetJenis]["shoppingCartReferenceFields"] : $defaultItemLabels,
+            "selectProcessor" => $this->configUi[$targetJenis]["selectorProcessor"],
+            "paymentSubtitle" => "details for " . $this->configUi[$this->jenisTr]['steps'][1]['label'],
+            "btnLabel" => "continue " . $this->configUi[$this->jenisTr]['steps'][1]['label'],
+            "ses_outMaster" => isset($_SESSION[$cCode]['main']) ? $_SESSION[$cCode]['main'] : array(),
+            "ses_items" => isset($_SESSION[$cCode]['items']) ? $_SESSION[$cCode]['items'] : array(),
+            // -----------
+            "actionTarget" => "top.$('#result').load('" . MODUL_PATH . "Transaksi/validate/" . $targetJenis . "?rawPrev=$rawPrevURL');",
+            "columnRecorderTarget" => base_url() . "ValueGate/recordColumn/" . $this->jenisTr . "/nilai_entry",
+            "bankColumnRecorderTarget" => base_url() . "ValueGate/recordColumn/" . $this->jenisTr . "/paymentMethod_cash",
+            // -------------------
+            "selectedBankID" => isset($_SESSION[$cCode]['main']['cash_account']) ? $_SESSION[$cCode]['main']['cash_account'] : 0,
+            "dueDateReader" => $readerDueDate,
+            "tagihanSrc" => $tagihanSrc,
+            "scriptBottom" => $scriptBottom,
+            "tagihanValue" => isset($_SESSION[$cCode]['main'][$tagihanSrc]) ? $_SESSION[$cCode]['main'][$tagihanSrc] : $defSisa,
+            "isPaymentRadioSelect" => isset($this->configUi[$this->jenisTr]['isPaymentRadioSelect']) ? $this->configUi[$this->jenisTr]['isPaymentRadioSelect'] : false,
+            "ppnDisabled" => $ppnDisabled,
+            "scriptTrigger" => $scriptTrigger,
+        );
+
+        if (!isset($_GET['json'])) {
+            $this->load->view("transaksi", $data);
+        }
+        else {
+            return json_encode($data);
+        }
+
+        //        die("selecting payment src...");
+    }
+
+    public function viewIncomplete()
+    {
+
+        session_write_close();
+        if (!isset($this->session->login['id'])) {
+            redirect(base_url() . "Login");
+        }
+        $jenisTr = $this->jenisTr;
+        $cCode = $this->cCode;
+
+        $historyFields = $this->configUi[$jenisTr]['shortHistoryFields'];
+        $pairRegistries = isset($this->configUi[$jenisTr]['pairRegistries']) ? $this->configUi[$jenisTr]['pairRegistries'] : array();
+        $mb = New MobileDetect();
+        $isMob = $mb->isMobile();
+        if ($isMob) {
+            $historyFields = isset($this->configUi[$jenisTr]['compactHistoryFields']) ? $this->configUi[$jenisTr]['compactHistoryFields'] : array();
+        }
+
+        //
+        //region lookup on-going transactions
+        $currentState = 99;
+        $progressFields = $historyFields;
+        $progressFields['items'] = "detail items";
+        $progressFields['state'] = "status";
+        $progressFields['action'] = "action";
+        $steps = $this->configUi[$jenisTr]['steps'];
+        $stepLabels = array(
+            "99" => "all",
+            //            "0" => "canceled",
+        );
+        $date1 = isset($_GET['date1']) ? $_GET['date1'] : date("Y-m-01");
+        $date2 = isset($_GET['date2']) ? $_GET['date2'] : date("Y-m-d");
+        $searchStr = isset($_GET['search']) ? $_GET['search'] : "";
+        $stepLinks = array(
+            "99" => MODUL_PATH . $this->uri->segment(2) . "/" . $this->uri->segment(3) . "/" . $this->jenisTr . "/99?date1=$date1&date2=$date2",
+            //            "0"  => base_url() . $this->uri->segment(1) . "/" . $this->uri->segment(2) . "/" . $this->uri->segment(3) . "/0?date1=$date1&date2=$date2",
+            "0" => MODUL_PATH . $this->uri->segment(2) . "/" . $this->uri->segment(3) . "/" . $this->jenisTr . "/0",
+        );
+
+
+        $arrayOnprogress = array();
+        $arrayOnprogressbyState = array();
+
+
+        if (sizeof($steps) > 1) {
+            $stepCodes = array();
+            //arrPrint($this->accessList);
+            $jmlStep = count($steps);
+            $indsteps = "(";
+            $arrFilters = array();
+            if (isset($this->accessList[$jenisTr]) && sizeof($this->accessList[$jenisTr]) > 0) {
+                foreach ($this->accessList[$jenisTr] as $stepNumber => $stepSpec) {
+                    if ($stepNumber <= $jmlStep) {
+                        foreach ($stepSpec as $targetCode => $filters) {
+                            $indsteps .= "'$targetCode',";
+                            $stepCodes[] = $targetCode;
+                            if ($filters['allowFollowUp'] == "true") {
+                                $arrFilters["allowFollowUp"][] = $targetCode;
+                            }
+
+                        }
+                    }
+                }
+            }
+
+            $indsteps = rtrim($indsteps, ",");
+            $indsteps .= ")";
+            $stepLabels ["0"] = "canceled";
+
+            if ($steps[1]['userGroup'] == $this->session->login['jenis']) {
+                $stepLabels[-1] = "<span class='glyphicon glyphicon-plus'></span>";
+                // $stepLinks[-1] = MODUL_PATH . $this->uri->segment(2) . "/createForm/" . $this->uri->segment(3) . "?date1=$date1&date2=$date2";
+                $stepLinks[-1] = MODUL_PATH . "Create/index/" . $this->jenisTr . "?date1=$date1&date2=$date2";
+            }
+
+
+            //            $currentState = $this->uri->segment(4) > 0 ? $this->uri->segment(4) : 0;
+            if (strlen($this->uri->segment(5)) > 0) {
+                $currentState = $this->uri->segment(5);
+            }
+
+
+            $this->load->model("MdlTransaksi");
+            $tr = new MdlTransaksi();
+            $tr->addFilter("transaksi.oleh_id='" . $this->session->login['id'] . "'");
+            //            $tr->addFilter("transaksi.cabang_id='" . $this->session->login['cabang_id'] . "'");
+            //            $tr->addFilter("gudang_id='" . $this->session->login['gudang_id'] . "'");
+            //            $tr->addFilter("jenis='" . $steps[1]['target'] . "'");
+            $tr->addFilter("div_id='" . $this->session->login['div_id'] . "'");
+            $tr->addFilter("jenis_top='" . $steps[1]['target'] . "'");
+
+            //region date filter
+            //            $date1 = isset($_GET['date1']) ? $_GET['date1'] : date("Y-m-01");
+            //            $date2 = isset($_GET['date2']) ? $_GET['date2'] : date("Y-m-d");
+            if (isset($_GET['date1'])) {
+                $this->db->where("fulldate>='" . $_GET['date1'] . "'");
+                $this->db->where("fulldate<='" . $_GET['date2'] . "'");
+            }
+            if (isset($_GET['search'])) {
+                $tr->setKeyWord($searchStr);
+            }
+
+            //endregion
+
+            //cekBiru($currentState);
+            $tr->addFilter("next_substep_code<>''");
+            if ($currentState < 99) {
+                $tr->addFilter("sub_step_number='$currentState'");
+                $tr->addFilter("valid_qty>0");
+            }
+            else {
+                $tr->addFilter("sub_step_number>0");
+                $tr->addFilter("valid_qty>0");
+            }
+            if (sizeof($arrFilters) > 0) {
+                //                $tr->addFilter("next_step_code in $indsteps");
+            }
+            else {
+                //                $tr->addFilter("transaksi.oleh_id='" . $this->session->login['id'] . "'");
+            }
+
+            //            $tmpHist = $tr->lookupUndoneEntries_joined($this->session->login['cabang_id'], $this->session->login['gudang_id'])->result();
+
+            $tmpHist = $tr->lookupUndoneEntries_joined(replaceSession())->result();
+            //            cekHere($this->db->last_query());
+            //            arrPrintWebs($tmpHist);
+
+            $selectedTopID = isset($_GET['topID']) ? $_GET['topID'] : 0;
+
+
+            $rowCtr = 0;
+            if (sizeof($tmpHist) > 0) {
+                $arrTransID = array();
+                $arrTransTopID = array();
+                $arrIdsHist = array();
+                $arrTransHist = array();
+                $arrProduk = array();
+                foreach ($tmpHist as $row) {
+                    $arrTransID[] = $row->transaksi_id;
+                    $arrTransTopID[] = $row->id_top;
+                    if ($row->ids_his != "") {
+                        $hist = blobDecode($row->ids_his);
+                        foreach ($hist as $hisSpec) {
+                            $arrIdsHist[$row->id][$hisSpec['step']] = array(
+                                "step" => $hisSpec['step'],
+                                "trID" => $hisSpec['trID'],
+                                "nomer" => $hisSpec['nomer'],
+                            );
+                            $arrTransHist[] = $hisSpec['trID'];
+                        }
+                    }
+
+                    $arrProduk[$row->transaksi_id] = array(
+                        "id" => $row->produk_id,
+                        "nama" => $row->produk_nama,
+                        "label" => $row->produk_label,
+                        "kode" => $row->produk_kode,
+                        "valid_qty" => $row->valid_qty,
+                        "master_id" => $row->id_master,
+                    );
+                }
+                $tmpReg_result = array();
+                $trReg = new MdlTransaksi();
+                $trReg->setFilters(array());
+                // $trReg->addFilter("param='main'");
+
+
+                $trReg->addFilter("transaksi_id in ('" . implode("','", $arrTransID) . "')");
+                $trReg->setJointSelectFields("main,transaksi_id");
+                // $tmpReg = $trReg->lookupRegistries()->result();
+                $tmpReg = $trReg->lookupDataRegistries()->result();
+                if (sizeof($tmpReg) > 0) {
+                    foreach ($tmpReg as $regRow) {
+                        $tmpReg_result[$regRow->transaksi_id]["main"] = blobDecode($regRow->main);
+                        // arrPrint($regRow);
+                        // $tmpReg_result[$regRow->transaksi_id][$param] = blobDecode($regRow->values);
+                    }
+                }
+
+                // matiHEre();
+                foreach ($tmpHist as $row) {
+                    if (sizeof($pairRegistries) > 0) {
+                        if ((sizeof($tmpReg_result) > 0) && (isset($tmpReg_result[$row->transaksi_id]))) {
+                            foreach ($tmpReg_result[$row->transaksi_id] as $param => $eReg) {
+                                foreach ($eReg as $k => $v) {
+                                    if (!isset($row->$k)) {
+                                        $row->$k = $v;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    $rowCtr++;
+                    $tmp = array();
+                    foreach ($historyFields as $fName => $fLabel) {
+
+                        $tmp[$fName] = isset($row->$fName) ? formatField_he_format($fName, $row->$fName) : formatField_he_format($fName, 0);
+
+                        if ($fName == "no") {
+                            $tmp[$fName] = formatField_he_format($fName, $rowCtr);
+                        }
+                    }
+                    // menambah manual detail/items barang
+                    if (isset($arrProduk[$row->transaksi_id])) {
+                        $tmp['items'] = $arrProduk[$row->transaksi_id]["valid_qty"] . "x ";
+                        $tmp['items'] .= $arrProduk[$row->transaksi_id]["label"] . " ";
+                        $tmp['items'] .= $arrProduk[$row->transaksi_id]["kode"];
+
+                        $linkOutstanding = MODUL_PATH . "Transaksi/viewOutstanding/$jenisTr/transaksi/$jenisTr?trID=" . $arrProduk[$row->transaksi_id]["master_id"];
+                        $tmp['items'] .= "<br><br> <a class='btn btn-primary btn-block' title='lihat selengkapnya' target='_blank'
+                            href='$linkOutstanding'>
+                            <span class=''>click to view complete...</span></a>";
+                    }
+                    else {
+                        $tmp['items'] = "-";
+                    }
+
+
+                    if ($row->sub_step_number > 0) {
+                        $tmp['state'] = "<span style='color:" . $this->configUi[$jenisTr]['steps'][$row->sub_step_number]['stateColor'] . "'>" . $this->configUi[$jenisTr]['steps'][$row->sub_step_number]['stateLabel'] . "</span>";
+                        $tmp['state'] .= "<br>" . createStateSign($row->sub_step_number, $row->step_avail, $jenisTr);
+                    }
+                    else {
+                        $tmp['state'] = "<span style='color:#777777'>canceled</span>";
+                    }
+
+                    $tmp['action'] = "";
+                    $nextStepNum = ($row->next_substep_num);
+                    $currentStepNum = ($row->sub_step_number);
+                    $nextStepCode = $row->next_step_code;
+                    $allowJoin = isset($this->configUi[$jenisTr]["steps"][$nextStepNum]['allowJoin']) && $this->configUi[$jenisTr]["steps"][$nextStepNum]['allowJoin'] == true ? $this->configUi[$jenisTr]["steps"][$nextStepNum]['allowJoin'] : false;
+                    $allowFollowup = false;
+                    if ($row->sub_step_number > 0) {
+
+                        if (placeCanFollowupTrans($this->session->login['membership'], $this->session->login['cabang_id'], $this->session->login['gudang_id'], $this->jenisTr, $currentStepNum)) {
+                            //                        if (in_array($this->configUi[$jenisTr]['steps'][$currentStepNum]['userGroup'], $this->session->login['membership'])) {
+                            $allowFollowup = true;
+                            $actionLabel = "review " . $this->configUi[$jenisTr]['steps'][$currentStepNum]['label'];
+
+                        }
+                    }
+
+                    if (isset($this->configUi[$jenisTr]['steps'][$nextStepNum])) {
+                        //                        cekHitam("masooox $nextStepNum ".$row->sub_step_number);
+                        if (isset($this->accessList[$jenisTr])) {
+                            if (isset($this->accessList[$jenisTr][$nextStepNum][$nextStepCode]["allowFollowUp"])) {
+                                $allowFollowup = $this->accessList[$jenisTr][$nextStepNum][$nextStepCode]["allowFollowUp"];
+                                $actionLabel = $this->configUi[$jenisTr]['steps'][$nextStepNum]['actionLabel'];
+                            }
+
+
+                        }
+                        else {
+                            if (placeCanFollowupTrans($this->session->login['membership'], $this->session->login['cabang_id'], $this->session->login['gudang_id'], $this->jenisTr, $nextStepNum)) {
+                                //                        if (in_array($this->configUi[$jenisTr]['steps'][$nextStepNum]['userGroup'], $this->session->login['membership'])) {
+                                $allowFollowup = true;
+                                $actionLabel = $this->configUi[$jenisTr]['steps'][$nextStepNum]['actionLabel'];
+
+                            }
+                        }
+
+                    }
+
+                    if ($allowFollowup) {
+                        $stepLabel = $this->configUi[$jenisTr]['steps'][$nextStepNum]['label'];
+
+                        $followupLink = "top.$('#result').load('" . base_url() . "Transaksi/followupPrePreview/" . $row->transaksi_id . "/$nextStepNum/" . $row->sub_step_number . "');";
+                        $tmp['action'] = "<a class='btn btn-primary btn-block' title='turn this entry into $stepLabel' href='javascript:void(0)' onClick =\"top.open_holdon();$followupLink\">" . $actionLabel . "</a>";
+                    }
+
+
+                    if ($currentState > 0) {
+                        if (isset($tmp['jenis_label'])) {
+                            $clickEvent = "";
+                            if ($row->id_top == $selectedTopID) {
+                                $checked = "checked";
+                            }
+                            else {
+                                $clickEvent = "location.href='" . base_url() . get_class($this) . "/" . $this->uri->segment(2) . "/" . $this->uri->segment(3) . "/" . $this->uri->segment(4) . "?topID=" . $row->id_top . "';";
+                                $checked = "";
+                            }
+
+                            $tmp['jenis_label'] = "<label><input type='checkbox' name='oID[]' $checked onclick=\"$clickEvent\" value='" . $row->transaksi_id . "'>" . $tmp['jenis_label'] . "</label>";
+                            //                                echo "topID:".$row->id_top."<br>";
+                        }
+                    }
+
+                    $arrayOnprogress[] = $tmp;
+                    $arrayOnprogressbyState[$row->sub_step_number][] = $tmp;
+
+
+                }
+            }
+        }
+        else {
+            $arrayOnprogress = array();
+        }
+
+        //arrPrint($arrayOnprogress);
+
+        //endregion
+
+        //region link to add new transaction
+        if (placeCanMakeTrans($this->session->login['membership'], $this->session->login['cabang_id'], $this->session->login['gudang_id'], $this->jenisTr)) {
+            //        if (in_array($this->configUi[$jenisTr]["steps"][1]['userGroup'], $this->session->login['membership'])) {
+            $createIndexes = (null != $this->config->item("transaksi_createIndex")) ? $this->config->item("transaksi_createIndex") : array();
+            if (array_key_exists($this->jenisTr, $createIndexes)) {
+                $targetUrl = MODUL_PATH . $createIndexes[$this->jenisTr] . "/" . $this->jenisTr;
+            }
+            else {
+                $targetUrl = MODUL_PATH . "Create/index/" . $this->jenisTr;
+            }
+            $addLink = array(
+                "link" => $targetUrl,
+                "label" => "<span class='glyphicon glyphicon-plus'></span> create new " . $this->configUi[$jenisTr]["steps"][1]['label'],
+            );
+        }
+        else {
+            $addLink = null;
+        }
+        //endregion
+        //arrPrint($addLink);
+        //
+        //region prepare params for viewer
+        $data = array(
+            "mode" => $this->uri->segment(3),
+            "isMobile" => $isMob,
+            "errMsg" => $this->session->errMsg,
+            "template" => $this->configUi[$jenisTr]["template"],
+            "title" => "incomplete " . $this->configUi[$jenisTr]["label"],
+            //            "subTitle"          => $this->configUi[$jenisTr]["label"] . " with status '" . $stepLabels[$currentState] . "'",
+            "subTitle" => $stepLabels[$currentState] . "'",
+            "jenisTr" => $jenisTr,
+            "jenisTransaksi" => $jenisTr,
+            "trName" => $this->configUi[$jenisTr]["label"],
+            //            "selectorCaller" => base_url() . "_selectorItem/" . $this->configUi[$jenisTr]["selectorCaller"] . "/$jenisTr/" . $this->configUi[$jenisTr]["selectorModel"],
+            "selectorCaller" => MODUL_PATH . $this->configUi[$jenisTr]["selectorCaller"] . "/$jenisTr/" . $this->configUi[$jenisTr]["selectorModel"],
+            "selectorLabel" => $this->configUi[$jenisTr]["selectorLabel"],
+            //            "pihakCaller" => base_url() . "_selectorPihak/" . $this->configUi[$jenisTr]["pihakCaller"] . "/$jenisTr/" . $this->configUi[$jenisTr]["pihakModel"],
+            "pihakCaller" => MODUL_PATH . $this->configUi[$jenisTr]["pihakCaller"] . "/$jenisTr/" . $this->configUi[$jenisTr]["pihakModel"],
+            "pihakCallerDelete" => MODUL_PATH . "_processPihak/remove/$jenisTr",
+            // "pihakLabel"=>$this->configUi[$jenisTr]["pihakLabel"],
+            "pihakLabel" => isset($_SESSION[$cCode]['main']['pihakName']) ? $_SESSION[$cCode]['main']['pihakName'] : $this->configUi[$jenisTr]["pihakLabel"],
+
+            "arrayProgressLabels" => $progressFields,
+            "arrayOnProgress" => $arrayOnprogress,
+            "arrayOnProgressByState" => $arrayOnprogressbyState,
+            "stepLabels" => $stepLabels,
+            "stepLinks" => $stepLinks,
+            "currentState" => $currentState,
+            "alternateLink" => MODUL_PATH . "/History" . "/viewHistory/" . $this->jenisTr,
+            "alternateLinkCaption" => $this->configUi[$jenisTr]["label"] . " histories " . "<span class='glyphicon glyphicon-arrow-right'></span>",
+            //==untuk keperluan followup many-to-one
+            "allowJoin" => isset($allowJoin) ? $allowJoin : false,
+            "actionLabel" => isset($actionLabel) ? $actionLabel : "",
+            "_nextStepNum" => isset($nextStepNum) ? $nextStepNum : "",
+            "_currentStepNum" => $currentState,
+            "followupBase" => MODUL_PATH . "FollowUp/followupPrePreview/",
+            "addLink" => $addLink,
+            "filters" => array(
+                "dates" => $this->dates,
+                "date1" => $date1,
+                "date2" => $date2,
+            ),
+            "thisPage" => MODUL_PATH . $this->uri->segment(2) . "/" . $this->uri->segment(3) . "/" . $this->uri->segment(4) . "/" . $this->uri->segment(5),
+        );
+        //        $data= array();
+        //endregion
+
+
+        $this->load->view("history", $data);
+    }
+
+    public function viewIncompleteStepAntarCabang()
+    {
+
+        $jenisTr = $this->uri->segment(3);
+        $cCode = "_TR_" . $this->jenisTr;
+        $historyFields = isset($this->configUi[$jenisTr]['shortHistoryFields']) ? $this->configUi[$jenisTr]['shortHistoryFields'] : array();
+        $pairRegistries = isset($this->configUi[$jenisTr]['pairRegistries']) ? $this->configUi[$jenisTr]['pairRegistries'] : array();
+        $connectTo = isset($this->configUi[$jenisTr]['connectTo']) ? $this->configUi[$jenisTr]['connectTo'] : "";
+        $stepHistoryFields = isset($this->configUi[$jenisTr]['shortStepHistoryFields']) ? $this->configUi[$jenisTr]['shortStepHistoryFields'] : array();
+        $arrExtHistoryFields2 = isset($this->configUi[$jenisTr]["extHistoryFields2"]) ? $this->configUi[$jenisTr]["extHistoryFields2"] : array();
+
+
+        $tmpMasterIDExt = array();
+        $arrJenisStepRslt = array();
+        $arrayOnProgressView = array();
+        if (sizeof($stepHistoryFields) > 0) {
+            if (strlen($connectTo) > 0) {
+                $pairRegistries = isset($this->configUi[$jenisTr]['pairRegistries']) ? $this->configUi[$jenisTr]['pairRegistries'] : array();
+                $transaksiConfig = isset($this->configUi[$jenisTr]['steps']) ? $this->configUi[$jenisTr]['steps'] : array();
+                $transaksiConnectConfig = isset($this->configUi[$connectTo]['steps']) ? $this->configUi[$connectTo]['steps'] : array();
+                $transaksiStepConfig = isset($this->configUi[$jenisTr]['steps'][1]) ? $this->configUi[$jenisTr]['steps'][1] : array();
+                $jenisTrTop = isset($transaksiStepConfig['target']) ? $transaksiStepConfig['target'] : "";
+
+
+                $transaksiExtendConnect = isset($this->configUi[$jenisTr]['extConnectTo']) ? $this->configUi[$jenisTr]['extConnectTo'] : array();
+                $transaksiExtendConnectMain = isset($this->configUi[$jenisTr]['extConnectToMain']) ? $this->configUi[$jenisTr]['extConnectToMain'] : array();
+                $transaksiExtendConnectPair = isset($this->configUi[$jenisTr]['extConnectToPair']) ? $this->configUi[$jenisTr]['extConnectToPair'] : array();
+
+
+                if (sizeof($transaksiExtendConnect) > 0) {
+                    foreach ($transaksiExtendConnect as $key_jenis) {
+                        $arrJenisStep = array(
+                            "next_step_num" => 1,
+                            "next_step_code" => $key_jenis,
+                        );
+
+                        $arrJenisStepRslt[$key_jenis] = callNextPICDetail($arrJenisStep);
+
+                    }
+                }
+
+
+                $tr2 = new MdlTransaksi();
+                $tr2->setFilters(array());
+
+                if (isset($connectTo)) {
+                    $tr2->addFilter("jenis_master='$connectTo'");
+                    $tr2->addFilter("link_id='0'");
+                    $tr2->addFilter("next_step_code>'0'");
+                    $tr2->addFilter("sub_step_number>'0'");
+                    $tr2->addFilter("gudang_id<>'0'");
+                    if ($this->session->login['cabang_id'] == CB_ID_PUSAT) {
+                    }
+                    else {
+                        $tr2->addFilter("transaksi.cabang2_id='" . $this->session->login['cabang_id'] . "'");
+                    }
+                    $tmpSrc2 = $tr2->lookupJoined()->result();
+                    //                    cekHere($this->db->last_query() . " --- " . count($tmpSrc2));
+
+                    $tmp2 = array();
+                    $tmpMasterIDResult = array();
+                    $tmpMasterID = array();
+                    $tmpResult = array();
+                    $arrNextAction = array();
+                    if (sizeof($tmpSrc2) > 0) {
+
+                        foreach ($tmpSrc2 as $src2sSpec) {
+                            $tmpMasterID[$src2sSpec->id_master] = $src2sSpec->id_master;
+                            $arrNextAction[$src2sSpec->transaksi_id] = array(
+                                "next_step_num" => $src2sSpec->next_substep_num,
+                                "next_step_code" => $src2sSpec->next_substep_code,
+                            );
+
+                            $arrTransID[] = $src2sSpec->transaksi_id;
+                        }
+                        //arrPrint($tmpMasterID);
+                        //arrPrint($transaksiExtendConnectMain);
+                        //arrPrint($transaksiExtendConnect);
+
+                        //--------------------------------
+                        if (sizeof($transaksiExtendConnect) > 0) {
+                            $tr12 = new MdlTransaksi();
+                            $tr12->setFilters(array());
+                            $tr12->addFilter("link_id=0");
+                            $this->db->where_in("jenis", $transaksiExtendConnectMain);
+                            $tr12->addFilter("id_master in ('" . implode("','", $tmpMasterID) . "')");
+                            $tr12->addFilter("valid_qty>'0'");
+                            //                            $trTmpExt = $tr12->lookupAll()->result();
+                            $trTmpExt = $tr12->lookupJoined()->result();
+                            //                            showLast_query("biru");
+                            //                            cekHere(sizeof($trTmpExt));
+                            //                            arrPrintWebs($trTmpExt);
+                            if (sizeof($trTmpExt) > 0) {
+                                foreach ($trTmpExt as $trTmpExtSpec) {
+                                    //arrprint($trTmpExtSpec);
+                                    $pairCode = $transaksiExtendConnectPair[$trTmpExtSpec->jenis];
+                                    //                                    cekhere($pairCode);
+                                    $tmpMasterIDExt[$trTmpExtSpec->id_master][$trTmpExtSpec->jenis] = $arrJenisStepRslt[$pairCode];
+                                }
+                            }
+                        }
+                        //                        arrPrint($tmpMasterIDExt);
+                        //--------------------------------
+
+
+                        $tr3 = new MdlTransaksi();
+                        $tr3->setFilters(array());
+                        $tr3->addFilter("link_id='0'");
+                        $tr3->addFilter("id_master in ('" . implode("','", $tmpMasterID) . "')");
+                        $tmpSrc3 = $tr3->lookupAll()->result();
+                        //                    cekHijau($this->db->last_query() . " --- " . count($tmpSrc2));
+
+                        //region membaca pairingan registries MAIN
+                        $tmpReg_result = array();
+                        if (sizeof($pairRegistries) > 0) {
+                            foreach ($pairRegistries as $param) {
+
+                                $trReg = new MdlTransaksi();
+                                $trReg->setFilters(array());
+                                $trReg->addFilter("param='$param'");
+                                $trReg->addFilter("transaksi_id in ('" . implode("','", $arrTransID) . "')");
+                                $tmpReg = $trReg->lookupRegistries()->result();
+                                if (sizeof($tmpReg) > 0) {
+                                    foreach ($tmpReg as $regRow) {
+                                        $param = $regRow->param;
+                                        $tmpReg_result[$regRow->transaksi_id][$param] = blobDecode($regRow->values);
+                                    }
+                                }
+                            }
+                        }
+                        //endregion
+
+                        foreach ($tmpSrc3 as $tmpSrc3Spec) {
+                            $tmpMasterIDResult[$tmpSrc3Spec->id_master][$tmpSrc3Spec->jenis] = $tmpSrc3Spec->nomer;
+                        }
+
+                        foreach ($tmpSrc2 as $src2s) {
+                            if (sizeof($tmpMasterIDResult[$src2s->id_master]) > 0) {
+                                foreach ($tmpMasterIDResult[$src2s->id_master] as $key => $val) {
+
+                                    $src2s->$key = $val;
+                                }
+                            }
+                            $tmpResult[$src2s->id_master] = $src2s;
+                        }
+
+                        $arrNextPIC = callNextPIC($arrNextAction);
+
+
+                        foreach ($tmpResult as $tmpSpec) {
+                            //                            arrPrint($tmpSpec);
+                            $extHistoryFields2 = isset($arrExtHistoryFields2[$tmpSpec->step_number]) ? $arrExtHistoryFields2[$tmpSpec->step_number] : array();
+
+                            if (sizeof($pairRegistries) > 0) {
+                                if ((sizeof($tmpReg_result) > 0) && (isset($tmpReg_result[$tmpSpec->transaksi_id]))) {
+                                    foreach ($tmpReg_result[$tmpSpec->transaksi_id] as $param => $eReg) {
+                                        if ($param == "main") {
+                                            foreach ($eReg as $k => $v) {
+                                                if (!isset($tmpSpec->$k)) {
+                                                    $tmpSpec->$k = $v;
+                                                }
+                                            }
+                                        }
+                                        elseif ($param == "items") {
+                                            if (sizeof($extHistoryFields2) > 0) {
+                                                foreach ($extHistoryFields2 as $k1 => $v1) {
+                                                    if (is_array($v1)) {
+                                                        $kolom = $v1['kolom'];
+                                                        $format = $v1['format'];
+                                                        //                                                cekHitam(":: $kolom :: $format ::");
+                                                        if (!isset($tmpSpec->$k1)) {
+                                                            $tmpDetail = "";
+                                                            foreach ($eReg as $eeReg) {
+                                                                $valDetail = formatField_he_format($format, $eeReg[$kolom]);
+                                                                $tmpDetail .= "<span>$valDetail</span><br>";
+                                                            }
+                                                            $tmpSpec->$k1 = $tmpDetail;
+                                                        }
+                                                    }
+                                                    else {
+                                                        if (!isset($tmpSpec->$k1)) {
+                                                            $tmpDetail = "";
+                                                            foreach ($eReg as $eeReg) {
+                                                                $valDetail = formatField_he_format("nomer", $eeReg[$v1]);
+                                                                $tmpDetail .= "<span>$valDetail</span><br>";
+                                                            }
+                                                            $tmpSpec->$k1 = $tmpDetail;
+                                                        }
+                                                    }
+
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+
+                            foreach ($stepHistoryFields as $fName => $fLabel) {
+
+                                $keyFormat = array_key_exists($fName, getTransaksiJenis()) ? "nomer" : $fName;
+                                $tmp2Datas[$fName] = isset($tmpSpec->$fName) ? formatField_he_format($keyFormat, $tmpSpec->$fName) : "-";
+                            }
+
+                            if ($tmpSpec->sub_step_number > 0) {
+                                $tmp2Datas['state'] = "<span style='color:" . $this->configUi[$jenisTr]['steps'][$tmpSpec->sub_step_number]['stateColor'] . "'>" . $this->configUi[$jenisTr]['steps'][$tmpSpec->sub_step_number]['stateLabel'] . "</span>";
+                                $tmp2Datas['state'] .= "<br>" . createStateSign($tmpSpec->sub_step_number, $tmpSpec->step_avail, $connectTo);
+                            }
+                            else {
+                                $tmp2Datas['state'] = "<span style='color:#777777'>canceled</span>";
+                            }
+
+
+                            $tmp2Datas['next_pic'] = "-";
+                            if (sizeof($arrNextPIC) > 0) {
+                                if (isset($arrNextPIC[$tmpSpec->next_substep_code][$tmpSpec->next_substep_num])) {
+                                    $next_pic = "";
+                                    $nob = 1;
+                                    foreach ($arrNextPIC[$tmpSpec->next_substep_code][$tmpSpec->next_substep_num] as $spec) {
+                                        if ($tmpSpec->cabang_id == $spec['cabang_id']) {
+
+                                            if ($next_pic == "") {
+                                                $next_pic = "$nob. " . $spec['nama'];
+                                            }
+                                            else {
+                                                $nob++;
+                                                $next_pic = $next_pic . "<br>" . "$nob. " . $spec['nama'];
+                                            }
+
+                                        }
+                                    }
+                                    $tmp2Datas['next_pic'] = $next_pic;
+
+                                }
+                            }
+                            //arrPrint($tmpMasterIDExt[$tmpSpec->id_master]);
+                            //---------------------------------------------
+                            //                            if(isset($tmpMasterIDExt[$tmpSpec->id_master])){
+                            //                            if(isset($tmpMasterIDExt[$tmpSpec->id_master])){
+                            if (sizeof($transaksiExtendConnectPair) > 0) {
+                                foreach ($transaksiExtendConnectPair as $kk => $vv) {
+                                    $next_picx = "";
+                                    $nobx = 1;
+                                    if (isset($tmpMasterIDExt[$tmpSpec->id_master][$kk])) {
+                                        foreach ($tmpMasterIDExt[$tmpSpec->id_master][$kk] as $spec) {
+                                            if ($next_picx == "") {
+                                                $next_picx = "$nobx. " . $spec['nama'];
+                                            }
+                                            else {
+                                                $nobx++;
+                                                $next_picx .= "<br>" . "$nobx. " . $spec['nama'];
+                                            }
+                                        }
+                                    }
+                                    else {
+                                        $next_picx = "done";
+                                    }
+
+                                    $tmp2Datas[$kk] = $next_picx;
+                                }
+                            }
+                            //                            }
+                            //---------------------------------------------
+
+
+                            $tmp2[] = $tmp2Datas;
+
+                            //                            break;
+                        }
+                    }
+                }
+
+
+                $arrayOnProgressView = $tmp2; // $tmp2
+            }
+        }
+
+        return $arrayOnProgressView;
+    }
+
+    public function viewResumeDetails()
+    {
+
+        $selectedID = $this->uri->segment(5);
+
+        $this->load->model("MdlTransaksi");
+        $tr = new MdlTransaksi();
+        $tr->setFilters(array());
+        $tr->addFilter("transaksi_data.trash='0'");
+        $joinedTrans = $tr->lookupJoinedByID($selectedID)->result()[0];
+
+        $jenisTr = $joinedTrans->jenis_master;
+        $pairRegistries = isset($this->configUi[$jenisTr]['pairRegistries']) ? $this->configUi[$jenisTr]['pairRegistries'] : array();
+        $receiptElemets = isset($this->configUi[$jenisTr]["receiptElements"]) ? $this->configUi[$jenisTr]["receiptElements"] : array();
+        $receiptDetailCompactListlabel = isset($this->configLayout[$jenisTr]["reviewDetailCompactListsLabel"]) ? $this->configLayout[$jenisTr]["reviewDetailCompactListsLabel"] : array();
+        $receiptDetailCompactListlabel2 = isset($this->configLayout[$jenisTr]["reviewDetailCompactListsLabel2"]) ? $this->configLayout[$jenisTr]["reviewDetailCompactListsLabel2"] : array();
+        $receiptCompactDetailsSum = isset($this->configLayout[$jenisTr]["reviewCompactListDetailSum"]) ? $this->configLayout[$jenisTr]["reviewCompactListDetailSum"] : array();
+        $receiptCompactDetailsSum2 = isset($this->configLayout[$jenisTr]["reviewCompactListDetailSum2"]) ? $this->configLayout[$jenisTr]["reviewCompactListDetailSum2"] : array();
+        $receiptMainLabel = isset($this->configLayout[$jenisTr]["reviewMainCompactListsLabel"]) ? $this->configLayout[$jenisTr]["reviewMainCompactListsLabel"] : array();
+        $reviewCompactListSum = isset($this->configLayout[$jenisTr]["reviewCompactListSum"]) ? $this->configLayout[$jenisTr]["reviewCompactListSum"] : array();
+        $reviewAddRows = isset($this->configLayout[$jenisTr]["reviewAddRows"]) ? $this->configLayout[$jenisTr]["reviewAddRows"] : array();
+        $reviewSign = isset($this->configLayout[$jenisTr]["reviewSign"][$joinedTrans->step_number]) ? $this->configLayout[$jenisTr]["reviewSign"][$joinedTrans->step_number] : array();
+
+        $d_start = backCustomDate(30, $joinedTrans->fulldate);
+        $d_stop = $joinedTrans->fulldate;
+
+        $tr->setFilters(array());
+        $tr->addFilter("transaksi_id='$selectedID'");
+        $tmpReg = $tr->lookupDataRegistries()->result();
+
+        $mainElements = array();
+
+        $mainData = array();
+        $receiptDetailFields = array();
+        $receiptSumFields = array();
+        $masterItems = array();
+        $masterItems2_sum = array();
+        foreach ($tmpReg as $regData) {
+            foreach ($regData as $key_reg => $val_reg) {
+                switch ($key_reg) {
+                    case "main":
+                        $mainData = blobDecode($val_reg);
+                        break;
+                    case "items":
+                        $masterItems_0 = blobDecode($val_reg);
+                        foreach ($masterItems_0 as $pId => $masterItem) {
+                            if (isset($masterItem['nett1']) && ($masterItem['nett1'] > 0)) {
+                                $ppn_key = $masterItem['ppn'] / $masterItem['nett1'];
+                            }
+                            else {
+                                $ppn_key = 0;
+                            }
+                            $addItem['harganppn'] = $masterItem['harga'] + ($masterItem['harga'] * $ppn_key);
+                            $masterItems[$pId] = $masterItem + $addItem;
+                        }
+                        break;
+                    case "items2_sum":
+                        $masterItems2_sum = blobDecode($val_reg);
+                        //                    foreach ($masterItems_0 as $pId => $masterItem) {
+                        //                        $ppn_key = $masterItem['ppn'] / $masterItem['nett1'];
+                        //                        $addItem['harganppn'] = $masterItem['harga'] + ($masterItem['harga'] * $ppn_key);
+                        //                        $masterItems[$pId] = $masterItem + $addItem;
+                        //                    }
+                        break;
+                    case "main_elements"://
+                        $mainElements = blobDecode($val_reg);
+                        break;
+                    case "receiptDetailFields"://
+                        $receiptDetailFields = blobDecode($val_reg);
+                        break;
+                    case "receiptSumFields"://
+                        $receiptSumFields = blobDecode($val_reg);
+                        break;
+                }
+            }
+
+        }
+        switch ($joinedTrans->produk_jenis) {
+            case "produk":
+                $link = base_url() . "Ledger/viewMoveDetails/RekeningPembantuProduk/persediaan produk/";
+                break;
+            case "supplies":
+                $link = base_url() . "Ledger/viewMoveDetails/RekeningPembantuSupplies/persediaan supplies/";
+                break;
+            default:
+                $link = NULL;
+                break;
+        }
+
+
+        $sumQty = array();
+        $arrItemsLink = array();
+        if (sizeof($masterItems) > 0) {
+            $qty_sum = 0;
+            foreach ($masterItems as $data) {
+                $qty_sum += $data["qty"];
+
+                if ($link != NULL) {
+                    $arrItemsLink[$data['id']] = $link . $data['id'] . "?o=" . $data['cabangID'] . "&trID=" . $joinedTrans->transaksi_id . "&date1=$d_start&date2=$d_stop";
+                }
+            }
+            $sumQty["qty"] = $qty_sum;
+        }
+        $mainData = $mainData + $sumQty + (array)$joinedTrans;
+
+        //region signatures
+        $signNumbers = array();
+        $signValues = array();
+        $signExtValues = array();
+        $trs = new MdlTransaksi();
+        $trs->setFilters(array());
+        $tmpSign = $trs->lookupSignaturesByMasterID($joinedTrans->id_master)->result();
+
+        $signHeader = array();
+        if (sizeof($tmpSign) > 0) {
+            foreach ($tmpSign as $row) {
+                $signValues['sign_' . $row->step_number] = array(
+                    "label" => isset($this->configUi[$joinedTrans->jenis_master]['steps'][$row->step_number]['stateCaption']) ? $this->configUi[$joinedTrans->jenis_master]['steps'][$row->step_number]['stateCaption'] : "",
+                    "contents" => isset($row->oleh_nama) ? $row->oleh_nama : "",
+                    "caption_department" => isset($this->config->item("userGroup")[$row->group_code]) ? $this->config->item("userGroup")[$row->group_code] : "",
+                );
+            }
+        }
+        //endregion
+
+
+        $data = array(
+            "mode" => $this->uri->segment(3),
+            "mainFields" => $mainData,
+            "items" => $masterItems,
+            "items2_sum" => $masterItems2_sum,
+            "itemsLabel" => $receiptDetailCompactListlabel,
+            "itemsLabel2" => $receiptDetailCompactListlabel2,
+            "mainSumDetailsFieldsLabel" => $receiptCompactDetailsSum,
+            "mainSumDetailsFieldsLabel2" => $receiptCompactDetailsSum2,
+            "mainSumFieldsLabel" => $reviewCompactListSum,
+            "mainFieldsLabel" => $receiptMainLabel,
+            "mainElements" => $mainElements,
+            "receiptSumFields" => $receiptSumFields,
+            "reviewAddRows" => $reviewAddRows,
+            "sign" => $signValues,
+            "reviewSign" => $reviewSign,
+
+            "itemsLink" => $arrItemsLink,
+            "itemsKolomLink" => array("nama", "produk_kode"),
+            "underMaintenance" => underConstruction(),
+        );
+
+        $this->load->view("transaksi", $data);
+
+    }
+
+    public function viewUndoneItemsIndex_uu()
+    {
+        $starttime = microtime(true);
+        if (!isset($this->session->login['id'])) {
+            redirect(base_url() . "Login");
+        }
+        $scriptBottom = "";
+        $sesionReplacer = replaceSession();
+        //        $jenisTr = $this->uri->segment(3);
+        $jenisTr = $this->jenisTr;
+        $cCode = "_TR_" . $this->jenisTr;
+        $paymentConfig = isset($this->configUi[$jenisTr]['paymentConfig']) ? $this->configUi[$jenisTr]['paymentConfig'] : false;
+        $myPaymentConfig = isset($this->configUi[$jenisTr]['myPaymentConfig']) ? $this->configUi[$jenisTr]['myPaymentConfig'] : false;
+        $historyFields = isset($this->configUi[$jenisTr]['shortHistoryFields']) ? $this->configUi[$jenisTr]['shortHistoryFields'] : array();
+        $pairRegistries = isset($this->configUi[$jenisTr]['pairRegistries']) ? $this->configUi[$jenisTr]['pairRegistries'] : array();
+        $connectTo = isset($this->configUi[$jenisTr]['connectTo']) ? $this->configUi[$jenisTr]['connectTo'] : "";
+        $stepHistoryFields = isset($this->configUi[$jenisTr]['shortStepHistoryFields']) ? $this->configUi[$jenisTr]['shortStepHistoryFields'] : array();
+        $arrExtHistoryFields2 = isset($this->configUi[$jenisTr]["extHistoryFields2"]) ? $this->configUi[$jenisTr]["extHistoryFields2"] : array();
+
+        $mb = New MobileDetect();
+        $isMob = $mb->isMobile();
+        if ($isMob) {
+            $historyFields = isset($this->configUi[$jenisTr]['compactHistoryFields']) ? $this->configUi[$jenisTr]['compactHistoryFields'] : array();
+        }
+        $prePreFields = $historyFields;
+        $prePreFields['state'] = "status";
+        $prePreFields['action'] = "action";
+        $swapJenisTr = isset($this->configUi[$jenisTr]['requestCode']['masterCode']) ? $this->configUi[$jenisTr]['requestCode']['masterCode'] : array();
+        $arrayOnprePre = array();
+        $arrayOnprePreGroup = array();
+        if (sizeof($swapJenisTr) > 0) {
+            $steps = $this->configUi[$swapJenisTr]['steps'];
+            $arrFilters = array();
+            if (sizeof($steps) > 1) {
+                $this->load->model("MdlTransaksi");
+                $tr = new MdlTransaksi();
+                $stepCodes = array();
+                $jmlStep = count($steps);
+                if (isset($this->accessList[$swapJenisTr]) && sizeof($this->accessList) > 0) {
+                    $indsteps = "(";
+                    foreach ($this->accessList[$swapJenisTr] as $stepNumber => $stepSpec) {
+                        if ($stepNumber <= $jmlStep) {
+                            foreach ($stepSpec as $targetCode => $filters) {
+                                $indsteps .= "'$targetCode',";
+                                $stepCodes[] = $targetCode;
+                                if ($filters['allowFollowUp'] == "true") {
+                                    $arrFilters["allowFollowUp"][] = $targetCode;
+                                }
+                            }
+                        }
+                    }
+                    $indsteps = rtrim($indsteps, ",");
+                    $indsteps .= ")";
+                    if (sizeof($arrFilters) > 0) {
+                        $tr->addFilter("next_step_code in $indsteps");
+                    }
+                    else {
+                        $tr->addFilter("transaksi.oleh_id='" . $this->session->login['id'] . "'");
+                    }
+                }
+                else {
+
+                }
+                $tr->addFilter("div_id='" . $this->session->login['div_id'] . "'");
+                $tr->addFilter("jenis_top='" . $steps[1]['target'] . "'");
+                $tr->addFilter("next_substep_code<>''");
+                $tr->addFilter("sub_step_number>0");
+                $tr->addFilter("valid_qty>0");
+                $tmpHist = $tr->lookupRecentUndoneEntries_joined($sesionReplacer)->result();
+                if (sizeof($tmpHist) > 0) {
+                    $arrTransID = array();
+                    $arrTransTopID = array();
+                    $arrIdsHist = array();
+                    $arrTransHist = array();
+                    foreach ($tmpHist as $row) {
+                        $arrTransID[] = $row->id;
+                        $arrTransTopID[] = $row->id_top;
+
+                        if ($row->ids_his != "") {
+                            $hist = blobDecode($row->ids_his);
+                            foreach ($hist as $hisSpec) {
+                                $arrIdsHist[$row->id][$hisSpec['step']] = array(
+                                    "step" => $hisSpec['step'],
+                                    "trID" => $hisSpec['trID'],
+                                    "nomer" => $hisSpec['nomer'],
+                                );
+                                $arrTransHist[] = $hisSpec['trID'];
+                            }
+                        }
+                    }
+                    $tmpReg_result = array();
+                    $trReg = new MdlTransaksi();
+                    $trReg->setFilters(array());
+                    $selectKolom = implode(",", $pairRegistries) . ",transaksi_id";
+                    // matiHEre(__LINE__);
+                    $trReg->setJointSelectFields($selectKolom);
+                    $trReg->addFilter("transaksi_id in ('" . implode("','", $arrTransID) . "')");
+                    $tmpReg = $trReg->lookupDataRegistries()->result();
+
+                    if (sizeof($tmpReg) > 0) {
+                        foreach ($tmpReg as $regRow) {
+                            $param = $regRow->param;
+                            $tmpReg_result[$regRow->transaksi_id][$param] = blobDecode($regRow->values);
+                        }
+                    }
+
+                    foreach ($tmpHist as $row) {
+                        if (sizeof($pairRegistries) > 0) {
+                            //                            $trReg = new MdlTransaksi();
+                            //                            $trReg->setFilters(array());
+                            //                            $trReg->addFilter("param in ('" . implode("','", $pairRegistries) . "')");
+                            //                            $trReg->addFilter("transaksi_id='" . $row->transaksi_id . "'");
+                            //                            $tmpReg = $trReg->lookupRegistries()->result();
+                            //                            if (sizeof($tmpReg) > 0) {
+                            //                                foreach ($tmpReg as $regRow) {
+                            //                                    $param = $regRow->param;
+                            //                                    $$param = blobDecode($regRow->values);
+                            //                                }
+                            //                                foreach ($pairRegistries as $eReg) {
+                            //                                    foreach ($$eReg as $k => $v) {
+                            //                                        if (!isset($row->$k)) {
+                            //                                            $row->$k = $v;
+                            //                                        }
+                            //                                    }
+                            //                                }
+                            //                            }
+                            if ((sizeof($tmpReg_result) > 0) && (isset($tmpReg_result[$row->id]))) {
+                                foreach ($tmpReg_result[$row->id] as $param => $eReg) {
+                                    foreach ($eReg as $k => $v) {
+                                        if (!isset($row->$k)) {
+                                            $row->$k = $v;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        $tmp = array();
+                        foreach ($historyFields as $fName => $fLabel) {
+                            $tmp[$fName] = isset($row->$fName) ? formatField($fName, $row->$fName) : formatField($fName, 0);
+                        }
+
+                        //                        cekHijau('$swapJenisTr: ' . $swapJenisTr);
+
+                        $showPoStatus = isset($this->configUi[$swapJenisTr]['showPoStatus']) ? $this->configUi[$swapJenisTr]['showPoStatus'] : array();
+                        $cekStateLocation = ($this->session->login['cabang_id'] > 0) ? "cabang" : "pusat";
+
+                        if ($row->sub_step_number > 0) {
+
+                            $tmp['state'] = "<div class='panel panel-warning' style='padding: 3px;margin-bottom: 5px;' ><span style='color:" . $this->configUi[$swapJenisTr]['steps'][$row->sub_step_number]['stateColor'] . "'>" . $this->configUi[$swapJenisTr]['steps'][$row->sub_step_number]['stateLabel'] . "</span>";
+                            $tmp['state'] .= "<br>" . createStateSign($row->sub_step_number, $row->step_avail, $swapJenisTr) . "</div>";
+
+                            // cek PO
+                            $arrTransactionSource = array();
+                            $id_master = $row->id_master;
+                            $id_top1 = $row->id_top;
+                            $this->load->model("MdlTransaksi");
+                            $l = new MdlTransaksi();
+                            $l->setFilters(array());
+                            $l->addFilter("transaksi_data.valid_qty>0");
+                            $l->addFilter("id_master='" . $id_master . "'");
+                            $l->addFilter("jenis_master='" . $swapJenisTr . "'");
+                            $l->addFilter("link_id=0");
+                            $tmpTS = $l->lookupJoined()->result();
+
+                            $arrsub_step_number = array();
+                            $arrstep_avail = array();
+                            $arrext_blob = array();
+                            $arrjenis_master = array();
+                            $arrtransaksi_no = array();
+                            $arrketerangan = array();
+
+                            if (sizeof($tmpTS) > 0) {
+                                foreach ($tmpTS as $kk => $arVL) {
+                                    $id = $arVL->id;
+                                    $id_master = $arVL->id_master;
+                                    $id_top2 = $arVL->id_top;
+                                    $produk_id = $arVL->produk_id;
+                                    $arrTransactionSource[$id_top1] = $produk_id;
+                                    $arrsub_step_number[$id_top1] = $arVL->sub_step_number;
+                                    $arrstep_avail[$id_top1] = $arVL->step_avail;
+                                    $arrext_blob[$id_top1][$kk] = isset($arVL->ext_blob) ? ($arVL->ext_blob != "" ? blobDecode($arVL->ext_blob) : "") : "";
+                                }
+
+                                if (sizeof($arrext_blob[$id_top1]) > 0) {
+                                    foreach ($arrext_blob[$id_top1] as $ky => $aVal) {
+                                        if ($aVal != "") {
+                                            foreach ($arrext_blob[$id_top1][$ky]['static'] as $numb => $numData) {
+                                                $arrtransaksi_no[$id_top1][$numb] = formatField("nomer", $numb);
+                                                $arrjenis_master[$id_top1][$numb] = $numData['jenis'];
+                                                $arrketerangan[$id_top1][$numb] = $numData['keterangan'];
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            if ($arrext_blob[$id_top1][$ky] != "") {
+                                $tmp['state'] .= "<div class='panel panel-danger bg-green' style='padding: 3px;margin-bottom: 5px;'>";
+                                if ($cekStateLocation == "cabang") {
+                                    $tmp['state'] .= "<div><b>diproses oleh PUSAT</b></div>";
+                                }
+                                if (sizeof($arrtransaksi_no[$id_top1]) > 0) {
+                                    foreach ($arrtransaksi_no[$id_top1] as $numb_) {
+                                        $tmp['state'] .= "<div><span class='fa fa-check-circle text-warning'></span> " . $numb_ . "</div>";
+                                    }
+                                }
+                                $tmp['state'] .= "</div>";
+                            }
+
+                        }
+                        else {
+                            $tmp['state'] = "<span style='color:#777777'>canceled</span>";
+                        }
+
+                        $tmp['action'] = "";
+                        $nextStepNum = ($row->next_substep_num);
+                        $currentStepNum = ($row->sub_step_number);
+                        $currentStepCode = ($row->jenis);
+                        $nextStepCode = ($row->next_step_code);
+
+                        if ($row->sub_step_number > 0) {
+                            $allowFollowup = true;
+                            $actionLabel = "review " . $this->configUi[$swapJenisTr]['steps'][$currentStepNum]['label'];
+                        }
+
+                        if (isset($this->configUi[$swapJenisTr]['steps'][$nextStepNum])) {
+                            if (isset($this->accessList[$jenisTr])) {
+                                if (isset($this->accessList[$swapJenisTr][$nextStepNum][$nextStepCode]["allowFollowUp"])) {
+                                    $allowFollowup = $this->accessList[$swapJenisTr][$nextStepNum][$nextStepCode]["allowFollowUp"];
+                                    $actionLabel = $this->configUi[$swapJenisTr]['steps'][$nextStepNum]['actionLabel'];
+                                }
+                            }
+                            else {
+                                if (in_array($this->configUi[$swapJenisTr]['steps'][$nextStepNum]['userGroup'], $this->session->login['membership'])) {
+                                    $allowFollowup = true;
+                                    $actionLabel = $this->configUi[$swapJenisTr]['steps'][$nextStepNum]['actionLabel'];
+                                }
+                                else {
+                                    $allowFollowup = true;
+                                    $actionLabel = "review " . $this->configUi[$swapJenisTr]['steps'][$currentStepNum]['label'];
+                                }
+                            }
+                        }
+
+                        if ($allowFollowup) {
+                            $allowJoin = isset($this->configUi[$swapJenisTr]["steps"][$nextStepNum]['allowJoin']) && $this->configUi[$swapJenisTr]["steps"][$nextStepNum]['allowJoin'] == true ? $this->configUi[$jenisTr]["steps"][$nextStepNum]['allowJoin'] : false;
+                            $stepLabel = isset($this->configUi[$swapJenisTr]['steps'][$nextStepNum]['label']) ? $this->configUi[$swapJenisTr]['steps'][$nextStepNum]['label'] : "";
+                            $isCancelPacking = isset($this->configUi[$swapJenisTr]['steps'][$nextStepNum]['isCancelPacking']) ? $this->configUi[$swapJenisTr]['steps'][$nextStepNum]['isCancelPacking'] : false;
+                            $allowCancel = isset($this->configUi[$swapJenisTr]['steps'][$nextStepNum]['allowCancel']) ? $this->configUi[$swapJenisTr]['steps'][$nextStepNum]['allowCancel'] : false;
+
+                            $targetFollowupLink = $isCancelPacking == true ? "followupCancelPackingPrePreview" : "followupPrePreview";
+                            $followupLink = "top.$('#result').load('" . base_url() . "Transaksi/$targetFollowupLink/" . $row->transaksi_id . "/$nextStepNum/" . $row->sub_step_number . "');";
+
+                            $tmp['action'] = "<div class='input-group'>";
+                            $tmp['action'] .= "<a class='btn btn-primary btn-block' title='turn this entry into $stepLabel' href='javascript:void(0)' onClick =\"top.open_holdon();$followupLink\">" . $actionLabel . "</a>";
+                            if ($allowJoin) {
+                                $tmp['action'] .= "<span class='input-group-addon'>";
+                                $tmp['action'] .= "<a title='process many items at once' href='" . base_url() . "Transaksi/viewIncomplete/" . $this->jenisTr . "/$currentStepNum'><span class='fa fa-dedent'></span></a>";
+                                $tmp['action'] .= "</span class='input-group-addon'>";
+                            }
+                            $tmp['action'] .= "</div class='input-group'>";
+
+                            if ($allowCancel) {
+                                $tmp['action'] .= "<div class='input-group'>";
+                                $tmp['action'] .= "<a class='btn btn-primary btn-block' title='turn this entry into $stepLabel' href='javascript:void(0)' onClick =\"top.open_holdon();$followupLink\">" . $actionLabel . "</a>";
+                                if ($allowJoin) {
+                                    $tmp['action'] .= "<span class='input-group-addon'>";
+                                    $tmp['action'] .= "<a title='process many items at once' href='" . base_url() . "Transaksi/viewIncomplete/" . $this->jenisTr . "/$currentStepNum'><span class='fa fa-dedent'></span></a>";
+                                    $tmp['action'] .= "</span class='input-group-addon'>";
+                                }
+                                $tmp['action'] .= "</div class='input-group'>";
+                            }
+                        }
+                        else {
+
+                        }
+                        $arrayOnprePre[] = $tmp;
+                        $arrayOnprePreGroup[$currentStepNum][] = $tmp;
+                    }
+                }
+            }
+            else {
+                $arrayOnprePre = array();
+            }
+        }
+        else {
+            $arrayOnprePre = array();
+        }
+        //endregion prePre
+
+
+        //region lookup on-going transactions
+        $progressFields = $historyFields;
+        $progressFields['state'] = "status";
+        $progressFields['action'] = "action";
+        $steps = $this->configUi[$jenisTr]['steps'];
+
+        $arrFilters = array();
+
+        $this->load->model("MdlTransaksi");
+        $tr = new MdlTransaksi();
+        $stepCodes = array();
+        $jmlStep = count($steps);
+
+        if (isset($this->accessList[$jenisTr]) && sizeof($this->accessList) > 0) {
+            $indsteps = "(";
+            foreach ($this->accessList[$jenisTr] as $stepNumber => $stepSpec) {
+                if ($stepNumber <= $jmlStep) {
+                    foreach ($stepSpec as $targetCode => $filters) {
+                        $indsteps .= "'$targetCode',";
+                        $stepCodes[] = $targetCode;
+                        if ($filters['allowFollowUp'] == "true") {
+                            $arrFilters["allowFollowUp"][] = $targetCode;
+                        }
+
+                    }
+                }
+            }
+            $indsteps = rtrim($indsteps, ",");
+            $indsteps .= ")";
+            if (sizeof($arrFilters) > 0) {
+                $tr->addFilter("next_step_code in $indsteps");
+            }
+            else {
+                $tr->addFilter("transaksi.oleh_id='" . $this->session->login['id'] . "'");
+                $tr->addFilter("next_step_code!=''");
+            }
+        }
+        else {
+
+        }
+
+        $tr->addFilter("div_id='" . $this->session->login['div_id'] . "'");
+        $tr->addFilter("jenis_top='" . $steps[1]['target'] . "'");
+        $tr->addFilter("next_substep_code<>''");
+        $tr->addFilter("sub_step_number>0");
+        $tr->addFilter("valid_qty>0");
+        if ($this->session->login['employee_type'] == "employee_freelance") {
+            $tr->addFilter("seller_id='" . $this->session->login['id'] . "'");
+        }
+
+        $tmpHist = $tr->lookupRecentUndoneEntries_joined($sesionReplacer)->result();
+
+        $arrayOnprogress = array();
+        $arrayOnprogressGroup = array();
+        $arrayOnprogressPartialMark = array();
+        $arrayOnprogressGroupPartialMark = array();
+
+        $extData = "";
+        $extact = "";
+        $selectProcessor = "";
+
+        if (sizeof($tmpHist) > 0) {
+            $arrTransID = array();
+            $arrTransTopID = array();
+            $arrIdsHist = array();
+            $arrTransHist = array();
+            $arrNextAction = array();
+            foreach ($tmpHist as $row) {
+                $arrTransID[] = $row->transaksi_id;
+                $arrTransTopID[] = $row->id_top;
+                $arrNextAction[$row->transaksi_id] = array(
+                    "next_step_num" => $row->next_substep_num,
+                    "next_step_code" => $row->next_substep_code,
+                );
+                if ($row->ids_his != "") {
+                    $hist = blobDecode($row->ids_his);
+                    foreach ($hist as $hisSpec) {
+                        $arrIdsHist[$row->id][$hisSpec['step']] = array(
+                            "step" => $hisSpec['step'],
+                            "trID" => $hisSpec['trID'],
+                            "nomer" => $hisSpec['nomer'],
+                        );
+                        $arrTransHist[] = $hisSpec['trID'];
+                    }
+                }
+                //                    arrPrint($row);
+            }
+
+            $tmpReg_result = array();
+            if (sizeof($pairRegistries) > 0) {
+                $selectKolom = implode(",", $pairRegistries) . ", transaksi_id";
+                $trReg = new MdlTransaksi();
+                $trReg->setFilters(array());
+                //            $trReg->addFilter("param='main'");
+                $trReg->setJointSelectFields($selectKolom);
+                $trReg->addFilter("transaksi_id in ('" . implode("','", $arrTransID) . "')");
+                $tmpReg = $trReg->lookupDataRegistries()->result();
+                if (sizeof($tmpReg) > 0) {
+                    foreach ($tmpReg as $regRow) {
+                        //                    arrPrintWebs($regRow);
+                        foreach ($regRow as $key_reg => $val_reg) {
+                            if ($key_reg != "transaksi_id") {
+                                $tmpReg_result[$regRow->transaksi_id][$key_reg] = blobDecode($val_reg);
+                            }
+                        }
+
+                    }
+                }
+            }
+
+
+            $arrNextPIC = callNextPIC($arrNextAction);
+
+            if (sizeof($arrIdsHist) > 0) {
+                $tr = new MdlTransaksi();
+                $tr->setFilters(array());
+                $tr->addFilter("id in ('" . implode("','", $arrTransHist) . "')");
+                $tmpTransHist = $tr->lookupAll()->result();
+
+
+                if (sizeof($tmpTransHist) > 0) {
+                    foreach ($tmpTransHist as $histSpec) {
+                        $tmpTransHist_result[$histSpec->id] = array(
+                            "oleh_id" => $histSpec->oleh_id,
+                            "oleh_nama" => $histSpec->oleh_nama,
+                        );
+                    }
+                }
+
+                foreach ($arrIdsHist as $trID => $histSpec) {
+                    foreach ($histSpec as $step => $detailSpec) {
+                        if (array_key_exists($detailSpec['trID'], $tmpTransHist_result)) {
+                            $detailSpec['main'] = $tmpTransHist_result[$detailSpec['trID']];
+                        }
+                        $arrTransMainHist[$trID][$step] = $detailSpec;
+                    }
+                }
+            }
+
+            $numb = 0;
+            foreach ($tmpHist as $row) {
+                //arrPrint($row);
+                $extHistoryFields2 = isset($arrExtHistoryFields2[$row->step_number]) ? $arrExtHistoryFields2[$row->step_number] : array();
+
+                if (sizeof($pairRegistries) > 0) {
+                    if ((sizeof($tmpReg_result) > 0) && (isset($tmpReg_result[$row->transaksi_id]))) {
+                        foreach ($tmpReg_result[$row->transaksi_id] as $param => $eReg) {
+                            switch ($param) {
+                                case "main":
+                                    foreach ($eReg as $k => $v) {
+                                        if (!isset($row->$k)) {
+                                            $row->$k = $v;
+                                        }
+                                    }
+                                    break;
+                                case "items":
+                                    if (sizeof($extHistoryFields2) > 0) {
+                                        foreach ($extHistoryFields2 as $k1 => $v1) {
+                                            if (is_array($v1)) {
+                                                $kolom = $v1['kolom'];
+                                                $format = $v1['format'];
+                                                //                                                cekHitam(":: $kolom :: $format ::");
+                                                if (!isset($row->$k1)) {
+                                                    $tmpDetail = "";
+                                                    foreach ($eReg as $eeReg) {
+                                                        $valDetail = formatField_he_format($format, $eeReg[$kolom]);
+                                                        $tmpDetail .= "<span>$valDetail</span><br>";
+                                                    }
+                                                    $row->$k1 = $tmpDetail;
+                                                }
+                                            }
+                                            else {
+                                                if (!isset($row->$k1)) {
+                                                    $tmpDetail = "";
+                                                    foreach ($eReg as $eeReg) {
+                                                        $valDetail = formatField_he_format("nomer", $eeReg[$v1]);
+                                                        $tmpDetail .= "<span>$valDetail</span><br>";
+                                                    }
+                                                    $row->$k1 = $tmpDetail;
+                                                }
+                                            }
+                                        }
+                                    }
+                                    break;
+                            }
+                        }
+                    }
+                }
+                //arrPrint($row);
+
+
+                $numb++;
+
+                $tmp = array();
+                foreach ($historyFields as $fName => $fLabel) {
+                    if (isset($row->$fName)) {
+                        if (is_numeric($row->$fName)) {
+                            if (!isset($sumFooter[$fName])) {
+                                $sumFooter[$fName] = 0;
+                            }
+                            $sumFooter[$fName] += $row->$fName;
+                        }
+                    }
+
+                    if (is_array($fLabel)) {
+                        $hisStep = $fLabel['step'];
+                        $hisKey = $fLabel['key'];
+
+                        if (isset($row->ids_his)) {
+                            if ($hisKey == "nomer") {
+                                $returnVal = showHistoriGlobalNumbers($row->ids_his, $hisStep, true);
+                                if ($returnVal == "") {
+                                    $tmp[$fName] = "-";
+                                }
+                                else {
+                                    $tmp[$fName] = $returnVal;
+                                }
+                            }
+                            else {
+                                $ids_his_decode = blobDecode($row->ids_his);
+                                if (isset($ids_his_decode[$hisStep][$hisKey])) {
+                                    $tmp[$fName] = $ids_his_decode[$hisStep][$hisKey];
+                                }
+                                else {
+                                    $tmp[$fName] = "-";
+                                }
+                            }
+                        }
+                        else {
+                            $tmp[$fName] = "-";
+                        }
+                    }
+                    else {
+                        $tmp[$fName] = isset($row->$fName) ? formatField_he_format($fName, $row->$fName) : formatField_he_format($fName, 0);
+                    }
+
+                    if ($fName == "no") {
+                        $tmp[$fName] = formatField_he_format($fName, $numb);
+                    }
+
+                }
+
+                if (sizeof($row->cancel_packing_source_id) > 0) {
+                    arrPrint($row->cancel_packing_source_id);
+                    $trx = new MdlTransaksi();
+                    $trx->addFilter("id='" . $row->cancel_packing_source_id . "'");
+                    $tmpTrx = $trx->lookupAll()->result();
+
+                    //                        $tmp['nomer_top'] = $tmpTrx[0]->nomer;
+                    $tmp['nomer_top'] = formatField_he_format("nomer_top", $tmpTrx[0]->nomer);
+                    //                        arrPrint($tmpTrx[0]->nomer);
+                }
+
+
+                if ($row->sub_step_number > 0) {
+                    $tmp['state'] = "<span style='color:" . $this->configUi[$jenisTr]['steps'][$row->sub_step_number]['stateColor'] . "'>" . $this->configUi[$jenisTr]['steps'][$row->sub_step_number]['stateLabel'] . "</span>";
+                    $tmp['state'] .= "<br>" . createStateSign($row->sub_step_number, $row->step_avail, $jenisTr);
+                }
+                else {
+                    $tmp['state'] = "<span style='color:#777777'>canceled</span>";
+                }
+
+
+                $tmp['next_pic'] = "-";
+                if (sizeof($arrNextPIC) > 0) {
+                    if (isset($arrNextPIC[$row->next_substep_code][$row->next_substep_num])) {
+                        $next_pic = "";
+                        $nob = 1;
+                        foreach ($arrNextPIC[$row->next_substep_code][$row->next_substep_num] as $spec) {
+                            if ($row->cabang_id == $spec['cabang_id']) {
+
+                                if ($next_pic == "") {
+                                    $next_pic = "$nob. " . $spec['nama'];
+                                }
+                                else {
+                                    $nob++;
+                                    $next_pic = $next_pic . "<br>" . "$nob. " . $spec['nama'];
+                                }
+
+                            }
+
+                        }
+                        $tmp['next_pic'] = $next_pic;
+                        //                            cekHitam($next_pic);
+                    }
+                }
+
+
+                $tmp['action'] = "";
+                $nextStepNum = ($row->next_substep_num);
+                $currentStepNum = ($row->sub_step_number);
+                $currentStepCode = ($row->jenis);
+                $nextStepCode = ($row->next_step_code);
+
+
+                if ($row->sub_step_number > 0) {
+                    //                        cekHere("koq");
+                    $allowFollowup = true;
+                    $actionLabel = "review " . $this->configUi[$jenisTr]['steps'][$currentStepNum]['label'];
+                }
+
+                if (isset($this->configUi[$jenisTr]['steps'][$nextStepNum])) {
+                    if (isset($this->accessList[$jenisTr])) {
+                        if (isset($this->accessList[$jenisTr][$nextStepNum][$nextStepCode]["allowFollowUp"])) {
+                            $allowFollowup = $this->accessList[$jenisTr][$nextStepNum][$nextStepCode]["allowFollowUp"];
+                            $actionLabel = $this->configUi[$jenisTr]['steps'][$nextStepNum]['actionLabel'];
+                        }
+
+
+                    }
+                    else {
+                        if (in_array($this->configUi[$jenisTr]['steps'][$nextStepNum]['userGroup'], $this->session->login['membership'])) {
+                            $allowFollowup = true;
+                            $actionLabel = $this->configUi[$jenisTr]['steps'][$nextStepNum]['actionLabel'];
+                        }
+                        else {
+                            $allowFollowup = true;
+                            $actionLabel = "review " . $this->configUi[$jenisTr]['steps'][$currentStepNum]['label'];
+                        }
+                    }
+                }
+                $req_cancel_qty = $row->req_cancel_qty != '' ? $row->req_cancel_qty : 0;
+                $valid_qty = $row->valid_qty != '' ? $row->valid_qty : 0;
+
+
+                if ($allowFollowup) {
+                    $allowJoin = isset($this->configUi[$jenisTr]["steps"][$nextStepNum]['allowJoin']) && $this->configUi[$jenisTr]["steps"][$nextStepNum]['allowJoin'] == true ? $this->configUi[$jenisTr]["steps"][$nextStepNum]['allowJoin'] : false;
+                    $stepLabel = isset($this->configUi[$jenisTr]['steps'][$nextStepNum]['label']) ? $this->configUi[$jenisTr]['steps'][$nextStepNum]['label'] : "";
+                    $isCancelPacking = isset($this->configUi[$jenisTr]['steps'][$nextStepNum]['isCancelPacking']) ? $this->configUi[$jenisTr]['steps'][$nextStepNum]['isCancelPacking'] : false;
+                    $allowCancel = isset($this->configUi[$jenisTr]['steps'][$nextStepNum]['allowCancel']) ? $this->configUi[$jenisTr]['steps'][$nextStepNum]['allowCancel'] : false;
+
+                    $targetFollowupLink = $isCancelPacking == true ? "followupCancelPackingPrePreview" : "followupPrePreview";
+
+                    $followupLink = "top.$('#result').load('" . MODUL_PATH . "FollowUp/$targetFollowupLink/$jenisTr/" . $row->transaksi_id . "/$nextStepNum/" . $row->sub_step_number . "');";
+
+                    $tmp['action'] = "<div class='input-group'>";
+                    $tmp['action'] .= "<a class='btn btn-primary btn-block' title='turn this entry into $stepLabel' href='javascript:void(0)' 
+                                onClick =\"top.open_holdon();$followupLink\">" . $actionLabel . "</a>";
+                    //                        if ($allowJoin) {
+                    //                            $tmp['action'] .= "<span class='input-group-addon'>";
+                    //                            $tmp['action'] .= "<a title='process many items at once' href='" . base_url() . "Transaksi/viewIncomplete/" . $this->jenisTr . "/$currentStepNum'><span class='fa fa-dedent'></span></a>";
+                    //                            $tmp['action'] .= "</span class='input-group-addon'>";
+                    //                        }
+                    $tmp['action'] .= "</div class='input-group'>";
+
+                    if ($req_cancel_qty > 0 && $valid_qty == 0) {
+                        $tmp['action'] = "<div class='btn-group' role='group' aria-label='cancel packing on progress'>";
+                        $tmp['action'] .= "<button type='button' disabled class='btn btn-warning' title='sedang dalam process cancel packing' href='javascript:void(0)'>menuggu approve cancel</button>";
+                        //                            $tmp['action'] .= "<button type='button' class='btn btn-warning' title='sedang dalam process cancel packing' href='javascript:void(0)'>x</button>";
+                        $tmp['action'] .= "</div>";
+                    }
+
+                }
+                else {
+
+                }
+
+                $tmpMark = array();
+                $tmp['keterangan'] = "-";
+                if ($row->partial == 1) {
+                    $tmpMark['style'] = "background-color:yellow;";
+                    $tmp['keterangan'] = "<span style='color:red;'>transaksi diproses sebagian</span>";
+                }
+
+
+                $arrayOnprogress[] = $tmp;
+                $arrayOnprogressGroup[$currentStepNum][] = $tmp;
+
+                $arrayOnprogressPartialMark[] = $tmpMark;
+                $arrayOnprogressGroupPartialMark[$currentStepNum][] = $tmpMark;
+
+                //                    break;
+            }
+        }
+
+
+        //endregion
+
+
+        //region link to add new transaction
+        if (placeCanMakeTrans_he_menu($this->session->login['membership'], $this->session->login['cabang_id'], $this->session->login['gudang_id'], $this->jenisTr, $this->configUiJenis)) {
+            $createIndexes = (null != $this->config->item("transaksi_createIndex")) ? $this->config->item("transaksi_createIndex") : array();
+            $isDisableMakeTrans = isset($this->configUi[$this->jenisTr]['isDisableMakeTrans']) ? $this->configUi[$this->jenisTr]['isDisableMakeTrans'] : false;
+            if (array_key_exists($this->jenisTr, $createIndexes)) {
+                $targetUrl = MODUL_PATH . $createIndexes[$this->jenisTr] . "/" . $this->jenisTr;
+            }
+            else {
+                $targetUrl = MODUL_PATH . "Create/index/" . $this->jenisTr;
+            }
+
+            if ($isDisableMakeTrans) {
+                $addLink = null;
+            }
+            else {
+                $addLink = array(
+                    "link" => $targetUrl,
+                    "label" => "<span class='glyphicon glyphicon-plus'></span> create new " . $this->configUi[$jenisTr]["steps"][1]['label'],
+                );
+            }
+
+        }
+        else {
+            $addLink = null;
+        }
+        //endregion
+
+        $jenisTrsub = isset($_GET['step']) ? $_GET['step'] : 1;
+        $historyFieldsDt = isset($this->configUi[$jenisTr]['historyFields'][$jenisTrsub]) ? $this->configUi[$jenisTr]['historyFields'][$jenisTrsub] : $this->configUi[$jenisTr]['shortHistoryFields'];
+        $availDbTable = $tr->getAvailTable($historyFieldsDt);
+
+        //-----------------------------------------------------
+        $arrJenisTrCek = array("587", "687", "1587", "1687");
+        if (in_array($jenisTr, $arrJenisTrCek)) {
+            $transaksiName = isset($this->configUi[$jenisTr]['label']) ? $this->configUi[$jenisTr]['label'] : NULL;
+            $subplace = isset($this->configUi[$jenisTr]['steps'][1]['subplace']) ? $this->configUi[$jenisTr]['steps'][1]['subplace'] : NULL;
+            if ($subplace != NULL) {
+                if (($subplace == "warehouse") && ($this->session->login['gudang_id'] < 0)) {
+                    //                    cekPink("SESUAI");
+                    $msg = NULL;
+                }
+                elseif (($subplace == "warehouse_ng") && ($this->session->login['gudang_id'] > 0)) {
+                    //                    cekPink("SESUAI NOT GOOD");
+                    $msg = NULL;
+                }
+                else {
+                    $msg = "Anda tidak memiliki kewenangan untuk membuat request $transaksiName";
+                    $addLink = array();
+                }
+            }
+        }
+
+        //-----------------------------------------------------
+        $endtime = microtime(true); // Bottom of page
+        $val = $endtime - $starttime;
+        //        cekMerah("Grabing data " . $val . " Seconds");
+
+        //region prepare params to viewer
+
+        $data = array(
+            "mode" => isset($this->configUi[$jenisTr]["mode"]) ? $this->configUi[$jenisTr]["mode"] : $this->uri->segment(3),
+            "isMobile" => $isMob,
+            "errMsg" => $this->session->errMsg,
+            "template" => $this->configUi[$jenisTr]["template"],
+            "title" => $this->configUi[$jenisTr]["label"],
+            "subTitle" => $this->configUi[$jenisTr]["steps"][1]['label'],
+            "jenisTr" => $jenisTr,
+            "trName" => $this->configUi[$jenisTr]["label"],
+            'addLink' => $addLink,
+            "allSteps" => $this->allSteps,
+            "historyTitle" => "<span class='glyphicon glyphicon-time'></span> recent " . $this->configUi[$jenisTr]["label"] . " histories",
+            "arrayHistoryLabels" => array("dtime" => "time") + $historyFields,
+            "arrayHistoryLabelsDt" => $historyFieldsDt,
+            "availDbTable" => $availDbTable,
+            "arrayHistory" => isset($arrayHistory) ? $arrayHistory : array(),
+            "onprogressTitle" => "<span class='glyphicon glyphicon-alert'></span> TRANSAKSI YANG PERLU ACTION ",
+            "arrayProgressLabels" => $progressFields,
+            "arrayOnProgressToPay" => $paymentConfig,
+            "itemLabels" => isset($itemLabels) ? $itemLabels : "",
+            "srcLabel" => isset($srcLabel) ? $srcLabel : "",
+            //            "arrayOnProgress" => array_merge($arrayOnprogress, $arrayOnprePre, $arrayOnpreDistribution),
+            "steps" => $steps,
+            "arrayOnProgress" => (isset($arrayOnprogress) && sizeof($arrayOnprogress) > 0) ? $arrayOnprogress : array(),
+            "arrayOnprogressGroup" => (isset($arrayOnprogressGroup) && (sizeof($arrayOnprogressGroup) > 0)) ? $arrayOnprogressGroup : array(),
+
+            "arrayOnprePre" => $arrayOnprePre,
+            "arrayOnprePreGroup" => $arrayOnprePreGroup,
+
+            "arrayOnpreDistribution" => isset($arrayOnpreDistribution) ? $arrayOnpreDistribution : array(),
+            "arrayOnpreDistributionGroup" => isset($arrayOnpreDistributionGroup) ? $arrayOnpreDistributionGroup : array(),
+
+            "entities" => isset($entities) ? $entities : array(),
+            "recapTitle" => "<span class='fa fa-newspaper-o'></span> today " . $this->configUi[$jenisTr]["label"] . " reports",
+            "arrayRecapLabels" => isset($recapLabels) ? $recapLabels : array(),
+            "arrayRecap" => isset($arrayRecap) ? $arrayRecap : array(),
+
+            "onprogressViewTitle" => "<span class='fa fa-eye'></span> show incomplete step " . $this->configUi[$jenisTr]["label"],
+            "onprogressViewSubTitle" => "<span class='text-black'>(daftar transaksi yang masih stanby di cabang tujuan)</span>",
+            "arrayOnProgressView" => isset($arrayOnProgressView) ? $arrayOnProgressView : array(),
+            "stepHistoryFields" => isset($stepHistoryFields) ? $stepHistoryFields : array(),
+
+            "selectProcessor" => $selectProcessor,
+            "sumFooter" => (isset($sumFooterResult) && sizeof($sumFooterResult) > 0) ? $sumFooter : array(),
+            "scriptBottom" => $scriptBottom,
+            "btnLabel" => $extData,
+            "actionTarget" => $extact,
+            "sumFooter" => isset($sumFooter) ? $sumFooter : "",
+
+            "arrayOnprogressPartialMark" => (isset($arrayOnprogressPartialMark) && sizeof($arrayOnprogressPartialMark) > 0) ? $arrayOnprogressPartialMark : array(),
+            "arrayOnprogressGroupPartialMark" => (isset($arrayOnprogressGroupPartialMark) && sizeof($arrayOnprogressGroupPartialMark) > 0) ? $arrayOnprogressGroupPartialMark : array(),
+
+            "defaultItemTrgEditable" => isset($defaultItemTrgEditable) ? $defaultItemTrgEditable : array(),
+            "editItemTrg" => MODUL_PATH . "_followupLiveEdit/editEfaktur/" . $this->jenisTr . "/",
+        );
+        //endregion
+        $this->load->view("transaksi", $data);
+    }
+
+    public function viewDasbord()
+    {
+        $this->load->model("Mdls/MdlProdukProject");
+        $p = new MdlProdukProject();
+        $temp = $p->lookUpAll()->result();
+        $projectNilai = "";
+        $list = "<div class='class=\"dashboards-row clearfix row\"'>";
+        $list .= "<div class='widget-container col-md-4'>";
+        $list .= "</div>";
+        $list .= "</div>";
+
+        echo $list;
+    }
+
+    public function viewRequestTambahanProject()
+    {
+
+        $mems = isset($this->session->login['membership']) ? $this->session->login['membership'] : array();
+        $jenisTr = $this->jenisTr;
+
+        $dataView = "";
+
+        $dataProject = array();
+        if (!in_array("o_project_spv", $mems) && !in_array("c_holding", $mems) && !in_array("c_owner", $mems) && !in_array("o_project_mgr", $mems)) {
+            $dataView .= "<div class='box-header'>
+                <h3><i class='fa fa-table'></i> Approval Tambahan Supplies dan Biaya <div class='btn btn-sm btn-info pull-right' onclick=\"undoneTambahanProject();\"><i class='fa fa-refresh'></i> REFRESH</div></h3>
+                <h5><span class='text-red text-xs text-capitalize'>ini adalah daftar semua tambahan biaya dan supplies yang harus di followup.</b></span></h5>
+                </div>";
+        }
+        else {
+            $dataView .= "<div class='box-header'><h3><i class='fa fa-table'></i> Approval Tambahan Supplies dan Biaya <div class='btn btn-sm btn-info pull-right' onclick=\"undoneTambahanProject();\"><i class='fa fa-refresh'></i> REFRESH</div></h3></div>";
+        }
+
+        $dataView .= "<div class='box-body table-responsive'>";
+
+        $dataView .= "
+                <ul class='nav nav-tabs'>
+                    <li class='nav-item'><a class='nav-link btn loadRequest' style='background:#f0f0f0;color:#999999;border-width:1px 1px 0px 1px; border-color:#cccccc; border-style: solid;' onclick='loadRequest()'><span class='fa fa-adjust'></span> REQUEST TAMBAHAN BIAYA DAN SUPPLIES</a></li>
+                    <li class='nav-item'><a class='nav-link btn loadApproved' style='background:#f0f0f0;color:#999999;border-width:1px 1px 0px 1px; border-color:#cccccc; border-style: solid;' onclick='loadApproved()'><span class='fa fa-check'></span> APPROVED</a></li>
+                    <li class='nav-item'><a class='nav-link btn loadRejected' style='background:#f0f0f0;color:#999999;border-width:1px 1px 0px 1px; border-color:#cccccc; border-style: solid;' onclick='loadRejected()'><span class='fa fa-ban'></span> REJECTED</a></li>
+                </ul>
+            ";
+
+        $dataView .= "<div class='static-container'>{cointainer}</div>";
+
+        $link_undoneTambahanProject = MODUL_PATH . "Transaksi/viewTableTambahanProject/$jenisTr/?mode=";
+
+        $dataView .= "</div>";
+        $dataView .= "
+        
+        <script>
+            function loadRequest(){
+                $('.loadRequest').css('background', '#ffffff');
+                $('.loadApproved').css('background', '#f0f0f0f0');
+                $('.loadRejected').css('background', '#f0f0f0f0');
+                top.$('.static-container').load('$link_undoneTambahanProject'+'request');
+            }
+            function loadApproved(){
+                $('.loadRequest').css('background', '#f0f0f0f0');
+                $('.loadApproved').css('background', '#ffffff');
+                $('.loadRejected').css('background', '#f0f0f0f0');
+                top.$('.static-container').load('$link_undoneTambahanProject'+'approved');
+            }
+            function loadRejected(){
+                $('.loadRequest').css('background', '#f0f0f0f0');
+                $('.loadApproved').css('background', '#f0f0f0f0');
+                $('.loadRejected').css('background', '#ffffff');
+                top.$('.static-container').load('$link_undoneTambahanProject'+'rejected');
+            }
+            
+            setTimeout(function(){
+                top.loadRequest();
+            }, 100)
+            
+        </script>
+        
+        ";
+
+
+        echo $dataView;
+    }
+
+    public function viewTableTambahanProject()
+    {
+
+        $mems = isset($this->session->login['membership']) ? $this->session->login['membership'] : array();
+        $this->load->model('Mdls/MdlProjectKomponenBiayaDetailsRabSubTambahan');
+
+        $pr = new MdlProjectKomponenBiayaDetailsRabSubTambahan();
+        $viewFields = $pr->getListedFields();
+
+        //tasklist = jika bukan spv, tampilkan hanya project yang mereka tangani saja
+        // jika o_project_spv maka tampilkan semua
+        if (!in_array("o_project_spv", $mems) && !in_array("c_holding", $mems) && !in_array("c_owner", $mems) && !in_array("o_project_mgr", $mems)) {
+            $this->load->model('Mdls/MdlTasklistProject');
+            $tmpTasklist = new MdlTasklistProject();
+            $tmpTasklist->addFilter("employee_id=" . $this->session->login['id']);
+            $this->db->where("cabang_id", $this->session->login['cabang_id']);
+            $arrTask = $tmpTasklist->lookupAll()->result();
+            $vTask = array();
+            foreach ($arrTask as $kk => $dts) {
+                $vTask[$dts->produk_id] = $dts->produk_id;
+            }
+            if (!empty($vTask)) {
+                $this->db->where_in("id", $vTask);
+            }
+            else {
+                $this->db->where("id", "-99999");
+            }
+        }
+        else {
+            if (!in_array("c_holding", $mems) && !in_array("c_owner", $mems)) {
+                $this->db->where("cabang_id", $this->session->login['cabang_id']);
+            }
+        }
+
+        $mode = $_GET['mode'];
+
+        $viewFields = $pr->getListedFields();
+
+        switch ($mode) {
+            case "request":
+                $this->db->where("approved", 0);
+                $this->db->where("approval_id", 0);
+                break;
+            case "approved":
+                $this->db->where("approved", 1);
+                $this->db->where("approval_id>", 0);
+                $head = array(
+                    "approval_nama" => "approve by",
+                    "approval_dtime" => "approve date",
+                    "approve_no" => "Nomer",
+                );
+                $viewFields = array_merge($viewFields, $head);
+                break;
+            case "rejected":
+                $this->db->where("approved", -1);
+                $this->db->where("approval_id>", 0);
+                $head = array(
+                    "approval_nama" => "reject by",
+                    "approval_dtime" => "reject date",
+                    "reject_no" => "Nomer",
+                );
+                $viewFields = array_merge($viewFields, $head);
+                break;
+        }
+        $tmp = $pr->lookupAll()->result();
+
+//        arrPrint($mems);
+//        showLast_query("biru");
+
+        $main_data_tambahan = array();
+        $gr_biaya_supplies = array();
+        if (!empty($tmp)) {
+            foreach ($tmp as $datas) {
+                $project_id = $datas->project_id;
+                $project_nama = $datas->project_nama;
+                $project_spk = $datas->no_spk;
+                $biaya_id = $datas->biaya_id;
+                $biaya_dasar_id = $datas->biaya_dasar_id;
+                $gr_biaya_supplies[$project_spk][$biaya_id][] = $datas;
+                $main_data_tambahan[$project_spk] = array(
+                    "project_nama" => $project_nama,
+                    "no_spk" => $project_spk,
+                    "biaya_nama" => $datas->biaya_nama,
+                    "data" => $gr_biaya_supplies[$project_spk][$biaya_id],
+                    "request_by" => $datas->request_nama,
+                    "request_dtime" => $datas->request_dtime,
+                    "approval_nama" => $datas->approval_nama,
+                    "approval_dtime" => $datas->approval_dtime,
+                    "approve_no" => $datas->approve_no,
+                    "reject_no" => $datas->reject_no,
+                    "approval_nama" => $datas->approval_nama,
+                    "approval_dtime" => $datas->approval_dtime,
+                );
+            }
+        }
+
+        //=================================
+        $dataView = "";
+
+        if (count($main_data_tambahan) > 0) {
+
+            $dataView .= "<table id='approval_tambahan_index' class='table dataTable table-bordered table-condensed compact table-hover-color-red table-striped'>";
+            $dataView .= "<thead>";
+            $dataView .= "<tr>";
+            $dataView .= "<th>No</th>";
+            foreach ($viewFields as $key => $label) {
+                $dataView .= "<th>$label</th>";
+            }
+            $dataView .= "<th>Action</th>";
+            $dataView .= "</tr>";
+            $dataView .= "</thead>";
+            $i = 0;
+            $dataView .= "<tbody>";
+            foreach ($main_data_tambahan as $noSpk => $trmp_0) {
+                $i++;
+                $dataView .= "<tr>";
+                $dataView .= "<td>$i</td>";
+                foreach ($viewFields as $key => $label) {
+                    if ($key == "data") {
+                        $data_produk_biaya = "";
+                        $data_produk_biaya .= "<table class='table compact dataTable striped table-hover table-bordered'>";
+                        $data_produk_biaya .= "<thead>";
+                        $data_produk_biaya .= "<th>No</th>";
+                        $data_produk_biaya .= "<th>Jenis</th>";
+                        $data_produk_biaya .= "<th>Nama</th>";
+                        $data_produk_biaya .= "<th>QTY</th>";
+                        $data_produk_biaya .= "<th>Nilai</th>";
+                        $data_produk_biaya .= "<th>Subtotal</th>";
+                        $data_produk_biaya .= "</thead>";
+                        $nooo = 0;
+                        $grandTotal = 0;
+                        foreach ($trmp_0[$key] as $detilData) {
+                            $jenis = $detilData->jenis;
+                            $nooo++;
+                            $data_produk_biaya .= "<tr>";
+                            $data_produk_biaya .= "<td>$nooo</td>";
+                            $data_produk_biaya .= "<td>$jenis</td>";
+                            $data_produk_biaya .= "<td>" . $detilData->biaya_dasar_nama . "</td>";
+                            $data_produk_biaya .= "<td class='text-right'>" . $detilData->jml . "</td>";
+                            $data_produk_biaya .= "<td class='text-right'>" . number_format($detilData->hrg_hpp) . "</td>";
+                            $data_produk_biaya .= "<td class='text-right'>" . number_format($detilData->hrg_hpp * $detilData->jml) . "</td>";
+                            $data_produk_biaya .= "</tr>";
+                            $grandTotal += $detilData->hrg_hpp * $detilData->jml;
+                        }
+                        $data_produk_biaya .= "<tfoot>";
+                        $data_produk_biaya .= "<tr>";
+                        $data_produk_biaya .= "<td colspan='5' class='text-right text-bold'>TOTAL</td>";
+                        $data_produk_biaya .= "<td class='text-right'>" . number_format($grandTotal) . "</td>";
+                        $data_produk_biaya .= "</tr>";
+                        $data_produk_biaya .= "</tfoot>";
+                        $data_produk_biaya .= "</table>";
+                        $dataView .= "<td>$data_produk_biaya</td>";
+                    }
+                    else {
+                        $limitText = 10;
+
+                        if (strlen($trmp_0[$key]) > 10) {
+                            $afterText = substr($trmp_0[$key], 0, 10) . "..."; // Potong 10 karakter pertama + tanda ...
+                        }
+                        else {
+                            $afterText = $trmp_0[$key]; // Pakai apa adanya
+                        }
+
+//                        $dataView .= "<td data-order='".$trmp_0[$key]."' title='".$trmp_0[$key]."' data-key='$key'>".$trmp_0[$key]."</td>";
+                        $dataView .= "<td data-order='" . $trmp_0[$key] . "' title='" . $trmp_0[$key] . "' data-key='$key'>$afterText</td>";
+                    }
+                }
+
+                //action
+                if ($mode == "request") {
+//                    if (!in_array("c_holding", $mems) || !in_array("c_owner", $mems)) {
+                    if (!in_array("c_holding", $mems) && !in_array("c_owner", $mems) && !in_array("o_project_mgr", $mems)) {
+                        $dataView .= "<td>
+                                    <span onclick=\"javascript:void(0)\" class='btn btn-sm btn-default'> <i class='fa fa-check'></i> approve </span>
+                                    <span onclick=\"javascript:void(0)\" class='btn btn-sm btn-default'> <i class='fa fa-ban'></i> reject </span>
+                                </td>";
+                    }
+                    else {
+                        $dataView .= "<td>
+                                    <span onclick=\"approvalSuppliesBiaya('$noSpk','$grandTotal')\" class='btn btn-sm btn-warning'> <i class='fa fa-check'></i> approve </span>
+                                    <span onclick=\"rejectSuppliesBiaya('$noSpk','$grandTotal')\" class='btn btn-sm btn-danger'> <i class='fa fa-ban'></i> reject </span>
+                                </td>";
+                    }
+                }
+
+                //action
+                if ($mode == "approved") {
+                    if( !in_array("o_project_mgr", $mems) && !in_array("o_project_spv", $mems) && !in_array("c_holding", $mems) && !in_array("c_owner", $mems) ) {
+                        $dataView .= "<td>
+                                    <span onclick='' class=''> - </span>
+                                </td>";
+                    }
+                    else {
+                        $approve_no = $trmp_0['approve_no'];
+                        $dataView .= "<td>
+                                    <span onclick=\"printSpkTambahan('$approve_no')\" class='btn btn-sm bg-olive'> <i class='fa fa-print'></i> cetak SPK Tambahan </span>
+                                </td>";
+
+                    }
+                }
+
+                if ($mode == "rejected") {
+
+                    $dataView .= "<td>
+                                    <span onclick='' class=''> - </span>
+                                </td>";
+
+                }
+
+                $dataView .= "</tr>";
+            }
+            $dataView .= "</tbody>";
+            $dataView .= "</table>";
+
+        }
+        else {
+            $dataView .= "<table id='' class='table dataTable table-bordered table-condensed compact table-hover-color-red table-striped'>";
+            $dataView .= "<thead>";
+            foreach ($viewFields as $key => $label) {
+                $dataView .= "<th>$label</th>";
+            }
+
+            $colspan = count($viewFields) + 2;
+
+            $dataView .= "</thead>";
+            $dataView .= "<tbody>";
+            $dataView .= "<td colspan='$colspan' class='text-center'>TIDAK ADA DATA</td>";
+            $dataView .= "</tbody>";
+            $dataView .= "</table>";
+        }
+
+
+        $dataView .= "<style type='text/css'>
+                #modal-overlay {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgba(0, 0, 0, 0.7);
+                    z-index: 1000;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                  }
+                
+                  .modal-content {
+                    width: 100%;
+                    height: 100%;
+                    background-color: white;
+                    border-radius: 10px;
+                    position: relative;
+                    overflow: hidden;
+                  }
+                
+                  .close-btn {
+                    position: absolute;
+                    top: 10px;
+                    right: 20px;
+                    font-size: 30px;
+                    cursor: pointer;
+                  }
+                
+                  #modal-iframe {
+                    width: 100%;
+                    height: 100%;
+                  }
+                  
+                  .link-with-icon i {
+                    opacity: 0;
+                    transition: opacity 0.3s ease-in-out;
+                  }
+
+                  .link-with-icon:hover i {
+                    opacity: 1;
+                  }
+            </style>";
+        $dataView .= "<div id='modal-overlay' style='display: none;'>
+              <div class='modal-content'>
+                <span class='close-btn' onclick='closeModalOverlay()'>&times;</span>
+                <iframe id='modal-iframe' src='' frameborder='0'></iframe>
+              </div>
+            </div>";
+        $dataView .= "<script>
+                let popupWindow; 
+                function view_data (xx) {
+                  // console.log('xxx:', xx);
+                  
+                  const popupWidth = 1024;
+                  const popupHeight = 720;
+                  const left = (window.innerWidth - popupWidth) / 2;
+                  const top = (window.innerHeight - popupHeight) / 2;
+                
+                  popupWindow = window.open(
+                    xx, 
+                    'popupWindow', 
+                    `width=1024,height=720,left=100,top=100,` +
+                    'resizable=no,scrollbars=no,toolbar=no,menubar=no,location=no,status=no'
+                  );
+                }
+                function closePopup() {
+                  window.close();  // Tutup jendela popup
+                }
+                
+                function view_data_modal(xx) {
+                  
+                  const iframe = document.getElementById('modal-iframe');
+                  const modal = document.getElementById('modal-overlay');
+                  
+                  // Set URL ke iframe dan tampilkan modal
+                  iframe.src = xx;
+                  modal.style.display = 'flex';
+                  }
+                function closeModalOverlay() {
+                  const modal = document.getElementById('modal-overlay');
+                  const iframe = document.getElementById('modal-iframe');
+                
+                  // Kosongkan src iframe dan sembunyikan modal
+                  iframe.src = '';
+                  modal.style.display = 'none';
+                  close_holdon();
+                }
+            </script>";
+        $dataView .= "
+                <script>
+                    if ( top.$.fn.dataTable.isDataTable('#approval_tambahan_index') ) {
+                        top.$('#approval_tambahan_index').DataTable().destroy();
+                    }
+                    let approval_tambahan_index = $('#approval_tambahan_index').DataTable({
+                        dom: 'B<br>lfrtip',
+                        language: {
+                            search: \"Cari data kamu di sini:\",
+                            lengthMenu: \"Tampilkan _MENU_ entri\",
+                            info: \"Menampilkan _START_ sampai _END_ dari _TOTAL_ entri\",
+                            infoEmpty: \"Tidak ada data yang tersedia\",
+                            zeroRecords: \"Data nggak ketemu, coba lagi ya~\",
+                            paginate: {
+                                first: \"Awal\",
+                                last: \"Akhir\",
+                                next: \"Berikutnya\",
+                                previous: \"Sebelumnya\"
+                            }
+                        },
+                        order: [[2, 'desc']],
+                        buttons: [
+                            {
+                              extend: 'colvis',
+                              text: 'Pilih Kolom', // Teks tombol Colvis
+                              columns: ':gt(0)', // Kolom yang dapat dipilih (dalam contoh ini, semua kolom kecuali kolom pertama)
+                              postfixButtons: [ 'colvisRestore' ], // Tombol untuk mengembalikan pengaturan kolom default
+                              columnText: function ( dt, idx, title ) {
+                                return (idx+1)+': '+title; // Teks untuk setiap kolom
+                              }
+                            }
+                          ],
+                    });
+
+                </script>
+            ";
+
+
+        $linkApproveReject = base_url() . $this->modul . "/Transaksi/exeProjectTambahan/";
+        $printSpkTambahan = base_url() . $this->modul . "";
+        $dataView .= "
+                <script>
+                    $(document).on('click', '.toggle-collapse', function() {
+                        let target = $(this).data('bs-target');
+                        $(target).collapse('toggle');
+                    });
+                </script>
+                <script>
+                    function approvalSuppliesBiaya(nospk,req){
+                        top.swal({
+                          title: 'Konfirmasi Approval',
+                          html: 'Anda akan melakukan approval Tambahan Biaya dan Supplies',
+                          type: 'warning',
+                          showConfirmButton: true,
+                          showCancelButton: true
+                        }).then((confirm) => {
+                              if (confirm) {
+                                    top.swal('Sedang memproses Approval');
+                                    top.swal.enableLoading();
+                                    top.$('#result').load('$linkApproveReject'+'approve/588?nospk=' + btoa(nospk)+'&req='+btoa(req), function(aa){
+                                        let jsonDatas = JSON.parse(aa);
+                                        if(jsonDatas.status==1){
+                                            swal('Approve Berhasil', jsonDatas.reason, 'success');
+                                        }
+                                        top.undoneTambahanProject();
+                                    });
+                                    console.log('url: $linkApproveReject'+'approve/588?nospk=' + btoa(nospk) );
+                              }
+                        });
+                    }
+                    
+                    function rejectSuppliesBiaya(nospk,req){
+                        top.swal({
+                          title: 'Konfirmasi Reject',
+                          html: 'Anda akan me-reject request Tambahan Biaya dan Supplies ini, yakin untuk lanjutkan...??',
+                          type: 'error',
+                          showConfirmButton: true,
+                          showCancelButton: true
+                        }).then((confirm) => {
+                              if (confirm) {
+                                    top.swal('Sedang memproses Reject');
+                                    top.swal.enableLoading();
+                                    top.$('#result').load('$linkApproveReject'+'reject/588?nospk=' + btoa(nospk)+'&req='+btoa(req), function(aa){
+                                        let jsonDatas = JSON.parse(aa);
+                                        if(jsonDatas.status==1){
+                                            swal('Reject Berhasil', jsonDatas.reason, 'success');
+                                        }
+                                        top.undoneTambahanProject();
+                                    });
+                                    console.log('url: $linkApproveReject'+'reject/588?nospk=' + btoa(nospk) );
+                              }
+                        });
+                    }
+                    
+                    function printSpkTambahan(spk){
+                        window.open('$printSpkTambahan'+'/MasterData/print_tasklist_tambahan?spk='+spk)
+                    }
+                </script>
+            ";
+        echo $dataView;
+    }
+
+    public function viewactiveProject()
+    {
+        session_write_close();
+        $mems = isset($this->session->login['membership']) ? $this->session->login['membership'] : array();
+
+        $this->load->model('Mdls/MdlProdukProject');
+        $this->load->model('Mdls/MdlTasklistProject');
+        $this->load->model('Mdls/MdlLockerStock');
+        $this->load->model('Mdls/MdlProduk');
+
+        $prd = new MdlProduk();
+        $pr = new MdlProdukProject();
+        $tp = new MdlTasklistProject();
+        $viewFields = $pr->getListedFields();
+
+        $produk_name = array();
+        $this->db->select("id, nama");
+        $tmpPrd = $prd->lookupAll()->result();
+        foreach ($tmpPrd as $rows) {
+            $produk_name[$rows->id] = $rows->nama;
+        }
+
+
+        //tasklist = jika bukan spv, tampilkan hanya project yang mereka tangani saja
+        // jika o_project_spv maka tampilkan semua
+        if (!in_array("o_project_spv", $mems) && !in_array("c_holding", $mems) && !in_array("c_owner", $mems) && !in_array("o_project_mgr", $mems)) {
+            $this->load->model('Mdls/MdlTasklistProject');
+            $tmpTasklist = new MdlTasklistProject();
+            $tmpTasklist->addFilter("employee_id=" . $this->session->login['id']);
+            $this->db->where("cabang_id", $this->session->login['cabang_id']);
+//            $this->db->where("closing_status", 0);
+            $arrTask = $tmpTasklist->lookupAll()->result();
+            $vTask = array();
+            foreach ($arrTask as $kk => $dts) {
+                $vTask[$dts->produk_id] = $dts->produk_id;
+            }
+            if (!empty($vTask)) {
+                $this->db->where_in("id", $vTask);
+            }
+            else {
+                $this->db->where("id", "-99999");
+            }
+            $this->db->where("closing_status", 0);
+        }
+        else {
+            $this->db->where("closing_status", 0);
+            if (!in_array("c_holding", $mems)) {
+                $this->db->where("cabang_id", $this->session->login['cabang_id']);
+            }
+        }
+
+        $tmp = $pr->fectDataProject()->result();
+
+        showlast_query("biru");
+        $this->db->where("status=1 AND trash= 0 ");
+        $tmpTp = $tp->lookupAll()->result();
+
+        showlast_query("merah");
+
+        $faseCount = array();
+        $produknameByGudang = array();
+        foreach ($tmpTp as $k => $faseRow) {
+            $faseCount[$faseRow->produk_id][] = $faseRow;
+            $produknameByGudang[$faseRow->gudang_wo] = $faseRow->produk_nama;
+        }
+
+        $lk = new MdlLockerStock();
+        $this->db->select("gudang_id,produk_id,nama,jumlah");
+        $this->db->where("jenis='produk'");
+        $this->db->where("gudang_id>100");
+        $this->db->where("jumlah>0");
+        $this->db->where("state='sold'");
+        $tmpkl = $lk->lookupAll()->result();
+        $lockCount = array();
+        $prdLocker = array();
+        foreach ($tmpkl as $k => $locRow) {
+            $lockCount[$locRow->gudang_id][] = (array)$locRow;
+            $locRow->nama = $produk_name[$locRow->produk_id];
+            $prdLocker[$locRow->gudang_id][$locRow->produk_id] = $locRow;
+        }
+
+        // arrPrintWebs($_SESSION[login]);
+        // arrPrint( $this->db->last_query() );
+        // arrPrint( $tmpTp );
+        // echo json_encode($lockCount);
+        // matiHere(__LINE__);
+
+        $dataView = "";
+        $link = MODUL_PATH . "MasterData/index/";
+        $linkTimeline = MODUL_PATH . "Transaksi/viewModalTimelineAI/";
+        $link_sub = MODUL_PATH . "MasterData/showKomposisiProdukFase/";
+        $dataProject = array();
+        if (count($tmp) > 0) {
+            if (!in_array("o_project_spv", $mems) && !in_array("c_holding", $mems) && !in_array("c_owner", $mems) && !in_array("o_project_mgr", $mems)) {
+                $dataView .= "<div class='box-header'>
+                <h3><i class='fa fa-table'></i> Project yang harus diselesaikan <div class='btn btn-sm btn-info pull-right' onclick=\"viewundoneList();\"><i class='fa fa-refresh'></i> REFRESH</div></h3>
+                <h5><span class='text-red text-xs text-capitalize'>ini adalah daftar semua project yang saya tangani <b>(" . $this->session->login['nama'] . ")</b></span></h5>
+                </div>";
+            }
+            else {
+                $dataView .= "<div class='box-header'><h3><i class='fa fa-table'></i> Semua Project  <b>(" . $this->session->login['nama'] . ")</b><div class='btn btn-sm btn-info pull-right' onclick=\"viewundoneList();\"><i class='fa fa-refresh'></i> REFRESH</div></h3></div>";
+            }
+
+            $dataView .= "<div class='box-body table-responsive'>";
+            $dataView .= "<table id='masterdata_index' class='table dataTable table-bordered table-condensed compact table-hover-color-red table-striped'>";
+            $dataView .= "<thead>";
+            $dataView .= "<tr>";
+            $dataView .= "<th>No</th>";
+            foreach ($viewFields as $key => $label) {
+                $dataView .= "<th>$label</th>";
+                //nambah kolom
+                if ($key == "end_dtime") {
+                    $dataView .= "<th class='padding:20px;'>progress<br>tasklist</th>";
+                    $dataView .= "<th class='padding:20px;'>timeline</th>";
+                }
+            }
+            $dataView .= "</tr>";
+            $dataView .= "</thead>";
+
+            $isLinkModal = array(
+                "nama"
+            );
+            $i = 0;
+            $dataView .= "<tbody line='".__LINE__."'>";//
+
+            foreach ($tmp as $trmp_0) {
+                $i++;
+                $prID = $trmp_0->id;
+                $prEdit = $trmp_0->edit;
+
+                $dataView .= "<tr>";
+                $dataView .= "<td>$i</td>";
+                foreach ($viewFields as $key => $label) {
+                    $newLink = $link . $prID . "?debuger=0";
+                    $newLinkTimeline = $linkTimeline . $prID . "?debuger=0";
+                    $newLinkSub = $link_sub . $prID;
+                    $value = formatField_he_format($key, $trmp_0->$key);
+                    $isLink = array("project_start");
+                    if (in_array($key, $isLink)) {
+                        if($prEdit){
+                            $value = "<a class='btn btn-xs btn-warning' href='$newLink' title='" . $trmp_0->$key . "' onclick=\"closePopup();\"><i class='fa fa-hourglass fa-spin'></i> PROSES EDIT RAB</a>";
+                        }
+                        else{
+                        $value = "<a href='$newLink' title='" . $trmp_0->$key . "' onclick=\"closePopup();\">" . formatField_he_format($key, $trmp_0->$key) . "</a>";
+                        }
+                    }
+
+                    if (in_array($key, $isLinkModal)) {
+                        $value_asli = $trmp_0->$key;
+                        $max_length = 12;
+                        $lim_value = substr($value_asli, 0, $max_length);
+                        if (strlen($value_asli) > $max_length) {
+                            $lim_value .= '...';
+                        }
+                        $lim_value = $lim_value;
+                        $value = "<a href='javascript:void(1);' class='link-with-icon' onclick=\"view_data('$newLink');\" title='" . $trmp_0->$key . " | klik untuk melihat detail'>" . formatField_he_format($key, $lim_value) . " <i class='fa fa-eye text-red'></i></a>";
+                    }
+
+                    if ($key == "customer_nama" || $key == "keterangan" || $key == "spek") {
+                        $value_asli = $trmp_0->$key;
+                        $max_length = 12; // perkiraan panjang karakter yang sesuai dengan lebar 100px
+                        $value = substr($value_asli, 0, $max_length);
+                        if (strlen($value_asli) > $max_length) {
+                            $value .= '...';
+                        }
+                        $value = $value;
+                    }
+
+                    $dataView .= "<td data-order='" . $trmp_0->$key . "' title='" . $trmp_0->$key . "' data-key='$key'><span class='hidden'>" . $trmp_0->$key . "</span> $value </td>";
+
+                    if ($key == "end_dtime") {
+                        $vount = isset($faseCount[$prID]) ? json_encode($faseCount[$prID]) : 0;
+                        $view = "";
+                        if (!empty($faseCount[$prID])) {
+                            $view .= "<table class='table dataTable compact' style='margin: 0px!important;'>";
+                            $nilai_kontrak = $trmp_0->harga * 1;
+                            $ppnFactor = 0.11;
+                            $nilai_progress = 0;
+                            $nilai_progress_incl = 0;
+                            foreach ($faseCount[$prID] as $k => $taskListDummy) {
+//                                $nilai_progress += ($taskListDummy->nilai_sub_fase * $taskListDummy->progress_percent) / 100;
+                                $nilai_progress += $nilai_kontrak * ($taskListDummy->persen_sub / 100) * ($taskListDummy->progress_percent / 100) ;
+                            }
+
+//                            $nilai_progress = $nilai_progress_incl / (1 + $ppnFactor);
+
+                            $progressAll = round(($nilai_progress / $nilai_kontrak) * 100, 2);
+                            $styleWidth = $progressAll;
+
+                            if ($progressAll <= 10) {
+                                $color = "red";
+                                $styleWidth = "30";
+                            }
+                            elseif ($progressAll <= 30) {
+                                $color = "orange";
+                                $styleWidth = "30";
+                            }
+                            elseif ($progressAll <= 50) {
+                                $color = "yellow";
+                            }
+                            elseif ($progressAll <= 70) {
+                                $color = "lightgreen";
+                            }
+                            elseif ($progressAll <= 90) {
+                                $color = "green";
+                            }
+                            else {
+                                $color = "darkgreen";
+                            }
+
+                            $view .= "<caption style='min-width: 120px!important;padding: 0px!important;' class='toggle-collapse' title='click untuk lihat details tasklist' data-bs-toggle='collapse' data-bs-target='#collapseTableID_$prID'>
+                                         <div style='margin: 0px!important;' class='progress'>
+                                              <div id='progressBar' nilai_progress_incl='$nilai_progress_incl' nilai_kontrak='$nilai_kontrak' prID='$prID' nilai_progress='$nilai_progress' class='progress-bar text-bold' style='width: $styleWidth%;background-color: $color !important;'>$progressAll%</div>
+                                         </div>
+                                      </caption>";
+
+                            $view .= "<tbody id='collapseTableID_$prID' class='collapse'>";
+
+                            foreach ($faseCount[$prID] as $k => $taskListData) {
+                                $gudangID = $taskListData->gudang_wo;
+                                $no_spk = $taskListData->no_spk;
+                                $sub_progress = round($taskListData->progress_percent, 2);
+                                if (isset($prdLocker[$gudangID])) {
+                                    $view .= "<tr>";
+                                    $view .= "<th colspan=2>";
+                                    $view .= "($sub_progress%) $no_spk";
+                                    $view .= "</th>";
+                                    $view .= "</tr>";
+                                    foreach ($prdLocker[$gudangID] as $kk => $prd) {
+                                        $view .= "<tr>";
+                                        $view .= "<td>" . $prd->nama . "</td><td class='text-right'>" . $prd->jumlah . "</td>";
+                                        $view .= "</tr>";
+                                    }
+                                }
+                                else {
+                                    $view .= "<tr>";
+                                    $view .= "<th colspan=2>($sub_progress%) " . $no_spk . "</th>";
+                                    $view .= "</tr>";
+                                    $view .= "<tr>";
+                                    $view .= "<th colspan='2' class='text-red text-lowercase'><i>--belum distribusi--</i></th>";
+                                    $view .= "</tr>";
+                                }
+                            }
+                            $view .= "</tbody>";
+                            $view .= "</table>";
+                        }
+                        else {
+
+                            $color = "red";
+                            $styleWidth = "30";
+                            $progressAll = "0";
+
+                            $view .= "<table class='table dataTable compact' style='margin: 0px!important;'>";
+                            $view .= "<caption style='min-width: 200px!important;padding: 0px!important;' class='toggle-collapse' title='click untuk lihat details tasklist' data-bs-toggle='collapse' data-bs-target='#collapseTableID_$prID'>
+                                         <div style='margin: 0px!important;' class='progress'>
+                                              <div id='progressBar' class='progress-bar text-bold' style='width: $styleWidth%;background-color: $color !important;'>$progressAll% <i class='fa fa-warning text-auto blink'></i></div>
+                                         </div>
+                                      </caption>";
+                            $view .= "</table>";
+                        }
+                        $view .= "";
+                        $rupiah = $trmp_0->harga * $progressAll / 100;
+                        $dataView .= "<td rupiah='$rupiah' data-order='$progressAll' data-key='$key'>$view</td>";
+
+                        $timeline = "<span onclick=\"showModal('$newLinkTimeline','Timeline Proyek')\" class='btn btn-xs btn-info btn-flat'>show</span>";
+
+                        $dataView .= "<td rupiah='$rupiah' data-order='timeline' data-key='timeline' class='text-center'>$timeline</td>";
+                    }
+                }
+                $dataView .= "</tr>";
+            }
+
+            $dataView .= "</tbody>";
+
+            $dataView .= "<tfoot>";
+            $dataView .= "<tr bgcolor='#e5e5e5' id='current-page-footer'>";
+            $dataView .= "</tr>";
+            $dataView .= "<tr bgcolor='#e5e500' id='all-data-footer'>";
+            $dataView .= "</tr>";
+            $dataView .= "</tfoot>";
+
+            $dataView .= "</table>";
+            $dataView .= "</div>";
+
+            $dataView .= "<style type='text/css'>
+                #modal-overlay {
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background-color: rgba(0, 0, 0, 0.7);
+                    z-index: 1000;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                  }
+                
+                  .modal-content {
+                    width: 100%;
+                    height: 100%;
+                    background-color: white;
+                    border-radius: 10px;
+                    position: relative;
+                    overflow: hidden;
+                  }
+                
+                  .close-btn {
+                    position: absolute;
+                    top: 10px;
+                    right: 20px;
+                    font-size: 30px;
+                    cursor: pointer;
+                  }
+                
+                  #modal-iframe {
+                    width: 100%;
+                    height: 100%;
+                  }
+                  
+                  .link-with-icon i {
+                    opacity: 0;
+                    transition: opacity 0.3s ease-in-out;
+                  }
+
+                  .link-with-icon:hover i {
+                    opacity: 1;
+                  }
+            </style>";
+            $dataView .= "<div id='modal-overlay' style='display: none;'>
+              <div class='modal-content'>
+                <span class='close-btn' onclick='closeModalOverlay()'>&times;</span>
+                <iframe id='modal-iframe' src='' frameborder='0'></iframe>
+              </div>
+            </div>";
+            $dataView .= "<script>
+                let popupWindow; 
+                function view_data (xx) {
+                  // console.log('xxx:', xx);
+                  
+                  const popupWidth = 1024;
+                  const popupHeight = 720;
+                  const left = (window.innerWidth - popupWidth) / 2;
+                  const top = (window.innerHeight - popupHeight) / 2;
+                
+                  popupWindow = window.open(
+                    xx, 
+                    'popupWindow', 
+                    `width=1024,height=720,left=100,top=100,` +
+                    'resizable=no,scrollbars=no,toolbar=no,menubar=no,location=no,status=no'
+                  );
+                }
+                function closePopup() {
+                  window.close();  // Tutup jendela popup
+                }
+                
+                function view_data_modal(xx) {
+                  
+                  const iframe = document.getElementById('modal-iframe');
+                  const modal = document.getElementById('modal-overlay');
+                  
+                  // Set URL ke iframe dan tampilkan modal
+                  iframe.src = xx;
+                  modal.style.display = 'flex';
+                  }
+                function closeModalOverlay() {
+                  const modal = document.getElementById('modal-overlay');
+                  const iframe = document.getElementById('modal-iframe');
+                
+                  // Kosongkan src iframe dan sembunyikan modal
+                  iframe.src = '';
+                  modal.style.display = 'none';
+                  close_holdon();
+                }
+            </script>";
+            $dataView .= "
+                <script>
+                    if ( top.$.fn.dataTable.isDataTable('#masterdata_index') ) {
+                        top.$('#masterdata_index').DataTable().destroy();
+                        console.log( 'matikan dulu' );
+                        console.log( top.$.fn.dataTable.isDataTable('#masterdata_index') );
+                    }
+
+                    let masterdata_table = $('#masterdata_index').DataTable({
+                        dom: 'B<br>lfrtip',
+                        language: {
+                            search: \"Cari data kamu di sini:\",
+                            lengthMenu: \"Tampilkan _MENU_ entri\",
+                            info: \"Menampilkan _START_ sampai _END_ dari _TOTAL_ entri\",
+                            infoEmpty: \"Tidak ada data yang tersedia\",
+                            zeroRecords: \"Data nggak ketemu, coba lagi ya~\",
+                            paginate: {
+                                first: \"Awal\",
+                                last: \"Akhir\",
+                                next: \"Berikutnya\",
+                                previous: \"Sebelumnya\"
+                            }
+                        },
+                        order: [[12, 'desc']],
+                        columnDefs: [{
+                            targets: 4,
+                            render: function ( data, type, row ) {
+                                var isi_data = data.length>15?data.substr(0,15)+'…':data;
+                                return \"<span title='\"+data+\"'>\"+isi_data+\"</span>\"
+                            }
+                        }],
+                        buttons: [
+                            {
+                              extend: 'colvis',
+                              text: 'Pilih Kolom', // Teks tombol Colvis
+                              columns: ':gt(0)', // Kolom yang dapat dipilih (dalam contoh ini, semua kolom kecuali kolom pertama)
+                              postfixButtons: [ 'colvisRestore' ], // Tombol untuk mengembalikan pengaturan kolom default
+                              columnText: function ( dt, idx, title ) {
+                                return (idx+1)+': '+title; // Teks untuk setiap kolom
+                              }
+                            }
+                          ],
+
+                        initComplete: function() {
+                            var api = this.api();
+                            var columnCount = api.columns().count();
+                            var currentFooter = '<th class=\"text-right text-uppercase\">Page:</th>';
+                            var allFooter = '<th class=\"text-right text-uppercase\">All:</th>';
+                            for (var i = 1; i < columnCount; i++) {
+                                currentFooter += '<th id=\"current-page-total-' + i + '\" class=\"text-right\"></th>';
+                                allFooter += '<th id=\"all-data-total-' + i + '\" class=\"text-right\"></th>';
+                            }
+                            $('#current-page-footer').html(currentFooter);
+                            $('#all-data-footer').html(allFooter);
+                        },
+                        footerCallback: function(row, data, start, end, display) {
+                            var api = this.api();
+                              var columnsToTotal = [
+                                  { name: 'kolom_10', index: 10, type: 'hiddenSpan' },
+                                  { name: 'kolom_12', index: 12, type: 'attr', attrName: 'rupiah' }
+                              ];
+
+                            var intVal = function (i) {
+                                if (typeof i === 'string') {
+                                    var match = i.match(/<span class=\"hidden\">([\d\.\-]+)<\/span>/);
+                                    return match ? parseFloat(match[1]) : 0;
+                                } else if (typeof i === 'number') {
+                                    return i;
+                                } else {
+                                    return 0;
+                                }
+                            };
+                          columnsToTotal.forEach(function(col) {
+                            var totalPage = 0;
+                            var totalAll = 0;
+                            if (col.type === 'hiddenSpan') {
+                              totalPage = api
+                                .column(col.index, { page: 'current' })
+                                .data()
+                                .reduce(function(a, b) {
+                                  var match = (b + '').match(/<span class=\"hidden\">([\d\.\-]+)<\/span>/);
+                                  return a + (match ? parseFloat(match[1]) : 0);
+                                }, 0);
+                              totalAll = api
+                                .column(col.index)
+                                .data()
+                                .reduce(function(a, b) {
+                                  var match = (b + '').match(/<span class=\"hidden\">([\d\.\-]+)<\/span>/);
+                                  return a + (match ? parseFloat(match[1]) : 0);
+                                }, 0);
+                            } else if (col.type === 'attr') {
+                              api.cells(null, col.index, { page: 'current' }).nodes().each(function(td) {
+                                var val = $(td).attr(col.attrName);
+                                if (val) totalPage += parseFloat(val);
+                                });
+                              api.cells(null, col.index).nodes().each(function(td) {
+                                var val = $(td).attr(col.attrName);
+                                if (val) totalAll += parseFloat(val);
+                              });
+                            }
+                            setTimeout(function(){
+                                $('#current-page-total-'+col.index).html(
+                                    addCommas(totalPage.toFixed(0))
+                                );
+                                $('#all-data-total-'+col.index).html(
+                                    addCommas(totalAll.toFixed(0))
+                                );
+                            }, 100);
+                        });
+                        }
+                    });
+
+                    let delaySearch;
+                    $('#masterdata_index_filter input').off().on('input', function () {
+                        let value = this.value.trim();
+                        clearTimeout(delaySearch);
+                        delaySearch = setTimeout(() => {
+                            masterdata_table.search(value).draw();
+                        }, 500);
+                    });
+                </script>
+            ";
+            $dataView .= "
+                <script>
+                    $(document).on('click', '.toggle-collapse', function() {
+                        let target = $(this).data('bs-target');
+                        $(target).collapse('toggle');
+                    });
+                </script>
+            ";
+        }
+        echo $dataView;
+    }
+
+    public function viewProjectLocker()
+    {
+
+
+    }
+
+    public function transaksiTrashed()
+    {
+
+        $this->db->select("id, id_master, id_top, link_id, project_id, project_nama, nomer, status_4, status, trash");
+        $this->db->where("jenis_top='588spo'");
+        $this->db->where("link_id=0");
+        $tr = $this->db->get("transaksi")->result();
+
+        $spostatus = array();
+        foreach ($tr as $trData) {
+            $spostatus[$trData->id_master][$trData->id] = $trData;
+        }
+
+        arrPrint($spostatus);
+    }
+
+    public function viewStatusProject()
+    {
+
+        $this->db->select("id, transaksi_id, nama, dtime, cabang_id, cabang_nama, persen_progress, lock, quot_status, project_start, customer_id, customer_nama, closing_status, closing_transaksi_nomer, status, trash, harga");
+        $tr = $this->db->get("project_produk")->result();
+
+        $spostatus = array();
+        $hasil = array();
+        foreach ($tr as $trData) {
+            $spostatus[$trData->transaksi_id][$trData->id] = $trData;
+
+
+        }
+
+        echo json_encode($spostatus);
+    }
+
+    public function viewModalTimeline()
+    {
+        $project_id = $targetJenis = $this->uri->segment(4);
+
+        $this->load->model("Mdls/MdlProdukProject");
+        $pp = new MdlProdukProject();
+        $pp->addFilter("id='$project_id'");
+        $produkProject = $pp->lookUpAll()->result();
+        $nama_project = $produkProject[0]->nama;
+
+        $this->load->model("MdlTransaksi");
+        $tr = new MdlTransaksi();
+
+        $this->db->select("id_master");
+        $this->db->where("transaksi.project_id", trim($project_id));
+        $this->db->where("transaksi.jenis", "588so");
+        $this->db->where("transaksi.link_id", 0);
+        $tmpPreHist = $this->db->get('transaksi')->result();
+
+        $this->db->select("id, jenis, project_id, project_nama, dtime, nomer, jenis_label, oleh_nama");
+        $this->db->where("(transaksi.project_id = '" . trim($project_id) . "' OR transaksi.id_master = '" . $tmpPreHist[0]->id_master . "')");
+        $this->db->where("transaksi.link_id", 0);
+        $this->db->where_in("transaksi.jenis", array("588spo", "588so", "588st", "588sorj", "588sporj", "588"));
+        $tmpHist = $this->db->get('transaksi')->result();
+
+        $this->db->select("id, jenis, project_id, project_nama, dtime, nomer, jenis_label, oleh_nama");
+        $this->db->where("(transaksi.project_id = '" . trim($project_id) . "' OR transaksi.id_master = '" . $tmpPreHist[0]->id_master . "')");
+        $this->db->where("transaksi.link_id", 0);
+        $this->db->where_in("transaksi.jenis", array("5834r", "5834", "5856r", "5856", "9855r", "9855", "9833sc", "9833r", "9833"));
+        $tmpNestedTrx = $this->db->get('transaksi')->result();
+
+        $this->load->model("Mdls/MdlTasklistProjectLog");
+        $mLog = new MdlTasklistProjectLog();
+        $this->db->select("id, produk_id as project_id, nama as project_nama, dtime, no_spk as nomer, type as jenis_label, person_nama as oleh_nama, employee_nama");
+        $mLog->addFilter("produk_id='" . trim($project_id) . "'");
+        $tmpTaskLog = $mLog->lookupAll()->result();
+
+        $tmpJsonLog = array();
+        $tmpNestedTask = array();
+        foreach ($tmpTaskLog as $row => $data) {
+            if ($data->jenis_label === "create") {
+                $data->jenis_label = 'MEMBUAT SPK UNTUK <r>' . $data->employee_nama . "</r>";
+                $tmpJsonLog[$data->dtime] = $data;
+            }
+        }
+
+        $tmpJson = array();
+        foreach ($tmpHist as $row => $data) {
+            $data->nomer = formatField_he_format("nomer", $data->nomer);
+            $tmpJson[$data->dtime] = $data;
+        }
+
+        $pre_json = array_merge($tmpJsonLog, $tmpJson);
+
+        $json_data = array();
+        foreach ($pre_json as $row => $datas) {
+            $json_data[] = $datas;
+        }
+
+        echo "
+
+
+    <style>
+        /* Gunakan namespace khusus untuk timeline kita */
+        .custom-timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0;
+            list-style: none;
+        }
+
+        /* Garis vertikal di tengah */
+        .custom-timeline::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            background-color: #3498db;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -1px;
+            z-index: 1;
+        }
+
+        /* Container untuk item */
+        .custom-timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+
+        /* Item di kiri */
+        .custom-timeline-item-left {
+            left: 0;
+            clear: left;
+        }
+
+        /* Item di kanan */
+        .custom-timeline-item-right {
+            left: 50%;
+            clear: right;
+        }
+
+        /* Lingkaran indikator */
+        .custom-timeline-item-right::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background-color: white;
+            border: 3px solid #f12929;
+            border-radius: 50%;
+            top: 15px;
+            z-index: 2;
+        }
+        .custom-timeline-item-left::after {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            background-color: white;
+            border: 3px solid #3498db;
+            border-radius: 50%;
+            top: 15px;
+            z-index: 2;
+        }
+
+        .custom-timeline-item-left::after {
+            right: -8px;
+        }
+
+        .custom-timeline-item-right::after {
+            left: -8px;
+        }
+
+        /* Kotak konten */
+        .custom-timeline-content {
+            padding: 15px;
+            background-color: white;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        /* Waktu */
+        .custom-timeline-time {
+            color: #555;
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        /* Header */
+        .custom-timeline-header {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        /* Body */
+        .custom-timeline-body {
+            font-size: 0.9em;
+            color: #555;
+            line-height: 1.4;
+        }
+
+        /* Label waktu */
+        .custom-time-label {
+            position: relative;
+            width: 100%;
+            text-align: center;
+            margin: 30px 0;
+            clear: both;
+        }
+
+        .custom-time-label span {
+            background-color: #3498db;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: inline-block;
+            font-weight: bold;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Responsive */
+        @media screen and (max-width: 768px) {
+            .custom-timeline::after {
+                left: 31px;
+            }
+
+            .custom-timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .custom-timeline-item-right {
+                left: 0;
+            }
+
+            .custom-timeline-item::after {
+                left: 15px;
+            }
+        }
+
+        .pull-right {
+          float: right !important;
+        }
+        .pull-left {
+          float: left !important;
+        }
+    </style>
+
+        <h1>
+            <div class='text-center text-bold'><i class='fa fa-calendar'></i> Timeline Project $nama_project </div>
+        </h1>
+
+        <div id='custom-timeline-container'>
+          <ul class='custom-timeline' id='my-custom-timeline'></ul>
+        </div>
+
+        <script>
+
+            const json_data = " . json_encode($json_data) . ";
+            console.log(json_data);
+            const timelineData = json_data;
+            function formatCustomDate(dateString) {
+                const date = new Date(dateString);
+                const options = {
+                    day: '2-digit',
+                    month: 'short',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                };
+                return date.toLocaleDateString('id-ID', options);
+            }
+
+            function buildCustomTimeline(data) {
+                const container = document.getElementById('my-custom-timeline');
+                container.innerHTML = '';
+                data.sort((a, b) => new Date(a.dtime) - new Date(b.dtime));
+                let currentYear = null;
+                let currentMonth = null;
+                data.forEach((item, index) => {
+                    const date = new Date(item.dtime);
+                    const year = date.getFullYear();
+                    const month = date.getMonth();
+                    if (year !== currentYear) {
+                        const yearLabel = document.createElement('li');
+                        yearLabel.className = 'custom-time-label';
+                        yearLabel.innerHTML = `<span>`+year+`</span>`;
+                        container.appendChild(yearLabel);
+                        currentYear = year;
+                        currentMonth = null;
+                    }
+                    if (month !== currentMonth) {
+                        const monthName = date.toLocaleDateString('id-ID', { month: 'long' });
+                        const monthLabel = document.createElement('li');
+                        monthLabel.className = 'custom-time-label';
+                        monthLabel.innerHTML = `<span>`+monthName+`</span>`;
+                        container.appendChild(monthLabel);
+                        currentMonth = month;
+                    }
+                    const itemElement = document.createElement('li');
+                    itemElement.className = `custom-timeline-item ` + ( index % 2 === 0 ? ' custom-timeline-item-left' : ' custom-timeline-item-right') +``;
+                    itemElement.innerHTML = `
+                        <div class='custom-timeline-content'>
+                            <div class='custom-timeline-time'><span disabled class='pull-left btn btn-xs btn-info text-bold text-uppercase'>`+item.oleh_nama+`</span>&nbsp;&nbsp;&nbsp;<span class='pull-right meta'><i class='fa fa-clock-o'></i>&nbsp;<i>`+formatCustomDate(item.dtime)+`</i></span></div>
+                            <div class='custom-timeline-header text-uppercase'>`+item.jenis_label+`</div>
+                            <div class='custom-timeline-body'>
+                                No. Dokumen: `+item.nomer+`
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(itemElement);
+                });
+            }
+
+            //document.addEventListener('DOMContentLoaded', () => {
+                buildCustomTimeline(timelineData);
+            //});
+
+            $('.modal-dialog').removeClass('modal-lg').addClass('modal-xl');
+        </script>
+
+        ";
+    }
+
+    /**
+     * Convert items to uniform format (PHP 5.6 compatible)
+     * @param mixed $items Array or object of items
+     * @return array Uniform formatted array
+     */
+    public function convertToUniformFormat($items)
+    {
+        $result = array();
+
+        if (!is_array($items) && !is_object($items)) {
+            return $result;
+        }
+
+        // Convert to array if object
+        if (is_object($items)) {
+            $items = get_object_vars($items);
+        }
+
+        // Handle case where items is a single item
+        if (isset($items['dtime']) || isset($items['jenis_label'])) {
+            $items = array($items);
+        }
+
+        foreach ($items as $item) {
+            // Convert item to array if object
+            if (is_object($item)) {
+                $item = get_object_vars($item);
+            }
+
+            // Skip if not an array
+            if (!is_array($item)) {
+                continue;
+            }
+
+            $formatted = array(
+                'dtime' => isset($item['dtime']) ? $item['dtime'] : null,
+                'action' => isset($item['action']) ? $item['action'] :
+                    (isset($item['jenis_label']) ? $item['jenis_label'] : null),
+                'details' => isset($item['details']) ? $item['details'] :
+                    (isset($item['nomer']) ? 'No. Dokumen: ' . $item['nomer'] : null),
+                'oleh_nama' => isset($item['oleh_nama']) ? $item['oleh_nama'] : null
+            );
+
+            // Preserve all original fields
+            $formatted = array_merge($item, $formatted);
+
+            $result[] = $formatted;
+        }
+
+        return $result;
+    }
+
+    public function viewModalTimelineAI()
+    {
+
+
+        $stepByStep = array(
+            "5856" => "Distribusi dan Penerimaan supplies",
+            "5856" => "Distribusi dan Penerimaan supplies",
+        );
+
+        $project_id = $targetJenis = $this->uri->segment(4);
+
+        $this->load->model("Mdls/MdlProdukProject");
+        $pp = new MdlProdukProject();
+        $pp->addFilter("id='$project_id'");
+        $produkProject = $pp->lookUpAll()->result();
+        $nama_project = $produkProject[0]->nama;
+
+        $this->load->model("MdlTransaksi");
+        $tr = new MdlTransaksi();
+
+        $this->db->select("id_master");
+        $this->db->where("transaksi.project_id", trim($project_id));
+        $this->db->where("transaksi.jenis", "588so");
+        $this->db->where("transaksi.link_id", 0);
+        $tmpPreHist = $this->db->get('transaksi')->result();
+
+        $this->db->select("id, jenis, project_id, project_nama, dtime, nomer, jenis_label, oleh_nama");
+        $this->db->where("(transaksi.project_id = '" . trim($project_id) . "' OR transaksi.id_master = '" . $tmpPreHist[0]->id_master . "')");
+        $this->db->where("transaksi.link_id", 0);
+        $this->db->where_in("transaksi.jenis", array("588spo", "588so", "588st", "588sorj", "588sporj", "588"));
+        $mainTransactions = $this->db->get('transaksi')->result();
+
+        $this->db->select("id, jenis, project_id, project_nama, dtime, nomer, jenis_label, oleh_nama");
+        $this->db->where("(transaksi.project_id = '" . trim($project_id) . "' OR transaksi.id_master = '" . $tmpPreHist[0]->id_master . "')");
+        $this->db->where("transaksi.link_id", 0);
+        $this->db->where_in("transaksi.jenis", array("5834r", "5834", "5856r", "5856", "9855r", "9855", "9833sc", "9833r", "9833"));
+        $nestedTransactions = $this->db->get('transaksi')->result();
+
+        //daftar tasklist by spk
+        $this->load->model("Mdls/MdlTasklistProject");
+        $mTask = new MdlTasklistProject();
+//        $this->db->select("id, produk_id as project_id, nama as project_nama, dtime, no_spk as nomer, nilai as jenis_label, employee_nama as oleh_nama, progress_percent, dtime_end, dtime_start, progress_nama");
+        $this->db->select("*");
+        $mTask->addFilter("produk_id='" . trim($project_id) . "'");
+        $taskList = $mTask->lookupAll()->result();
+
+        $tmpTasklist = array();
+        foreach ($taskList as $rowTask) {
+            $tmpTasklist[$rowTask->no_spk] = $rowTask;
+        }
+
+        //GET FROM REG
+        $idsReg = array();
+//        foreach($mainTransactions as $transaction) {
+//            $idsReg[] = $transaction->id;
+//        }
+        foreach ($nestedTransactions as $transaction) {
+            $idsReg[] = $transaction->id;
+        }
+        $idsRegString = implode(',', $idsReg);
+
+        $nestedReg = array();
+        if (!empty($idsReg)) {
+            $this->db->select("transaksi_id, main");
+            $this->db->where_in("transaksi_id", $idsReg);
+            $nestedReg = $this->db->get('transaksi_data_registry')->result();
+        }
+
+        $tmpNestTedTrx = array();
+        foreach ($nestedReg as $key => $reg) {
+            $regMain = blobDecode($reg->main);
+            $trxID = $reg->transaksi_id;
+            $tmpNestTedTrx[$trxID] = isset($regMain['pihakTasklist__label']) ? $regMain['pihakTasklist__label'] : $regMain['pihakProjekNoSpk'];
+        }
+
+        $this->load->model("Mdls/MdlTasklistProjectLog");
+        $mLog = new MdlTasklistProjectLog();
+        $this->db->select("id, produk_id as project_id, nama as project_nama, dtime, no_spk as nomer, type as jenis_label, person_nama as oleh_nama, employee_nama");
+        $mLog->addFilter("produk_id='" . trim($project_id) . "'");
+        $taskLogs = $mLog->lookupAll()->result();
+
+        $groupedTasks = array();
+        foreach ($taskLogs as $task) {
+            $nomer = $task->nomer;
+            if (!isset($groupedTasks[$nomer])) {
+                $groupedTasks[$nomer] = array(
+                    'main' => null,
+                    'subtasks' => array()
+                );
+            }
+            if ($task->jenis_label === "create") {
+                $task->jenis_label = 'MEMBUAT SPK UNTUK <r>' . $task->employee_nama . "</r>";
+                if (isset($tmpTasklist[$task->nomer])) {
+                    $task->spk_status = array(
+                        "status" => $tmpTasklist[$task->nomer]->progress_nama,
+                        "progress" => $tmpTasklist[$task->nomer]->progress_percent,
+                        "target_selesai" => $tmpTasklist[$task->nomer]->dtime_end,
+                        "penanggung_jawab" => $tmpTasklist[$task->nomer]->oleh_nama,
+                        "keterangan" => $tmpTasklist[$task->nomer]->jenis_label
+                    );
+                }
+                $groupedTasks[$nomer]['main'] = $task;
+            }
+            else {
+
+                switch ($task->jenis_label) {
+                    case "subtasklist":
+                        $task->jenis_label = "POSTING PEKERJAAN LAPANGAN";
+                        break;
+                    case "QC PROSES":
+                        $task->jenis_label = "MELAKUKAN QUALITY CONTROL LAPANGAN";
+                        break;
+                }
+
+                $groupedTasks[$nomer]['subtasks'][] = $task;
+            }
+        }
+
+        $processedTaskLogs = array();
+        foreach ($groupedTasks as $nomer => $group) {
+            if ($group['main']) {
+                $mainItem = $group['main'];
+                $mainItem->has_nested = !empty($group['subtasks']);
+                $mainItem->nested_items = array();
+                foreach ($group['subtasks'] as $subtask) {
+                    $mainItem->nested_items[] = array(
+                        'dtime' => $subtask->dtime,
+                        'action' => $subtask->jenis_label,
+                        'details' => 'No. SPK: ' . $subtask->nomer,
+                        'oleh_nama' => $subtask->oleh_nama
+                    );
+                }
+                $processedTaskLogs[$mainItem->dtime] = $mainItem;
+            }
+        }
+
+        $processedMainTransactions = array();
+        foreach ($mainTransactions as $transaction) {
+            $transaction->nomer = formatField_he_format("nomer", $transaction->nomer);
+            $transaction->has_nested = false;
+            $transaction->nested_items = array();
+            $processedMainTransactions[$transaction->dtime] = $transaction;
+        }
+
+        $combinedData = array_merge($processedTaskLogs, $processedMainTransactions);
+
+        function findRelatedNestedTransactions($mainTransaction, $nestedTransactions, $tmpNestTedTrx)
+        {
+            $related = array();
+            foreach ($nestedTransactions as $nested) {
+                if (isset($tmpNestTedTrx[$nested->id]) && $mainTransaction->nomer == $tmpNestTedTrx[$nested->id]) {
+                    $related[] = array(
+                        'id' => $nested->id,
+                        'dtime' => $nested->dtime,
+                        'action' => $nested->jenis_label . " (" . $nested->jenis . ")",
+                        'details' => "No. Dokumen: " . formatField_he_format("nomer", $nested->nomer),
+                        'oleh_nama' => $nested->oleh_nama
+                    );
+                }
+            }
+            return $related;
+        }
+
+        $timelineData = array();
+        foreach ($combinedData as $item) {
+            $timelineItem = is_object($item) ? get_object_vars($item) : (array)$item;
+            $existingNested = [];
+            if (isset($timelineItem['nested_items'])) {
+                $existingNested = is_array($timelineItem['nested_items'])
+                    ? $timelineItem['nested_items']
+                    : [$timelineItem['nested_items']];
+            }
+            $relatedNested = findRelatedNestedTransactions($item, $nestedTransactions, $tmpNestTedTrx);
+            $allNestedItems = array_merge(
+                $this->convertToUniformFormat($existingNested),
+                $this->convertToUniformFormat($relatedNested)
+            );
+            usort($allNestedItems, function ($a, $b) {
+                return strtotime($a['dtime']) - strtotime($b['dtime']);
+            });
+            $timelineItem['nested_items'] = $allNestedItems;
+            $timelineItem['has_nested'] = !empty($allNestedItems);
+            $timelineData[] = $timelineItem;
+        }
+
+        usort($timelineData, function ($a, $b) {
+            return strtotime($a['dtime']) - strtotime($b['dtime']);
+        });
+
+        echo "
+
+    <style>
+
+    .spk-summary {
+        margin-top: 15px;
+        padding: 12px;
+        background-color: #f8f9fa;
+        border-radius: 5px;
+        border: 1px solid #e0e0e0;
+    }
+
+    .spk-summary-header {
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+    }
+
+    .spk-summary-header i {
+        margin-right: 8px;
+        color: #3498db;
+    }
+
+    .spk-summary-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 10px;
+    }
+
+    .spk-summary-item {
+        font-size: 0.9em;
+    }
+
+    .spk-summary-label {
+        font-weight: bold;
+        color: #7f8c8d;
+        margin-bottom: 3px;
+    }
+
+    .spk-summary-value {
+        color: #2c3e50;
+    }
+
+    .custom-timeline {
+      position: relative;
+      max-width: 1200px;
+      margin: 30px auto;
+      padding: 0;
+      list-style: none;
+    }
+
+    .custom-timeline::after {
+      content: '';
+      position: absolute;
+      width: 2px;
+      background-color: #3498db;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      margin-left: -1px;
+      z-index: 1;
+    }
+
+    /* Container untuk item */
+    .custom-timeline-item {
+      padding: 10px 40px;
+      position: relative;
+      width: 50%;
+      box-sizing: border-box;
+      margin-bottom: 20px;
+    }
+
+    /* Item di kiri */
+    .custom-timeline-item-left {
+      left: 0;
+      clear: left;
+    }
+
+    /* Item di kanan */
+    .custom-timeline-item-right {
+      left: 50%;
+      clear: right;
+    }
+
+    /* Lingkaran indikator */
+    .custom-timeline-item::after {
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      background-color: white;
+      border: 3px solid #3498db;
+      border-radius: 50%;
+      top: 15px;
+      z-index: 2;
+    }
+
+    .custom-timeline-item-left::after {
+      right: -8px;
+    }
+
+    .custom-timeline-item-right::after {
+      left: -8px;
+    }
+
+    /* Kotak konten */
+    .custom-timeline-content {
+      padding: 15px;
+      background-color: white;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      position: relative;
+    }
+
+    /* Waktu */
+    .custom-timeline-time {
+      color: #555;
+      font-size: 0.9em;
+      margin-bottom: 5px;
+    }
+
+    /* Header */
+    .custom-timeline-header {
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #2c3e50;
+    }
+
+    /* Body */
+    .custom-timeline-body {
+      font-size: 0.9em;
+      color: #555;
+      line-height: 1.4;
+    }
+
+    /* Label waktu */
+    .custom-time-label {
+      position: relative;
+      width: 100%;
+      text-align: center;
+      margin: 30px 0;
+      clear: both;
+    }
+
+    .custom-time-label span {
+      background-color: #3498db;
+      color: white;
+      padding: 5px 15px;
+      border-radius: 20px;
+      display: inline-block;
+      font-weight: bold;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Nested timeline styles */
+    .nested-timeline {
+      position: relative;
+      margin: 15px 0 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .nested-timeline::after {
+      content: '';
+      position: absolute;
+      width: 2px;
+      background-color: #e74c3c;
+      top: 15px;
+      bottom: 15px;
+      left: 20px;
+      z-index: 1;
+    }
+
+    .nested-timeline-item {
+      padding: 5px 0 5px 40px;
+      position: relative;
+      margin-bottom: 5px;
+    }
+
+    .nested-timeline-item::before {
+      content: '';
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background-color: white;
+      border: 2px solid #e74c3c;
+      border-radius: 50%;
+      left: 15px;
+      top: 10px;
+      z-index: 2;
+    }
+
+    .nested-timeline-content {
+      padding: 10px;
+      background-color: #f9f9f9;
+      border-radius: 3px;
+      border: 1px solid #eee;
+    }
+
+    .nested-timeline-time {
+      color: #777;
+      font-size: 0.8em;
+      margin-bottom: 12px;
+    }
+
+    .nested-timeline-header {
+      font-weight: bold;
+      margin-bottom: 5px;
+      color: #c0392b;
+      font-size: 0.95em;
+      text-transform: uppercase;
+    }
+
+    .nested-timeline-body {
+      font-size: 0.8em;
+      color: #777;
+      line-height: 1.3;
+    }
+
+    /* Toggle button for nested timeline */
+    .toggle-nested-timeline {
+      background: #3498db;
+      color: white;
+      border: none;
+      padding: 3px 8px;
+      border-radius: 3px;
+      font-size: 0.8em;
+      margin-top: 5px;
+      cursor: pointer;
+    }
+
+    /* Responsive */
+    @media screen and (max-width: 768px) {
+      .custom-timeline::after {
+        left: 31px;
+      }
+
+      .custom-timeline-item {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 25px;
+      }
+
+      .custom-timeline-item-right {
+        left: 0;
+      }
+
+      .custom-timeline-item::after {
+        left: 15px;
+      }
+
+      .nested-timeline::after {
+        left: 15px;
+      }
+
+      .nested-timeline-item {
+        padding-left: 35px;
+      }
+
+      .nested-timeline-item::before {
+        left: 10px;
+      }
+    }
+
+    /* Summary section styles */
+    .timeline-summary {
+        max-width: 1200px;
+        margin: 40px auto;
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .summary-header {
+        font-size: 1.5em;
+        color: #2c3e50;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #3498db;
+    }
+
+    .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+    }
+
+    .summary-card {
+        background-color: white;
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    .summary-card-title {
+        font-weight: bold;
+        color: #3498db;
+        margin-bottom: 10px;
+        font-size: 1.1em;
+    }
+
+    .summary-card-value {
+        font-size: 1.3em;
+        color: #2c3e50;
+        margin-bottom: 5px;
+    }
+
+    .summary-card-desc {
+        font-size: 0.9em;
+        color: #7f8c8d;
+    }
+
+    .milestone-list {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .milestone-item {
+        padding: 8px 0;
+        border-bottom: 1px solid #eee;
+    }
+
+    .milestone-date {
+        font-weight: bold;
+        color: #3498db;
+    }
+
+    .milestone-name {
+        color: #2c3e50;
+    }
+
+    .project-duration {
+        margin-top: 20px;
+        font-size: 1.1em;
+        color: #2c3e50;
+        text-align: center;
+    }
+
+    .duration-value {
+        font-weight: bold;
+        color: #3498db;
+    }
+
+  </style>
+
+        <h1>
+            <div class='text-center text-bold'><i class='fa fa-calendar'></i> Timeline Project $nama_project </div>
+        </h1>
+
+        <div id='custom-timeline-container'>
+          <ul class='custom-timeline' id='my-custom-timeline'></ul>
+        </div>
+
+        <div id='timeline-summary' class='timeline-summary'></div>
+
+        <script>
+
+            const timelineData = " . json_encode($timelineData) . ";
+            const tasklist = " . json_encode($tmpTasklist) . ";
+
+            function formatCustomDate(dateString) {
+                const date = new Date(dateString);
+                const options = {
+                    day: '2-digit',
+                    month: 'short',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                };
+                return date.toLocaleDateString('id-ID', options);
+            }
+
+            function getStatusClass(status) {
+                const statusMap = {
+                    'Selesai': 'status-completed',
+                    'Dalam Pengerjaan': 'status-in-progress',
+                    'Belum Dimulai': 'status-not-started',
+                    'Tertunda': 'status-pending'
+                };
+                return statusMap[status] || '';
+            }
+
+            function buildNestedTimeline(items, parentElement) {
+                const ul = document.createElement('ul');
+                ul.className = 'nested-timeline';
+                items.forEach(item => {
+                    const li = document.createElement('li');
+                    li.className = 'nested-timeline-item';
+                    li.innerHTML = `
+                        <div class=\"nested-timeline-content\">
+                            <div class=\"nested-timeline-time\"> <div><span class='btn btn-xs bg-orange pull-left'><i class='fa fa-user'></i>&nbsp;\${item.oleh_nama}</span>&nbsp;&nbsp;<span class='pull-right'><i class='fa fa-clock-o'></i>&nbsp;\${formatCustomDate(item.dtime)}</span></div></div>
+                            <div class=\"nested-timeline-header\">\${item.action}</div>
+                            <div class=\"nested-timeline-body\">
+                                \${item.details}
+                            </div>
+                        </div>
+                    `;
+                    ul.appendChild(li);
+                });
+                parentElement.appendChild(ul);
+                ul.style.display = 'none';
+                return ul;
+            }
+
+            function buildCustomTimeline(data) {
+                const container = document.getElementById('my-custom-timeline');
+                container.innerHTML = '';
+                data.sort((a, b) => new Date(a.dtime) - new Date(b.dtime));
+                let currentYear = null;
+                let currentMonth = null;
+                data.forEach((item, index) => {
+                    const date = new Date(item.dtime);
+                    const year = date.getFullYear();
+                    const month = date.getMonth();
+                    let spkItems = [];
+                    if (year !== currentYear) {
+                        const yearLabel = document.createElement('li');
+                        yearLabel.className = 'custom-time-label';
+                        yearLabel.innerHTML = `<span>\${year}</span>`;
+                        container.appendChild(yearLabel);
+                        currentYear = year;
+                        currentMonth = null;
+                    }
+                    if (month !== currentMonth) {
+                        const monthName = date.toLocaleDateString('id-ID', { month: 'long' });
+                        const monthLabel = document.createElement('li');
+                        monthLabel.className = 'custom-time-label';
+                        monthLabel.innerHTML = `<span>\${monthName}</span>`;
+                        container.appendChild(monthLabel);
+                        currentMonth = month;
+                    }
+                    const itemElement = document.createElement('li');
+                    itemElement.className = `custom-timeline-item \${
+                        index % 2 === 0 ? 'custom-timeline-item-left' : 'custom-timeline-item-right'
+                    }`;
+                    let spkSummaryHTML = '';
+                    if (item.jenis_label.includes('MEMBUAT SPK') && item.spk_status) {
+                        spkItems.push(item);
+                    }
+                    itemElement.innerHTML = `
+                        <div class='custom-timeline-content'>
+                            <div class='custom-timeline-time'> <div><span class='btn btn-xs bg-info pull-left'><i class='fa fa-user'></i>&nbsp;\${item.oleh_nama}</span>&nbsp;&nbsp;<span class='pull-right'><i class='fa fa-clock-o'></i>&nbsp;\${formatCustomDate(item.dtime)}</span></div></div>
+                            <div class='custom-timeline-header'>\${item.jenis_label}</div>
+                            <div class='custom-timeline-body'>
+                                No. Dokumen: \${item.nomer}
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(itemElement);
+                    if (item.has_nested && item.nested_items) {
+                        const contentDiv = itemElement.querySelector('.custom-timeline-content');
+                        const nestedTimeline = buildNestedTimeline(item.nested_items, contentDiv);
+                        const toggleBtn = contentDiv.querySelector('.toggle-nested-timeline');
+//                        toggleBtn.addEventListener('click', function() {
+//                            if (nestedTimeline.style.display === 'none') {
+                                  nestedTimeline.style.display = 'block';
+//                                toggleBtn.textContent = `Hide Details (\${item.nested_items.length})`;
+//                            }
+//                            else {
+//                                nestedTimeline.style.display = 'none';
+//                                toggleBtn.textContent = `Show Details (\${item.nested_items.length})`;
+//                            }
+//                        });
+                    }
+
+                // Tambahkan summary SPK di bagian paling bawah
+                if (spkItems.length > 0) {
+                    const contentDiv = itemElement.querySelector('.custom-timeline-content');
+                    const spkSummaryContainer = document.createElement('div');
+                    spkSummaryContainer.className = 'custom-timeline-content';
+                    spkSummaryContainer.innerHTML = `
+                        <h4 class='spk-summary-title'>Ringkasan SPK</h4>
+                        <div class='spk-summary-grid'>
+                            \${spkItems.map(spk => `
+                                <div class='spk-card'>
+                                    <!-- Header Card -->
+                                    <div class='spk-card-header'>
+                                        <div class='spk-identity'>
+                                            <span class='spk-number text-bold'>\${spk.nomer}</span>
+                                        </div>
+                                        <div class='spk-status-badge \${getStatusClass(spk.spk_status.status)}'>
+                                            <i class='status-icon'></i>
+                                            <span>\${spk.spk_status.status}</span>
+                                        </div>
+                                    </div>
+                                    <div class='spk-card-body'>
+                                        <div class='spk-detail-row'>
+                                            <span class='detail-label text-bold'>Penanggung Jawab:</span>
+                                            <span class='detail-value'>\${spk.spk_status.penanggung_jawab}</span>
+                                        </div>
+                                        <div class='spk-detail-row'>
+                                            <span class='detail-label text-bold'>Target Selesai:</span>
+                                            <span class='detail-value deadline'>
+                                                <i class='calendar-icon'></i>
+                                                \${formatCustomDate(spk.spk_status.target_selesai)}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class='spk-progress-container'>
+                                        <div class='progress-container'>
+                                            <div class='progress-label text-bold'>Progress: \${spk.spk_status.progress}%</div>
+                                            <div style=\"margin: 0px!important;\" class=\"progress\">
+                                                <div id=\"taskProgressBar\" class=\"progress-bar text-bold\" style=\"width: \${spk.spk_status.progress}%; background-color: rgb(231, 76, 60);\">\${spk.spk_status.progress}%</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                    contentDiv.appendChild(spkSummaryContainer);
+                }
+                });
+            }
+
+            function calculateSummary(data) {
+                const summary = {
+                    totalEvents: data.length,
+                    firstDate: null,
+                    lastDate: null,
+                    projectName: null,
+                    keyMilestones: [],
+                    teamMembers: new Set(),
+                    documentTypes: new Set()
+                };
+
+                data.forEach(item => {
+                    const date = new Date(item.dtime);
+                    if (!summary.firstDate || date < summary.firstDate) {
+                        summary.firstDate = date;
+                    }
+                    if (!summary.lastDate || date > summary.lastDate) {
+                        summary.lastDate = date;
+                    }
+                    if (item.project_nama && !summary.projectName) {
+                        summary.projectName = item.project_nama;
+                    }
+                    if (item.oleh_nama) {
+                        summary.teamMembers.add(item.oleh_nama);
+                    }
+                    if (item.jenis_label) {
+                        summary.documentTypes.add(item.jenis_label);
+                    }
+                    if (item.jenis_label.includes('STARTED') || item.jenis_label.includes('COMPLETED') || item.jenis_label.includes('QUOTATION') || item.jenis_label.includes('PENYERAHAN')) {
+                        summary.keyMilestones.push({
+                            date: item.dtime,
+                            name: item.jenis_label,
+                            by: item.oleh_nama
+                        });
+                    }
+                });
+                summary.keyMilestones.sort((a, b) => new Date(a.date) - new Date(b.date));
+                return summary;
+            }
+
+            function buildTimelineSummary(data) {
+                const container = document.getElementById('timeline-summary');
+                const packages = Object.values(data);
+                const totalSPK = packages.length;
+                const completedSPK = packages.filter(p => p.progress_percent > 99 ).length;
+                const pendingSPK = totalSPK - completedSPK;
+                const overdueSPK = getOverdueTasks(packages).length;
+                const totalNilaiProject = packages.reduce((a,b) => parseInt(b.nilai_kontrak), 0);
+
+                const nilaiProgress = packages.reduce((sum, p) => {
+                  const nilai = parseInt(p.nilai_sub_fase);
+                  const progress = parseInt(p.progress_percent);
+                  const kontribusi = nilai * (progress / 100);
+                  return sum + kontribusi;
+                }, 0);
+
+                const totalProgressPercentage = Math.round((nilaiProgress / totalNilaiProject) * 100);
+
+                container.innerHTML = `
+                <div class='summary-header'>Project Summary: \${packages[0]?.produk_nama || 'Unnamed Project'}</div>
+
+                <div class='summary-grid'>
+                    <div class='summary-card'>
+                        <div class='summary-card-title'>Total Progress</div>
+                        <div class='summary-card-value'>\${totalProgressPercentage}%</div>
+                        <div class='summary-card-desc'>Based on Value</div>
+                    </div>
+                    <div class='summary-card'>
+                        <div class='summary-card-title'>Nilai Project</div>
+                        <div class='summary-card-value'>Rp \${addCommas(totalNilaiProject)}</div>
+                        <div class='summary-card-desc'>Total Kontrak</div>
+                    </div>
+                    <div class='summary-card'>
+                        <div class='summary-card-title'>Nilai Progress</div>
+                        <div class='summary-card-value'>Rp \${addCommas(nilaiProgress)}</div>
+                        <div class='summary-card-desc'>Terealisasi</div>
+                    </div>
+                    <div class='summary-card'>
+                        <div class='summary-card-title'>Total SPK</div>
+                        <div class='summary-card-value'>\${totalSPK}</div>
+                        <div class='summary-card-desc'>Surat Perintah Kerja</div>
+                    </div>
+                    <div class='summary-card'>
+                        <div class='summary-card-title'>SPK Selesai</div>
+                        <div class='summary-card-value'>\${completedSPK}</div>
+                        <div class='summary-card-desc'>QC Approved</div>
+                    </div>
+                    <div class='summary-card'>
+                        <div class='summary-card-title'>SPK Tertunda</div>
+                        <div class='summary-card-value'>\${pendingSPK}</div>
+                        <div class='summary-card-desc'>Belum Dimulai</div>
+                    </div>
+                    <div class='summary-card overdue-card'>
+                        <div class='summary-card-title'>Overdue SPK</div>
+                        <div class='summary-card-value'>\${overdueSPK}</div>
+                        <div class='summary-card-desc'>\${overdueSPK > 0 ? '⚠️ Perlu Tindakan' : 'Tidak Ada'}</div>
+                        \${overdueSPK > 0 ? `
+                            <div class='overdue-tooltip'>
+                                <span class='tooltip-text'>\${getOverdueTaskNames(packages)}</span>
+                            </div>
+                        ` : ''}
+                    </div>
+                </div>
+                <div class='project-duration'>
+                    <span class='duration-label'>Periode Proyek:</span>
+                    \${getDateRange(packages)}
+                </div>`;
+            }
+            function getOverdueTasks(packages) {
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                return packages.filter(pkg => {
+                    if (pkg.progress_percent === \"100\") return false;
+                    if (!pkg.dtime_end) return false;
+                    const endDate = new Date(pkg.dtime_end);
+                    endDate.setHours(0, 0, 0, 0);
+                    return endDate < today;
+                });
+            }
+            function getOverdueTaskNames(packages) {
+                return getOverdueTasks(packages)
+                    .map(pkg => `• \${pkg.no_spk} (\${formatDate(pkg.dtime_end)})`)
+                    .join('<br>');
+            }
+            function formatNumber(num) {
+                return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " . ");
+            }
+            function getDateRange(packages) {
+                const dates = packages.flatMap(p => [p.dtime_start, p.dtime_end].filter(Boolean));
+                if (dates.length === 0) return \"Tidak ada data periode\";
+                const start = dates.reduce((a, b) => a < b ? a : b);
+                const end = dates.reduce((a, b) => a > b ? a : b);
+                return `<span class='date-range'>\${formatDate(start)} - \${formatDate(end)}</span>`;
+            }
+            function formatDate(dateStr) {
+                const options = { day: '2-digit', month: 'short', year: 'numeric' };
+                return new Date(dateStr).toLocaleDateString('id-ID', options);
+            }
+            buildCustomTimeline(timelineData);
+            buildTimelineSummary(tasklist);
+            $('.modal-dialog').removeClass('modal-lg').addClass('modal-xl');
+        </script>
+        ";
+    }
+
+    public function exeProjectTambahan()
+    {
+
+        $jenis_exe = $this->uri->segment(4);
+        $no_spk = isset($_GET['nospk']) ? base64_decode($_GET['nospk']) : matiHere('nomor spk tidak ada');
+        $nilai_req = isset($_GET['req']) ? base64_decode($_GET['req']) : matiHere('nilai req tidak ada');
+        $login_id = $this->session->login['id'];
+        $login_nama = $this->session->login['nama'];
+
+        $mems = isset($this->session->login['membership']) ? $this->session->login['membership'] : array();
+
+        if (!in_array("o_project_spv", $mems) || !in_array("c_holding", $mems) || !in_array("c_owner", $mems) || !in_array("o_project_mgr", $mems)) {
+
+        }
+        else {
+            matiHere("akun anda tidak memiliki wewenang untuk melakukan transaksi ini.");
+        }
+
+        $numbering = array(
+            "dtime" => date("Y-m-d H:i:s"),
+            "oleh_id" => $login_id,
+            "toko_id" => 1001,
+        );
+
+        $this->db->trans_start();
+
+        $this->load->model('Mdls/MdlProjectKomponenBiayaDetailsRabSubTambahan');
+        $pr = new MdlProjectKomponenBiayaDetailsRabSubTambahan();
+        $this->db->where("approved", 0);
+        $this->db->where("approval_id", 0);
+        $this->db->where("no_spk", $no_spk);
+        $tmp = $pr->lookupAll()->result();
+        cekMerah(__LINE__);
+        arrPrint($tmp);
+        showLast_query("biru");
+        $request = array();
+        $saldo = 0;
+        if (!empty($tmp)) {
+            foreach ($tmp as $dataa) {
+                $saldo += $dataa->saldo * 1;
+                $request[$dataa->request_id] = $dataa->request_id;
+            }
+            if ($nilai_req != $saldo) {
+                matiHere(":::BELUM TERSIMPAN::: <br> karena data update, silahkan refresh dulu kemudian lakukan kembali.");
+            }
+        }
+        else {
+            matiHere("SPK: $no_spk tidak memiliki request tambahan/ atau sudah diapprove.");
+        }
+
+        switch ($jenis_exe) {
+            case "approve":
+                if (in_array($login_id, $request)) {
+                    matiHere("Anda tidak bisa melakukan Approval untuk tambahan yang Anda request sendiri, silahkan meminta approval kepada atasan Anda..");
+                }
+                $update = array(
+                    "approved" => 1,
+                    "approval_id" => $login_id,
+                    "approval_nama" => $login_nama,
+                    "approval_dtime" => date("Y-m-d H:i:s"),
+                    "approval_nilai" => $nilai_req * 1,
+                    $jenis_exe . "_no" => $this->numbering_new("SB-TMB", "APR-TMB", $numbering),
+                );
+                $pr->setFilters(array());
+                $subDetails = $pr->updateData(array("no_spk" => $no_spk ), $update) or matiHere("gagal memperbaharui data produk sub WO LINE: " . __LINE__);
+                cekMerah(__LINE__);
+                showLast_query("biru");
+                if($subDetails){
+                    $this->load->model('Mdls/MdlTasklistProjectTambahan');
+                    $prt = new MdlTasklistProjectTambahan();
+                    $update['status'] = 1;
+                    $prt->setFilters(array());
+                    $taskTambahan = $prt->updateData(array("no_spk" => $no_spk ), $update) or matiHere("gagal memperbaharui data produk sub WO LINE: " . __LINE__);
+                    cekMerah(__LINE__);
+                    showLast_query("biru");
+                }
+                break;
+            case "reject":
+                $update = array(
+                    "approved" => -1,
+                    "approval_id" => $login_id,
+                    "approval_nama" => $login_nama,
+                    "approval_dtime" => date("Y-m-d H:i:s"),
+                    "approval_nilai" => 0,
+                    $jenis_exe . "_no" => $this->numbering_new("SB-TMB", "REJ-TMB", $numbering),
+                );
+                $pr->updateData(array("no_spk" => $no_spk), $update) or matiHere("gagal memperbaharui data produk sub WO LINE: " . __LINE__);
+                cekMerah(__LINE__);
+                showLast_query("biru");
+                break;
+        }
+
+//        matiHere(__LINE__);
+        $commit = $this->db->trans_complete();
+
+        if ($commit) {
+            $return = array(
+                "status" => 1,
+                "reason" => "$jenis_exe berhasil",
+            );
+
+            echo json_encode($return);
+        }
+        else {
+            matiHere("GAGAL UPDATE DATA, SILAHKAN COBA BEBERAPA SAAT LAGI");
+        }
+
+    }
+
+    public function numbering_new($setType = 'tasklist', $trAlias = 'TL', $dt)
+    {
+        $arr = array();
+
+        //region penomoran receipt
+        $this->load->model("CustomCounter");
+        $cn = new CustomCounter("transaksi");
+        $cn->setType($setType);
+        $cn->setModul($this->modul);
+        $cn->setStepCode($trAlias);
+
+        $numBatch = array(
+            "$trAlias" => array(
+                "counters" => array(
+                    "stepCode",
+                    "stepCode|oleh_id",
+                    "stepCode|produk_id",
+                    "stepCode|fase_id",
+                    "stepCode|employee_id",
+                    "stepCode|month",
+                    "stepCode|years",
+                ),
+//                "formatNota" => "stepCode|employee_id,.stepCode,.employee_id,stepCode|employee_id,.month,.years",
+                "formatNota" => "stepCode|oleh_id,.stepCode,.oleh_id,stepCode|oleh_id,.month,.years",
+            )
+        );
+
+        if (isset($dt['dtime'])) {
+            $month_select = date("m", strtotime($dt['dtime']));
+            $arr['month'] = getRomawi($month_select);
+            $arr['years'] = date("Y", strtotime($dt['dtime']));
+        }
+
+        $arr['stepCode'] = $trAlias;
+        $arr['oleh_id'] = $dt['oleh_id'];
+        $arr['produk_id'] = $dt['produk_id'];
+        $arr['fase_id'] = $dt['fase_id'];
+        $arr['employee_id'] = $dt['employee_id'];
+
+        $counterForNumber = array($numBatch[$trAlias]['formatNota']);
+        $configCustomParams = $numBatch[$trAlias]['counters'];
+
+        if (sizeof($configCustomParams) > 0) {
+            $cContent = array();
+            foreach ($configCustomParams as $i => $cRawParams) {
+                $cParams = explode("|", $cRawParams);
+                $cValues = array();
+                foreach ($cParams as $param) {
+                    $cValues[$i][$param] = $arr[$param];
+                }
+                $cRawValues = implode("|", $cValues[$i]);
+                $paramSpec = $cn->getNewCount($cParams, $cValues[$i]);
+                $cContent[$cRawParams][$cRawValues] = $paramSpec['value'];
+                switch ($paramSpec['id']) {
+                    case 0: //===counter type is new
+                        $addData = array(
+                            "toko_id" => 0,
+                            "toko_nama" => "none",
+                        );
+                        $paramKeyRaw = print_r($cParams, true);
+                        $paramValuesRaw = print_r($cValues[$i], true);
+                        $cn->writeNewCount($cParams, $cValues[$i], $paramKeyRaw, $paramValuesRaw, $addData);
+                        break;
+                    default: //===counter to be updated
+                        $cn->updateCount($paramSpec['id'], $paramSpec['value']);
+                        break;
+                }
+            }
+        }
+        $appliedCounters = base64_encode(serialize($cContent));
+        $appliedCounters_inText = print_r($cContent, true);
+
+        $counterForNumber = array($numBatch[$trAlias]['formatNota']);
+        $tmpNomorNota = "";
+        $arrNomorNota = array();
+        foreach ($counterForNumber as $i => $c0RawParams) {
+            $c0Params = explode(",", $c0RawParams);
+            $c0Values = array();
+            foreach ($c0Params as $k => $cRawParams) {
+                $arrRawParams = explode("|", $cRawParams);
+                if (count($arrRawParams) > 1) {
+                    $cRawParamsValues = array();
+                    foreach ($arrRawParams as $key) {
+                        $cRawParamsValues[$key] = $arr[$key];
+                    }
+                    $cRawParamsValuesK = implode("|", array_keys($cRawParamsValues));
+                    $cRawParamsValuesV = implode("|", $cRawParamsValues);
+                    $arrNomorNota[] = digit_3($cContent[$cRawParamsValuesK][$cRawParamsValuesV]);
+                }
+                else {
+                    if (isset($arr[$arrRawParams[0]])) {
+                        $cRawParamsValuesV = $arr[$arrRawParams[0]];
+                        $cRawParamsValuesK = $arrRawParams[0];
+                        if ($arrRawParams[0] == "startDate") {
+                            $arrNomorNota[] = $cRawParamsValuesV;
+                        }
+                        elseif ($arrRawParams[0] == "toko_id") {
+                            $arrNomorNota[] = $cRawParamsValuesV;
+                        }
+                        elseif ($arrRawParams[0] == "place_id") {
+                            $arrNomorNota[] = digit_2($cRawParamsValuesV);
+                        }
+                        elseif ($arrRawParams[0] == "customer_id") {
+                            $arrNomorNota[] = digit_3($cRawParamsValuesV);
+                        }
+                        elseif ($arrRawParams[0] == "employee_id") {
+                            $arrNomorNota[] = digit_3($cRawParamsValuesV);
+                        }
+                        elseif ($arrRawParams[0] == "oleh_id") {
+                            $arrNomorNota[] = digit_3($cRawParamsValuesV);
+                        }
+                        elseif ($arrRawParams[0] == "supplier_id") {
+                            $arrNomorNota[] = digit_3($cRawParamsValuesV);
+                        }
+                        else {
+                            if (isset($cContent[$cRawParamsValuesK])) {
+                                $arrNomorNota[] = digit_3($cContent[$cRawParamsValuesK][$cRawParamsValuesV]);
+                            }
+                            else {
+                                $arrNomorNota[] = digit_3($cRawParamsValuesV);
+                            }
+                        }
+                    }
+                    else {
+                        $cc = explode(".", $arrRawParams[0]);
+                        if (is_numeric($arr[$cc[1]])) {
+                            $arrNomorNota[] = digit_3($arr[$cc[1]]);
+                        }
+                        else {
+                            $arrNomorNota[] = $arr[$cc[1]];
+                        }
+                    }
+                }
+            }
+        }
+        $tmpNomorNota = implode("/", $arrNomorNota);
+        return $tmpNomorNota;
+    }
+
+}

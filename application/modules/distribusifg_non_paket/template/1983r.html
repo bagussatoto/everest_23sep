@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{title}</title>
+
+    <style>
+        #someSvgElementId {
+            width: 100%;
+        }
+    </style>
+    <style>
+
+
+        * {
+
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+
+        }
+        @media print {
+            a[href]:after {
+                display: none;
+                visibility: hidden;
+            }
+            td{
+                width: max-content;
+            }
+            span.text-white{
+                display: none;
+                visibility: hidden;
+            }
+        }
+        .halaman-print {
+            width: 215mm;
+            min-height: 300mm;
+
+            /*kecilkan padding untuk mmendapatkan margin yang tipis*/
+            padding: 1mm;
+            margin: 1mm auto;
+            border: 0px #D3D3D3 solid;
+            border-radius: 6px;
+            background: grey;
+            box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+
+        }
+
+        .halaman {
+            width: 210mm;
+            min-height: 297mm;
+
+            /*kecilkan padding untuk mmendapatkan margin yang tipis*/
+            padding: 1mm;
+            margin: 1mm auto;
+            border: 0px #D3D3D3 solid;
+            border-radius: 6px;
+            background: white;
+            box-shadow: 0 0 1px rgba(0, 0, 0, 0.1);
+
+        }
+
+        .margin-halaman {
+
+            padding: 1mm;
+            border: 0px grey solid;
+            height: 297mm;
+            /*outline: 1mm darkgrey solid;*/
+
+        }
+
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        @media print {
+
+            html, body {
+                width: 210mm;
+                height: 297mm;
+            }
+
+            .halaman {
+                margin: 0;
+                border: initial;
+                border-radius: initial;
+                width: initial;
+                min-height: initial;
+                box-shadow: initial;
+                background: initial;
+                page-break-after: always;
+            }
+
+        }
+    </style>
+    <style>
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background-color: #FAFAFA;
+            font-size: 11px;
+            font-family: Consolas, Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New, monospace, serif;
+        }
+        .row-eq-height {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display:         flex;
+        }
+        @media print {
+            a[href]:after {
+                display: none;
+                visibility: hidden;
+            }
+            td{
+                width: max-content;
+            }
+        }
+        @media screen {
+            a[href]:after {
+                display: none;
+                visibility: hidden;
+            }
+            td{
+                width: max-content;
+            }
+        }
+    </style>
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/jQuery/jquery-2.2.3.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-3.3.7-dist/js/bootstrap.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}sweetalert2-master/dist/sweetalert2.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap3-dialog-master/dist/js/bootstrap-dialog.min.js?v={local_version}"></script>
+
+
+    <script src="{cdn_suport}AdminLTE-2.3.11/plugins/slimScroll/jquery.slimscroll.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}AdminLTE-2.3.11/dist/js/app.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}multi-step-modal-master/multi-step-modal.js?v={local_version}"></script>
+
+    <script src="{cdn_suport}bootstrap-fileinput-master/js/fileinput.min.js?v={local_version}"></script>
+    <script src="{cdn_suport}bootstrap-toggle-master/js/bootstrap-toggle.min.js?v={local_version}"></script>
+    <script src="{base}assets/custom/hippo_ajax.js?v={local_version}"></script>
+
+    <link rel="stylesheet" href="{base}assets/custom/custom.min.css?v={local_version}">
+    <link rel="stylesheet" href="{cdn_suport}bootstrap-3.3.7-dist/css/bootstrap.min.css?v={local_version}">
+
+</head>
+
+<body class="hold-transition skin-purple sidebar-mini" onloads="" style="">
+
+
+<div class="" style="width: 50%;float: left;position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;">
+    {companyProfile}
+</div>
+<div class="" style="width: 50%;float: left;position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px;">
+    <img src="{base}assets/images/san_221iso.png" alt="images" class="img-responsive pull-right">
+</div>
+
+
+<div style="border-top: 4px double #000;margin-top: 10px;" class="text-center col-md-12 col-xs-12">
+    <h2 class="ttext-renggang-10 text-bold">
+        {title}
+    </h2>
+</div>
+
+
+
+<div class="col-md-4 col-xs-4 no-padding" style="right: 3px;height: 205px;">
+
+</div>
+<div class="col-md-4 col-xs-4 no-padding" style="right: 3px;">
+
+</div>
+<div class="col-md-4 col-xs-4 no-padding">
+    <div class="panel panel-default tablee-responsive sspacer-top-10 ccol-md-6"
+         style="margin-left: 3px;margin-right: 3px;;height: 203px;">
+        {fixedElements}
+    </div>
+</div>
+
+
+<div class="col-md-12 no-padding" style="border: 0px solid red;">
+    <div class="panel panel-default table-responsive spacer-top-10">
+        {content}
+    </div>
+</div>
+
+
+<div class="col-md-12 no-padding" style="border: 0px solid black;">
+    <div class="col-md-6 col-xs-6 no-padding" style="right: 3px;">
+        <div class="panel panel-default table-responsive sspacer-top-10 ccol-md-6" style="height: 268px;">
+            {noteDetails}
+        </div>
+    </div>
+    <div class="col-md-6 col-xs-6 no-padding" style="border: 1px ;">
+        <div class="no-padding">
+            {sign_1}
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
